@@ -14,7 +14,7 @@ export type OAuthProviders = (typeof providers)[number];
 declare module "next-auth" {
   interface Session {
     user: {
-      id: string;
+      sub: string;
     } & DefaultSession["user"];
   }
 }
@@ -24,6 +24,7 @@ export const {
   auth,
   CSRF_experimental,
 } = NextAuth({
+  session: { strategy: "jwt" },
   adapter: DrizzleAdapter(db, tableCreator),
   providers: [
     Credentials({
@@ -51,18 +52,60 @@ export const {
     }),
   ],
   callbacks: {
-    session: ({ session, user }) => ({
+    session: ({ session, token }) => ({
       ...session,
       user: {
         ...session.user,
-        id: user.id,
+        id: token.sub,
+        email: token.email,
+        image: token.picture,
+        name: token.name,
       },
     }),
-    jwt: ({ token, profile }) => {
-      if (profile?.id) {
-        token.id = profile.id;
-        token.image = profile.picture;
+    jwt: ({ token, profile, account, user, trigger }) => {
+      switch (trigger) {
+        case "signIn":
+          if (user) {
+            token.sub = user.id;
+            token.email = user.email;
+            token.name = user.name;
+            token.picture = user.image;
+          }
+
+          if (profile) {
+            token.image = profile.picture;
+          }
+
+          if (account) {
+            /* empty */
+          }
+
+          break;
+
+        case "signUp":
+          if (user) {
+            token.sub = user.id;
+            token.email = user.email;
+            token.name = user.name;
+            token.picture = user.image;
+          }
+
+          if (profile) {
+            token.image = profile.picture;
+          }
+
+          if (account) {
+            /* empty */
+          }
+
+          break;
+        case "update":
+          break;
+
+        default:
+          break;
       }
+
       return token;
     },
     authorized({ request: _, auth }) {
