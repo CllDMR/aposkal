@@ -8,7 +8,7 @@ import { db, tableCreator } from "@acme/db";
 export type { Session } from "next-auth";
 
 // Update this whenever adding new providers so that the client can
-export const providers = ["discord"] as const;
+export const providers = [""] as const;
 export type OAuthProviders = (typeof providers)[number];
 
 declare module "next-auth" {
@@ -33,9 +33,8 @@ export const {
         password: { label: "Password", type: "password" },
       },
       async authorize(_credentials, _req) {
-        await new Promise(() => {
-          return;
-        });
+        await Promise.resolve();
+
         // Add logic here to look up the user from the credentials supplied
         const user = { id: "1", name: "J Smith", email: "jsmith@example.com" };
 
