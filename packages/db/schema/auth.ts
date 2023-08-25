@@ -16,6 +16,8 @@ export const tenant = mySqlTable("tenant", {
   name: varchar("name", { length: 255 }).notNull(),
 });
 
+export type InsertTenant = typeof tenant.$inferInsert;
+
 export const tenantRelations = relations(tenant, ({ many }) => ({
   usersToTenants: many(usersToTenants),
 }));

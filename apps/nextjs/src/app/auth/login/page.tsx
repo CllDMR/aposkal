@@ -9,7 +9,7 @@ export default function LoginPage() {
           type="text"
           name="callbackUrl"
           id="callbackUrl"
-          defaultValue="/dashboard"
+          defaultValue="/auth/select-tenant"
         />
       </div>
 
