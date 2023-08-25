@@ -45,14 +45,14 @@ export const {
       async authorize(credentials, _req) {
         const user = await db
           .select()
-          .from(schema.users)
-          .where(eq(schema.users.email, credentials.email as string))
+          .from(schema.user)
+          .where(eq(schema.user.email, credentials.email as string))
           .then((a) => a[0]);
 
         if (user) return user;
         else {
           await db
-            .insert(schema.users)
+            .insert(schema.user)
             .values({
               email: credentials.email as string,
               name: credentials.name as string,
@@ -61,8 +61,8 @@ export const {
 
           const newUser = await db
             .select()
-            .from(schema.users)
-            .where(eq(schema.users.email, credentials.email as string))
+            .from(schema.user)
+            .where(eq(schema.user.email, credentials.email as string))
             .then((a) => a[0]);
           return newUser ?? null;
         }

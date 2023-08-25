@@ -11,16 +11,16 @@ import { nanoid } from "nanoid";
 
 import { mySqlTable } from "./_table";
 
-export const tenants = mySqlTable("tenants", {
+export const tenant = mySqlTable("tenant", {
   id: varchar("id", { length: 255 }).$defaultFn(nanoid).notNull().primaryKey(),
   name: varchar("name", { length: 255 }).notNull(),
 });
 
-export const tenantsRelations = relations(tenants, ({ many }) => ({
+export const tenantRelations = relations(tenant, ({ many }) => ({
   usersToTenants: many(usersToTenants),
 }));
 
-export const users = mySqlTable("user", {
+export const user = mySqlTable("user", {
   id: varchar("id", { length: 255 }).$defaultFn(nanoid).notNull().primaryKey(),
   name: varchar("name", { length: 255 }),
   email: varchar("email", { length: 255 }).notNull(),
@@ -31,10 +31,10 @@ export const users = mySqlTable("user", {
   image: varchar("image", { length: 255 }),
 });
 
-export const usersRelations = relations(users, ({ many }) => ({
+export const userRelations = relations(user, ({ many }) => ({
   usersToTenants: many(usersToTenants),
-  accounts: many(accounts),
-  sessions: many(sessions),
+  accounts: many(account),
+  sessions: many(session),
 }));
 
 export const usersToTenants = mySqlTable(
@@ -49,17 +49,17 @@ export const usersToTenants = mySqlTable(
 );
 
 export const usersToTenantsRelations = relations(usersToTenants, ({ one }) => ({
-  tenant: one(tenants, {
+  tenant: one(tenant, {
     fields: [usersToTenants.tenantId],
-    references: [tenants.id],
+    references: [tenant.id],
   }),
-  user: one(users, {
+  user: one(user, {
     fields: [usersToTenants.userId],
-    references: [users.id],
+    references: [user.id],
   }),
 }));
 
-export const accounts = mySqlTable(
+export const account = mySqlTable(
   "account",
   {
     userId: varchar("userId", { length: 255 }).notNull(),
@@ -82,11 +82,11 @@ export const accounts = mySqlTable(
   }),
 );
 
-export const accountsRelations = relations(accounts, ({ one }) => ({
-  user: one(users, { fields: [accounts.userId], references: [users.id] }),
+export const accountRelations = relations(account, ({ one }) => ({
+  user: one(user, { fields: [account.userId], references: [user.id] }),
 }));
 
-export const sessions = mySqlTable(
+export const session = mySqlTable(
   "session",
   {
     sessionToken: varchar("sessionToken", { length: 255 })
@@ -100,14 +100,14 @@ export const sessions = mySqlTable(
   }),
 );
 
-export const sessionsRelations = relations(sessions, ({ one }) => ({
-  user: one(users, {
-    fields: [sessions.userId],
-    references: [users.id],
+export const sessionRelations = relations(session, ({ one }) => ({
+  user: one(user, {
+    fields: [session.userId],
+    references: [user.id],
   }),
 }));
 
-export const verificationTokens = mySqlTable(
+export const verificationToken = mySqlTable(
   "verificationToken",
   {
     identifier: varchar("identifier", { length: 255 }).notNull(),
