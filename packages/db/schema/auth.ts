@@ -7,11 +7,21 @@ import {
   timestamp,
   varchar,
 } from "drizzle-orm/mysql-core";
+import { nanoid } from "nanoid";
 
 import { mySqlTable } from "./_table";
 
+export const tenants = mySqlTable("tenants", {
+  id: varchar("id", { length: 255 }).$defaultFn(nanoid).notNull().primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+});
+
+export const tenantsRelations = relations(tenants, ({ many }) => ({
+  usersToTenants: many(usersToTenants),
+}));
+
 export const users = mySqlTable("user", {
-  id: varchar("id", { length: 255 }).notNull().primaryKey(),
+  id: varchar("id", { length: 255 }).$defaultFn(nanoid).notNull().primaryKey(),
   name: varchar("name", { length: 255 }),
   email: varchar("email", { length: 255 }).notNull(),
   emailVerified: timestamp("emailVerified", {
@@ -22,7 +32,31 @@ export const users = mySqlTable("user", {
 });
 
 export const usersRelations = relations(users, ({ many }) => ({
+  usersToTenants: many(usersToTenants),
   accounts: many(accounts),
+  sessions: many(sessions),
+}));
+
+export const usersToTenants = mySqlTable(
+  "users_to_tenants",
+  {
+    userId: int("user_id").notNull(),
+    tenantId: int("tenant_id").notNull(),
+  },
+  (t) => ({
+    pk: primaryKey(t.userId, t.tenantId),
+  }),
+);
+
+export const usersToTenantsRelations = relations(usersToTenants, ({ one }) => ({
+  tenant: one(tenants, {
+    fields: [usersToTenants.tenantId],
+    references: [tenants.id],
+  }),
+  user: one(users, {
+    fields: [usersToTenants.userId],
+    references: [users.id],
+  }),
 }));
 
 export const accounts = mySqlTable(
@@ -67,7 +101,10 @@ export const sessions = mySqlTable(
 );
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({
-  user: one(users),
+  user: one(users, {
+    fields: [sessions.userId],
+    references: [users.id],
+  }),
 }));
 
 export const verificationTokens = mySqlTable(

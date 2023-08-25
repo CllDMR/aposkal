@@ -4,8 +4,8 @@ export default function LoginPage() {
   return (
     <form className="" action={`/api/auth/callback/credentials`} method="post">
       <div>
-        <label htmlFor="username">Username</label>
-        <input type="text" name="username" id="username" />
+        <label htmlFor="email">Email</label>
+        <input type="text" name="email" id="email" />
       </div>
 
       <div>
