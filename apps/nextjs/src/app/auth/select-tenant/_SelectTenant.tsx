@@ -18,12 +18,10 @@ export const SelectTenant: FC<SelectTenantProps> = ({ id, name }) => {
     <form
       onSubmit={async (e) => {
         e.preventDefault();
-        const result = await update({
+        await update({
           ...data,
           user: { ...data?.user, ti: id, tn: name },
         });
-
-        console.log({ result });
 
         router.push("/");
       }}
