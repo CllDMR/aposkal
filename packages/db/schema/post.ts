@@ -1,5 +1,7 @@
 import { relations, sql } from "drizzle-orm";
-import { index, serial, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { index, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import { nanoid } from "nanoid";
 
 import { mySqlTable } from "./_table";
 import { tenant, user } from "./auth";
@@ -7,7 +9,10 @@ import { tenant, user } from "./auth";
 export const post = mySqlTable(
   "post",
   {
-    id: serial("id").primaryKey(),
+    id: varchar("id", { length: 255 })
+      .$defaultFn(nanoid)
+      .notNull()
+      .primaryKey(),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
@@ -28,3 +33,6 @@ export const postRelations = relations(post, ({ one }) => ({
   owner: one(tenant),
   author: one(user),
 }));
+
+export const insertPostSchema = createInsertSchema(post);
+export const selectPostSchema = createSelectSchema(post);

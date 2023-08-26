@@ -324,6 +324,9 @@ importers:
       drizzle-orm:
         specifier: ^0.28.3
         version: 0.28.3(@planetscale/database@1.10.0)
+      drizzle-zod:
+        specifier: ^0.5.1
+        version: 0.5.1(drizzle-orm@0.28.3)(zod@3.22.2)
       nanoid:
         specifier: ^4.0.2
         version: 4.0.2
@@ -5286,6 +5289,16 @@ packages:
         optional: true
     dependencies:
       '@planetscale/database': 1.10.0
+    dev: false
+
+  /drizzle-zod@0.5.1(drizzle-orm@0.28.3)(zod@3.22.2):
+    resolution: {integrity: sha512-C/8bvzUH/zSnVfwdSibOgFjLhtDtbKYmkbPbUCq46QZyZCH6kODIMSOgZ8R7rVjoI+tCj3k06MRJMDqsIeoS4A==}
+    peerDependencies:
+      drizzle-orm: '>=0.23.13'
+      zod: '*'
+    dependencies:
+      drizzle-orm: 0.28.3(@planetscale/database@1.10.0)
+      zod: 3.22.2
     dev: false
 
   /duplexer3@0.1.5:
