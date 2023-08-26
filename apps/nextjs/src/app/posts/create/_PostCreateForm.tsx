@@ -3,15 +3,13 @@
 import type { FC } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import type { z } from "zod";
 
-import { insertPostSchema } from "@acme/db/schema/post";
+import { postCreateInput } from "@acme/api/src/inputs/post";
 
+import type { RouterInputs } from "~/utils/api";
 import { api } from "~/utils/api";
 
-interface PostCreateFormProps {}
-
-export const PostCreateForm: FC<PostCreateFormProps> = () => {
+export const PostCreateForm: FC = () => {
   const context = api.useContext();
   const { mutateAsync } = api.post.create.useMutation({
     async onSettled() {
@@ -19,8 +17,8 @@ export const PostCreateForm: FC<PostCreateFormProps> = () => {
     },
   });
 
-  const { handleSubmit, register } = useForm<z.infer<typeof insertPostSchema>>({
-    resolver: zodResolver(insertPostSchema),
+  const { handleSubmit, register } = useForm<RouterInputs["post"]["create"]>({
+    resolver: zodResolver(postCreateInput),
   });
 
   const onSubmit = handleSubmit(async (data) => {
@@ -37,16 +35,6 @@ export const PostCreateForm: FC<PostCreateFormProps> = () => {
       <div>
         <label htmlFor="content">Content</label>
         <input type="text" {...register("content")} />
-      </div>
-
-      <div>
-        <label htmlFor="authorId">AuthorId</label>
-        <input type="text" {...register("authorId")} />
-      </div>
-
-      <div>
-        <label htmlFor="ownerId">OwnerId</label>
-        <input type="text" {...register("ownerId")} />
       </div>
 
       <button type="submit">Send</button>

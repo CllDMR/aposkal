@@ -10,9 +10,12 @@ interface PostListProps {
 }
 
 export const PostList: FC<PostListProps> = ({ posts }) => {
-  const [data] = api.post.all.useSuspenseQuery(undefined, {
-    initialData: posts,
-  });
+  const [data] = api.post.all.useSuspenseQuery(
+    {},
+    {
+      initialData: posts,
+    },
+  );
 
   return (
     <>

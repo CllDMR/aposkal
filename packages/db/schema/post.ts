@@ -21,17 +21,23 @@ export const post = mySqlTable(
     content: varchar("content", { length: 256 }).notNull(),
 
     authorId: varchar("author_id", { length: 255 }).notNull(),
-    ownerId: varchar("owner_id", { length: 255 }).notNull(),
+    tenantId: varchar("tenant_id", { length: 255 }).notNull(),
   },
-  ({ authorId, ownerId }) => ({
+  ({ authorId, tenantId }) => ({
     authorIdIdx: index("author_id_idx").on(authorId),
-    ownerIdIdx: index("owner_id_idx").on(ownerId),
+    tenantIdIdx: index("tenant_id_idx").on(tenantId),
   }),
 );
 
 export const postRelations = relations(post, ({ one }) => ({
-  owner: one(tenant),
-  author: one(user),
+  tenant: one(tenant, {
+    fields: [post.tenantId],
+    references: [tenant.id],
+  }),
+  author: one(user, {
+    fields: [post.authorId],
+    references: [user.id],
+  }),
 }));
 
 export const insertPostSchema = createInsertSchema(post);
