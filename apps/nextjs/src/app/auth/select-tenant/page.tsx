@@ -3,6 +3,8 @@ import { zfd } from "zod-form-data";
 
 import { db, desc, eq, schema } from "@acme/db";
 
+import { SelectTenant } from "./_SelectTenant";
+
 export default async function SelectTenantPage() {
   const tenants = await db
     .select()
@@ -57,6 +59,7 @@ export default async function SelectTenantPage() {
             <input type="hidden" name="id" defaultValue={tenant.id} />
             <button type="submit">Delete</button>
           </form>
+          <SelectTenant id={tenant.id} name={tenant.name} />
         </div>
       ))}
       {tenants.length === 0 && <p>No tenant</p>}

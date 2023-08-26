@@ -13,7 +13,8 @@ export default async function HomePage() {
       {session ? (
         <div>
           <p>
-            {session.user.sub} - {session.user.name}
+            {session.user.ti} - {session.user.tn} - {session.user.sub} -{" "}
+            {session.user.name}
           </p>
           <Link href="/auth/logout">Logout</Link>
         </div>
