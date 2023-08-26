@@ -3,6 +3,8 @@ import { zfd } from "zod-form-data";
 
 import { db, schema } from "@acme/db";
 
+import { PostCreateForm } from "./_PostCreateForm";
+
 export default function PostCreatePage() {
   async function createAction(formData: FormData) {
     "use server";
@@ -47,6 +49,8 @@ export default function PostCreatePage() {
 
         <button type="submit">Send</button>
       </form>
+
+      <PostCreateForm />
     </main>
   );
 }

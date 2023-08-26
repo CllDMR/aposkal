@@ -4,6 +4,7 @@ import { zfd } from "zod-form-data";
 import { db, schema } from "@acme/db";
 
 import { PostList } from "./_PostList";
+import { PostCreateForm } from "./create/_PostCreateForm";
 
 export default async function PostsPage() {
   const posts = await db.select().from(schema.post);
@@ -52,6 +53,8 @@ export default async function PostsPage() {
 
         <button type="submit">Send</button>
       </form>
+
+      <PostCreateForm />
 
       <PostList posts={posts} />
     </main>
