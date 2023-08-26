@@ -10,6 +10,7 @@ import {
 import { nanoid } from "nanoid";
 
 import { mySqlTable } from "./_table";
+import { post } from "./post";
 
 export const tenant = mySqlTable("tenant", {
   id: varchar("id", { length: 255 }).$defaultFn(nanoid).notNull().primaryKey(),
@@ -20,6 +21,7 @@ export type InsertTenant = typeof tenant.$inferInsert;
 
 export const tenantRelations = relations(tenant, ({ many }) => ({
   usersToTenants: many(usersToTenants),
+  posts: many(post),
 }));
 
 export const user = mySqlTable("user", {
@@ -37,6 +39,7 @@ export const userRelations = relations(user, ({ many }) => ({
   usersToTenants: many(usersToTenants),
   accounts: many(account),
   sessions: many(session),
+  posts: many(post),
 }));
 
 export const usersToTenants = mySqlTable(
