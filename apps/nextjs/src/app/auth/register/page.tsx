@@ -2,14 +2,18 @@ import { CSRF_experimental } from "@acme/auth";
 
 export default function RegisterPage() {
   return (
-    <form className="" action={`/api/auth/callback/credentials`} method="post">
+    <form
+      className=""
+      action={`/api/auth/callback/credentials-register`}
+      method="post"
+    >
       <div className="hidden">
         <input
           hidden
           type="text"
           name="callbackUrl"
           id="callbackUrl"
-          defaultValue="/auth/select-tenant"
+          defaultValue="/auth/verify-email-sent"
         />
       </div>
 

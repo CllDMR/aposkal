@@ -17,6 +17,7 @@ export const post = mySqlTable(
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
     updatedAt: timestamp("updated_at").onUpdateNow(),
+
     title: varchar("name", { length: 256 }).notNull(),
     content: varchar("content", { length: 256 }).notNull(),
 

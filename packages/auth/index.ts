@@ -4,6 +4,8 @@ import NextAuth from "next-auth";
 
 import { db, eq, schema, tableCreator } from "@acme/db";
 
+import { sendMail } from "./mailer";
+
 export { useSession } from "next-auth/react";
 export type { UpdateSession } from "next-auth/react";
 
@@ -22,7 +24,30 @@ export const {
   adapter: DrizzleAdapter(db, tableCreator),
   providers: [
     Credentials({
-      name: "Credentials",
+      id: "credentials-login",
+      name: "Credentials Login",
+      credentials: {
+        email: {
+          label: "Email",
+          type: "text",
+          placeholder: "jsmith@example.com",
+        },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials, _req) {
+        const user = await db
+          .select()
+          .from(schema.user)
+          .where(eq(schema.user.email, credentials.email as string))
+          .then((a) => a[0]);
+
+        if (user?.emailVerified) return user;
+        return null;
+      },
+    }),
+    Credentials({
+      id: "credentials-register",
+      name: "Credentials Register",
       credentials: {
         email: {
           label: "Email",
@@ -43,7 +68,7 @@ export const {
           .where(eq(schema.user.email, credentials.email as string))
           .then((a) => a[0]);
 
-        if (user) return user;
+        if (user) throw new Error("Already exists");
         else {
           await db
             .insert(schema.user)
@@ -58,7 +83,18 @@ export const {
             .from(schema.user)
             .where(eq(schema.user.email, credentials.email as string))
             .then((a) => a[0]);
-          return newUser ?? null;
+
+          await sendMail({
+            to: credentials.email as string,
+            userId: newUser!.id,
+          });
+          // const newUser = await db
+          //   .select()
+          //   .from(schema.user)
+          //   .where(eq(schema.user.email, credentials.email as string))
+          //   .then((a) => a[0]);
+          // return newUser ?? null;
+          return { id: "" };
         }
       },
     }),

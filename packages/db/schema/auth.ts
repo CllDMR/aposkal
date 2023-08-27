@@ -1,5 +1,5 @@
 import type { AdapterAccount } from "@auth/core/adapters";
-import { relations, sql } from "drizzle-orm";
+import { relations } from "drizzle-orm";
 import {
   index,
   int,
@@ -31,7 +31,7 @@ export const user = mySqlTable("user", {
   emailVerified: timestamp("emailVerified", {
     mode: "date",
     fsp: 3,
-  }).default(sql`CURRENT_TIMESTAMP(3)`),
+  }),
   image: varchar("image", { length: 255 }),
 });
 
@@ -45,8 +45,8 @@ export const userRelations = relations(user, ({ many }) => ({
 export const usersToTenants = mySqlTable(
   "users_to_tenants",
   {
-    userId: int("user_id").notNull(),
-    tenantId: int("tenant_id").notNull(),
+    userId: varchar("user_id", { length: 255 }).notNull(),
+    tenantId: varchar("tenant_id", { length: 255 }).notNull(),
   },
   (t) => ({
     pk: primaryKey(t.userId, t.tenantId),

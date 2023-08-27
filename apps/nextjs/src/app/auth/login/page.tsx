@@ -2,7 +2,11 @@ import { CSRF_experimental } from "@acme/auth";
 
 export default function LoginPage() {
   return (
-    <form className="" action={`/api/auth/callback/credentials`} method="post">
+    <form
+      className=""
+      action={`/api/auth/callback/credentials-login`}
+      method="post"
+    >
       <div className="hidden">
         <input
           hidden

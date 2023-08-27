@@ -176,7 +176,7 @@ importers:
         version: 13.4.19(react-dom@18.2.0)(react@18.2.0)
       next-auth:
         specifier: 0.0.0-manual.b53ca00b
-        version: 0.0.0-manual.b53ca00b(next@13.4.19)(react-dom@18.2.0)(react@18.2.0)
+        version: 0.0.0-manual.b53ca00b(next@13.4.19)(nodemailer@6.9.4)(react-dom@18.2.0)(react@18.2.0)
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -280,10 +280,10 @@ importers:
         version: link:../db
       '@auth/core':
         specifier: ^0.12.0
-        version: 0.12.0
+        version: 0.12.0(nodemailer@6.9.4)
       '@auth/drizzle-adapter':
         specifier: ^0.3.2
-        version: 0.3.2
+        version: 0.3.2(nodemailer@6.9.4)
       '@t3-oss/env-nextjs':
         specifier: ^0.6.1
         version: 0.6.1(typescript@5.1.6)(zod@3.22.2)
@@ -292,7 +292,10 @@ importers:
         version: 13.4.19(react-dom@18.2.0)(react@18.2.0)
       next-auth:
         specifier: 0.0.0-manual.b53ca00b
-        version: 0.0.0-manual.b53ca00b(next@13.4.19)(react-dom@18.2.0)(react@18.2.0)
+        version: 0.0.0-manual.b53ca00b(next@13.4.19)(nodemailer@6.9.4)(react-dom@18.2.0)(react@18.2.0)
+      nodemailer:
+        specifier: ^6.9.4
+        version: 6.9.4
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -312,6 +315,9 @@ importers:
       '@acme/tsconfig':
         specifier: ^0.1.0
         version: link:../../tooling/typescript
+      '@types/nodemailer':
+        specifier: ^6.4.9
+        version: 6.4.9
       eslint:
         specifier: ^8.47.0
         version: 8.47.0
@@ -477,7 +483,7 @@ packages:
       '@jridgewell/gen-mapping': 0.3.3
       '@jridgewell/trace-mapping': 0.3.18
 
-  /@auth/core@0.0.0-manual.59d8da33:
+  /@auth/core@0.0.0-manual.59d8da33(nodemailer@6.9.4):
     resolution: {integrity: sha512-ZTaUedTobGEvQPhEeJLmnsdGbztG10T0rK8TA4wH87Eb8oBHInI//3zRngX6T9hEcZ+/OJnIANw0JrGDqUDREA==}
     peerDependencies:
       nodemailer: ^6.8.0
@@ -488,12 +494,13 @@ packages:
       '@panva/hkdf': 1.1.1
       cookie: 0.5.0
       jose: 4.14.4
+      nodemailer: 6.9.4
       oauth4webapi: 2.3.0
       preact: 10.11.3
       preact-render-to-string: 5.2.3(preact@10.11.3)
     dev: false
 
-  /@auth/core@0.12.0:
+  /@auth/core@0.12.0(nodemailer@6.9.4):
     resolution: {integrity: sha512-XYipdAc/nKu014VOgpcPyLlj1ghWlnwyloaB1UjQd9ElZRZQ9YpSizzXGLON23t/a0FyabOBBl0/awD2tW58Rg==}
     peerDependencies:
       nodemailer: ^6.8.0
@@ -504,26 +511,27 @@ packages:
       '@panva/hkdf': 1.1.1
       cookie: 0.5.0
       jose: 4.14.4
+      nodemailer: 6.9.4
       oauth4webapi: 2.3.0
       preact: 10.11.3
       preact-render-to-string: 5.2.3(preact@10.11.3)
     dev: false
 
-  /@auth/drizzle-adapter@0.3.2:
+  /@auth/drizzle-adapter@0.3.2(nodemailer@6.9.4):
     resolution: {integrity: sha512-fHfzwaTomm/RKgFKBO5AJ8JTfR44rX1KX2ASaKRk+4jvVhDh9FCir5BV1Fv68b5ay7XBo9DtcNSQuZp4hbpLYw==}
     dependencies:
-      '@auth/core': 0.12.0
+      '@auth/core': 0.12.0(nodemailer@6.9.4)
     transitivePeerDependencies:
       - nodemailer
     dev: false
 
-  /@auth/nextjs@0.0.0-manual.179c08d4(next@13.4.19)(react@18.2.0):
+  /@auth/nextjs@0.0.0-manual.179c08d4(next@13.4.19)(nodemailer@6.9.4)(react@18.2.0):
     resolution: {integrity: sha512-HVuDgb6xlYLV5mHTGc0Pycg8BlwtcvjvS+54QXEbOBpA5tulzKxAH8QlCoKj5R9XHW9hP9DiCnvXyVV9x2N+jA==}
     peerDependencies:
       next: ^13.4.6
       react: ^18.2.0
     dependencies:
-      '@auth/core': 0.0.0-manual.59d8da33
+      '@auth/core': 0.0.0-manual.59d8da33(nodemailer@6.9.4)
       next: 13.4.19(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
     transitivePeerDependencies:
@@ -3692,6 +3700,12 @@ packages:
 
   /@types/node@18.17.7:
     resolution: {integrity: sha512-WJj/p/cIg6zUsxv1n2leZHpvn8hr9TYuLQxAZxZcK/7+5t5ukmJGelOLGOy3L1MLhAO/sapTJGd1V7kvoIuzUg==}
+
+  /@types/nodemailer@6.4.9:
+    resolution: {integrity: sha512-XYG8Gv+sHjaOtUpiuytahMy2mM3rectgroNbs6R3djZEKmPNiIJwe9KqOJBGzKKnNZNKvnuvmugBgpq3w/S0ig==}
+    dependencies:
+      '@types/node': 18.17.7
+    dev: true
 
   /@types/prop-types@15.7.5:
     resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}
@@ -8261,7 +8275,7 @@ packages:
     resolution: {integrity: sha512-SrQrok4CATudVzBS7coSz26QRSmlK9TzzoFbeKfcPBUFPjcQM9Rqvr/DlJkOrwI/0KcgvMub1n1g5Jt9EgRn4A==}
     dev: false
 
-  /next-auth@0.0.0-manual.b53ca00b(next@13.4.19)(react-dom@18.2.0)(react@18.2.0):
+  /next-auth@0.0.0-manual.b53ca00b(next@13.4.19)(nodemailer@6.9.4)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-hV/FhWoNGwpLe/+eaBVCDx4SBiauNuwA4fIT5DacSY0KrobcC6rvWQkL89WQZZKh3EpYqOefFkiXRkHNz90miw==}
     peerDependencies:
       next: ^13.4.5
@@ -8272,9 +8286,10 @@ packages:
       nodemailer:
         optional: true
     dependencies:
-      '@auth/core': 0.0.0-manual.59d8da33
-      '@auth/nextjs': 0.0.0-manual.179c08d4(next@13.4.19)(react@18.2.0)
+      '@auth/core': 0.0.0-manual.59d8da33(nodemailer@6.9.4)
+      '@auth/nextjs': 0.0.0-manual.179c08d4(next@13.4.19)(nodemailer@6.9.4)(react@18.2.0)
       next: 13.4.19(react-dom@18.2.0)(react@18.2.0)
+      nodemailer: 6.9.4
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
@@ -8382,6 +8397,11 @@ packages:
   /node-stream-zip@1.15.0:
     resolution: {integrity: sha512-LN4fydt9TqhZhThkZIVQnF9cwjU3qmUH9h78Mx/K7d3VvfRqqwthLwJEUOEL0QPZ0XQmNN7be5Ggit5+4dq3Bw==}
     engines: {node: '>=0.12.0'}
+    dev: false
+
+  /nodemailer@6.9.4:
+    resolution: {integrity: sha512-CXjQvrQZV4+6X5wP6ZIgdehJamI63MFoYFGGPtHudWym9qaEHDNdPzaj5bfMCvxG1vhAileSWW90q7nL0N36mA==}
+    engines: {node: '>=6.0.0'}
     dev: false
 
   /normalize-path@3.0.0:

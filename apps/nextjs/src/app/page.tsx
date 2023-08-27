@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { auth } from "@acme/auth";
 
-export const runtime = "edge";
+// export const runtime = "edge";
 
 export default async function HomePage() {
   const session = await auth();
