@@ -1,8 +1,8 @@
 import { auth } from "@acme/auth";
 import { db, eq, schema } from "@acme/db";
 
-import { PostList } from "./_PostList";
-import { PostCreateForm } from "./create/_PostCreateForm";
+import { PostCreateForm } from "~/components/organisms/post/PostCreateForm";
+import { PostList } from "~/components/organisms/post/PostList";
 
 export default async function PostsPage() {
   const session = await auth();
