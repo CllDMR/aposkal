@@ -1,5 +1,5 @@
 import { relations, sql } from "drizzle-orm";
-import { index, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { boolean, index, timestamp, varchar } from "drizzle-orm/mysql-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { nanoid } from "nanoid";
 
@@ -20,6 +20,8 @@ export const post = mySqlTable(
 
     title: varchar("name", { length: 256 }).notNull(),
     content: varchar("content", { length: 256 }).notNull(),
+    isDraft: boolean("isDraft").notNull().default(false),
+    publishAt: timestamp("publish_at").notNull(),
 
     authorId: varchar("author_id", { length: 255 }).notNull(),
     tenantId: varchar("tenant_id", { length: 255 }).notNull(),

@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 import { insertPostSchema, selectPostSchema } from "@acme/db/schema/post";
 
 export const postAllInput = selectPostSchema
@@ -7,17 +9,26 @@ export const postAllInput = selectPostSchema
     updatedAt: true,
     title: true,
     content: true,
+    isDraft: true,
+    publishAt: true,
   });
 
 export const postByIdInput = selectPostSchema.pick({ id: true });
 
-export const postCreateInput = insertPostSchema.omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
-  authorId: true,
-  tenantId: true,
-});
+const datelike = z.union([z.number(), z.string(), z.date()]);
+
+export const postCreateInput = insertPostSchema
+  .omit({
+    id: true,
+    createdAt: true,
+    updatedAt: true,
+    authorId: true,
+    tenantId: true,
+    publishAt: true,
+  })
+  .extend({
+    publishAt: datelike.pipe(z.coerce.date()),
+  });
 
 export const postUpdateInput = insertPostSchema
   .required()

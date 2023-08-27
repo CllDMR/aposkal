@@ -7,6 +7,8 @@ import { useForm } from "react-hook-form";
 import { postCreateInput } from "@acme/api/src/inputs/post";
 
 import { Form } from "~/components/atoms/form/form";
+import { FormCheckbox } from "~/components/molecules/form/form-checkbox";
+import { FormDate } from "~/components/molecules/form/form-date";
 import { FormInput } from "~/components/molecules/form/form-input";
 import type { RouterInputs } from "~/utils/api";
 import { api } from "~/utils/api";
@@ -25,6 +27,7 @@ export const PostCreateForm: FC = () => {
     handleSubmit,
     register,
     formState: { errors },
+    control,
   } = useForm<PostCreateFormFields>({
     resolver: zodResolver(postCreateInput),
   });
@@ -53,6 +56,22 @@ export const PostCreateForm: FC = () => {
         autoComplete="content"
         errors={errors}
         register={register}
+      />
+
+      <FormCheckbox<PostCreateFormFields>
+        id="isDraft"
+        label="Is Draft"
+        name="isDraft"
+        errors={errors}
+        register={register}
+      />
+
+      <FormDate<PostCreateFormFields>
+        id="publishAt"
+        label="Publish At"
+        name="publishAt"
+        control={control}
+        errors={errors}
       />
 
       <button
