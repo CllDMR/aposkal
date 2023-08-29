@@ -1,25 +1,22 @@
-import Credentials from "@auth/core/providers/credentials";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import type { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth";
+import Credentials from "next-auth/providers/credentials";
 
 import { db, eq, schema, tableCreator } from "@acme/db";
 
-import { sendMail } from "./mailer";
-
-export { useSession } from "next-auth/react";
-export type { UpdateSession } from "next-auth/react";
+// import { sendMail } from "./mailer";
 
 export type { Session } from "next-auth";
+export { getServerSession } from "next-auth/next";
+export { signIn, signOut, useSession } from "next-auth/react";
+export type { SessionContextValue } from "next-auth/react";
 
 // Update this whenever adding new providers so that the client can
 export const providers = [""] as const;
 export type OAuthProviders = (typeof providers)[number];
 
-export const {
-  handlers: { GET, POST },
-  auth,
-  CSRF_experimental,
-} = NextAuth({
+export const authOptions: NextAuthOptions = {
   session: { strategy: "jwt" },
   adapter: DrizzleAdapter(db, tableCreator),
   providers: [
@@ -35,10 +32,12 @@ export const {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, _req) {
+        if (!credentials) throw new Error("No credentials");
+
         const user = await db
           .select()
           .from(schema.user)
-          .where(eq(schema.user.email, credentials.email as string))
+          .where(eq(schema.user.email, credentials.email))
           .then((a) => a[0]);
 
         if (user?.emailVerified) return user;
@@ -62,10 +61,12 @@ export const {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, _req) {
+        if (!credentials) throw new Error("No credentials");
+
         const user = await db
           .select()
           .from(schema.user)
-          .where(eq(schema.user.email, credentials.email as string))
+          .where(eq(schema.user.email, credentials.email))
           .then((a) => a[0]);
 
         if (user) throw new Error("Already exists");
@@ -73,25 +74,57 @@ export const {
           await db
             .insert(schema.user)
             .values({
-              email: credentials.email as string,
-              name: credentials.name as string,
+              email: credentials.email,
+              name: credentials.name,
             })
             .execute();
 
           const newUser = await db
             .select()
             .from(schema.user)
-            .where(eq(schema.user.email, credentials.email as string))
+            .where(eq(schema.user.email, credentials.email))
             .then((a) => a[0]);
 
-          await sendMail({
-            to: credentials.email as string,
-            userId: newUser!.id,
-          });
+          if (typeof window === "undefined") {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            const {
+              createTransport,
+              getTestMessageUrl,
+              // eslint-disable-next-line @typescript-eslint/no-var-requires
+            } = require("nodemailer");
+
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+            const transporter = createTransport({
+              host: "smtp.ethereal.email",
+              port: 587,
+              auth: {
+                user: "clotilde.weissnat@ethereal.email",
+                pass: "GJ2BZFrt8zG3YQd9JD",
+              },
+            });
+
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+            const info = await transporter.sendMail({
+              from: '"Clotilde Weissnat" <clotilde.weissnat@ethereal.email>', // sender address
+              to: credentials.email, // list of receivers
+              subject: "Verify Your Email", // Subject line
+              html: `<a href='http://localhost:3000/auth/verify-email?token=${
+                newUser!.id
+              }'>Verify email</a>`, // html body
+            });
+
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+            console.log(getTestMessageUrl(info));
+          }
+
+          // await sendMail({
+          //   to: credentials.email,
+          //   userId: newUser!.id,
+          // });
           // const newUser = await db
           //   .select()
           //   .from(schema.user)
-          //   .where(eq(schema.user.email, credentials.email as string))
+          //   .where(eq(schema.user.email, credentials.email))
           //   .then((a) => a[0]);
           // return newUser ?? null;
           return { id: "" };
@@ -105,7 +138,8 @@ export const {
       user: {
         ...session.user,
         id: token.sub,
-        tid: token.tid,
+        ti: token.ti,
+        tn: token.tn,
         email: token.email,
         image: token.picture,
         name: token.name,
@@ -122,7 +156,7 @@ export const {
           }
 
           if (profile) {
-            token.image = profile.picture;
+            token.image = profile.image;
           }
 
           if (account) {
@@ -140,7 +174,7 @@ export const {
           }
 
           if (profile) {
-            token.image = profile.picture;
+            token.image = profile.image;
           }
 
           if (account) {
@@ -163,8 +197,14 @@ export const {
 
       return token;
     },
-    authorized({ request: _, auth }) {
-      return !!auth?.user;
-    },
+    // signIn({ account, user, credentials, email, profile }) {
+    //   return "";
+    // },
+
+    // authorized({ request: _, auth }) {
+    //   return !!auth?.user;
+    // },
   },
-});
+};
+
+export const handler = NextAuth(authOptions);

@@ -32,7 +32,7 @@ export const postRouter = createTRPCRouter({
   create: protectedProcedure.input(postCreateInput).mutation(({ ctx, input }) =>
     ctx.db.insert(schema.post).values({
       ...input,
-      authorId: ctx.session.user.sub,
+      authorId: ctx.session.user.id,
       tenantId: ctx.session.user.ti,
     }),
   ),

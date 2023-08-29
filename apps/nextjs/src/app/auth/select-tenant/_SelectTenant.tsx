@@ -2,7 +2,8 @@
 
 import type { FC } from "react";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+
+import { useSession } from "@acme/auth";
 
 interface SelectTenantProps {
   id: string;
@@ -18,6 +19,7 @@ export const SelectTenant: FC<SelectTenantProps> = ({ id, name }) => {
     <form
       onSubmit={async (e) => {
         e.preventDefault();
+
         await update({
           ...data,
           user: { ...data?.user, ti: id, tn: name },

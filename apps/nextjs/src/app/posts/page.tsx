@@ -1,11 +1,13 @@
-import { auth } from "@acme/auth";
+import { authOptions, getServerSession } from "@acme/auth";
 import { db, eq, schema } from "@acme/db";
 
 import { PostCreateForm } from "~/components/organisms/post/PostCreateForm";
 import { PostList } from "~/components/organisms/post/PostList";
 
 export default async function PostsPage() {
-  const session = await auth();
+  const session = await getServerSession(authOptions);
+  if (!session) throw new Error("No Session");
+
   const posts = await db
     .select()
     .from(schema.post)
