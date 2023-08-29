@@ -2,8 +2,10 @@
 
 import type { FC } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useSession } from "next-auth/react";
 
-import { useSession } from "@acme/auth";
+import { Form } from "~/components/atoms/form/form";
+import { Button } from "~/components/molecules/button";
 
 interface SelectTenantProps {
   id: string;
@@ -17,7 +19,7 @@ export const SelectTenant: FC<SelectTenantProps> = ({ id, name }) => {
   const { data, update } = useSession();
 
   return (
-    <form
+    <Form
       onSubmit={async (e) => {
         e.preventDefault();
 
@@ -29,7 +31,7 @@ export const SelectTenant: FC<SelectTenantProps> = ({ id, name }) => {
         router.push(searchParamsCallbackUrl ?? "/");
       }}
     >
-      <button type="submit">Select</button>
-    </form>
+      <Button type="submit">Select</Button>
+    </Form>
   );
 };

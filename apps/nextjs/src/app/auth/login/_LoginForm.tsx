@@ -2,12 +2,12 @@
 
 import { useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { signIn } from "@acme/auth";
-
 import { Form } from "~/components/atoms/form/form";
+import { Button } from "~/components/molecules/button";
 import { FormInput } from "~/components/molecules/form/form-input";
 
 interface LoginFormFields {
@@ -64,12 +64,7 @@ export default function LoginForm() {
         register={register}
       />
 
-      <button
-        type="submit"
-        className="inline-flex items-center justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-      >
-        Login
-      </button>
+      <Button type="submit">Login</Button>
     </Form>
   );
 }

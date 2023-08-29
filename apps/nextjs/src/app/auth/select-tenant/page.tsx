@@ -3,6 +3,7 @@ import { zfd } from "zod-form-data";
 
 import { db, desc, eq, schema } from "@acme/db";
 
+import { Button } from "~/components/molecules/button";
 import { SelectTenant } from "./_SelectTenant";
 
 export default async function SelectTenantPage() {
@@ -49,7 +50,7 @@ export default async function SelectTenantPage() {
           <input type="text" id="name" name="name" />
         </div>
 
-        <button type="submit">Send</button>
+        <Button type="submit">Send</Button>
       </form>
 
       {tenants?.map((tenant) => (
@@ -57,7 +58,7 @@ export default async function SelectTenantPage() {
           <span>{tenant.name}</span>
           <form action={deleteAction}>
             <input type="hidden" name="id" defaultValue={tenant.id} />
-            <button type="submit">Delete</button>
+            <Button type="submit">Delete</Button>
           </form>
           <SelectTenant id={tenant.id} name={tenant.name} />
         </div>
