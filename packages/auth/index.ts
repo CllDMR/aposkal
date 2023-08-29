@@ -19,6 +19,11 @@ export type OAuthProviders = (typeof providers)[number];
 export const authOptions: NextAuthOptions = {
   session: { strategy: "jwt" },
   adapter: DrizzleAdapter(db, tableCreator),
+  pages: {
+    signIn: "/auth/login",
+    signOut: "/auth/logout",
+    newUser: "/auth/register",
+  },
   providers: [
     Credentials({
       id: "credentials-login",

@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -20,6 +21,8 @@ const loginInput = z.object({
 });
 
 export default function LoginForm() {
+  const searchParamsCallbackUrl = useSearchParams().get("callbackUrl");
+
   const {
     handleSubmit,
     register,
@@ -31,7 +34,11 @@ export default function LoginForm() {
   const onSubmit = handleSubmit(async (data) => {
     await signIn("credentials-login", {
       ...data,
-      callbackUrl: "/auth/select-tenant",
+      callbackUrl: `/auth/select-tenant${
+        searchParamsCallbackUrl
+          ? "?callbackUrl=" + encodeURIComponent(searchParamsCallbackUrl)
+          : ""
+      }`,
     });
   });
 

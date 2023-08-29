@@ -1,7 +1,7 @@
 "use client";
 
 import type { FC } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { useSession } from "@acme/auth";
 
@@ -11,6 +11,7 @@ interface SelectTenantProps {
 }
 
 export const SelectTenant: FC<SelectTenantProps> = ({ id, name }) => {
+  const searchParamsCallbackUrl = useSearchParams().get("callbackUrl");
   const router = useRouter();
 
   const { data, update } = useSession();
@@ -25,7 +26,7 @@ export const SelectTenant: FC<SelectTenantProps> = ({ id, name }) => {
           user: { ...data?.user, ti: id, tn: name },
         });
 
-        router.push("/");
+        router.push(searchParamsCallbackUrl ?? "/");
       }}
     >
       <button type="submit">Select</button>
