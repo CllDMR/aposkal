@@ -6,6 +6,11 @@ export default withAuth({
     signOut: "/auth/logout",
     newUser: "/auth/register",
   },
+  callbacks: {
+    authorized({ token }) {
+      return !!(token?.sub && token.email && token.ti && token.tn);
+    },
+  },
 });
 
 export const config = { matcher: ["/posts"] };
