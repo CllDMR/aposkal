@@ -5,7 +5,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Disclosure } from "@headlessui/react";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
-import { ArrowTrendingUpIcon, HomeIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowTrendingUpIcon,
+  HomeIcon,
+  WrenchScrewdriverIcon,
+} from "@heroicons/react/24/outline";
 
 import { useSidebarStore } from "~/store/sidebar";
 
@@ -19,6 +23,12 @@ const navigation = [
       { name: "All", href: "/posts" },
       { name: "Create New", href: "/posts/create" },
     ],
+  },
+  {
+    name: "Settings",
+    href: "/settings",
+    icon: WrenchScrewdriverIcon,
+    children: [{ name: "Tenant", href: "/settings/tenant" }],
   },
 ];
 
