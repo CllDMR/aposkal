@@ -3,6 +3,7 @@ import { db, desc, eq, schema } from "@acme/db";
 
 import { PostCreateForm } from "~/components/organisms/post/PostCreateForm";
 import { PostList } from "~/components/organisms/post/PostList";
+import { PostTable } from "~/components/organisms/post/PostTable";
 
 export default async function PostsPage() {
   const session = await getServerSession(authOptions);
@@ -21,6 +22,8 @@ export default async function PostsPage() {
       <PostCreateForm />
 
       <PostList posts={posts} />
+
+      <PostTable posts={posts} />
     </main>
   );
 }
