@@ -18,9 +18,9 @@ type NavbarProps = PropsWithChildren & {
 };
 
 const userNavigation = [
-  { name: "Select Company", href: "/auth/company/select" },
+  { name: "Select Tenant", href: "/auth/select-tenant" },
   { name: "Your profile", href: "#" },
-  { name: "Sign out", href: "/auth/signout" },
+  { name: "Logout", href: "/auth/logout" },
 ];
 
 function classNames(...classes: string[]) {
