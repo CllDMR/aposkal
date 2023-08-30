@@ -21,9 +21,9 @@ export default async function PostsPage() {
 
       <PostCreateForm />
 
-      <PostList posts={posts} />
-
       <PostTable posts={posts} />
+
+      <PostList posts={posts} />
     </main>
   );
 }
