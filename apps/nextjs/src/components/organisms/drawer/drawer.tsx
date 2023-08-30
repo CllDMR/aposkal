@@ -46,7 +46,7 @@ export function Drawer() {
           {navigation.map((item) => (
             <li key={item.name}>
               {!item.children ? (
-                <a
+                <Link
                   href={item.href}
                   className={classNames(
                     pathname.includes(item.href)
@@ -60,7 +60,7 @@ export function Drawer() {
                     aria-hidden="true"
                   />
                   {item.name}
-                </a>
+                </Link>
               ) : (
                 <Disclosure as="div" defaultOpen={pathname.includes(item.href)}>
                   {({ open }) => (

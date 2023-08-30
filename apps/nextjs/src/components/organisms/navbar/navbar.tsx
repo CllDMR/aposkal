@@ -3,6 +3,7 @@
 import type { FC, PropsWithChildren } from "react";
 import { Fragment } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Menu, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -138,7 +139,7 @@ export const Navbar: FC<NavbarProps> = ({ children, session }) => {
                 {userNavigation.map((item) => (
                   <Menu.Item key={item.name}>
                     {({ active }) => (
-                      <a
+                      <Link
                         href={item.href}
                         className={classNames(
                           active ? "bg-gray-50" : "",
@@ -146,7 +147,7 @@ export const Navbar: FC<NavbarProps> = ({ children, session }) => {
                         )}
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     )}
                   </Menu.Item>
                 ))}
