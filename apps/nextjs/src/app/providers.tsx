@@ -18,7 +18,7 @@ const getBaseUrl = () => {
   return `http://localhost:${env.PORT}`; // dev SSR should use localhost
 };
 
-export function TRPCReactProvider(props: {
+export function Providers(props: {
   children: React.ReactNode;
   headers?: Headers;
 }) {

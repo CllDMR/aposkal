@@ -4,8 +4,12 @@ import { Inter } from "next/font/google";
 import "~/styles/globals.css";
 
 import { headers } from "next/headers";
+import { getServerSession } from "next-auth";
 
-import { TRPCReactProvider } from "./providers";
+import { authOptions } from "@acme/auth";
+
+import { Navbar } from "~/components/organisms/navbar/navbar";
+import { Providers } from "./providers";
 
 const fontSans = Inter({
   subsets: ["latin"],
@@ -17,13 +21,18 @@ export const metadata: Metadata = {
   description: "Simple stock management tool.",
 };
 
-export default function Layout(props: { children: React.ReactNode }) {
+export default async function Layout(props: { children: React.ReactNode }) {
+  const session = await getServerSession(authOptions);
+
+  if (!session) throw new Error("No session");
+
   return (
     <html lang="en">
       <body className={["font-sans", fontSans.variable].join(" ")}>
-        <TRPCReactProvider headers={headers()}>
+        <Providers headers={headers()}>
+          <Navbar session={session} />
           {props.children}
-        </TRPCReactProvider>
+        </Providers>
       </body>
     </html>
   );

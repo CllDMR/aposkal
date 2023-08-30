@@ -13,6 +13,9 @@ const config = {
   experimental: {
     serverActions: true,
   },
+  images: {
+    domains: ["images.unsplash.com", "tailwindui.com"],
+  },
 };
 
 export default config;
