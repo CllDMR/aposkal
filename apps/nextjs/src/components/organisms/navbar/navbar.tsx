@@ -19,7 +19,7 @@ type NavbarProps = PropsWithChildren & {
 
 const userNavigation = [
   { name: "Select Tenant", href: "/auth/select-tenant" },
-  { name: "Your profile", href: "#" },
+  { name: "Your profile", href: "/profile" },
   { name: "Logout", href: "/auth/logout" },
 ];
 
