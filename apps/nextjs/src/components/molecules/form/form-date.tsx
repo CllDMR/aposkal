@@ -11,7 +11,7 @@ import type {
 } from "react-hook-form";
 import { useController } from "react-hook-form";
 
-import { Date } from "~/components/atoms/form/date";
+import { Date as DateComp } from "~/components/atoms/form/date";
 import { FormErrorMessage } from "~/components/atoms/form/form-error-message";
 import type { InputProps } from "~/components/atoms/form/input";
 import { Label } from "~/components/atoms/form/label";
@@ -43,14 +43,16 @@ export const FormDate = <TFormValues extends FieldValues>({
     <div className={clsx("", className)} aria-live="polite">
       <div className="flex">
         <Label label={label} name={name} />
-        <Date
+        <DateComp
           aria-invalid={hasError}
           className={clsx({
             "border-red-600 transition-colors hover:border-red-600 focus:border-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50":
               hasError,
           })}
           value={{ startDate: value, endDate: value }}
-          onChange={(v) => void fOnChange(v?.startDate?.toString())}
+          onChange={(v) =>
+            void fOnChange(new Date(v?.startDate?.toString() ?? ""))
+          }
           {...props}
           {...field}
         />
