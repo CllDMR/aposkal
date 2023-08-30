@@ -1,6 +1,9 @@
 import { revalidatePath } from "next/cache";
+import { nanoid } from "nanoid";
+import { getServerSession } from "next-auth";
 import { zfd } from "zod-form-data";
 
+import { authOptions } from "@acme/auth";
 import { db, desc, eq, schema } from "@acme/db";
 
 import { Button } from "~/components/molecules/button";
@@ -21,7 +24,25 @@ export default async function SelectTenantPage() {
     const result = validationSchema.safeParse(formData);
 
     if (result.success) {
-      await db.insert(schema.tenant).values(result.data);
+      const session = await getServerSession(authOptions);
+
+      if (!session) throw new Error("No Session");
+
+      const tenantId = nanoid();
+
+      await db
+        .insert(schema.tenant)
+        .values({ ...result.data, id: tenantId })
+        .execute();
+
+      await db
+        .insert(schema.usersToTenants)
+        .values({
+          tenantId: tenantId,
+          userId: session.user.id,
+        })
+        .execute();
+
       revalidatePath("/auth/select-tenant");
     } else console.error(result.error.flatten());
   }
