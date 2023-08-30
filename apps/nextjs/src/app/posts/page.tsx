@@ -1,6 +1,7 @@
 import { authOptions, getServerSession } from "@acme/auth";
 import { db, desc, eq, schema } from "@acme/db";
 
+import { Main } from "~/components/atoms/Main";
 import { PostCreateForm } from "~/components/organisms/post/PostCreateForm";
 import { PostList } from "~/components/organisms/post/PostList";
 import { PostTable } from "~/components/organisms/post/PostTable";
@@ -16,7 +17,7 @@ export default async function PostsPage() {
     .orderBy(desc(schema.post.id));
 
   return (
-    <main>
+    <Main>
       <h1>Posts Page</h1>
 
       <PostCreateForm />
@@ -24,6 +25,6 @@ export default async function PostsPage() {
       <PostTable posts={posts} />
 
       <PostList posts={posts} />
-    </main>
+    </Main>
   );
 }

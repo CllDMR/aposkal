@@ -1,10 +1,11 @@
+import { Main } from "~/components/atoms/Main";
 import { PostCreateForm } from "~/components/organisms/post/PostCreateForm";
 
 export default function PostCreatePage() {
   return (
-    <main>
+    <Main>
       <h1>Post Create Page</h1>
       <PostCreateForm />
-    </main>
+    </Main>
   );
 }

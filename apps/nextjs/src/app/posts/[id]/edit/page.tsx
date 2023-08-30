@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@acme/auth";
 import { and, db, eq, schema } from "@acme/db";
 
+import { Main } from "~/components/atoms/Main";
 import { PostEditForm } from "~/components/organisms/post/PostEditForm";
 
 interface PageProps {
@@ -27,9 +28,9 @@ export default async function PostEditPage({ params: { id } }: PageProps) {
   if (!post) notFound();
 
   return (
-    <main>
+    <Main>
       <h1>Post Edit Page</h1>
       <PostEditForm post={post} />
-    </main>
+    </Main>
   );
 }
