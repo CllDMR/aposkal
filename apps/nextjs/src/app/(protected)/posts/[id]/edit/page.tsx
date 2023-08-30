@@ -23,6 +23,7 @@ export default async function PostEditPage({ params: { id } }: PageProps) {
     .where(
       and(eq(schema.post.tenantId, session.user.ti), eq(schema.post.id, id)),
     )
+    .limit(1)
     .then((a) => a[0]);
 
   if (!post) notFound();

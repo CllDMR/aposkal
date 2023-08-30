@@ -43,6 +43,7 @@ export const authOptions: NextAuthOptions = {
           .select()
           .from(schema.user)
           .where(eq(schema.user.email, credentials.email))
+          .limit(1)
           .then((a) => a[0]);
 
         if (user?.emailVerified) return user;
@@ -72,6 +73,7 @@ export const authOptions: NextAuthOptions = {
           .select()
           .from(schema.user)
           .where(eq(schema.user.email, credentials.email))
+          .limit(1)
           .then((a) => a[0]);
 
         if (user) throw new Error("Already exists");
@@ -88,6 +90,7 @@ export const authOptions: NextAuthOptions = {
             .select()
             .from(schema.user)
             .where(eq(schema.user.email, credentials.email))
+            .limit(1)
             .then((a) => a[0]);
 
           if (typeof window === "undefined") {

@@ -28,6 +28,7 @@ export const postRouter = createTRPCRouter({
         .select()
         .from(schema.post)
         .where(eq(schema.post.id, input.id))
+        .limit(1)
         .then((a) => a[0]);
     }),
 

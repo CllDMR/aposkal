@@ -16,6 +16,7 @@ export const tenantRouter = createTRPCRouter({
         .select()
         .from(schema.tenant)
         .where(eq(schema.tenant.id, input.id))
+        .limit(1)
         .then((a) => a[0]),
     ),
 
