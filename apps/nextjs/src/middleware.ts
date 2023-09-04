@@ -15,10 +15,10 @@ export default withAuth({
 
 export const config = {
   matcher: [
-    "/auth/select-tenant",
+    // "/auth/select-tenant",
     "/auth/verify-email",
     "/auth/verify-email-sent",
-    "/auth/logout",
+    // "/auth/logout",
     "/dashboard",
     "/posts",
     "/posts/(.*)",

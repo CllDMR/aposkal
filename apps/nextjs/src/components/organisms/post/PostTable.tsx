@@ -19,12 +19,12 @@ interface TableItem {
 }
 
 interface PostTableProps {
-  posts: RouterOutputs["post"]["all"];
+  posts: RouterOutputs["post"]["list"];
 }
 
 export const PostTable: FC<PostTableProps> = ({ posts }) => {
   const context = api.useContext();
-  const [data] = api.post.all.useSuspenseQuery(
+  const [data] = api.post.list.useSuspenseQuery(
     {},
     {
       initialData: posts,
@@ -33,8 +33,8 @@ export const PostTable: FC<PostTableProps> = ({ posts }) => {
 
   const { mutateAsync, isLoading, variables } = api.post.delete.useMutation({
     async onSettled() {
-      await context.post.all.invalidate();
-      await context.post.byId.invalidate();
+      await context.post.list.invalidate();
+      await context.post.get.invalidate();
     },
   });
 

@@ -3,16 +3,16 @@ import { z } from "zod";
 import { desc, eq, schema } from "@acme/db";
 
 import {
-  postAllInput,
-  postByIdInput,
   postCreateInput,
+  postGetInput,
+  postListInput,
   postUpdateInput,
 } from "../inputs/post";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const postRouter = createTRPCRouter({
-  all: protectedProcedure
-    .input(postAllInput)
+  list: protectedProcedure
+    .input(postListInput)
     .query(async ({ ctx, input: _ }) => {
       return await ctx.db
         .select()
@@ -21,16 +21,14 @@ export const postRouter = createTRPCRouter({
         .orderBy(desc(schema.post.id));
     }),
 
-  byId: protectedProcedure
-    .input(postByIdInput)
-    .query(async ({ ctx, input }) => {
-      return await ctx.db
-        .select()
-        .from(schema.post)
-        .where(eq(schema.post.id, input.id))
-        .limit(1)
-        .then((a) => a[0]);
-    }),
+  get: protectedProcedure.input(postGetInput).query(async ({ ctx, input }) => {
+    return await ctx.db
+      .select()
+      .from(schema.post)
+      .where(eq(schema.post.id, input.id))
+      .limit(1)
+      .then((a) => a[0]);
+  }),
 
   create: protectedProcedure
     .input(postCreateInput)

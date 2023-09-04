@@ -4,7 +4,8 @@ import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { nanoid } from "nanoid";
 
 import { mySqlTable } from "./_table";
-import { tenant, user } from "./auth";
+import { tenant } from "./auth/tenant";
+import { user } from "./auth/user";
 
 export const post = mySqlTable(
   "post",

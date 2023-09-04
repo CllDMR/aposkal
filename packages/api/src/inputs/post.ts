@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { insertPostSchema, selectPostSchema } from "@acme/db/schema/post";
 
-export const postAllInput = selectPostSchema
+export const postListInput = selectPostSchema
   .omit({ id: true, authorId: true, tenantId: true })
   .partial({
     createdAt: true,
@@ -13,7 +13,7 @@ export const postAllInput = selectPostSchema
     publishAt: true,
   });
 
-export const postByIdInput = selectPostSchema.pick({ id: true });
+export const postGetInput = selectPostSchema.pick({ id: true });
 
 const datelike = z.union([z.number(), z.string(), z.date()]);
 

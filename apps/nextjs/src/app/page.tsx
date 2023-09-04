@@ -2,6 +2,8 @@ import Link from "next/link";
 
 import { authOptions, getServerSession } from "@acme/auth";
 
+import { Button } from "~/components/molecules/button";
+
 // export const runtime = "edge";
 
 export default async function HomePage() {
@@ -16,12 +18,18 @@ export default async function HomePage() {
             {session.user.ti} - {session.user.tn} - {session.user.id} -{" "}
             {session.user.name}
           </p>
-          <Link href="/auth/logout">Logout</Link>
+          <Link href="/auth/logout">
+            <Button>Logout</Button>
+          </Link>
         </div>
       ) : (
         <>
-          <Link href="/auth/login">Login</Link>
-          <Link href="/auth/register">Register</Link>
+          <Link href="/auth/login">
+            <Button>Login</Button>
+          </Link>
+          <Link href="/auth/register">
+            <Button>Register</Button>
+          </Link>
         </>
       )}
     </main>

@@ -8,12 +8,12 @@ import type { RouterOutputs } from "~/utils/api";
 import { api } from "~/utils/api";
 
 interface PostListProps {
-  posts: RouterOutputs["post"]["all"];
+  posts: RouterOutputs["post"]["list"];
 }
 
 export const PostList: FC<PostListProps> = ({ posts }) => {
   const context = api.useContext();
-  const [data] = api.post.all.useSuspenseQuery(
+  const [data] = api.post.list.useSuspenseQuery(
     {},
     {
       initialData: posts,
@@ -22,8 +22,8 @@ export const PostList: FC<PostListProps> = ({ posts }) => {
 
   const { mutateAsync } = api.post.delete.useMutation({
     async onSettled() {
-      await context.post.all.invalidate();
-      await context.post.byId.invalidate();
+      await context.post.list.invalidate();
+      await context.post.get.invalidate();
     },
   });
 

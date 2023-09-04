@@ -15,14 +15,14 @@ import type { RouterInputs, RouterOutputs } from "~/utils/api";
 import { api } from "~/utils/api";
 
 type PostEditFormFields = RouterInputs["post"]["update"];
-type Post = NonNullable<RouterOutputs["post"]["byId"]>;
+type Post = NonNullable<RouterOutputs["post"]["get"]>;
 
 export const PostEditForm: FC<{ post: Post }> = ({ post }) => {
   const context = api.useContext();
   const { mutateAsync } = api.post.update.useMutation({
     async onSettled() {
-      await context.post.all.invalidate();
-      await context.post.byId.invalidate();
+      await context.post.list.invalidate();
+      await context.post.get.invalidate();
     },
   });
 

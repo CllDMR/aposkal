@@ -4,16 +4,39 @@ import { getServerSession } from "next-auth";
 import { zfd } from "zod-form-data";
 
 import { authOptions } from "@acme/auth";
-import { db, desc, eq, schema } from "@acme/db";
+import { db, desc, eq, inArray, schema } from "@acme/db";
 
 import { Button } from "~/components/molecules/button";
 import { SelectTenant } from "./_SelectTenant";
 
 export default async function SelectTenantPage() {
-  const tenants = await db
+  const session = await getServerSession(authOptions);
+
+  if (!session) throw new Error("No Session");
+
+  const usertenants = await db
     .select()
-    .from(schema.tenant)
-    .orderBy(desc(schema.tenant.name));
+    .from(schema.usersToTenants)
+    .where(eq(schema.usersToTenants.userId, session.user.id))
+    .orderBy(desc(schema.usersToTenants.tenantId));
+
+  let tenants: {
+    name: string;
+    id: string;
+  }[] = [];
+
+  if (usertenants.length > 0) {
+    tenants = await db
+      .select()
+      .from(schema.tenant)
+      .where(
+        inArray(
+          schema.tenant.id,
+          usertenants.map((e) => e.tenantId),
+        ),
+      )
+      .orderBy(desc(schema.tenant.name));
+  }
 
   async function createAction(formData: FormData) {
     "use server";

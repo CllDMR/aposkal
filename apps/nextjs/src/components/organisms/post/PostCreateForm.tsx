@@ -20,7 +20,7 @@ export const PostCreateForm: FC = () => {
   const context = api.useContext();
   const { mutateAsync } = api.post.create.useMutation({
     async onSettled() {
-      await context.post.all.invalidate();
+      await context.post.list.invalidate();
     },
   });
 

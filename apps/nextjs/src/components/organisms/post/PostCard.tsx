@@ -8,13 +8,13 @@ import type { RouterOutputs } from "~/utils/api";
 import { api } from "~/utils/api";
 
 interface PostCardProps {
-  initPost: RouterOutputs["post"]["byId"];
-  id: NonNullable<RouterOutputs["post"]["byId"]>["id"];
+  initPost: RouterOutputs["post"]["get"];
+  id: NonNullable<RouterOutputs["post"]["get"]>["id"];
 }
 
 export const PostCard: FC<PostCardProps> = ({ initPost, id }) => {
   const context = api.useContext();
-  const [post] = api.post.byId.useSuspenseQuery(
+  const [post] = api.post.get.useSuspenseQuery(
     { id },
     {
       initialData: initPost,
@@ -23,8 +23,8 @@ export const PostCard: FC<PostCardProps> = ({ initPost, id }) => {
 
   const { mutateAsync } = api.post.delete.useMutation({
     async onSettled() {
-      await context.post.all.invalidate();
-      await context.post.byId.invalidate();
+      await context.post.list.invalidate();
+      await context.post.get.invalidate();
     },
   });
 
