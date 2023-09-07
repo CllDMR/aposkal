@@ -135,7 +135,7 @@ export const authOptions: NextAuthOptions = {
           //   .where(eq(schema.user.email, credentials.email))
           //   .then((a) => a[0]);
           // return newUser ?? null;
-          return { id: "" };
+          return newUser ?? null;
         }
       },
     }),
