@@ -5,20 +5,24 @@ export default withAuth({
     signIn: "/auth/login",
     signOut: "/auth/logout",
     newUser: "/auth/register",
+    verifyRequest: "/auth/verify-email",
   },
   callbacks: {
-    authorized({ token }) {
-      return !!(token?.sub && token.email && token.ti && token.tn);
+    authorized({ token, req }) {
+      if (req.nextUrl.pathname.startsWith("/auth"))
+        return !!token?.sub && !!token.email;
+
+      return !!token?.sub && !!token.email && !!token.ti && !!token.tn;
     },
   },
 });
 
 export const config = {
   matcher: [
-    // "/auth/select-tenant",
+    "/auth/select-tenant",
     "/auth/verify-email",
     "/auth/verify-email-sent",
-    // "/auth/logout",
+    "/auth/logout",
     "/dashboard",
     "/posts",
     "/posts/(.*)",
