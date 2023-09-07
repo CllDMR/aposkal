@@ -1,4 +1,8 @@
+import Link from "next/link";
+
 import { db, eq, schema } from "@acme/db";
+
+import { Button } from "~/components/molecules/button";
 
 export default async function VerifyEmailPage({
   searchParams,
@@ -12,9 +16,27 @@ export default async function VerifyEmailPage({
 
   return (
     <main>
-      <h1>Verifing email</h1>
+      <h1>Verified your email address</h1>
 
       <p>{searchParams.token}</p>
+
+      <div className="flex">
+        <Link href="/">
+          <Button>Go to Home Page</Button>
+        </Link>
+
+        <span>or</span>
+
+        <Link href="/auth/select-tenant">
+          <Button>Go to Select Tenant Page</Button>
+        </Link>
+
+        <span>or</span>
+
+        <Link href="/auth/logout">
+          <Button>Go to Logout Page</Button>
+        </Link>
+      </div>
     </main>
   );
 }
