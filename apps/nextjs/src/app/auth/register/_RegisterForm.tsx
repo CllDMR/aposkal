@@ -25,7 +25,7 @@ export default function RegisterForm() {
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    formState: { errors, isLoading },
   } = useForm<RegisterFormFields>({
     resolver: zodResolver(registerInput),
   });
@@ -69,7 +69,9 @@ export default function RegisterForm() {
         register={register}
       />
 
-      <Button type="submit">Register</Button>
+      <Button type="submit" disabled={isLoading}>
+        Register
+      </Button>
     </Form>
   );
 }

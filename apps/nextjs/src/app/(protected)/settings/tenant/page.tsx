@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth";
 
@@ -6,7 +5,7 @@ import { authOptions } from "@acme/auth";
 import { db } from "@acme/db";
 
 import { Main } from "~/components/atoms/Main";
-import { Button } from "~/components/molecules/button";
+import { LinkButton } from "~/components/molecules/link-button";
 import { TenantWithUsersTable } from "~/components/organisms/tenant-with-users/TenantWithUsersTable";
 
 export default async function SettingsTenantPage() {
@@ -30,9 +29,7 @@ export default async function SettingsTenantPage() {
       <div className="flex justify-between">
         <p>{tenantWithUsers.name}</p>
 
-        <Link href={`/settings/tenant/add-user`}>
-          <Button>Add User</Button>
-        </Link>
+        <LinkButton href={`/settings/tenant/add-user`}>Add User</LinkButton>
       </div>
 
       <TenantWithUsersTable tenantWithUsers={tenantWithUsers} />

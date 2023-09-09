@@ -25,7 +25,7 @@ export const TenantAddUserForm: FC = () => {
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    formState: { errors, isLoading },
   } = useForm<TenantAddUserFormFields>({
     resolver: zodResolver(tenantAddUserInput),
   });
@@ -46,7 +46,9 @@ export const TenantAddUserForm: FC = () => {
         register={register}
       />
 
-      <Button type="submit">Add User</Button>
+      <Button type="submit" disabled={isLoading}>
+        Add User
+      </Button>
     </Form>
   );
 };

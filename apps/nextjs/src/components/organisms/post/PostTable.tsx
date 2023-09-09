@@ -2,10 +2,10 @@
 
 import type { FC } from "react";
 import { useMemo } from "react";
-import Link from "next/link";
 import type { ColumnDef } from "@tanstack/react-table";
 
 import { Button } from "~/components/molecules/button";
+import { LinkButton } from "~/components/molecules/link-button";
 import type { RouterOutputs } from "~/utils/api";
 import { api } from "~/utils/api";
 import { Table } from "../table";
@@ -69,15 +69,11 @@ export const PostTable: FC<PostTableProps> = ({ posts }) => {
         cell: ({ row: { original: post } }) => {
           return (
             <div>
-              <Link href={`/posts/${post.id}`}>
-                <Button>Go</Button>
-              </Link>
-              <Link href={`/posts/${post.id}/edit`}>
-                <Button>Edit</Button>
-              </Link>
+              <LinkButton href={`/posts/${post.id}`}>Go</LinkButton>
+              <LinkButton href={`/posts/${post.id}/edit`}>Edit</LinkButton>
               <Button
-                disabled={isLoading && post.id === variables}
                 onClick={async () => await mutateAsync(post.id)}
+                disabled={isLoading && post.id === variables}
               >
                 Delete
               </Button>

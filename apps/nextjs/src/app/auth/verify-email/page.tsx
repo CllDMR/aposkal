@@ -1,8 +1,6 @@
-import Link from "next/link";
-
 import { db, eq, schema } from "@acme/db";
 
-import { Button } from "~/components/molecules/button";
+import { LinkButton } from "~/components/molecules/link-button";
 
 export default async function VerifyEmailPage({
   searchParams,
@@ -21,21 +19,17 @@ export default async function VerifyEmailPage({
       <p>{searchParams.token}</p>
 
       <div className="flex">
-        <Link href="/">
-          <Button>Go to Home Page</Button>
-        </Link>
+        <LinkButton href="/">Go to Home Page</LinkButton>
 
         <span>or</span>
 
-        <Link href="/auth/select-tenant">
-          <Button>Go to Select Tenant Page</Button>
-        </Link>
+        <LinkButton href="/auth/select-tenant">
+          Go to Select Tenant Page
+        </LinkButton>
 
         <span>or</span>
 
-        <Link href="/auth/logout">
-          <Button>Go to Logout Page</Button>
-        </Link>
+        <LinkButton href="/auth/logout">Go to Logout Page</LinkButton>
       </div>
     </main>
   );

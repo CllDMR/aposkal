@@ -29,7 +29,7 @@ export const PostEditForm: FC<{ post: Post }> = ({ post }) => {
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    formState: { errors, isLoading },
     control,
   } = useForm<PostEditFormFields>({
     resolver: zodResolver(postUpdateInput),
@@ -78,7 +78,9 @@ export const PostEditForm: FC<{ post: Post }> = ({ post }) => {
         errors={errors}
       />
 
-      <Button type="submit">Update</Button>
+      <Button type="submit" disabled={isLoading}>
+        Update
+      </Button>
     </Form>
   );
 };

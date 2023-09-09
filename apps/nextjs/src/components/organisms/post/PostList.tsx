@@ -1,9 +1,9 @@
 "use client";
 
 import type { FC } from "react";
-import Link from "next/link";
 
 import { Button } from "~/components/molecules/button";
+import { LinkButton } from "~/components/molecules/link-button";
 import type { RouterOutputs } from "~/utils/api";
 import { api } from "~/utils/api";
 
@@ -20,7 +20,7 @@ export const PostList: FC<PostListProps> = ({ posts }) => {
     },
   );
 
-  const { mutateAsync } = api.post.delete.useMutation({
+  const { mutateAsync, isLoading } = api.post.delete.useMutation({
     async onSettled() {
       await context.post.list.invalidate();
       await context.post.get.invalidate();
@@ -32,13 +32,12 @@ export const PostList: FC<PostListProps> = ({ posts }) => {
       {data.map((post) => (
         <div key={post.id}>
           <span>{post.title}</span>
-          <Link href={`/posts/${post.id}`}>
-            <Button>Go</Button>
-          </Link>
-          <Link href={`/posts/${post.id}/edit`}>
-            <Button>Edit</Button>
-          </Link>
-          <Button onClick={async () => await mutateAsync(post.id)}>
+          <LinkButton href={`/posts/${post.id}`}>Go</LinkButton>
+          <LinkButton href={`/posts/${post.id}/edit`}>Edit</LinkButton>
+          <Button
+            onClick={async () => await mutateAsync(post.id)}
+            disabled={isLoading}
+          >
             Delete
           </Button>
         </div>

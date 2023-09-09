@@ -7,7 +7,10 @@ import { Form } from "~/components/atoms/form/form";
 import { Button } from "~/components/molecules/button";
 
 export default function LogoutForm() {
-  const { handleSubmit } = useForm();
+  const {
+    handleSubmit,
+    formState: { isLoading },
+  } = useForm();
 
   const onSubmit = handleSubmit(async () => {
     await signOut({
@@ -17,7 +20,9 @@ export default function LogoutForm() {
 
   return (
     <Form className="" onSubmit={onSubmit}>
-      <Button type="submit">Logout</Button>
+      <Button type="submit" disabled={isLoading}>
+        Logout
+      </Button>
     </Form>
   );
 }

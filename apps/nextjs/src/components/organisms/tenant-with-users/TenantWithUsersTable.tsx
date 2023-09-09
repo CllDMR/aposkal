@@ -2,10 +2,10 @@
 
 import type { FC } from "react";
 import { useMemo } from "react";
-import Link from "next/link";
 import type { ColumnDef } from "@tanstack/react-table";
 
 import { Button } from "~/components/molecules/button";
+import { LinkButton } from "~/components/molecules/link-button";
 import type { RouterOutputs } from "~/utils/api";
 import { api } from "~/utils/api";
 import { Table } from "../table";
@@ -52,14 +52,12 @@ export const TenantWithUsersTable: FC<TenantWithUsersTableProps> = ({
         cell: ({ row: { original: tenantUser } }) => {
           return (
             <div>
-              <Link href={`/users/${tenantUser.id}`}>
-                <Button>Go</Button>
-              </Link>
+              <LinkButton href={`/users/${tenantUser.id}`}>Go</LinkButton>
               <Button
-                disabled={isLoading && tenantUser.id === variables?.userId}
                 onClick={async () =>
                   await mutateAsync({ userId: tenantUser.id })
                 }
+                disabled={isLoading && tenantUser.id === variables?.userId}
               >
                 Remove
               </Button>
