@@ -1,6 +1,5 @@
 import { ErrorMessage } from "@hookform/error-message";
 import clsx from "clsx";
-import get from "lodash.get";
 import type {
   Control,
   DeepMap,
@@ -11,7 +10,7 @@ import type {
 } from "react-hook-form";
 import { useController } from "react-hook-form";
 
-import { Date as DateComp } from "~/components/atoms/form/date";
+import { DateInput } from "~/components/atoms/form/date";
 import { FormErrorMessage } from "~/components/atoms/form/form-error-message";
 import type { InputProps } from "~/components/atoms/form/input";
 import { Label } from "~/components/atoms/form/label";
@@ -30,31 +29,30 @@ export const FormDate = <TFormValues extends FieldValues>({
   rules,
   errors,
   className,
-  ...props
-}: FormDateProps<TFormValues>): JSX.Element => {
-  const errorMessages = get(errors, name);
-  const hasError = !!(errors && errorMessages);
+} // ...props
+: FormDateProps<TFormValues>): JSX.Element => {
+  // const errorMessages = get(errors, name);
+  // const hasError = !!(errors && errorMessages);
 
   const {
-    field: { onChange: fOnChange, value, ref: _, ...field },
+    field: { onChange: fOnChange, value, ref: _, name: _name, onBlur: __ },
   } = useController({ control, name, rules });
 
   return (
     <div className={clsx("", className)} aria-live="polite">
       <div className="flex">
         <Label label={label} name={name} />
-        <DateComp
-          aria-invalid={hasError}
-          className={clsx({
-            "border-red-600 transition-colors hover:border-red-600 focus:border-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50":
-              hasError,
-          })}
-          value={{ startDate: value, endDate: value }}
-          onChange={(v) =>
-            void fOnChange(new Date(v?.startDate?.toString() ?? ""))
-          }
-          {...props}
-          {...field}
+        <DateInput
+          // aria-invalid={hasError}
+          // className={clsx({
+          //   "border-red-600 hover:border-red-600 focus:border-red-600 focus:ring-red-600 transition-colors focus:outline-none focus:ring-2 focus:ring-opacity-50":
+          //     hasError,
+          // })}
+          name={_name}
+          value={value}
+          onChange={(v) => void fOnChange(v)}
+          // {...props}
+          // {...field}
         />
       </div>
       <ErrorMessage
