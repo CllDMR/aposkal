@@ -7,7 +7,12 @@ import * as tenant from "./schema/auth/tenant";
 import * as user from "./schema/auth/user";
 import * as usersToTenants from "./schema/auth/usersToTenants";
 import * as verificationToken from "./schema/auth/verificationToken";
+import * as customer from "./schema/customer";
 import * as post from "./schema/post";
+import * as product from "./schema/product";
+import * as purchaseOrder from "./schema/purchase_order";
+import * as saleOrder from "./schema/sale_order";
+import * as warehouse from "./schema/warehouse";
 
 export const schema = {
   ...account,
@@ -18,6 +23,11 @@ export const schema = {
   ...verificationToken,
 
   ...post,
+  ...customer,
+  ...product,
+  ...purchaseOrder,
+  ...saleOrder,
+  ...warehouse,
 };
 
 export { mySqlTable as tableCreator } from "./schema/_table";
