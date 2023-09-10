@@ -4,6 +4,9 @@ import { Inter } from "next/font/google";
 import "~/styles/globals.css";
 
 import { headers } from "next/headers";
+import { getServerSession } from "next-auth";
+
+import { authOptions } from "@acme/auth";
 
 import { Providers } from "./providers";
 
@@ -17,11 +20,17 @@ export const metadata: Metadata = {
   description: "Simple stock management tool.",
 };
 
-export default function Layout(props: { children: React.ReactNode }) {
+export default async function Layout(props: { children: React.ReactNode }) {
+  const session = await getServerSession(authOptions);
+
+  if (!session) throw new Error("No session");
+
   return (
     <html lang="en">
       <body className={["font-sans", fontSans.variable].join(" ")}>
-        <Providers headers={headers()}>{props.children}</Providers>
+        <Providers headers={headers()} session={session}>
+          {props.children}
+        </Providers>
       </body>
     </html>
   );

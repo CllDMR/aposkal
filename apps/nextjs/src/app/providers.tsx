@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ReactQueryStreamedHydration } from "@tanstack/react-query-next-experimental";
 import { loggerLink, unstable_httpBatchStreamLink } from "@trpc/client";
+import type { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import superjson from "superjson";
 
@@ -20,6 +21,7 @@ const getBaseUrl = () => {
 
 export function Providers(props: {
   children: React.ReactNode;
+  session: Session;
   headers?: Headers;
 }) {
   const [queryClient] = useState(
@@ -58,7 +60,9 @@ export function Providers(props: {
     <api.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
         <ReactQueryStreamedHydration transformer={superjson}>
-          <SessionProvider>{props.children}</SessionProvider>
+          <SessionProvider session={props.session}>
+            {props.children}
+          </SessionProvider>
         </ReactQueryStreamedHydration>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
