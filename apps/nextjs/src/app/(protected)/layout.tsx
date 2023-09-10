@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { getServerSession } from "next-auth";
 
 import { authOptions } from "@acme/auth";
@@ -6,11 +5,6 @@ import { authOptions } from "@acme/auth";
 import { Drawer } from "~/components/organisms/drawer/drawer";
 import { DrawerMobileWrapper } from "~/components/organisms/drawer/mobile-wrapper";
 import { Navbar } from "~/components/organisms/navbar/navbar";
-
-export const metadata: Metadata = {
-  title: "Stock Manager",
-  description: "Simple stock management tool.",
-};
 
 export default async function Layout(props: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions);
