@@ -5,12 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { postCreateInput } from "@acme/api/src/inputs/post";
+import { Button, Form, FormCheckbox, FormDate, FormInput } from "@acme/ui";
 
-import { Form } from "~/components/atoms/form/form";
-import { Button } from "~/components/molecules/button";
-import { FormCheckbox } from "~/components/molecules/form/form-checkbox";
-import { FormDate } from "~/components/molecules/form/form-date";
-import { FormInput } from "~/components/molecules/form/form-input";
 import type { RouterInputs } from "~/utils/api";
 import { api } from "~/utils/api";
 

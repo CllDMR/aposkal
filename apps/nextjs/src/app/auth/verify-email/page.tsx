@@ -1,6 +1,5 @@
 import { db, eq, schema } from "@acme/db";
-
-import { LinkButton } from "~/components/molecules/link-button";
+import { LinkButton } from "@acme/ui";
 
 export default async function VerifyEmailPage({
   searchParams,

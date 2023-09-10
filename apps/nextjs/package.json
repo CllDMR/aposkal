@@ -16,6 +16,7 @@
     "@acme/api": "^0.1.0",
     "@acme/auth": "^0.1.0",
     "@acme/db": "^0.1.0",
+    "@acme/ui": "^0.1.0",
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
     "@hookform/error-message": "^2.0.1",

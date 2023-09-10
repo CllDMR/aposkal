@@ -4,11 +4,10 @@ import type { FC } from "react";
 import { useMemo } from "react";
 import type { ColumnDef } from "@tanstack/react-table";
 
-import { Button } from "~/components/molecules/button";
-import { LinkButton } from "~/components/molecules/link-button";
+import { Button, LinkButton, Table } from "@acme/ui";
+
 import type { RouterOutputs } from "~/utils/api";
 import { api } from "~/utils/api";
-import { Table } from "../table";
 
 interface TableItem {
   id: string;

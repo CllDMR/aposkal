@@ -10,10 +10,10 @@ import type {
 } from "react-hook-form";
 import { useController } from "react-hook-form";
 
-import { DateInput } from "~/components/atoms/form/date";
-import { FormErrorMessage } from "~/components/atoms/form/form-error-message";
-import type { InputProps } from "~/components/atoms/form/input";
-import { Label } from "~/components/atoms/form/label";
+import { DateInput } from "~/atoms/form/date";
+import { FormErrorMessage } from "~/atoms/form/form-error-message";
+import type { InputProps } from "~/atoms/form/input";
+import { Label } from "~/atoms/form/label";
 
 export type FormDateProps<TFormValues extends FieldValues> = {
   name: Path<TFormValues>;
@@ -28,9 +28,8 @@ export const FormDate = <TFormValues extends FieldValues>({
   label,
   rules,
   errors,
-  className,
-} // ...props
-: FormDateProps<TFormValues>): JSX.Element => {
+  className, // ...props
+}: FormDateProps<TFormValues>): JSX.Element => {
   // const errorMessages = get(errors, name);
   // const hasError = !!(errors && errorMessages);
 

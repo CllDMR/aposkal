@@ -10,45 +10,47 @@ import type {
   UseFormRegister,
 } from "react-hook-form";
 
-import { FormErrorMessage } from "~/components/atoms/form/form-error-message";
-import type { InputProps } from "~/components/atoms/form/input";
-import { Input } from "~/components/atoms/form/input";
-import { Label } from "~/components/atoms/form/label";
+import { FormErrorMessage } from "~/atoms/form/form-error-message";
+import { Label } from "~/atoms/form/label";
+import type { SelectProps } from "~/atoms/form/select";
+import { Select } from "~/atoms/form/select";
 
-export type FormInputProps<TFormValues extends FieldValues> = {
-  label: string;
+export type FormSelectProps<TFormValues extends FieldValues> = {
   name: Path<TFormValues>;
   rules?: RegisterOptions;
   register?: UseFormRegister<TFormValues>;
   errors?: Partial<DeepMap<TFormValues, FieldError>>;
-} & Omit<InputProps, "name">;
+} & Omit<SelectProps, "name">;
 
-export const FormInput = <TFormValues extends FieldValues>({
+export const FormSelect = <TFormValues extends FieldValues>({
   name,
   label,
   register,
   rules,
   errors,
   className,
+  children,
   ...props
-}: FormInputProps<TFormValues>): JSX.Element => {
+}: FormSelectProps<TFormValues>): JSX.Element => {
   const errorMessages = get(errors, name);
   const hasError = !!(errors && errorMessages);
 
   return (
     <div className={clsx("", className)} aria-live="polite">
       <Label label={label} name={name} />
-      <Input
+      <Select
         name={name}
         label={label}
         aria-invalid={hasError}
         className={clsx({
-          "border-red-600 transition-colors hover:border-red-600 focus:border-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50":
+          "border-red-600 hover:border-red-600 focus:border-red-600 focus:ring-red-600 transition-colors focus:outline-none focus:ring-2 focus:ring-opacity-50":
             hasError,
         })}
         {...props}
         {...register?.(name, rules)}
-      />
+      >
+        {children}
+      </Select>
       <ErrorMessage
         errors={errors}
         name={name as any}

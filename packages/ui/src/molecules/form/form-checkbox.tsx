@@ -10,10 +10,10 @@ import type {
   UseFormRegister,
 } from "react-hook-form";
 
-import { Checkbox } from "~/components/atoms/form/checkbox";
-import { FormErrorMessage } from "~/components/atoms/form/form-error-message";
-import type { InputProps } from "~/components/atoms/form/input";
-import { Label } from "~/components/atoms/form/label";
+import { Checkbox } from "~/atoms/form/checkbox";
+import { FormErrorMessage } from "~/atoms/form/form-error-message";
+import type { InputProps } from "~/atoms/form/input";
+import { Label } from "~/atoms/form/label";
 
 export type FormCheckboxProps<TFormValues extends FieldValues> = {
   name: Path<TFormValues>;
@@ -43,7 +43,7 @@ export const FormCheckbox = <TFormValues extends FieldValues>({
           label={label}
           aria-invalid={hasError}
           className={clsx({
-            "border-red-600 transition-colors hover:border-red-600 focus:border-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50":
+            "border-red-600 hover:border-red-600 focus:border-red-600 focus:ring-red-600 transition-colors focus:outline-none focus:ring-2 focus:ring-opacity-50":
               hasError,
           })}
           {...props}

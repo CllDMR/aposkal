@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from "react";
 import type { NextPage } from "next";
 
-import { Main } from "~/components/atoms/Main";
+import { Main } from "@acme/ui";
 
 export const metadata = {
   title: "Post Create Page",
