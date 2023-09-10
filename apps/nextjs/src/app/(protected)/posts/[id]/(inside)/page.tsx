@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import { authOptions, getServerSession } from "@acme/auth";
 import { and, db, eq, schema } from "@acme/db";
 
-import { Main } from "~/components/atoms/Main";
 import { PostCard } from "~/components/organisms/post/PostCard";
 
 interface PageProps {
@@ -27,11 +26,5 @@ export default async function PostPage({ params: { id } }: PageProps) {
 
   if (!post) notFound();
 
-  return (
-    <Main>
-      <h1>Post {id} Page</h1>
-
-      <PostCard initPost={post} id={id} />
-    </Main>
-  );
+  return <PostCard initPost={post} id={id} />;
 }
