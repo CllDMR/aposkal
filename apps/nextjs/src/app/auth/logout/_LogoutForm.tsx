@@ -9,7 +9,7 @@ import { Button } from "~/components/molecules/button";
 export default function LogoutForm() {
   const {
     handleSubmit,
-    formState: { isLoading },
+    formState: { isSubmitting },
   } = useForm();
 
   const onSubmit = handleSubmit(async () => {
@@ -20,7 +20,7 @@ export default function LogoutForm() {
 
   return (
     <Form className="" onSubmit={onSubmit}>
-      <Button type="submit" disabled={isLoading}>
+      <Button type="submit" disabled={isSubmitting}>
         Logout
       </Button>
     </Form>

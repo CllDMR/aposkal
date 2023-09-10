@@ -27,7 +27,7 @@ export const PostCreateForm: FC = () => {
   const {
     handleSubmit,
     register,
-    formState: { errors, isLoading },
+    formState: { errors, isSubmitting },
     control,
   } = useForm<PostCreateFormFields>({
     resolver: zodResolver(postCreateInput),
@@ -75,7 +75,7 @@ export const PostCreateForm: FC = () => {
         errors={errors}
       />
 
-      <Button type="submit" disabled={isLoading}>
+      <Button type="submit" disabled={isSubmitting}>
         Create
       </Button>
     </Form>

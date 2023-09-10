@@ -29,7 +29,7 @@ export const PostEditForm: FC<{ post: Post }> = ({ post }) => {
   const {
     handleSubmit,
     register,
-    formState: { errors, isLoading },
+    formState: { errors, isSubmitting },
     control,
   } = useForm<PostEditFormFields>({
     resolver: zodResolver(postUpdateInput),
@@ -37,7 +37,7 @@ export const PostEditForm: FC<{ post: Post }> = ({ post }) => {
   });
 
   const onSubmit = handleSubmit(async (data) => {
-    await mutateAsync(data);
+    return await mutateAsync(data);
   });
 
   return (
@@ -78,7 +78,7 @@ export const PostEditForm: FC<{ post: Post }> = ({ post }) => {
         errors={errors}
       />
 
-      <Button type="submit" disabled={isLoading}>
+      <Button type="submit" disabled={isSubmitting}>
         Update
       </Button>
     </Form>
