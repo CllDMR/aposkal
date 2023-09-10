@@ -11,7 +11,6 @@ import { SelectTenant } from "./_SelectTenant";
 
 export default async function SelectTenantPage() {
   const session = await getServerSession(authOptions);
-
   if (!session) throw new Error("No Session");
 
   const usertenants = await db

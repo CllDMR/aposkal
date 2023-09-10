@@ -9,7 +9,6 @@ import { TenantAddUserForm } from "~/components/organisms/tenant-with-users/Tena
 
 export default async function SettingsTenantAddUserPage() {
   const session = await getServerSession(authOptions);
-
   if (!session) throw new Error("No Session");
 
   const tenantWithUsers = await db.query.tenant.findFirst({
