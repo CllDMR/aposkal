@@ -21,7 +21,7 @@ const getBaseUrl = () => {
 
 export function Providers(props: {
   children: React.ReactNode;
-  session: Session;
+  session?: Session | null | undefined;
   headers?: Headers;
 }) {
   const [queryClient] = useState(

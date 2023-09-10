@@ -22,7 +22,6 @@ export const metadata: Metadata = {
 
 export default async function Layout(props: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions);
-  if (!session) throw new Error("No session");
 
   return (
     <html lang="en">
