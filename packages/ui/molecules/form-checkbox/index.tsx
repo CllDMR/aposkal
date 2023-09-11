@@ -1,3 +1,5 @@
+"use client";
+
 import { ErrorMessage } from "@hookform/error-message";
 import clsx from "clsx";
 import get from "lodash.get";
@@ -10,10 +12,10 @@ import type {
   UseFormRegister,
 } from "react-hook-form";
 
-import { Checkbox } from "~/atoms/form/checkbox";
-import { FormErrorMessage } from "~/atoms/form/form-error-message";
-import type { InputProps } from "~/atoms/form/input";
-import { Label } from "~/atoms/form/label";
+import { Checkbox } from "../../atoms/checkbox";
+import { FormErrorMessage } from "../../atoms/form-error-message";
+import type { InputProps } from "../../atoms/input";
+import { Label } from "../../atoms/label";
 
 export type FormCheckboxProps<TFormValues extends FieldValues> = {
   name: Path<TFormValues>;

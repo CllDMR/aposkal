@@ -5,7 +5,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { postUpdateInput } from "@acme/api/src/inputs/post";
-import { Button, Form, FormCheckbox, FormDate, FormInput } from "@acme/ui";
+import { Form } from "@acme/ui/atoms";
+import {
+  Button,
+  FormCheckbox,
+  FormDateInput,
+  FormInput,
+} from "@acme/ui/molecules";
 
 import type { RouterInputs, RouterOutputs } from "~/utils/api";
 import { api } from "~/utils/api";
@@ -66,7 +72,7 @@ export const PostEditForm: FC<{ post: Post }> = ({ post }) => {
         register={register}
       />
 
-      <FormDate<PostEditFormFields>
+      <FormDateInput<PostEditFormFields>
         id="publishAt"
         label="Publish At"
         name="publishAt"

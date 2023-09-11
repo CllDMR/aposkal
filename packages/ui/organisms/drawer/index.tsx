@@ -11,7 +11,7 @@ import {
   WrenchScrewdriverIcon,
 } from "@heroicons/react/24/outline";
 
-import { useSidebarStore } from "~/store/sidebar";
+import { useSidebarStore } from "../../store/sidebar";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: HomeIcon },

@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 
 import { authOptions } from "@acme/auth";
-import { Drawer, DrawerMobileWrapper, Navbar } from "@acme/ui";
+import { Drawer, DrawerMobileWrapper, Navbar } from "@acme/ui/organisms";
 
 export default async function Layout(props: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions);

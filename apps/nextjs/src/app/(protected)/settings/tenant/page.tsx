@@ -3,7 +3,8 @@ import { getServerSession } from "next-auth";
 
 import { authOptions } from "@acme/auth";
 import { db } from "@acme/db";
-import { LinkButton, Main } from "@acme/ui";
+import { Main } from "@acme/ui/atoms";
+import { LinkButton } from "@acme/ui/molecules";
 
 import { TenantWithUsersTable } from "~/components/organisms/tenant-with-users/TenantWithUsersTable";
 

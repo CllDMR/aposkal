@@ -5,7 +5,7 @@ import { zfd } from "zod-form-data";
 
 import { authOptions } from "@acme/auth";
 import { db, desc, eq, inArray, schema } from "@acme/db";
-import { Button } from "@acme/ui";
+import { Button } from "@acme/ui/molecules";
 
 import { SelectTenant } from "./_SelectTenant";
 

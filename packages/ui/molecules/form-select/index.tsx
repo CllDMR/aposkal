@@ -1,3 +1,5 @@
+"use client";
+
 import { ErrorMessage } from "@hookform/error-message";
 import clsx from "clsx";
 import get from "lodash.get";
@@ -10,35 +12,35 @@ import type {
   UseFormRegister,
 } from "react-hook-form";
 
-import { FormErrorMessage } from "~/atoms/form/form-error-message";
-import type { InputProps } from "~/atoms/form/input";
-import { Input } from "~/atoms/form/input";
-import { Label } from "~/atoms/form/label";
+import { FormErrorMessage } from "../../atoms/form-error-message";
+import { Label } from "../../atoms/label";
+import type { SelectProps } from "../../atoms/select";
+import { Select } from "../../atoms/select";
 
-export type FormInputProps<TFormValues extends FieldValues> = {
-  label: string;
+export type FormSelectProps<TFormValues extends FieldValues> = {
   name: Path<TFormValues>;
   rules?: RegisterOptions;
   register?: UseFormRegister<TFormValues>;
   errors?: Partial<DeepMap<TFormValues, FieldError>>;
-} & Omit<InputProps, "name">;
+} & Omit<SelectProps, "name">;
 
-export const FormInput = <TFormValues extends FieldValues>({
+export const FormSelect = <TFormValues extends FieldValues>({
   name,
   label,
   register,
   rules,
   errors,
   className,
+  children,
   ...props
-}: FormInputProps<TFormValues>): JSX.Element => {
+}: FormSelectProps<TFormValues>): JSX.Element => {
   const errorMessages = get(errors, name);
   const hasError = !!(errors && errorMessages);
 
   return (
     <div className={clsx("", className)} aria-live="polite">
       <Label label={label} name={name} />
-      <Input
+      <Select
         name={name}
         label={label}
         aria-invalid={hasError}
@@ -48,7 +50,9 @@ export const FormInput = <TFormValues extends FieldValues>({
         })}
         {...props}
         {...register?.(name, rules)}
-      />
+      >
+        {children}
+      </Select>
       <ErrorMessage
         errors={errors}
         name={name as any}

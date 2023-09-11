@@ -6,7 +6,8 @@ import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Button, Form, FormInput } from "@acme/ui";
+import { Form } from "@acme/ui/atoms";
+import { Button, FormInput } from "@acme/ui/molecules";
 
 interface LoginFormFields {
   email: string;

@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 
-import { cn } from "~/utils/cn";
+import { cn } from "../../utils/cn";
 
 enum LinkButtonVariant {
   ERROR,

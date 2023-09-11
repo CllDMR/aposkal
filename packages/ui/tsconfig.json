@@ -1,11 +1,6 @@
 {
   "extends": "@acme/tsconfig/base.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "~/*": ["./src/*"]
-    },
-    "disableSizeLimit": true,
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
   },
   "include": ["."],

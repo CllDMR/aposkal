@@ -5,7 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { tenantAddUserInput } from "@acme/api/src/inputs/tenant";
-import { Button, Form, FormInput } from "@acme/ui";
+import { Form } from "@acme/ui/atoms";
+import { Button, FormInput } from "@acme/ui/molecules";
 
 import type { RouterInputs } from "~/utils/api";
 import { api } from "~/utils/api";

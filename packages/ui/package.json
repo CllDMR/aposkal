@@ -2,24 +2,26 @@
   "name": "@acme/ui",
   "version": "0.1.0",
   "private": true,
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "sideEffects": false,
-  "license": "MIT",
-  "files": [
-    "dist/**"
-  ],
   "exports": {
-    ".": "./dist/index.js"
+    "./atoms/*": {
+      "types": "./atoms/*/index.tsx",
+      "default": "./atoms/*/index.tsx"
+    },
+    "./molecules/*": {
+      "types": "./molecules/*/index.tsx",
+      "default": "./molecules/*/index.tsx"
+    },
+    "./organisms/*": {
+      "types": "./organisms/*/index.tsx",
+      "default": "./organisms/*/index.tsx"
+    }
   },
+  "license": "MIT",
   "scripts": {
-    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
-    "lint": "eslint src/",
+    "clean": "rm -rf .turbo node_modules",
+    "lint": "eslint .",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
-    "typecheck": "tsc --noEmit",
-    "build": "tsup index.tsx --external react",
-    "dev": "tsup index.tsx --watch --external react"
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@acme/api": "^0.1.0",

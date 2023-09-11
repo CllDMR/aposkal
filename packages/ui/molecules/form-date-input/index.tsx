@@ -1,3 +1,5 @@
+"use client";
+
 import { ErrorMessage } from "@hookform/error-message";
 import clsx from "clsx";
 import type {
@@ -10,26 +12,26 @@ import type {
 } from "react-hook-form";
 import { useController } from "react-hook-form";
 
-import { DateInput } from "~/atoms/form/date";
-import { FormErrorMessage } from "~/atoms/form/form-error-message";
-import type { InputProps } from "~/atoms/form/input";
-import { Label } from "~/atoms/form/label";
+import { DateInput } from "../../atoms/date-input";
+import { FormErrorMessage } from "../../atoms/form-error-message";
+import type { InputProps } from "../../atoms/input";
+import { Label } from "../../atoms/label";
 
-export type FormDateProps<TFormValues extends FieldValues> = {
+export type FormDateInputProps<TFormValues extends FieldValues> = {
   name: Path<TFormValues>;
   control: Control<TFormValues>;
   rules?: RegisterOptions;
   errors?: Partial<DeepMap<TFormValues, FieldError>>;
 } & Omit<InputProps, "name" | "type" | "onChange" | "value">;
 
-export const FormDate = <TFormValues extends FieldValues>({
+export const FormDateInput = <TFormValues extends FieldValues>({
   name,
   control,
   label,
   rules,
   errors,
   className, // ...props
-}: FormDateProps<TFormValues>): JSX.Element => {
+}: FormDateInputProps<TFormValues>): JSX.Element => {
   // const errorMessages = get(errors, name);
   // const hasError = !!(errors && errorMessages);
 

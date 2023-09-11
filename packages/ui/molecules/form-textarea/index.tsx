@@ -1,3 +1,5 @@
+"use client";
+
 import type { DetailedHTMLProps, TextareaHTMLAttributes } from "react";
 import { ErrorMessage } from "@hookform/error-message";
 import clsx from "clsx";
@@ -11,8 +13,8 @@ import type {
   UseFormRegister,
 } from "react-hook-form";
 
-import { FormErrorMessage } from "~/atoms/form/form-error-message";
-import { Label } from "~/atoms/form/label";
+import { FormErrorMessage } from "../../atoms/form-error-message";
+import { Label } from "../../atoms/label";
 
 export type FormTextareaProps<TFormValues extends FieldValues> = {
   id: string;

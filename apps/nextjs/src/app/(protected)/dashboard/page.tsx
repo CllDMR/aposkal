@@ -1,4 +1,4 @@
-import { Main } from "@acme/ui";
+import { Main } from "@acme/ui/atoms";
 
 export default function DashboardPage() {
   return (
