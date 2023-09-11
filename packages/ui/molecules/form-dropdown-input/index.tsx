@@ -10,7 +10,7 @@ interface Option {
   value: string;
 }
 
-export interface FormDropdownInputProps<TFormValues extends FieldValues> {
+export interface FormDropdownInputProps<_TFormValues extends FieldValues> {
   // label: string;
   // name: Path<TFormValues>;
   // rules?: RegisterOptions;
@@ -36,16 +36,16 @@ export const FormDropdownInput = <TFormValues extends FieldValues>({
   onChange,
   queryText,
   onChangeQueryText,
-  // className,
-  ...props
-}: FormDropdownInputProps<TFormValues>): JSX.Element => {
+} // className,
+// ...props
+: FormDropdownInputProps<TFormValues>): JSX.Element => {
   // const errorMessages = get(errors, name);
   // const hasError = !!(errors && errorMessages);
 
   return (
     <Combobox value={option} onChange={onChange} nullable>
       <Combobox.Input
-        className="w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+        className="focus:ring-indigo-600 w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 sm:text-sm sm:leading-6"
         onChange={(event) => onChangeQueryText(event.target.value)}
         displayValue={(option: Option) => option?.value}
       />

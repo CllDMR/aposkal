@@ -1,19 +1,23 @@
+"use client";
+
+import type { FieldValuesFromFieldErrors } from "@hookform/error-message";
 import { ErrorMessage } from "@hookform/error-message";
 import clsx from "clsx";
 import get from "lodash.get";
 import type {
   DeepMap,
   FieldError,
+  FieldName,
   FieldValues,
   Path,
   RegisterOptions,
   UseFormRegister,
 } from "react-hook-form";
 
-import { FormErrorMessage } from "~/components/atoms/form/form-error-message";
-import { Label } from "~/components/atoms/form/label";
-import type { SelectProps } from "~/components/atoms/form/select";
-import { Select } from "~/components/atoms/form/select";
+import { FormErrorMessage } from "../../atoms/form-error-message";
+import { Label } from "../../atoms/label";
+import type { SelectProps } from "../../atoms/select";
+import { Select } from "../../atoms/select";
 
 export type FormSelectProps<TFormValues extends FieldValues> = {
   name: Path<TFormValues>;
@@ -43,7 +47,7 @@ export const FormSelect = <TFormValues extends FieldValues>({
         label={label}
         aria-invalid={hasError}
         className={clsx({
-          "border-red-600 transition-colors hover:border-red-600 focus:border-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50":
+          "border-red-600 hover:border-red-600 focus:border-red-600 focus:ring-red-600 transition-colors focus:outline-none focus:ring-2 focus:ring-opacity-50":
             hasError,
         })}
         {...props}
@@ -53,7 +57,13 @@ export const FormSelect = <TFormValues extends FieldValues>({
       </Select>
       <ErrorMessage
         errors={errors}
-        name={name as any}
+        name={
+          name as unknown as FieldName<
+            FieldValuesFromFieldErrors<
+              Partial<DeepMap<TFormValues, FieldError>>
+            >
+          >
+        }
         render={({ message }) => (
           <FormErrorMessage className="mt-1">{message}</FormErrorMessage>
         )}

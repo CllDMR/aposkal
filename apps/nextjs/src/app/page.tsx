@@ -1,6 +1,5 @@
 import { authOptions, getServerSession } from "@acme/auth";
-
-import { LinkButton } from "~/components/molecules/link-button";
+import { LinkButton } from "@acme/ui/molecules";
 
 // export const runtime = "edge";
 

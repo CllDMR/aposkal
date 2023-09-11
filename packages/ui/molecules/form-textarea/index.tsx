@@ -1,18 +1,22 @@
+"use client";
+
 import type { DetailedHTMLProps, TextareaHTMLAttributes } from "react";
+import type { FieldValuesFromFieldErrors } from "@hookform/error-message";
 import { ErrorMessage } from "@hookform/error-message";
 import clsx from "clsx";
 import get from "lodash.get";
 import type {
   DeepMap,
   FieldError,
+  FieldName,
   FieldValues,
   Path,
   RegisterOptions,
   UseFormRegister,
 } from "react-hook-form";
 
-import { FormErrorMessage } from "~/components/atoms/form/form-error-message";
-import { Label } from "~/components/atoms/form/label";
+import { FormErrorMessage } from "../../atoms/form-error-message";
+import { Label } from "../../atoms/label";
 
 export type FormTextareaProps<TFormValues extends FieldValues> = {
   id: string;
@@ -49,9 +53,9 @@ export const FormTextarea = <TFormValues extends FieldValues>({
         aria-label={label}
         aria-invalid={!!(errors && errorMessages)}
         className={clsx(
-          "relative block w-full resize-none appearance-none overflow-auto rounded border border-gray-300 bg-gray-50 p-3 text-base leading-none text-gray-700 placeholder-gray-500 transition-colors ease-in-out hover:border-blue-400 focus:border-blue-400 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-30",
+          "hover:border-blue-400 focus:border-blue-400 focus:ring-blue-400 relative block w-full resize-none appearance-none overflow-auto rounded border border-gray-300 bg-gray-50 p-3 text-base leading-none text-gray-700 placeholder-gray-500 transition-colors ease-in-out focus:outline-none focus:ring-4 focus:ring-opacity-30",
           hasError
-            ? "border-red-600 hover:border-red-600 focus:border-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50"
+            ? "border-red-600 hover:border-red-600 focus:border-red-600 focus:ring-red-600 focus:ring-opacity-50"
             : "",
         )}
         {...props}
@@ -59,7 +63,13 @@ export const FormTextarea = <TFormValues extends FieldValues>({
       />
       <ErrorMessage
         errors={errors}
-        name={name as any}
+        name={
+          name as FieldName<
+            FieldValuesFromFieldErrors<
+              Partial<DeepMap<TFormValues, FieldError>>
+            >
+          >
+        }
         render={({ message }) => <FormErrorMessage>{message}</FormErrorMessage>}
       />
     </div>

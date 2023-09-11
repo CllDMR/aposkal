@@ -3,8 +3,8 @@ import { getServerSession } from "next-auth";
 
 import { authOptions } from "@acme/auth";
 import { db } from "@acme/db";
+import { Main } from "@acme/ui/atoms";
 
-import { Main } from "~/components/atoms/Main";
 import { TenantAddUserForm } from "~/components/organisms/tenant-with-users/TenantAddUserForm";
 
 export default async function SettingsTenantAddUserPage() {

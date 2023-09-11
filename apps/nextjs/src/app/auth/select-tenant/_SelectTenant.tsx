@@ -4,8 +4,8 @@ import type { FC } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 
-import { Form } from "~/components/atoms/form/form";
-import { Button } from "~/components/molecules/button";
+import { Form } from "@acme/ui/atoms";
+import { Button } from "@acme/ui/molecules";
 
 interface SelectTenantProps {
   id: string;

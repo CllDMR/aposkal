@@ -5,8 +5,8 @@ import { zfd } from "zod-form-data";
 
 import { authOptions } from "@acme/auth";
 import { db, desc, eq, inArray, schema } from "@acme/db";
+import { Button } from "@acme/ui/molecules";
 
-import { Button } from "~/components/molecules/button";
 import { SelectTenant } from "./_SelectTenant";
 
 export default async function SelectTenantPage() {

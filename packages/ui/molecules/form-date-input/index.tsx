@@ -1,36 +1,39 @@
+"use client";
+
+import type { FieldValuesFromFieldErrors } from "@hookform/error-message";
 import { ErrorMessage } from "@hookform/error-message";
 import clsx from "clsx";
 import type {
   Control,
   DeepMap,
   FieldError,
+  FieldName,
   FieldValues,
   Path,
   RegisterOptions,
 } from "react-hook-form";
 import { useController } from "react-hook-form";
 
-import { DateInput } from "~/components/atoms/form/date";
-import { FormErrorMessage } from "~/components/atoms/form/form-error-message";
-import type { InputProps } from "~/components/atoms/form/input";
-import { Label } from "~/components/atoms/form/label";
+import { DateInput } from "../../atoms/date-input";
+import { FormErrorMessage } from "../../atoms/form-error-message";
+import type { InputProps } from "../../atoms/input";
+import { Label } from "../../atoms/label";
 
-export type FormDateProps<TFormValues extends FieldValues> = {
+export type FormDateInputProps<TFormValues extends FieldValues> = {
   name: Path<TFormValues>;
   control: Control<TFormValues>;
   rules?: RegisterOptions;
   errors?: Partial<DeepMap<TFormValues, FieldError>>;
 } & Omit<InputProps, "name" | "type" | "onChange" | "value">;
 
-export const FormDate = <TFormValues extends FieldValues>({
+export const FormDateInput = <TFormValues extends FieldValues>({
   name,
   control,
   label,
   rules,
   errors,
-  className,
-} // ...props
-: FormDateProps<TFormValues>): JSX.Element => {
+  className, // ...props
+}: FormDateInputProps<TFormValues>): JSX.Element => {
   // const errorMessages = get(errors, name);
   // const hasError = !!(errors && errorMessages);
 
@@ -57,7 +60,13 @@ export const FormDate = <TFormValues extends FieldValues>({
       </div>
       <ErrorMessage
         errors={errors}
-        name={name as any}
+        name={
+          name as unknown as FieldName<
+            FieldValuesFromFieldErrors<
+              Partial<DeepMap<TFormValues, FieldError>>
+            >
+          >
+        }
         render={({ message }) => (
           <FormErrorMessage className="mt-1">{message}</FormErrorMessage>
         )}

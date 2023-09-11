@@ -1,13 +1,13 @@
 import type { RankingInfo } from "@tanstack/match-sorter-utils";
-import { rankItem, rankings } from "@tanstack/match-sorter-utils";
+import { rankings, rankItem } from "@tanstack/match-sorter-utils";
 import type { Row } from "@tanstack/react-table";
 
 // most of table work acceptably well with this function
-const fuzzy = <TData extends Record<string, any> = {}>(
+const fuzzy = <TData extends object = object>(
   row: Row<TData>,
   columnId: string,
   filterValue: string | number,
-  addMeta: (item: RankingInfo) => void
+  addMeta: (item: RankingInfo) => void,
 ) => {
   const itemRank = rankItem(row.getValue(columnId), filterValue as string, {
     threshold: rankings.MATCHES,
@@ -18,12 +18,14 @@ const fuzzy = <TData extends Record<string, any> = {}>(
 
 //  if the value is falsy, then the columnFilters state entry for that filter will removed from that array.
 // https://github.com/KevinVandy/material-react-table/discussions/223#discussioncomment-4249221
-fuzzy.autoRemove = (val: any) => !val;
+fuzzy.autoRemove = (val: unknown) => !val;
 
-const contains = <TData extends Record<string, any> = {}>(
+const contains = <
+  TData extends Record<string, unknown> = Record<string, unknown>,
+>(
   row: Row<TData>,
   id: string,
-  filterValue: string | number
+  filterValue: string | number,
 ) =>
   row
     .getValue<string | number>(id)
@@ -32,12 +34,14 @@ const contains = <TData extends Record<string, any> = {}>(
     .trim()
     .includes(filterValue.toString().toLowerCase().trim());
 
-contains.autoRemove = (val: any) => !val;
+contains.autoRemove = (val: unknown) => !val;
 
-const startsWith = <TData extends Record<string, any> = {}>(
+const startsWith = <
+  TData extends Record<string, unknown> = Record<string, unknown>,
+>(
   row: Row<TData>,
   id: string,
-  filterValue: string | number
+  filterValue: string | number,
 ) =>
   row
     .getValue<string | number>(id)
@@ -46,7 +50,7 @@ const startsWith = <TData extends Record<string, any> = {}>(
     .trim()
     .startsWith(filterValue.toString().toLowerCase().trim());
 
-startsWith.autoRemove = (val: any) => !val;
+startsWith.autoRemove = (val: unknown) => !val;
 
 export const filterFns = {
   fuzzy,

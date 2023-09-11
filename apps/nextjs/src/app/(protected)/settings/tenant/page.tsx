@@ -3,9 +3,9 @@ import { getServerSession } from "next-auth";
 
 import { authOptions } from "@acme/auth";
 import { db } from "@acme/db";
+import { Main } from "@acme/ui/atoms";
+import { LinkButton } from "@acme/ui/molecules";
 
-import { Main } from "~/components/atoms/Main";
-import { LinkButton } from "~/components/molecules/link-button";
 import { TenantWithUsersTable } from "~/components/organisms/tenant-with-users/TenantWithUsersTable";
 
 export default async function SettingsTenantPage() {

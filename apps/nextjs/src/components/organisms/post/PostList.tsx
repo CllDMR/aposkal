@@ -2,8 +2,8 @@
 
 import type { FC } from "react";
 
-import { Button } from "~/components/molecules/button";
-import { LinkButton } from "~/components/molecules/link-button";
+import { Button, LinkButton } from "@acme/ui/molecules";
+
 import type { RouterOutputs } from "~/utils/api";
 import { api } from "~/utils/api";
 

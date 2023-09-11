@@ -4,11 +4,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Link, Stack } from "expo-router";
 import { FlashList } from "@shopify/flash-list";
 
-import { api } from "~/utils/api";
 import type { RouterOutputs } from "~/utils/api";
+import { api } from "~/utils/api";
 
 function PostCard(props: {
-  post: RouterOutputs["post"]["all"][number];
+  post: RouterOutputs["post"]["list"][number];
   onDelete: () => void;
 }) {
   return (
@@ -22,7 +22,7 @@ function PostCard(props: {
           }}
         >
           <TouchableOpacity>
-            <Text className="text-xl font-semibold text-pink-400">
+            <Text className="text-pink-400 text-xl font-semibold">
               {props.post.title}
             </Text>
             <Text className="mt-2 text-white">{props.post.content}</Text>
@@ -30,7 +30,7 @@ function PostCard(props: {
         </Link>
       </View>
       <TouchableOpacity onPress={props.onDelete}>
-        <Text className="font-bold uppercase text-pink-400">Delete</Text>
+        <Text className="text-pink-400 font-bold uppercase">Delete</Text>
       </TouchableOpacity>
     </View>
   );
@@ -46,7 +46,7 @@ function CreatePost() {
     async onSuccess() {
       setTitle("");
       setContent("");
-      await utils.post.all.invalidate();
+      await utils.post.list.invalidate();
     },
   });
 
@@ -60,7 +60,7 @@ function CreatePost() {
         placeholder="Title"
       />
       {error?.data?.zodError?.fieldErrors.title && (
-        <Text className="mb-2 text-red-500">
+        <Text className="text-red-500 mb-2">
           {error.data.zodError.fieldErrors.title}
         </Text>
       )}
@@ -72,16 +72,18 @@ function CreatePost() {
         placeholder="Content"
       />
       {error?.data?.zodError?.fieldErrors.content && (
-        <Text className="mb-2 text-red-500">
+        <Text className="text-red-500 mb-2">
           {error.data.zodError.fieldErrors.content}
         </Text>
       )}
       <TouchableOpacity
-        className="rounded bg-pink-400 p-2"
+        className="bg-pink-400 rounded p-2"
         onPress={() => {
           mutate({
             title,
             content,
+            publishAt: new Date(),
+            isDraft: false,
           });
         }}
       >
@@ -94,10 +96,10 @@ function CreatePost() {
 const Index = () => {
   const utils = api.useContext();
 
-  const postQuery = api.post.all.useQuery();
+  const postQuery = api.post.list.useQuery({});
 
   const deletePostMutation = api.post.delete.useMutation({
-    onSettled: () => utils.post.all.invalidate(),
+    onSettled: () => utils.post.list.invalidate(),
   });
 
   return (
@@ -110,7 +112,7 @@ const Index = () => {
         </Text>
 
         <Button
-          onPress={() => void utils.post.all.invalidate()}
+          onPress={() => void utils.post.list.invalidate()}
           title="Refresh posts"
           color={"#f472b6"}
         />

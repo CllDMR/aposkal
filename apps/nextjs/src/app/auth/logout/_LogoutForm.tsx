@@ -3,8 +3,8 @@
 import { signOut } from "next-auth/react";
 import { useForm } from "react-hook-form";
 
-import { Form } from "~/components/atoms/form/form";
-import { Button } from "~/components/molecules/button";
+import { Form } from "@acme/ui/atoms";
+import { Button } from "@acme/ui/molecules";
 
 export default function LogoutForm() {
   const {
