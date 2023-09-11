@@ -1,11 +1,13 @@
 "use client";
 
+import type { FieldValuesFromFieldErrors } from "@hookform/error-message";
 import { ErrorMessage } from "@hookform/error-message";
 import clsx from "clsx";
 import get from "lodash.get";
 import type {
   DeepMap,
   FieldError,
+  FieldName,
   FieldValues,
   Path,
   RegisterOptions,
@@ -55,7 +57,13 @@ export const FormSelect = <TFormValues extends FieldValues>({
       </Select>
       <ErrorMessage
         errors={errors}
-        name={name as any}
+        name={
+          name as unknown as FieldName<
+            FieldValuesFromFieldErrors<
+              Partial<DeepMap<TFormValues, FieldError>>
+            >
+          >
+        }
         render={({ message }) => (
           <FormErrorMessage className="mt-1">{message}</FormErrorMessage>
         )}

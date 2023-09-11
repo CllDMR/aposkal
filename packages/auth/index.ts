@@ -1,5 +1,5 @@
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
-import type { NextAuthOptions } from "next-auth";
+import type { NextAuthOptions, Session } from "next-auth";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
@@ -192,10 +192,8 @@ export const authOptions: NextAuthOptions = {
           break;
         case "update":
           if (session) {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-            token.ti = session.user.ti;
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-            token.tn = session.user.tn;
+            token.ti = (session as Session)?.user.ti;
+            token.tn = (session as Session)?.user.tn;
           }
           break;
 
@@ -215,4 +213,5 @@ export const authOptions: NextAuthOptions = {
   },
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 export const handler = NextAuth(authOptions);
