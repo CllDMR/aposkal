@@ -7,7 +7,7 @@ import { authOptions } from "@acme/auth";
 import { db, desc, eq, inArray, schema } from "@acme/db";
 import { Button } from "@acme/ui/molecules";
 
-import { SelectTenant } from "./_SelectTenant";
+import { SelectTenant } from "~/components/organisms/auth/SelectTenant";
 
 export default async function SelectTenantPage() {
   const session = await getServerSession(authOptions);
