@@ -6,8 +6,8 @@ const NotFound: FC = () => {
     <div>
       <h2>Not Found</h2>
       <p>Could not find requested resource</p>
-      <Link className="btn btn-secondary" href="/posts/create">
-        Create new Post
+      <Link className="btn btn-secondary" href="/products/create">
+        Create new Product
       </Link>
     </div>
   );

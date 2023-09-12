@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@acme/auth";
 import { and, db, eq, schema } from "@acme/db";
 
-import { PostEditForm } from "~/components/organisms/post/PostEditForm";
+import { ProductEditForm } from "~/components/organisms/product/ProductEditForm";
 
 interface PageProps {
   params: {
@@ -12,20 +12,23 @@ interface PageProps {
   };
 }
 
-export default async function PostEditPage({ params: { id } }: PageProps) {
+export default async function ProductEditPage({ params: { id } }: PageProps) {
   const session = await getServerSession(authOptions);
   if (!session) throw new Error("No Session");
 
-  const post = await db
+  const product = await db
     .select()
-    .from(schema.post)
+    .from(schema.product)
     .where(
-      and(eq(schema.post.tenantId, session.user.ti), eq(schema.post.id, id)),
+      and(
+        eq(schema.product.tenantId, session.user.ti),
+        eq(schema.product.id, id),
+      ),
     )
     .limit(1)
     .then((a) => a[0]);
 
-  if (!post) notFound();
+  if (!product) notFound();
 
-  return <PostEditForm post={post} />;
+  return <ProductEditForm product={product} />;
 }

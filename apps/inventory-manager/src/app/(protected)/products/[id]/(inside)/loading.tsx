@@ -1,5 +1,5 @@
 const Page = () => {
-  return <div>Loading Post...</div>;
+  return <div>Loading Product...</div>;
 };
 
 export default Page;
