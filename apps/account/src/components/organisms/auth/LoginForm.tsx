@@ -20,7 +20,7 @@ const loginInput = z.object({
 });
 
 export default function LoginForm() {
-  const searchParamsCallbackUrl = useSearchParams().get("callbackUrl");
+  const searchParamsCallbackUrls = useSearchParams().getAll("callbackUrl");
 
   const {
     handleSubmit,
@@ -31,13 +31,17 @@ export default function LoginForm() {
   });
 
   const onSubmit = handleSubmit(async (data) => {
+    const params = new URLSearchParams();
+    const combinedCallbackUrls = searchParamsCallbackUrls.reduce(
+      (p, c) => p + c,
+    );
+
+    // params.append("callbackUrl", encodeURIComponent(s));
+    params.append("callbackUrl", combinedCallbackUrls);
+
     await signIn("credentials-login", {
       ...data,
-      callbackUrl: `/auth/select-tenant${
-        searchParamsCallbackUrl
-          ? "?callbackUrl=" + encodeURIComponent(searchParamsCallbackUrl)
-          : ""
-      }`,
+      callbackUrl: `/auth/select-tenant?${params.toString()}`,
     });
   });
 

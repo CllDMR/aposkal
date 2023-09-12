@@ -9,15 +9,8 @@ import type { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import superjson from "superjson";
 
-import { env } from "~/env.mjs";
 import { api } from "~/utils/api";
-
-const getBaseUrl = () => {
-  if (typeof window !== "undefined") return ""; // browser should use relative url
-  if (env.VERCEL_URL) return env.VERCEL_URL; // SSR should use vercel url
-
-  return `http://localhost:${env.PORT}`; // dev SSR should use localhost
-};
+import { getBaseUrl } from "~/utils/get-base-url";
 
 export function Providers(props: {
   children: React.ReactNode;

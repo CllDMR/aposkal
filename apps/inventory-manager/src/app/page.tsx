@@ -1,9 +1,13 @@
 import { authOptions, getServerSession } from "@acme/auth";
 import { LinkButton } from "@acme/ui/molecules";
 
+import { getBaseAuthUrl, getBaseUrl } from "~/utils/get-base-url";
+
 // export const runtime = "edge";
 
 export default async function HomePage() {
+  const baseUrl = getBaseUrl();
+  const baseAuthUrl = getBaseAuthUrl();
   const session = await getServerSession(authOptions);
 
   return (
@@ -15,12 +19,30 @@ export default async function HomePage() {
             {session.user.ti} - {session.user.tn} - {session.user.id} -{" "}
             {session.user.name}
           </p>
-          <LinkButton href="/auth/logout">Logout</LinkButton>
+          <LinkButton
+            href={`${baseAuthUrl}/auth/logout?callbackUrl=${encodeURIComponent(
+              baseUrl,
+            )}`}
+          >
+            Logout
+          </LinkButton>
         </div>
       ) : (
         <>
-          <LinkButton href="/auth/login">Login</LinkButton>
-          <LinkButton href="/auth/register">Register</LinkButton>
+          <LinkButton
+            href={`${baseAuthUrl}/auth/login?callbackUrl=${encodeURIComponent(
+              baseUrl,
+            )}`}
+          >
+            Login
+          </LinkButton>
+          <LinkButton
+            href={`${baseAuthUrl}/auth/register?callbackUrl=${encodeURIComponent(
+              baseUrl,
+            )}`}
+          >
+            Register
+          </LinkButton>
         </>
       )}
     </main>

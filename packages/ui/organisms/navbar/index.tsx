@@ -4,6 +4,7 @@ import type { FC, PropsWithChildren } from "react";
 import { Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -19,9 +20,9 @@ type NavbarProps = PropsWithChildren & {
 };
 
 const userNavigation = [
-  { name: "Select Tenant", href: "/auth/select-tenant" },
-  { name: "Your profile", href: "/profile" },
-  { name: "Logout", href: "/auth/logout" },
+  { name: "Select Tenant", href: "http://localhost:3000/auth/select-tenant" },
+  { name: "Your profile", href: "http://localhost:3000/profile" },
+  { name: "Logout", href: "http://localhost:3000/auth/logout" },
 ];
 
 function classNames(...classes: string[]) {
@@ -29,6 +30,11 @@ function classNames(...classes: string[]) {
 }
 
 export const Navbar: FC<NavbarProps> = ({ children, session }) => {
+  let basePath = "";
+  if (typeof window !== "undefined") basePath = window?.location.origin;
+
+  const pathName = usePathname();
+
   const { setOpen } = useSidebarStore();
 
   return (
@@ -140,7 +146,11 @@ export const Navbar: FC<NavbarProps> = ({ children, session }) => {
                   <Menu.Item key={item.name}>
                     {({ active }) => (
                       <Link
-                        href={item.href}
+                        href={
+                          item.href +
+                          "?callbackUrl=" +
+                          encodeURIComponent(basePath + pathName)
+                        }
                         className={classNames(
                           active ? "bg-gray-50" : "",
                           "block px-3 py-1 text-sm leading-6 text-gray-900",
