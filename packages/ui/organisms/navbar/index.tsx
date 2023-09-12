@@ -17,10 +17,10 @@ import { useSidebarStore } from "../../store/sidebar";
 
 type NavbarProps = PropsWithChildren & {
   session: Session;
-  navigationPaths: NavigationPath[];
+  navigationPaths: NavbarNavigationPath[];
 };
 
-export interface NavigationPath {
+export interface NavbarNavigationPath {
   name: string;
   href: string;
 }
