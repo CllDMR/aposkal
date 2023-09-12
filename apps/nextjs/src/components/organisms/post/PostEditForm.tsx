@@ -19,8 +19,13 @@ import { api } from "~/utils/api";
 type PostEditFormFields = RouterInputs["post"]["update"];
 type Post = NonNullable<RouterOutputs["post"]["get"]>;
 
-export const PostEditForm: FC<{ post: Post }> = ({ post }) => {
+export const PostEditForm: FC<{ post: Post }> = ({ post: initialPost }) => {
   const context = api.useContext();
+  const [post] = api.post.get.useSuspenseQuery(
+    { id: initialPost.id },
+    { initialData: initialPost },
+  );
+
   const { mutateAsync } = api.post.update.useMutation({
     async onSettled() {
       await context.post.list.invalidate();
