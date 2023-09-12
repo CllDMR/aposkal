@@ -3,7 +3,6 @@ import { withAuth } from "next-auth/middleware";
 import { getBaseAuthUrl, getBaseUrl } from "./utils/get-base-url";
 
 const baseUrl = getBaseUrl();
-
 const encodedBaseUrlQuery = `?callbackUrl=${encodeURIComponent(baseUrl)}`;
 const baseAuthUrl = getBaseAuthUrl();
 

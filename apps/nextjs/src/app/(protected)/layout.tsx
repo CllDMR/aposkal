@@ -2,6 +2,19 @@ import { getServerSession } from "next-auth";
 
 import { authOptions } from "@acme/auth";
 import { Drawer, DrawerMobileWrapper, Navbar } from "@acme/ui/organisms";
+import type { NavigationPath } from "@acme/ui/organisms/navbar";
+
+import { getBaseAuthUrl } from "~/utils/get-base-url";
+
+const baseAuthUrl = getBaseAuthUrl();
+
+const toAuthURL = (path: string) => `${baseAuthUrl}${path}`;
+
+const navigationPaths: NavigationPath[] = [
+  { name: "Select Tenant", href: toAuthURL("/auth/select-tenant") },
+  { name: "Your profile", href: toAuthURL("/profile") },
+  { name: "Logout", href: toAuthURL("/auth/logout") },
+];
 
 export default async function Layout(props: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions);
@@ -9,7 +22,7 @@ export default async function Layout(props: { children: React.ReactNode }) {
 
   return (
     <>
-      <Navbar session={session} />
+      <Navbar session={session} navigationPaths={navigationPaths} />
       <div>
         <DrawerMobileWrapper />
 
