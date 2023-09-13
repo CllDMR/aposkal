@@ -16,19 +16,28 @@ import { useSidebarStore } from "../../store/sidebar";
 
 type NavbarProps = PropsWithChildren & {
   session: Session;
+  navigationPaths: NavbarNavigationPath[];
 };
 
-const userNavigation = [
-  { name: "Select Tenant", href: "/auth/select-tenant" },
-  { name: "Your profile", href: "/profile" },
-  { name: "Logout", href: "/auth/logout" },
-];
+export interface NavbarNavigationPath {
+  name: string;
+  href: string;
+}
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export const Navbar: FC<NavbarProps> = ({ children, session }) => {
+export const Navbar: FC<NavbarProps> = ({
+  children,
+  session,
+  navigationPaths,
+}) => {
+  // let basePath = "";
+  // if (typeof window !== "undefined") basePath = window?.location.origin;
+
+  // const pathName = usePathname();
+
   const { setOpen } = useSidebarStore();
 
   return (
@@ -136,11 +145,16 @@ export const Navbar: FC<NavbarProps> = ({ children, session }) => {
               leaveTo="transform opacity-0 scale-95"
             >
               <Menu.Items className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
-                {userNavigation.map((item) => (
+                {navigationPaths.map((item) => (
                   <Menu.Item key={item.name}>
                     {({ active }) => (
                       <Link
                         href={item.href}
+                        // href={
+                        //   item.href +
+                        //   "?callbackUrl=" +
+                        //   encodeURIComponent(basePath + pathName)
+                        // }
                         className={classNames(
                           active ? "bg-gray-50" : "",
                           "block px-3 py-1 text-sm leading-6 text-gray-900",

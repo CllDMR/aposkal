@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  @apply focus-visible:outline-none;
+}
+
+select {
+  @apply bg-transparent;
+}

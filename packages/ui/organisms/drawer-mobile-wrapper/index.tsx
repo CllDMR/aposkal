@@ -5,9 +5,14 @@ import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
 import { useSidebarStore } from "../../store/sidebar";
+import type { DrawerNavigationPath } from "../drawer";
 import { Drawer } from "../drawer";
 
-export function DrawerMobileWrapper() {
+export function DrawerMobileWrapper({
+  navigationPaths,
+}: {
+  navigationPaths: DrawerNavigationPath[];
+}) {
   const { open, setOpen } = useSidebarStore();
 
   return (
@@ -60,7 +65,7 @@ export function DrawerMobileWrapper() {
                 </div>
               </Transition.Child>
               {/* Sidebar component, swap this element with another sidebar if you like */}
-              <Drawer />
+              <Drawer navigationPaths={navigationPaths} />
             </Dialog.Panel>
           </Transition.Child>
         </div>

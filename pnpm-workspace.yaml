@@ -1,4 +1,5 @@
 packages:
   - apps/*
+  - starter-templates/*
   - packages/*
   - tooling/*

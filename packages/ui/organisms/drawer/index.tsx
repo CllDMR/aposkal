@@ -1,42 +1,30 @@
 "use client";
 
+import type { ReactElement } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Disclosure } from "@headlessui/react";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
-import {
-  ArrowTrendingUpIcon,
-  HomeIcon,
-  WrenchScrewdriverIcon,
-} from "@heroicons/react/24/outline";
 
 import { useSidebarStore } from "../../store/sidebar";
 
-const navigation = [
-  { name: "Dashboard", href: "/dashboard", icon: HomeIcon },
-  {
-    name: "Posts",
-    href: "/posts",
-    icon: ArrowTrendingUpIcon,
-    children: [
-      { name: "All", href: "/posts" },
-      { name: "Create New", href: "/posts/create" },
-    ],
-  },
-  {
-    name: "Settings",
-    href: "/settings",
-    icon: WrenchScrewdriverIcon,
-    children: [{ name: "Tenant", href: "/settings/tenant" }],
-  },
-];
+export interface DrawerNavigationPath {
+  name: string;
+  href: string;
+  icon: ReactElement;
+  children?: { name: string; href: string }[];
+}
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export function Drawer() {
+export function Drawer({
+  navigationPaths,
+}: {
+  navigationPaths: DrawerNavigationPath[];
+}) {
   const setOpen = useSidebarStore((store) => store.setOpen);
   const pathname = usePathname();
 
@@ -53,7 +41,7 @@ export function Drawer() {
       </div>
       <nav className="flex flex-1 flex-col">
         <ul className="space-y-1">
-          {navigation.map((item) => (
+          {navigationPaths.map((item) => (
             <li key={item.name}>
               {!item.children ? (
                 <Link
@@ -62,13 +50,11 @@ export function Drawer() {
                     pathname.includes(item.href)
                       ? "bg-gray-50"
                       : "hover:bg-gray-50",
-                    "group  flex   p-2 text-sm font-medium leading-6 text-gray-700",
+                    "group  flex gap-x-3 p-2 text-sm font-medium leading-6 text-gray-700",
                   )}
                 >
-                  <item.icon
-                    className="ml-2 mr-3 h-5 w-5 shrink-0 text-gray-400"
-                    aria-hidden="true"
-                  />
+                  {item.icon}
+
                   {item.name}
                 </Link>
               ) : (
@@ -83,10 +69,8 @@ export function Drawer() {
                           "flex w-full items-center gap-x-3  p-2 text-left text-sm font-medium leading-6 text-gray-700",
                         )}
                       >
-                        <item.icon
-                          className="ml-2 h-6 w-6 shrink-0 text-gray-400"
-                          aria-hidden="true"
-                        />
+                        {item.icon}
+
                         {item.name}
                         <ChevronRightIcon
                           className={classNames(
@@ -97,7 +81,7 @@ export function Drawer() {
                         />
                       </Disclosure.Button>
                       <Disclosure.Panel as="ul" className="mt-1">
-                        {item.children.map((subItem) => (
+                        {item.children?.map((subItem) => (
                           <li key={subItem.name}>
                             {/* 44px */}
                             <Disclosure.Button
