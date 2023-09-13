@@ -4,7 +4,6 @@ import type { FC, PropsWithChildren } from "react";
 import { Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { Menu, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -34,10 +33,10 @@ export const Navbar: FC<NavbarProps> = ({
   session,
   navigationPaths,
 }) => {
-  let basePath = "";
-  if (typeof window !== "undefined") basePath = window?.location.origin;
+  // let basePath = "";
+  // if (typeof window !== "undefined") basePath = window?.location.origin;
 
-  const pathName = usePathname();
+  // const pathName = usePathname();
 
   const { setOpen } = useSidebarStore();
 
@@ -150,11 +149,12 @@ export const Navbar: FC<NavbarProps> = ({
                   <Menu.Item key={item.name}>
                     {({ active }) => (
                       <Link
-                        href={
-                          item.href +
-                          "?callbackUrl=" +
-                          encodeURIComponent(basePath + pathName)
-                        }
+                        href={item.href}
+                        // href={
+                        //   item.href +
+                        //   "?callbackUrl=" +
+                        //   encodeURIComponent(basePath + pathName)
+                        // }
                         className={classNames(
                           active ? "bg-gray-50" : "",
                           "block px-3 py-1 text-sm leading-6 text-gray-900",
