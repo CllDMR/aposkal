@@ -1,0 +1,63 @@
+"use client";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import type { FC } from "react";
+import { useForm } from "react-hook-form";
+
+import { productCategoryUpdateInput } from "@acme/api/src/inputs/product_category";
+import { Form } from "@acme/ui/atoms";
+import { Button, FormInput } from "@acme/ui/molecules";
+
+import type { RouterInputs, RouterOutputs } from "~/utils/api";
+import { api } from "~/utils/api";
+
+type ProductCategoryEditFormFields = RouterInputs["productCategory"]["update"];
+type ProductCategory = NonNullable<RouterOutputs["productCategory"]["get"]>;
+
+export const ProductCategoryEditForm: FC<{ productCategory: ProductCategory }> = ({
+  productCategory: initialProductCategory,
+}) => {
+  const context = api.useContext();
+  const [productCategory] = api.productCategory.get.useSuspenseQuery(
+    { id: initialProductCategory.id },
+    { initialData: initialProductCategory },
+  );
+
+  const { mutateAsync } = api.productCategory.update.useMutation({
+    async onSettled() {
+      await context.productCategory.list.invalidate();
+      await context.productCategory.get.invalidate();
+    },
+  });
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isSubmitting },
+  } = useForm<ProductCategoryEditFormFields>({
+    resolver: zodResolver(productCategoryUpdateInput),
+    defaultValues: productCategoryUpdateInput.parse(productCategory),
+  });
+
+  const onSubmit = handleSubmit(async (data) => {
+    return await mutateAsync(data);
+  });
+
+  return (
+    <Form onSubmit={onSubmit}>
+      <FormInput<ProductCategoryEditFormFields>
+        id="name"
+        label="Name"
+        name="name"
+        type="text"
+        autoComplete="name"
+        errors={errors}
+        register={register}
+      />
+
+      <Button type="submit" disabled={isSubmitting}>
+        Update
+      </Button>
+    </Form>
+  );
+};

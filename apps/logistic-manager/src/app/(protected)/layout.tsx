@@ -76,11 +76,7 @@ export default async function Layout(props: { children: React.ReactNode }) {
       <div>
         <DrawerMobileWrapper navigationPaths={drawerNavigationPaths} />
 
-        {/* Static sidebar for desktop */}
-        <div className="hidden lg:fixed lg:inset-y-0 lg:z-20 lg:flex lg:w-52 lg:flex-col">
-          {/* Sidebar component, swap this element with another sidebar if you like */}
-          <Drawer navigationPaths={drawerNavigationPaths} />
-        </div>
+        <Drawer navigationPaths={drawerNavigationPaths} />
 
         {props.children}
       </div>
