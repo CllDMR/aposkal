@@ -9,9 +9,9 @@ export default async function ProductCategoriesPage() {
 
   const productCategories = await db
     .select()
-    .from(schema.product)
-    .where(eq(schema.product.tenantId, session.user.ti))
-    .orderBy(desc(schema.product.id));
+    .from(schema.productCategory)
+    .where(eq(schema.productCategory.tenantId, session.user.ti))
+    .orderBy(desc(schema.productCategory.id));
 
   return <ProductCategoryTable productCategories={productCategories} />;
 }

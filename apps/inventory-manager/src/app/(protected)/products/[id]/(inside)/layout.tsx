@@ -4,8 +4,8 @@ import type { NextPage } from "next";
 import { Main } from "@acme/ui/atoms";
 
 export const metadata = {
-  title: "Products",
-  description: "List of products",
+  title: "Product",
+  description: "A product",
 };
 
 type LayoutProps = PropsWithChildren & {
