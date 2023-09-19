@@ -5,7 +5,7 @@ import { nanoid } from "nanoid";
 
 import { mySqlTable } from "./_table";
 import { tenant } from "./auth/tenant";
-import { productsToSuppliers } from "./productsToSuppliers";
+import { productsToSuppliers } from "./products_to_suppliers";
 
 export const supplier = mySqlTable(
   "supplier",

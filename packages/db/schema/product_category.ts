@@ -5,6 +5,7 @@ import { nanoid } from "nanoid";
 
 import { mySqlTable } from "./_table";
 import { tenant } from "./auth/tenant";
+import { productsToCategories } from "./products_to_categories";
 
 export const productCategory = mySqlTable(
   "product_category",
@@ -29,11 +30,12 @@ export const productCategory = mySqlTable(
 
 export const productCategoryRelations = relations(
   productCategory,
-  ({ one }) => ({
+  ({ one, many }) => ({
     tenant: one(tenant, {
       fields: [productCategory.tenantId],
       references: [tenant.id],
     }),
+    productsToCategories: many(productsToCategories),
   }),
 );
 
