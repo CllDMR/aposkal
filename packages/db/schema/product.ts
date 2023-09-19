@@ -1,10 +1,11 @@
 import { relations, sql } from "drizzle-orm";
-import { index, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { index, int, timestamp, varchar } from "drizzle-orm/mysql-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { nanoid } from "nanoid";
 
 import { mySqlTable } from "./_table";
 import { tenant } from "./auth/tenant";
+import { productsToSuppliers } from "./productsToSuppliers";
 
 export const product = mySqlTable(
   "product",
@@ -18,7 +19,8 @@ export const product = mySqlTable(
       .notNull(),
     updatedAt: timestamp("updated_at").onUpdateNow(),
 
-    title: varchar("name", { length: 256 }).notNull(),
+    name: varchar("name", { length: 256 }).notNull(),
+    price: int("price").notNull(),
 
     tenantId: varchar("tenant_id", { length: 255 }).notNull(),
   },
@@ -27,11 +29,12 @@ export const product = mySqlTable(
   }),
 );
 
-export const productRelations = relations(product, ({ one }) => ({
+export const productRelations = relations(product, ({ one, many }) => ({
   tenant: one(tenant, {
     fields: [product.tenantId],
     references: [tenant.id],
   }),
+  productsToSuppliers: many(productsToSuppliers),
 }));
 
 export const insertProductSchema = createInsertSchema(product);

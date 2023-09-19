@@ -12,7 +12,8 @@ import { api } from "~/utils/api";
 
 interface TableItem {
   id: string;
-  title: string;
+  address: string;
+  name: string;
 }
 
 interface SupplierTableProps {
@@ -40,10 +41,16 @@ export const SupplierTable: FC<SupplierTableProps> = ({ suppliers }) => {
   const cols = useMemo<ColumnDef<TableItem>[]>(
     () => [
       {
-        header: "Title",
+        header: "Address",
         cell: (row) => row.renderValue(),
-        accessorKey: "title",
-        footer: "Title",
+        accessorKey: "address",
+        footer: "Address",
+      },
+      {
+        header: "Name",
+        cell: (row) => row.renderValue(),
+        accessorKey: "name",
+        footer: "Name",
       },
       {
         header: "Actions",

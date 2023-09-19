@@ -12,7 +12,8 @@ import { api } from "~/utils/api";
 
 interface TableItem {
   id: string;
-  title: string;
+  name: string;
+  price: number;
 }
 
 interface ProductTableProps {
@@ -38,10 +39,16 @@ export const ProductTable: FC<ProductTableProps> = ({ products }) => {
   const cols = useMemo<ColumnDef<TableItem>[]>(
     () => [
       {
-        header: "Title",
+        header: "Name",
         cell: (row) => row.renderValue(),
-        accessorKey: "title",
-        footer: "Title",
+        accessorKey: "name",
+        footer: "Name",
+      },
+      {
+        header: "Price",
+        cell: (row) => row.renderValue(),
+        accessorKey: "price",
+        footer: "Price",
       },
       {
         header: "Actions",

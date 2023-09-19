@@ -31,7 +31,7 @@ export const SupplierList: FC<SupplierListProps> = ({ suppliers }) => {
     <>
       {data.map((supplier) => (
         <div key={supplier.id}>
-          <span>{supplier.title}</span>
+          <span>{supplier.name}</span>
           <LinkButton href={`/suppliers/${supplier.id}`}>Go</LinkButton>
           <LinkButton href={`/suppliers/${supplier.id}/edit`}>Edit</LinkButton>
           <Button

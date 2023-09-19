@@ -46,11 +46,20 @@ export const SupplierEditForm: FC<{ supplier: Supplier }> = ({
   return (
     <Form onSubmit={onSubmit}>
       <FormInput<SupplierEditFormFields>
-        id="title"
-        label="Title"
-        name="title"
+        id="address"
+        label="Address"
+        name="address"
         type="text"
-        autoComplete="title"
+        autoComplete="address"
+        errors={errors}
+        register={register}
+      />
+      <FormInput<SupplierEditFormFields>
+        id="name"
+        label="Name"
+        name="name"
+        type="text"
+        autoComplete="name"
         errors={errors}
         register={register}
       />

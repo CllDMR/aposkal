@@ -46,13 +46,23 @@ export const ProductEditForm: FC<{ product: Product }> = ({
   return (
     <Form onSubmit={onSubmit}>
       <FormInput<ProductEditFormFields>
-        id="title"
-        label="Title"
-        name="title"
+        id="name"
+        label="Name"
+        name="name"
         type="text"
-        autoComplete="title"
+        autoComplete="name"
         errors={errors}
         register={register}
+      />
+      <FormInput<ProductEditFormFields>
+        id="price"
+        label="Price"
+        name="price"
+        type="text"
+        autoComplete="price"
+        errors={errors}
+        register={register}
+        rules={{ valueAsNumber: true }}
       />
 
       <Button type="submit" disabled={isSubmitting}>

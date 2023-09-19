@@ -30,7 +30,7 @@ export const SupplierCard: FC<SupplierCardProps> = ({ initSupplier, id }) => {
 
   return (
     <div>
-      <span>{supplier.title}</span>
+      <span>{supplier.name}</span>
       <LinkButton href={`/suppliers/${supplier.id}/edit`}>Edit</LinkButton>
       <Button
         onClick={async () => await mutateAsync(supplier.id)}

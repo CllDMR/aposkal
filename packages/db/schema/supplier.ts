@@ -5,6 +5,7 @@ import { nanoid } from "nanoid";
 
 import { mySqlTable } from "./_table";
 import { tenant } from "./auth/tenant";
+import { productsToSuppliers } from "./productsToSuppliers";
 
 export const supplier = mySqlTable(
   "supplier",
@@ -18,7 +19,8 @@ export const supplier = mySqlTable(
       .notNull(),
     updatedAt: timestamp("updated_at").onUpdateNow(),
 
-    title: varchar("name", { length: 256 }).notNull(),
+    name: varchar("name", { length: 256 }).notNull(),
+    address: varchar("address", { length: 256 }).notNull(),
 
     tenantId: varchar("tenant_id", { length: 255 }).notNull(),
   },
@@ -27,11 +29,12 @@ export const supplier = mySqlTable(
   }),
 );
 
-export const supplierRelations = relations(supplier, ({ one }) => ({
+export const supplierRelations = relations(supplier, ({ one, many }) => ({
   tenant: one(tenant, {
     fields: [supplier.tenantId],
     references: [tenant.id],
   }),
+  productsToSuppliers: many(productsToSuppliers),
 }));
 
 export const insertSupplierSchema = createInsertSchema(supplier);

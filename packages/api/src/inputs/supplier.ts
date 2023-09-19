@@ -8,7 +8,8 @@ export const supplierListInput = selectSupplierSchema
   .partial({
     createdAt: true,
     updatedAt: true,
-    title: true,
+    address: true,
+    name: true,
   });
 
 export const supplierGetInput = selectSupplierSchema.pick({ id: true });
@@ -27,4 +28,4 @@ export const supplierUpdateInput = insertSupplierSchema
     updatedAt: true,
     tenantId: true,
   })
-  .partial({ title: true });
+  .partial({ address: true, name: true });

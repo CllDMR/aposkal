@@ -36,11 +36,20 @@ export const SupplierCreateForm: FC = () => {
   return (
     <Form onSubmit={onSubmit}>
       <FormInput<SupplierCreateFormFields>
-        id="title"
-        label="Title"
-        name="title"
+        id="address"
+        label="Address"
+        name="address"
         type="text"
-        autoComplete="title"
+        autoComplete="address"
+        errors={errors}
+        register={register}
+      />
+      <FormInput<SupplierCreateFormFields>
+        id="name"
+        label="Name"
+        name="name"
+        type="text"
+        autoComplete="name"
         errors={errors}
         register={register}
       />

@@ -30,7 +30,7 @@ export const ProductCard: FC<ProductCardProps> = ({ initProduct, id }) => {
 
   return (
     <div>
-      <span>{product.title}</span>
+      <span>{product.name}</span>
       <LinkButton href={`/products/${product.id}/edit`}>Edit</LinkButton>
       <Button
         onClick={async () => await mutateAsync(product.id)}

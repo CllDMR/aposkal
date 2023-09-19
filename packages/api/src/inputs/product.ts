@@ -8,7 +8,8 @@ export const productListInput = selectProductSchema
   .partial({
     createdAt: true,
     updatedAt: true,
-    title: true,
+    name: true,
+    price: true,
   });
 
 export const productGetInput = selectProductSchema.pick({ id: true });
@@ -27,4 +28,4 @@ export const productUpdateInput = insertProductSchema
     updatedAt: true,
     tenantId: true,
   })
-  .partial({ title: true });
+  .partial({ name: true, price: true });

@@ -36,13 +36,23 @@ export const ProductCreateForm: FC = () => {
   return (
     <Form onSubmit={onSubmit}>
       <FormInput<ProductCreateFormFields>
-        id="title"
-        label="Title"
-        name="title"
+        id="name"
+        label="Name"
+        name="name"
         type="text"
-        autoComplete="title"
+        autoComplete="name"
         errors={errors}
         register={register}
+      />
+      <FormInput<ProductCreateFormFields>
+        id="price"
+        label="Price"
+        name="price"
+        type="number"
+        autoComplete="price"
+        errors={errors}
+        register={register}
+        rules={{ valueAsNumber: true }}
       />
 
       <Button type="submit" disabled={isSubmitting}>
