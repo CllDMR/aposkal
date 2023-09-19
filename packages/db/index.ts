@@ -11,6 +11,7 @@ import * as customer from "./schema/customer";
 import * as post from "./schema/post";
 import * as product from "./schema/product";
 import * as productCategory from "./schema/product_category";
+import * as productTag from "./schema/product_tag";
 import * as purchaseOrder from "./schema/purchase_order";
 import * as saleOrder from "./schema/sale_order";
 import * as supplier from "./schema/supplier";
@@ -27,6 +28,7 @@ export const schema = {
   ...customer,
   ...post,
   ...productCategory,
+  ...productTag,
   ...product,
   ...purchaseOrder,
   ...saleOrder,

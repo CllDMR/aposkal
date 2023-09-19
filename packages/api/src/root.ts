@@ -2,6 +2,7 @@ import { customerRouter } from "./router/customer";
 import { postRouter } from "./router/post";
 import { productRouter } from "./router/product";
 import { productCategoryRouter } from "./router/product_category";
+import { productTagRouter } from "./router/product_tag";
 import { purchaseOrderRouter } from "./router/purchase_order";
 import { saleOrderRouter } from "./router/sale_order";
 import { supplierRouter } from "./router/supplier";
@@ -14,6 +15,7 @@ export const appRouter = createTRPCRouter({
   post: postRouter,
   product: productRouter,
   productCategory: productCategoryRouter,
+  productTag: productTagRouter,
   purchaseOrder: purchaseOrderRouter,
   saleOrder: saleOrderRouter,
   supplier: supplierRouter,
