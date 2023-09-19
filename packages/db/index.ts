@@ -12,6 +12,7 @@ import * as post from "./schema/post";
 import * as product from "./schema/product";
 import * as purchaseOrder from "./schema/purchase_order";
 import * as saleOrder from "./schema/sale_order";
+import * as supplier from "./schema/supplier";
 import * as warehouse from "./schema/warehouse";
 
 export const schema = {
@@ -27,6 +28,7 @@ export const schema = {
   ...product,
   ...purchaseOrder,
   ...saleOrder,
+  ...supplier,
   ...warehouse,
 };
 
