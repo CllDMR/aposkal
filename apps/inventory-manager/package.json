@@ -3,14 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "pnpm with-env next build",
+    "build": "dotenv -e ../../.env -e .env.local -- bash -c 'next build'",
     "clean": "git clean -xdf .next .turbo node_modules",
-    "dev": "pnpm with-env next dev",
+    "dev": "dotenv -e ../../.env -e .env.local -- next dev",
     "lint": "dotenv -v SKIP_ENV_VALIDATION=1 next lint",
     "format": "prettier --ignore-path ../../.gitignore --check \"./src/**/*.{js,cjs,mjs,ts,tsx,md,json}\"",
-    "start": "pnpm with-env next start",
-    "typecheck": "tsc --noEmit",
-    "with-env": "dotenv -e ../../.env --"
+    "start": "dotenv -e ../../.env -e .env.local -- bash -c 'next start -p \"$PORT\"'",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@acme/api": "^0.1.0",
