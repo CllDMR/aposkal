@@ -1,88 +1,199 @@
 "use client";
 
+import { Fragment, useState } from "react";
 import { Combobox, Transition } from "@headlessui/react";
-import { CheckIcon } from "@heroicons/react/20/solid";
-import clsx from "clsx";
-import type { FieldValues } from "react-hook-form";
+import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import type { FieldValuesFromFieldErrors } from "@hookform/error-message";
+import { ErrorMessage } from "@hookform/error-message";
+import type {
+  Control,
+  DeepMap,
+  FieldError,
+  FieldName,
+  FieldValues,
+  Path,
+  PathValue,
+  RegisterOptions,
+} from "react-hook-form";
+import { useController } from "react-hook-form";
+
+import { FormErrorMessage, Label } from "../../atoms";
 
 interface Option {
   id: string;
+  label: string;
   value: string;
 }
 
-export interface FormDropdownInputProps<_TFormValues extends FieldValues> {
-  // label: string;
-  // name: Path<TFormValues>;
-  // rules?: RegisterOptions;
+export interface FormDropdownInputProps<TFormValues extends FieldValues> {
+  label: string;
+  name: Path<TFormValues>;
+  rules?: RegisterOptions;
   // register?: UseFormRegister<TFormValues>;
-  // errors?: Partial<DeepMap<TFormValues, FieldError>>;
-  option: Option | null;
+  errors?: Partial<DeepMap<TFormValues, FieldError>>;
+  control: Control<TFormValues>;
+
+  // option: Option | null;
   options: Option[];
-  onChange: (val: Option) => void;
-  queryText: string;
-  onChangeQueryText: (val: string) => void;
+  // onChange: (val: Option) => void;
+  // queryText: string;
+  // onChangeQueryText: (val: string) => void;
 }
 
 // & Omit<InputProps, "name" | "value" | "onChange" | "nullable">
 
 export const FormDropdownInput = <TFormValues extends FieldValues>({
-  // name,
-  // label,
+  name,
+  label,
   // register,
-  // rules,
+  rules,
   // errors,
-  option,
-  options,
-  onChange,
-  queryText,
-  onChangeQueryText,
-} // className,
+  control,
+  // option,
+  options, // onChange,
+  // onChangeQueryText, // className,
+} // queryText,
 // ...props
 : FormDropdownInputProps<TFormValues>): JSX.Element => {
   // const errorMessages = get(errors, name);
   // const hasError = !!(errors && errorMessages);
+  const defaultValue = {
+    id: "",
+    label: "Select",
+    value: "",
+  } as PathValue<TFormValues, Path<TFormValues>>;
+
+  const [openCreateModal, setOpenCreateModal] = useState(false);
+  // const [selected, setSelected] = useState<{
+  //   id: string;
+  //   value: string;
+  // } | null>(null);
+  const [queryText, setQueryText] = useState("");
+
+  const filteredOptions =
+    queryText === ""
+      ? options
+      : options.filter((option_) =>
+          option_.label
+            .toLowerCase()
+            .replace(/\s+/g, "")
+            .includes(queryText.toLowerCase().replace(/\s+/g, "")),
+        );
+
+  const {
+    field: { onChange: fOnChange, value, ref, name: _name, onBlur },
+    formState: { errors },
+  } = useController({
+    control,
+    name,
+    rules,
+    defaultValue: defaultValue,
+  });
+
+  const handleOnChange = (val: any) => {
+    if (!val?.id) {
+      /* empty */
+    } else if (val?.id === "new") {
+      setOpenCreateModal(true);
+    } else fOnChange(val.value);
+  };
 
   return (
-    <Combobox value={option} onChange={onChange} nullable>
-      <Combobox.Input
-        className="focus:ring-indigo-600 w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 sm:text-sm sm:leading-6"
-        onChange={(event) => onChangeQueryText(event.target.value)}
-        displayValue={(option: Option) => option?.value}
-      />
-      <Transition
-        enter="transition duration-100 ease-out"
-        enterFrom="transform scale-95 opacity-0"
-        enterTo="transform scale-100 opacity-100"
-        leave="transition duration-75 ease-out"
-        leaveFrom="transform scale-100 opacity-100"
-        leaveTo="transform scale-95 opacity-0"
+    <div className="">
+      <Label label={label} name={name} />
+
+      <Combobox
+        value={
+          filteredOptions.find(
+            (filteredOption) => filteredOption.value === value,
+          ) ?? defaultValue
+        }
+        onChange={handleOnChange}
+        nullable
+        defaultValue={defaultValue}
+        // name={_name}
       >
-        <Combobox.Options
-          className={clsx(
-            "rounded-md bg-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm",
-            { "py-1": options.length > 0 || queryText.length > 0 },
-          )}
-        >
-          {queryText.length > 0 && (
-            <Combobox.Option
-              className="ui-active:bg-indigo-400 ui-active:text-white ui-not-active:bg-white ui-not-active:text-black select-none px-3 py-2"
-              value={{ id: "new", value: queryText }}
+        <div className="relative mt-1">
+          <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-300 sm:text-sm">
+            <Combobox.Input
+              className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
+              displayValue={(option: Option) => option?.label}
+              onChange={(event) => setQueryText(event.target.value)}
+              onBlur={onBlur}
+              name={_name}
+              ref={ref}
+            />
+            <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
+              <ChevronUpDownIcon
+                className="h-5 w-5 text-gray-400"
+                aria-hidden="true"
+              />
+            </Combobox.Button>
+          </div>
+          <Transition
+            as={Fragment}
+            leave="transition ease-in duration-100"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+            afterLeave={() => setQueryText("")}
+          >
+            <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+              {filteredOptions.length === 0 && queryText !== "" ? (
+                <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
+                  Nothing found.
+                </div>
+              ) : (
+                filteredOptions.map((filteredOption) => (
+                  <Combobox.Option
+                    key={filteredOption.id}
+                    className={({ active }) =>
+                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                        active ? "bg-primary-600 text-white" : "text-gray-900"
+                      }`
+                    }
+                    value={filteredOption}
+                  >
+                    {({ selected, active }) => (
+                      <>
+                        <span
+                          className={`block truncate ${
+                            selected ? "font-medium" : "font-normal"
+                          }`}
+                        >
+                          {filteredOption.label}
+                        </span>
+                        {selected ? (
+                          <span
+                            className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
+                              active ? "text-white" : "text-primary-600"
+                            }`}
+                          >
+                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                          </span>
+                        ) : null}
+                      </>
+                    )}
+                  </Combobox.Option>
+                ))
+              )}
+            </Combobox.Options>
+          </Transition>
+        </div>
+      </Combobox>
+
+      <ErrorMessage
+        errors={errors}
+        name={
+          _name as unknown as FieldName<
+            FieldValuesFromFieldErrors<
+              Partial<DeepMap<TFormValues, FieldError>>
             >
-              Create &quot;{queryText}&quot;
-            </Combobox.Option>
-          )}
-          {options.map((option) => (
-            <Combobox.Option
-              key={option.id}
-              value={option}
-              className="ui-active:bg-indigo-400 ui-active:text-white ui-not-active:bg-white ui-not-active:text-black select-none px-3 py-2"
-            >
-              <CheckIcon className="ui-selected:block hidden" />
-              {option.value}
-            </Combobox.Option>
-          ))}
-        </Combobox.Options>
-      </Transition>
-    </Combobox>
+          >
+        }
+        render={({ message }) => (
+          <FormErrorMessage className="mt-1">{message}</FormErrorMessage>
+        )}
+      />
+    </div>
   );
 };

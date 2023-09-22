@@ -2,6 +2,7 @@ import { relations, sql } from "drizzle-orm";
 import { index, int, timestamp, varchar } from "drizzle-orm/mysql-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { nanoid } from "nanoid";
+import { z } from "zod";
 
 import { mySqlTable } from "./_table";
 import { tenant } from "./auth/tenant";
@@ -41,5 +42,9 @@ export const productRelations = relations(product, ({ one, many }) => ({
   productsToTags: many(productsToTags),
 }));
 
-export const insertProductSchema = createInsertSchema(product);
+export const insertProductSchema = createInsertSchema(product).extend({
+  productCategoryId: z.string(),
+  // productTagId: z.string(),
+  // productSupplierId: z.string(),
+});
 export const selectProductSchema = createSelectSchema(product);

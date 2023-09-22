@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 
 import { productCreateInput } from "@acme/api/src/inputs/product";
 import { Form } from "@acme/ui/atoms";
-import { Button, FormInput } from "@acme/ui/molecules";
+import { Button, FormDropdownInput, FormInput } from "@acme/ui/molecules";
 
 import type { RouterInputs } from "~/utils/api";
 import { api } from "~/utils/api";
@@ -21,15 +21,30 @@ export const ProductCreateForm: FC = () => {
     },
   });
 
+  const { data: productCategories } = api.productCategory.list.useQuery({});
+
+  const formattedProductCategories =
+    productCategories?.map((productCategory) => ({
+      id: productCategory.id,
+      label: productCategory.name,
+      value: productCategory.id,
+    })) ?? [];
+
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
+    control,
   } = useForm<ProductCreateFormFields>({
     resolver: zodResolver(productCreateInput),
+    defaultValues: {
+      productCategoryId: formattedProductCategories[0]?.value,
+    },
   });
 
   const onSubmit = handleSubmit(async (data) => {
+    console.log({ data });
+
     await mutateAsync(data);
   });
 
@@ -53,6 +68,13 @@ export const ProductCreateForm: FC = () => {
         errors={errors}
         register={register}
         rules={{ valueAsNumber: true }}
+      />
+      <FormDropdownInput<ProductCreateFormFields>
+        label="Product Category"
+        name="productCategoryId"
+        errors={errors}
+        control={control}
+        options={formattedProductCategories}
       />
 
       <Button type="submit" disabled={isSubmitting}>
