@@ -7,7 +7,7 @@ import { product } from "./product";
 import { supplier } from "./supplier";
 
 export const productsToSuppliers = mySqlTable(
-  "products_to_suppliers",
+  "p_to_s",
   {
     productId: varchar("product_id", { length: 255 }).notNull(),
     supplierId: varchar("supplier_id", { length: 255 }).notNull(),

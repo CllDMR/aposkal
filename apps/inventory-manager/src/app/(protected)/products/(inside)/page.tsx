@@ -7,11 +7,22 @@ export default async function ProductsPage() {
   const session = await getServerSession(authOptions);
   if (!session) throw new Error("No Session");
 
-  const products = await db
-    .select()
-    .from(schema.product)
-    .where(eq(schema.product.tenantId, session.user.ti))
-    .orderBy(desc(schema.product.id));
+  const products = await db.query.product.findMany({
+    where: eq(schema.product.tenantId, session.user.ti),
+    with: {
+      productsToCategories: {
+        with: {
+          productCategory: true,
+        },
+      },
+      productsToTags: {
+        with: {
+          productTag: true,
+        },
+      },
+    },
+    orderBy: desc(schema.product.id),
+  });
 
   return <ProductTable products={products} />;
 }

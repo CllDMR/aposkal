@@ -2,7 +2,7 @@
 
 import type { FC } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 
 import { productCreateInput } from "@acme/api/src/inputs/product";
 import { Form } from "@acme/ui/atoms";
@@ -22,12 +22,19 @@ export const ProductCreateForm: FC = () => {
   });
 
   const { data: productCategories } = api.productCategory.list.useQuery({});
+  const { data: productTags } = api.productTag.list.useQuery({});
 
   const formattedProductCategories =
     productCategories?.map((productCategory) => ({
       id: productCategory.id,
       label: productCategory.name,
       value: productCategory.id,
+    })) ?? [];
+  const formattedProductTags =
+    productTags?.map((productTag) => ({
+      id: productTag.id,
+      label: productTag.name,
+      value: productTag.id,
     })) ?? [];
 
   const {
@@ -39,8 +46,15 @@ export const ProductCreateForm: FC = () => {
     resolver: zodResolver(productCreateInput),
     defaultValues: {
       productCategoryId: formattedProductCategories[0]?.value,
+      productTagIds: formattedProductTags.map((formattedProductTag) => ({
+        id: formattedProductTag.id,
+      })),
     },
   });
+
+  const { fields, append } = useFieldArray({ name: "productTagIds", control });
+
+  const { productTagIds, ...restErrors } = errors;
 
   const onSubmit = handleSubmit(async (data) => {
     console.log({ data });
@@ -56,7 +70,7 @@ export const ProductCreateForm: FC = () => {
         name="name"
         type="text"
         autoComplete="name"
-        errors={errors}
+        errors={restErrors}
         register={register}
       />
       <FormInput<ProductCreateFormFields>
@@ -65,17 +79,33 @@ export const ProductCreateForm: FC = () => {
         name="price"
         type="number"
         autoComplete="price"
-        errors={errors}
+        errors={restErrors}
         register={register}
         rules={{ valueAsNumber: true }}
       />
       <FormDropdownInput<ProductCreateFormFields>
         label="Product Category"
         name="productCategoryId"
-        errors={errors}
+        errors={restErrors}
         control={control}
         options={formattedProductCategories}
       />
+      {fields.map((field, index) => {
+        return (
+          <FormDropdownInput
+            key={field.id}
+            label="Product Tag"
+            name={`productTagIds.${index}.id`}
+            // errors={{ productTagIds }}
+            control={control}
+            options={formattedProductTags}
+          />
+        );
+      })}
+
+      <Button type="button" onClick={() => append({ id: "" })}>
+        Add Tag
+      </Button>
 
       <Button type="submit" disabled={isSubmitting}>
         Create

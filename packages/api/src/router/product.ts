@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import { z } from "zod";
 
 import { desc, eq, schema } from "@acme/db";
@@ -14,11 +15,22 @@ export const productRouter = createTRPCRouter({
   list: protectedProcedure
     .input(productListInput)
     .query(async ({ ctx, input: _ }) => {
-      return await ctx.db
-        .select()
-        .from(schema.product)
-        .where(eq(schema.product.tenantId, ctx.session.user.ti))
-        .orderBy(desc(schema.product.id));
+      return await ctx.db.query.product.findMany({
+        where: eq(schema.product.tenantId, ctx.session.user.ti),
+        with: {
+          productsToCategories: {
+            with: {
+              productCategory: true,
+            },
+          },
+          productsToTags: {
+            with: {
+              productTag: true,
+            },
+          },
+        },
+        orderBy: desc(schema.product.id),
+      });
     }),
 
   get: protectedProcedure
@@ -35,10 +47,40 @@ export const productRouter = createTRPCRouter({
   create: protectedProcedure
     .input(productCreateInput)
     .mutation(async ({ ctx, input }) => {
-      return await ctx.db.insert(schema.product).values({
-        ...input,
+      const { productCategoryId, productTagIds, ...rest } = input;
+
+      const productId = nanoid();
+
+      const newProduct = await ctx.db.insert(schema.product).values({
+        ...rest,
+        id: productId,
         tenantId: ctx.session.user.ti,
       });
+
+      await ctx.db.insert(schema.productsToCategories).values({
+        product_categoryId: productCategoryId,
+        productId: productId,
+      });
+
+      const tagPromises = [];
+
+      for (const productTagId of productTagIds) {
+        tagPromises.push(
+          ctx.db
+            .insert(schema.productsToTags)
+            .values({
+              product_tagId: productTagId.id,
+              productId: productId,
+            })
+            .execute(),
+        );
+      }
+
+      console.log(tagPromises);
+
+      await Promise.all(tagPromises);
+
+      return newProduct;
     }),
 
   update: protectedProcedure

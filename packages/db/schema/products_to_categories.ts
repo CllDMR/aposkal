@@ -7,7 +7,7 @@ import { product } from "./product";
 import { productCategory } from "./product_category";
 
 export const productsToCategories = mySqlTable(
-  "products_to_product_categories",
+  "p_to_p_c",
   {
     productId: varchar("product_id", { length: 255 }).notNull(),
     product_categoryId: varchar("product_category_id", {

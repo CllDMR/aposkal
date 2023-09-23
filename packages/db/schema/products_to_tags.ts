@@ -7,7 +7,7 @@ import { product } from "./product";
 import { productTag } from "./product_tag";
 
 export const productsToTags = mySqlTable(
-  "products_to_product_tags",
+  "p_to_p",
   {
     productId: varchar("product_id", { length: 255 }).notNull(),
     product_tagId: varchar("product_tag_id", {

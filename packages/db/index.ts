@@ -12,6 +12,9 @@ import * as post from "./schema/post";
 import * as product from "./schema/product";
 import * as productCategory from "./schema/product_category";
 import * as productTag from "./schema/product_tag";
+import * as productsToCategories from "./schema/products_to_categories";
+import * as productsToSuppliers from "./schema/products_to_suppliers";
+import * as productsToTags from "./schema/products_to_tags";
 import * as purchaseOrder from "./schema/purchase_order";
 import * as saleOrder from "./schema/sale_order";
 import * as supplier from "./schema/supplier";
@@ -27,9 +30,12 @@ export const schema = {
 
   ...customer,
   ...post,
+  ...product,
   ...productCategory,
   ...productTag,
-  ...product,
+  ...productsToCategories,
+  ...productsToSuppliers,
+  ...productsToTags,
   ...purchaseOrder,
   ...saleOrder,
   ...supplier,

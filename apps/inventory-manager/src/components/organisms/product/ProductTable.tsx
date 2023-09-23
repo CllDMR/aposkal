@@ -14,6 +14,8 @@ interface TableItem {
   id: string;
   name: string;
   price: number;
+  productsToCategories: RouterOutputs["product"]["list"][number]["productsToCategories"];
+  productsToTags: RouterOutputs["product"]["list"][number]["productsToTags"];
 }
 
 interface ProductTableProps {
@@ -49,6 +51,22 @@ export const ProductTable: FC<ProductTableProps> = ({ products }) => {
         cell: (row) => row.renderValue(),
         accessorKey: "price",
         footer: "Price",
+      },
+      {
+        header: "Categories",
+        cell: (row) => row.renderValue(),
+        accessorFn: (originalRow) =>
+          originalRow?.productsToCategories
+            ?.map((e) => e.productCategory.name)
+            .join(" "),
+      },
+      {
+        header: "Tags",
+        cell: (row) => row.renderValue(),
+        accessorFn: (originalRow) =>
+          originalRow?.productsToTags
+            ?.map((e) => e?.productTag?.name)
+            .join(" "),
       },
       {
         header: "Actions",
