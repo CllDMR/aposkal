@@ -1,8 +1,7 @@
 import { notFound } from "next/navigation";
-import { getServerSession } from "next-auth";
 
-import { authOptions } from "@acme/auth";
-import { and, db, eq, schema } from "@acme/db";
+import { authOptions, getServerSession } from "@acme/auth";
+import { and, db, desc, eq, schema } from "@acme/db";
 
 import { ProductEditForm } from "~/components/organisms/product/ProductEditForm";
 
@@ -16,19 +15,44 @@ export default async function ProductEditPage({ params: { id } }: PageProps) {
   const session = await getServerSession(authOptions);
   if (!session) throw new Error("No Session");
 
-  const product = await db
+  const productCategories = await db
     .select()
-    .from(schema.product)
-    .where(
-      and(
-        eq(schema.product.tenantId, session.user.ti),
-        eq(schema.product.id, id),
-      ),
-    )
-    .limit(1)
-    .then((a) => a[0]);
+    .from(schema.productCategory)
+    .where(eq(schema.productCategory.tenantId, session.user.ti))
+    .orderBy(desc(schema.productCategory.id));
+
+  const productTags = await db
+    .select()
+    .from(schema.productTag)
+    .where(eq(schema.productTag.tenantId, session.user.ti))
+    .orderBy(desc(schema.productTag.id));
+
+  const product = await db.query.product.findFirst({
+    where: and(
+      eq(schema.product.tenantId, session.user.ti),
+      eq(schema.product.id, id),
+    ),
+    with: {
+      productsToCategories: {
+        with: {
+          productCategory: true,
+        },
+      },
+      productsToTags: {
+        with: {
+          productTag: true,
+        },
+      },
+    },
+  });
 
   if (!product) notFound();
 
-  return <ProductEditForm product={product} />;
+  return (
+    <ProductEditForm
+      productCategories={productCategories}
+      productTags={productTags}
+      product={product}
+    />
+  );
 }

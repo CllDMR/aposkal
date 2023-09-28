@@ -7,11 +7,17 @@ export default async function SuppliersPage() {
   const session = await getServerSession(authOptions);
   if (!session) throw new Error("No Session");
 
-  const suppliers = await db
-    .select()
-    .from(schema.supplier)
-    .where(eq(schema.supplier.tenantId, session.user.ti))
-    .orderBy(desc(schema.supplier.id));
+  const suppliers = await db.query.supplier.findMany({
+    where: eq(schema.supplier.tenantId, session.user.ti),
+    with: {
+      productsToSuppliers: {
+        with: {
+          product: true,
+        },
+      },
+    },
+    orderBy: desc(schema.supplier.id),
+  });
 
   return <SupplierTable suppliers={suppliers} />;
 }

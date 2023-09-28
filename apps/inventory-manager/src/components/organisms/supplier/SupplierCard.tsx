@@ -8,16 +8,19 @@ import type { RouterOutputs } from "~/utils/api";
 import { api } from "~/utils/api";
 
 interface SupplierCardProps {
-  initSupplier: RouterOutputs["supplier"]["get"];
+  supplier: RouterOutputs["supplier"]["get"];
   id: NonNullable<RouterOutputs["supplier"]["get"]>["id"];
 }
 
-export const SupplierCard: FC<SupplierCardProps> = ({ initSupplier, id }) => {
+export const SupplierCard: FC<SupplierCardProps> = ({
+  supplier: initialSupplier,
+  id,
+}) => {
   const context = api.useContext();
   const [supplier] = api.supplier.get.useSuspenseQuery(
     { id },
     {
-      initialData: initSupplier,
+      initialData: initialSupplier,
     },
   );
 
@@ -29,15 +32,24 @@ export const SupplierCard: FC<SupplierCardProps> = ({ initSupplier, id }) => {
   });
 
   return (
-    <div>
-      <span>{supplier.name}</span>
-      <LinkButton href={`/suppliers/${supplier.id}/edit`}>Edit</LinkButton>
-      <Button
-        onClick={async () => await mutateAsync(supplier.id)}
-        disabled={isLoading}
-      >
-        Delete
-      </Button>
+    <div className="">
+      <div>
+        <span className="pr-4">{supplier.name}</span>
+        <LinkButton href={`/suppliers/${supplier.id}/edit`}>Edit</LinkButton>
+        <Button
+          onClick={async () => await mutateAsync(supplier.id)}
+          disabled={isLoading}
+        >
+          Delete
+        </Button>
+      </div>
+      <div>
+        {supplier.productsToSuppliers.map((productsToSupplier) => (
+          <p key={productsToSupplier.productId} className="">
+            {productsToSupplier.product.name}
+          </p>
+        ))}
+      </div>
     </div>
   );
 };

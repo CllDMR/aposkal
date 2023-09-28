@@ -11,7 +11,7 @@
     "format": "prettier --ignore-path ../../.gitignore --check \"**/*.{mjs,ts,md,json}\"",
     "push": "drizzle-kit push:mysql",
     "generate": "drizzle-kit generate:mysql",
-    "studio": "drizzle-kit studio --port 3001",
+    "studio": "drizzle-kit studio --port 3100",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

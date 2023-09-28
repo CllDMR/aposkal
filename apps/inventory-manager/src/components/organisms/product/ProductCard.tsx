@@ -8,16 +8,19 @@ import type { RouterOutputs } from "~/utils/api";
 import { api } from "~/utils/api";
 
 interface ProductCardProps {
-  initProduct: RouterOutputs["product"]["get"];
+  product: RouterOutputs["product"]["get"];
   id: NonNullable<RouterOutputs["product"]["get"]>["id"];
 }
 
-export const ProductCard: FC<ProductCardProps> = ({ initProduct, id }) => {
+export const ProductCard: FC<ProductCardProps> = ({
+  product: initialProduct,
+  id,
+}) => {
   const context = api.useContext();
   const [product] = api.product.get.useSuspenseQuery(
     { id },
     {
-      initialData: initProduct,
+      initialData: initialProduct,
     },
   );
 
@@ -29,15 +32,31 @@ export const ProductCard: FC<ProductCardProps> = ({ initProduct, id }) => {
   });
 
   return (
-    <div>
-      <span>{product.name}</span>
-      <LinkButton href={`/products/${product.id}/edit`}>Edit</LinkButton>
-      <Button
-        onClick={async () => await mutateAsync(product.id)}
-        disabled={isLoading}
-      >
-        Delete
-      </Button>
+    <div className="">
+      <div>
+        <span className="pr-4">{product.name}</span>
+        <LinkButton href={`/products/${product.id}/edit`}>Edit</LinkButton>
+        <Button
+          onClick={async () => await mutateAsync(product.id)}
+          disabled={isLoading}
+        >
+          Delete
+        </Button>
+      </div>
+      <div>
+        {product.productsToCategories.map((productsToCategory) => (
+          <p key={productsToCategory.product_categoryId} className="">
+            {productsToCategory.productCategory.name}
+          </p>
+        ))}
+      </div>
+      <div>
+        {product.productsToTags.map((productsToTag) => (
+          <p key={productsToTag.product_tagId} className="">
+            {productsToTag.productTag.name}
+          </p>
+        ))}
+      </div>
     </div>
   );
 };

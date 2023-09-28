@@ -8,12 +8,20 @@ import { productCreateInput } from "@acme/api/src/inputs/product";
 import { Form } from "@acme/ui/atoms";
 import { Button, FormDropdownInput, FormInput } from "@acme/ui/molecules";
 
-import type { RouterInputs } from "~/utils/api";
+import type { RouterInputs, RouterOutputs } from "~/utils/api";
 import { api } from "~/utils/api";
 
 type ProductCreateFormFields = RouterInputs["product"]["create"];
 
-export const ProductCreateForm: FC = () => {
+interface ProductCreateFormProps {
+  productCategories: RouterOutputs["productCategory"]["list"];
+  productTags: RouterOutputs["productTag"]["list"];
+}
+
+export const ProductCreateForm: FC<ProductCreateFormProps> = ({
+  productCategories: initialProductCategories,
+  productTags: initialProductTags,
+}) => {
   const context = api.useContext();
   const { mutateAsync } = api.product.create.useMutation({
     async onSettled() {
@@ -21,8 +29,18 @@ export const ProductCreateForm: FC = () => {
     },
   });
 
-  const { data: productCategories } = api.productCategory.list.useQuery({});
-  const { data: productTags } = api.productTag.list.useQuery({});
+  const { data: productCategories } = api.productCategory.list.useQuery(
+    {},
+    {
+      initialData: initialProductCategories,
+    },
+  );
+  const { data: productTags } = api.productTag.list.useQuery(
+    {},
+    {
+      initialData: initialProductTags,
+    },
+  );
 
   const formattedProductCategories =
     productCategories?.map((productCategory) => ({
@@ -44,21 +62,16 @@ export const ProductCreateForm: FC = () => {
     control,
   } = useForm<ProductCreateFormFields>({
     resolver: zodResolver(productCreateInput),
-    defaultValues: {
-      productCategoryId: formattedProductCategories[0]?.value,
-      productTagIds: formattedProductTags.map((formattedProductTag) => ({
-        id: formattedProductTag.id,
-      })),
-    },
   });
 
-  const { fields, append } = useFieldArray({ name: "productTagIds", control });
+  const { fields, append, remove } = useFieldArray({
+    name: "productTagIds",
+    control,
+  });
 
   const { productTagIds, ...restErrors } = errors;
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log({ data });
-
     await mutateAsync(data);
   });
 
@@ -92,14 +105,19 @@ export const ProductCreateForm: FC = () => {
       />
       {fields.map((field, index) => {
         return (
-          <FormDropdownInput
-            key={field.id}
-            label="Product Tag"
-            name={`productTagIds.${index}.id`}
-            // errors={{ productTagIds }}
-            control={control}
-            options={formattedProductTags}
-          />
+          <div key={field.id} className="">
+            <FormDropdownInput
+              key={field.id}
+              label="Product Tag"
+              name={`productTagIds.${index}.id`}
+              // errors={{ productTagIds }}
+              control={control}
+              options={formattedProductTags}
+            />
+            <Button type="button" onClick={() => remove(index)}>
+              Remove Tag
+            </Button>
+          </div>
         );
       })}
 

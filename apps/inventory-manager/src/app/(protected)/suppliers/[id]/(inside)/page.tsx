@@ -15,19 +15,21 @@ export default async function SupplierPage({ params: { id } }: PageProps) {
   const session = await getServerSession(authOptions);
   if (!session) throw new Error("No Session");
 
-  const supplier = await db
-    .select()
-    .from(schema.supplier)
-    .where(
-      and(
-        eq(schema.supplier.tenantId, session.user.ti),
-        eq(schema.supplier.id, id),
-      ),
-    )
-    .limit(1)
-    .then((a) => a[0]);
+  const supplier = await db.query.supplier.findFirst({
+    where: and(
+      eq(schema.supplier.tenantId, session.user.ti),
+      eq(schema.supplier.id, id),
+    ),
+    with: {
+      productsToSuppliers: {
+        with: {
+          product: true,
+        },
+      },
+    },
+  });
 
   if (!supplier) notFound();
 
-  return <SupplierCard initSupplier={supplier} id={id} />;
+  return <SupplierCard supplier={supplier} id={id} />;
 }

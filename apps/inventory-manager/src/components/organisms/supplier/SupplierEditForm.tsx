@@ -2,11 +2,11 @@
 
 import type { FC } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 
 import { supplierUpdateInput } from "@acme/api/src/inputs/supplier";
 import { Form } from "@acme/ui/atoms";
-import { Button, FormInput } from "@acme/ui/molecules";
+import { Button, FormDropdownInput, FormInput } from "@acme/ui/molecules";
 
 import type { RouterInputs, RouterOutputs } from "~/utils/api";
 import { api } from "~/utils/api";
@@ -30,14 +30,38 @@ export const SupplierEditForm: FC<{ supplier: Supplier }> = ({
     },
   });
 
+  const { data: products } = api.product.list.useQuery({});
+  const formattedProducts =
+    products?.map((product) => ({
+      id: product.id,
+      label: product.name,
+      value: product.id,
+    })) ?? [];
+
+  const { productsToSuppliers, ...restSupplier } = supplier;
+  const productIds_ = productsToSuppliers.map((productsToSupplier) => ({
+    id: productsToSupplier.productId,
+  }));
+
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
+    control,
   } = useForm<SupplierEditFormFields>({
     resolver: zodResolver(supplierUpdateInput),
-    defaultValues: supplierUpdateInput.parse(supplier),
+    defaultValues: supplierUpdateInput.parse({
+      ...restSupplier,
+      productIds: productIds_,
+    }),
   });
+
+  const { fields, append, remove } = useFieldArray({
+    name: "productIds",
+    control,
+  });
+
+  const { productIds, ...restErrors } = errors;
 
   const onSubmit = handleSubmit(async (data) => {
     return await mutateAsync(data);
@@ -51,7 +75,7 @@ export const SupplierEditForm: FC<{ supplier: Supplier }> = ({
         name="address"
         type="text"
         autoComplete="address"
-        errors={errors}
+        errors={restErrors}
         register={register}
       />
       <FormInput<SupplierEditFormFields>
@@ -59,10 +83,29 @@ export const SupplierEditForm: FC<{ supplier: Supplier }> = ({
         label="Name"
         name="name"
         type="text"
-        autoComplete="name"
-        errors={errors}
+        errors={restErrors}
         register={register}
       />
+      {fields.map((field, index) => {
+        return (
+          <div key={field.id} className="">
+            <FormDropdownInput
+              label="Product"
+              name={`productIds.${index}.id`}
+              // errors={{ productTagIds }}
+              control={control}
+              options={formattedProducts}
+            />
+            <Button type="button" onClick={() => remove(index)}>
+              Remove Product
+            </Button>
+          </div>
+        );
+      })}
+
+      <Button type="button" onClick={() => append({ id: "" })}>
+        Add Product
+      </Button>
 
       <Button type="submit" disabled={isSubmitting}>
         Update

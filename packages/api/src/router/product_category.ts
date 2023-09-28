@@ -53,6 +53,10 @@ export const productCategoryRouter = createTRPCRouter({
   delete: protectedProcedure
     .input(z.string())
     .mutation(async ({ ctx, input }) => {
+      await ctx.db
+        .delete(schema.productsToCategories)
+        .where(eq(schema.productsToCategories.product_categoryId, input));
+
       return await ctx.db
         .delete(schema.productCategory)
         .where(eq(schema.productCategory.id, input));
