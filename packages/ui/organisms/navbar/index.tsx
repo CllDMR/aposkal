@@ -105,8 +105,14 @@ const solutions = [
   },
   {
     name: "Order Manager",
-    description: "Interact with your customers and suppliers",
+    description: "Interact with your orders of customers and suppliers",
     href: "http://localhost:3003/dashboard",
+    icon: IconThree,
+  },
+  {
+    name: "Customer Manager",
+    description: "Manage and track relationships with your customers",
+    href: "http://localhost:3004/dashboard",
     icon: IconThree,
   },
 ];
