@@ -26,6 +26,8 @@ export default withAuth({
 export const config = {
   matcher: [
     "/dashboard",
+    "/customers",
+    "/customers/(.*)",
     "/posts",
     "/posts/(.*)",
     "/settings",
