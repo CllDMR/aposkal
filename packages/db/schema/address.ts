@@ -6,8 +6,8 @@ import { nanoid } from "nanoid";
 import { mySqlTable } from "./_table";
 import { tenant } from "./auth/tenant";
 
-export const customer = mySqlTable(
-  "customer",
+export const address = mySqlTable(
+  "address",
   {
     id: varchar("id", { length: 255 })
       .$defaultFn(nanoid)
@@ -18,13 +18,14 @@ export const customer = mySqlTable(
       .notNull(),
     updatedAt: timestamp("updated_at").onUpdateNow(),
 
-    firstname: varchar("firstname", { length: 256 }).notNull(),
-    lastname: varchar("lastname", { length: 256 }).notNull(),
-    middlename: varchar("middlename", { length: 256 }).notNull(),
-    gender: varchar("gender", { length: 256 }).notNull(),
-    birthdate: timestamp("birthdate").notNull(),
-    source: varchar("source", { length: 256 }).notNull(),
-    profileImage: varchar("profileImage", { length: 256 }).notNull(),
+    name: varchar("name", { length: 256 }).notNull(),
+    city: varchar("city", { length: 256 }).notNull(),
+    district: varchar("district", { length: 256 }).notNull(),
+    street: varchar("street", { length: 256 }).notNull(),
+    country: varchar("country", { length: 256 }).notNull(),
+    state: varchar("state", { length: 256 }),
+    description: varchar("description", { length: 256 }).notNull(),
+    longAddressDescription: varchar("longAddressDescription", { length: 256 }),
 
     tenantId: varchar("tenant_id", { length: 255 }).notNull(),
   },
@@ -33,12 +34,12 @@ export const customer = mySqlTable(
   }),
 );
 
-export const customerRelations = relations(customer, ({ one }) => ({
+export const addressRelations = relations(address, ({ one }) => ({
   tenant: one(tenant, {
-    fields: [customer.tenantId],
+    fields: [address.tenantId],
     references: [tenant.id],
   }),
 }));
 
-export const insertCustomerSchema = createInsertSchema(customer);
-export const selectCustomerSchema = createSelectSchema(customer);
+export const insertAddressSchema = createInsertSchema(address);
+export const selectAddressSchema = createSelectSchema(address);
