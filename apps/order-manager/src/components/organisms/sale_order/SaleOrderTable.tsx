@@ -1,8 +1,8 @@
 "use client";
 
-import type { ColumnDef } from "@tanstack/react-table";
 import type { FC } from "react";
 import { useMemo } from "react";
+import type { ColumnDef } from "@tanstack/react-table";
 
 import { Button, LinkButton } from "@acme/ui/molecules";
 import { Table } from "@acme/ui/organisms";
@@ -12,7 +12,15 @@ import { api } from "~/utils/api";
 
 interface TableItem {
   id: string;
-  title: string;
+
+  priority: string;
+  startdate: Date;
+  enddate: Date;
+  customerType: string;
+  source: string;
+
+  addressId: string;
+  customerId: string;
 }
 
 interface SaleOrderTableProps {
@@ -28,20 +36,57 @@ export const SaleOrderTable: FC<SaleOrderTableProps> = ({ saleOrders }) => {
     },
   );
 
-  const { mutateAsync, isLoading, variables } = api.saleOrder.delete.useMutation({
-    async onSettled() {
-      await context.saleOrder.list.invalidate();
-      await context.saleOrder.get.invalidate();
-    },
-  });
+  const { mutateAsync, isLoading, variables } =
+    api.saleOrder.delete.useMutation({
+      async onSettled() {
+        await context.saleOrder.list.invalidate();
+        await context.saleOrder.get.invalidate();
+      },
+    });
 
   const cols = useMemo<ColumnDef<TableItem>[]>(
     () => [
       {
-        header: "Title",
+        header: "Priority",
         cell: (row) => row.renderValue(),
-        accessorKey: "title",
-        footer: "Title",
+        accessorKey: "priority",
+        footer: "Priority",
+      },
+      {
+        header: "Start Date",
+        cell: (row) => (row.renderValue() as Date).toLocaleDateString(),
+        accessorKey: "startdate",
+        footer: "Start Date",
+      },
+      {
+        header: "End Date",
+        cell: (row) => (row.renderValue() as Date).toLocaleDateString(),
+        accessorKey: "enddate",
+        footer: "End Date",
+      },
+      {
+        header: "Customer Type",
+        cell: (row) => row.renderValue(),
+        accessorKey: "customerType",
+        footer: "Customer Type",
+      },
+      {
+        header: "Source",
+        cell: (row) => row.renderValue(),
+        accessorKey: "source",
+        footer: "Source",
+      },
+      {
+        header: "AddressId",
+        cell: (row) => row.renderValue(),
+        accessorKey: "addressId",
+        footer: "AddressId",
+      },
+      {
+        header: "CustomerId",
+        cell: (row) => row.renderValue(),
+        accessorKey: "customerId",
+        footer: "CustomerId",
       },
       {
         header: "Actions",

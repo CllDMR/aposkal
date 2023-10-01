@@ -2,9 +2,12 @@ import { relations, sql } from "drizzle-orm";
 import { index, timestamp, varchar } from "drizzle-orm/mysql-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { nanoid } from "nanoid";
+import { z } from "zod";
 
 import { mySqlTable } from "./_table";
+import { address } from "./address";
 import { tenant } from "./auth/tenant";
+import { customer } from "./customer";
 
 export const saleOrder = mySqlTable(
   "sale_order",
@@ -18,9 +21,15 @@ export const saleOrder = mySqlTable(
       .notNull(),
     updatedAt: timestamp("updated_at").onUpdateNow(),
 
-    title: varchar("name", { length: 256 }).notNull(),
+    priority: varchar("priority", { length: 256 }).notNull(),
+    startdate: timestamp("start_date").notNull(),
+    enddate: timestamp("end_date").notNull(),
+    customerType: varchar("customer_type", { length: 256 }).notNull(),
+    source: varchar("source", { length: 256 }).notNull(),
 
     tenantId: varchar("tenant_id", { length: 255 }).notNull(),
+    addressId: varchar("address_id", { length: 255 }).notNull(),
+    customerId: varchar("customer_id", { length: 255 }).notNull(),
   },
   ({ tenantId }) => ({
     tenantIdIdx: index("tenant_id_idx").on(tenantId),
@@ -32,7 +41,18 @@ export const saleOrderRelations = relations(saleOrder, ({ one }) => ({
     fields: [saleOrder.tenantId],
     references: [tenant.id],
   }),
+  toAddress: one(address, {
+    fields: [saleOrder.addressId],
+    references: [address.id],
+  }),
+  customer: one(customer, {
+    fields: [saleOrder.customerId],
+    references: [customer.id],
+  }),
 }));
 
-export const insertSaleOrderSchema = createInsertSchema(saleOrder);
+export const insertSaleOrderSchema = createInsertSchema(saleOrder).extend({
+  customerId: z.string(),
+  addressId: z.string(),
+});
 export const selectSaleOrderSchema = createSelectSchema(saleOrder);

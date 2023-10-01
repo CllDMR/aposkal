@@ -8,7 +8,13 @@ export const saleOrderListInput = selectSaleOrderSchema
   .partial({
     createdAt: true,
     updatedAt: true,
-    title: true,
+    addressId: true,
+    customerId: true,
+    customerType: true,
+    enddate: true,
+    priority: true,
+    source: true,
+    startdate: true,
   });
 
 export const saleOrderGetInput = selectSaleOrderSchema.pick({
@@ -29,4 +35,12 @@ export const saleOrderUpdateInput = insertSaleOrderSchema
     updatedAt: true,
     tenantId: true,
   })
-  .partial({ title: true });
+  .partial({
+    addressId: true,
+    customerId: true,
+    customerType: true,
+    enddate: true,
+    priority: true,
+    source: true,
+    startdate: true,
+  });
