@@ -8,7 +8,13 @@ export const customerListInput = selectCustomerSchema
   .partial({
     createdAt: true,
     updatedAt: true,
-    title: true,
+    firstname: true,
+    lastname: true,
+    middlename: true,
+    gender: true,
+    birthdate: true,
+    source: true,
+    profileImage: true,
   });
 
 export const customerGetInput = selectCustomerSchema.pick({ id: true });
@@ -27,4 +33,12 @@ export const customerUpdateInput = insertCustomerSchema
     updatedAt: true,
     tenantId: true,
   })
-  .partial({ title: true });
+  .partial({
+    firstname: true,
+    lastname: true,
+    middlename: true,
+    gender: true,
+    birthdate: true,
+    source: true,
+    profileImage: true,
+  });
