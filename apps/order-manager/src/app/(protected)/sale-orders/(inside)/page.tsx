@@ -10,6 +10,10 @@ export default async function SaleOrdersPage() {
   const saleOrders = await db.query.saleOrder.findMany({
     where: eq(schema.saleOrder.tenantId, session.user.ti),
     orderBy: desc(schema.saleOrder.id),
+    with: {
+      customer: true,
+      toAddress: true,
+    },
   });
 
   return <SaleOrderTable saleOrders={saleOrders} />;

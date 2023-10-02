@@ -14,22 +14,26 @@ export const saleOrderRouter = createTRPCRouter({
   list: protectedProcedure
     .input(saleOrderListInput)
     .query(async ({ ctx, input: _ }) => {
-      return await ctx.db
-        .select()
-        .from(schema.saleOrder)
-        .where(eq(schema.saleOrder.tenantId, ctx.session.user.ti))
-        .orderBy(desc(schema.saleOrder.id));
+      return await ctx.db.query.saleOrder.findMany({
+        where: eq(schema.saleOrder.tenantId, ctx.session.user.ti),
+        orderBy: desc(schema.saleOrder.id),
+        with: {
+          customer: true,
+          toAddress: true,
+        },
+      });
     }),
 
   get: protectedProcedure
     .input(saleOrderGetInput)
     .query(async ({ ctx, input }) => {
-      return await ctx.db
-        .select()
-        .from(schema.saleOrder)
-        .where(eq(schema.saleOrder.id, input.id))
-        .limit(1)
-        .then((a) => a[0]);
+      return await ctx.db.query.saleOrder.findFirst({
+        where: eq(schema.saleOrder.id, input.id),
+        with: {
+          customer: true,
+          toAddress: true,
+        },
+      });
     }),
 
   create: protectedProcedure

@@ -19,6 +19,9 @@ interface TableItem {
   customerType: string;
   source: string;
 
+  customer: RouterOutputs["saleOrder"]["list"][number]["customer"];
+  toAddress: RouterOutputs["saleOrder"]["list"][number]["toAddress"];
+
   addressId: string;
   customerId: string;
 }
@@ -77,16 +80,20 @@ export const SaleOrderTable: FC<SaleOrderTableProps> = ({ saleOrders }) => {
         footer: "Source",
       },
       {
-        header: "AddressId",
+        header: "Address",
         cell: (row) => row.renderValue(),
-        accessorKey: "addressId",
-        footer: "AddressId",
+        accessorKey: "toAddress.name",
+        footer: "Address",
       },
       {
-        header: "CustomerId",
-        cell: (row) => row.renderValue(),
-        accessorKey: "customerId",
-        footer: "CustomerId",
+        header: "Customer",
+        cell: (row) => {
+          const customer = row.getValue() as TableItem["customer"];
+
+          return `${customer.firstname} ${customer.middlename} ${customer.lastname}`;
+        },
+        accessorKey: "customer",
+        footer: "Customer",
       },
       {
         header: "Actions",

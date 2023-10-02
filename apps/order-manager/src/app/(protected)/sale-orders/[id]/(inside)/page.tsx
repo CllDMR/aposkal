@@ -20,6 +20,10 @@ export default async function SaleOrderPage({ params: { id } }: PageProps) {
       eq(schema.saleOrder.tenantId, session.user.ti),
       eq(schema.saleOrder.id, id),
     ),
+    with: {
+      customer: true,
+      toAddress: true,
+    },
   });
 
   if (!saleOrder) notFound();
