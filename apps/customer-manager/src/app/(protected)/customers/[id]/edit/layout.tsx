@@ -11,7 +11,7 @@ export const metadata = {
 const Layout: NextPage<PropsWithChildren> = ({ children }) => {
   return (
     <Main>
-      <h1>Customer Edit Page</h1>
+      <h1 className="sr-only">Customer Edit Page</h1>
 
       {children}
     </Main>

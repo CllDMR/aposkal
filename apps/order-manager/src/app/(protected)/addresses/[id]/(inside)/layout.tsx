@@ -17,7 +17,7 @@ type LayoutProps = PropsWithChildren & {
 const Layout: NextPage<LayoutProps> = ({ children, params: { id } }) => {
   return (
     <Main>
-      <h1>Address {id} Page</h1>
+      <h1 className="sr-only">Address {id} Page</h1>
 
       {children}
     </Main>
