@@ -5,6 +5,7 @@ export type { DateInputProps } from "./date-input";
 export { Form } from "./form";
 export { FormErrorMessage } from "./form-error-message";
 export type { FormErrorMessageProps } from "./form-error-message";
+export { FormSection } from "./form-section";
 export { Input } from "./input";
 export type { InputProps, InputSize } from "./input";
 export { Label } from "./label";
