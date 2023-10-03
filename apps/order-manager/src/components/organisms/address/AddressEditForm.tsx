@@ -4,27 +4,29 @@ import type { FC } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { postUpdateInput } from "@acme/api/src/inputs/post";
+import { addressUpdateInput } from "@acme/api/src/inputs/address";
 import { Form } from "@acme/ui/atoms";
 import { Button, FormInput } from "@acme/ui/molecules";
 
 import type { RouterInputs, RouterOutputs } from "~/utils/api";
 import { api } from "~/utils/api";
 
-type PostEditFormFields = RouterInputs["post"]["update"];
-type Post = NonNullable<RouterOutputs["post"]["get"]>;
+type AddressEditFormFields = RouterInputs["address"]["update"];
+type Address = NonNullable<RouterOutputs["address"]["get"]>;
 
-export const PostEditForm: FC<{ post: Post }> = ({ post: initialPost }) => {
+export const AddressEditForm: FC<{ address: Address }> = ({
+  address: initialAddress,
+}) => {
   const context = api.useContext();
-  const [post] = api.post.get.useSuspenseQuery(
-    { id: initialPost.id },
-    { initialData: initialPost },
+  const [address] = api.address.get.useSuspenseQuery(
+    { id: initialAddress.id },
+    { initialData: initialAddress },
   );
 
-  const { mutateAsync } = api.post.update.useMutation({
+  const { mutateAsync } = api.address.update.useMutation({
     async onSettled() {
-      await context.post.list.invalidate();
-      await context.post.get.invalidate();
+      await context.address.list.invalidate();
+      await context.address.get.invalidate();
     },
   });
 
@@ -32,9 +34,9 @@ export const PostEditForm: FC<{ post: Post }> = ({ post: initialPost }) => {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
-  } = useForm<PostEditFormFields>({
-    resolver: zodResolver(postUpdateInput),
-    defaultValues: postUpdateInput.parse(post),
+  } = useForm<AddressEditFormFields>({
+    resolver: zodResolver(addressUpdateInput),
+    defaultValues: addressUpdateInput.parse(address),
   });
 
   const onSubmit = handleSubmit(async (data) => {
