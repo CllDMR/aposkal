@@ -4,14 +4,14 @@ import type { NextPage } from "next";
 import { Main } from "@acme/ui/atoms";
 
 export const metadata = {
-  title: "Addresss",
-  description: "List of addresss",
+  title: "Addresses",
+  description: "List of addresses",
 };
 
 const Layout: NextPage<PropsWithChildren> = ({ children }) => {
   return (
     <Main>
-      <h1 className="sr-only">Addresss Page</h1>
+      <h1 className="sr-only">Addresses Page</h1>
 
       {children}
     </Main>

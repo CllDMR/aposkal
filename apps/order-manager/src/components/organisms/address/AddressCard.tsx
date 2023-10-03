@@ -31,7 +31,7 @@ export const AddressCard: FC<AddressCardProps> = ({ initAddress, id }) => {
   return (
     <div>
       <span>{address.name}</span>
-      <LinkButton href={`/addresss/${address.id}/edit`}>Edit</LinkButton>
+      <LinkButton href={`/addresses/${address.id}/edit`}>Edit</LinkButton>
       <Button
         onClick={async () => await mutateAsync(address.id)}
         disabled={isLoading}

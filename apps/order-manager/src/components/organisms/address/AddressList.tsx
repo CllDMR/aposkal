@@ -8,15 +8,15 @@ import type { RouterOutputs } from "~/utils/api";
 import { api } from "~/utils/api";
 
 interface AddressListProps {
-  addresss: RouterOutputs["address"]["list"];
+  addresses: RouterOutputs["address"]["list"];
 }
 
-export const AddressList: FC<AddressListProps> = ({ addresss }) => {
+export const AddressList: FC<AddressListProps> = ({ addresses }) => {
   const context = api.useContext();
   const [data] = api.address.list.useSuspenseQuery(
     {},
     {
-      initialData: addresss,
+      initialData: addresses,
     },
   );
 
@@ -32,8 +32,8 @@ export const AddressList: FC<AddressListProps> = ({ addresss }) => {
       {data.map((address) => (
         <div key={address.id}>
           <span>{address.name}</span>
-          <LinkButton href={`/addresss/${address.id}`}>Go</LinkButton>
-          <LinkButton href={`/addresss/${address.id}/edit`}>Edit</LinkButton>
+          <LinkButton href={`/addresses/${address.id}`}>Go</LinkButton>
+          <LinkButton href={`/addresses/${address.id}/edit`}>Edit</LinkButton>
           <Button
             onClick={async () => await mutateAsync(address.id)}
             disabled={isLoading}
