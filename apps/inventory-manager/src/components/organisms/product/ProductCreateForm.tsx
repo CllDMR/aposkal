@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 
 import { productCreateInput } from "@acme/api/src/inputs/product";
-import { Form } from "@acme/ui/atoms";
+import { Form, FormBottom } from "@acme/ui/atoms";
 import { Button, FormDropdownInput, FormInput } from "@acme/ui/molecules";
 
 import type { RouterInputs, RouterOutputs } from "~/utils/api";
@@ -69,7 +69,7 @@ export const ProductCreateForm: FC<ProductCreateFormProps> = ({
     control,
   });
 
-  const { productTagIds, ...restErrors } = errors;
+  const { productTagIds: _, ...restErrors } = errors;
 
   const onSubmit = handleSubmit(async (data) => {
     await mutateAsync(data);
@@ -125,9 +125,11 @@ export const ProductCreateForm: FC<ProductCreateFormProps> = ({
         Add Tag
       </Button>
 
-      <Button type="submit" disabled={isSubmitting}>
-        Create
-      </Button>
+      <FormBottom>
+        <Button type="submit" disabled={isSubmitting}>
+          Create
+        </Button>
+      </FormBottom>
     </Form>
   );
 };

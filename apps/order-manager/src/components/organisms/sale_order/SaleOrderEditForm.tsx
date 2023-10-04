@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { saleOrderUpdateInput } from "@acme/api/src/inputs/sale_order";
-import { Form } from "@acme/ui/atoms";
+import { Form, FormBottom } from "@acme/ui/atoms";
 import {
   Button,
   FormDateInput,
@@ -117,9 +117,11 @@ export const SaleOrderEditForm: FC<SaleOrderEditFormProps> = ({
         register={register}
       />
 
-      <Button type="submit" disabled={isSubmitting}>
-        Update
-      </Button>
+      <FormBottom>
+        <Button type="submit" disabled={isSubmitting}>
+          Update
+        </Button>
+      </FormBottom>
     </Form>
   );
 };

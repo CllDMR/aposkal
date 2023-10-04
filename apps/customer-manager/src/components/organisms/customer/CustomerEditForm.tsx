@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { customerUpdateInput } from "@acme/api/src/inputs/customer";
-import { Form } from "@acme/ui/atoms";
+import { Form, FormBottom } from "@acme/ui/atoms";
 import { Button, FormDateInput, FormInput } from "@acme/ui/molecules";
 
 import type { RouterInputs, RouterOutputs } from "~/utils/api";
@@ -108,9 +108,11 @@ export const CustomerEditForm: FC<{ customer: Customer }> = ({
         register={register}
       />
 
-      <Button type="submit" disabled={isSubmitting}>
-        Update
-      </Button>
+      <FormBottom>
+        <Button type="submit" disabled={isSubmitting}>
+          Update
+        </Button>
+      </FormBottom>
     </Form>
   );
 };

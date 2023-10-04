@@ -16,7 +16,7 @@ export const Form: FC<FormProps> = ({
     <form
       className={cn(
         {
-          "grid max-w-7xl grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-3":
+          "grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-3":
             variant === "grid",
           "divide-y": variant === "sections",
         },

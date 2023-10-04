@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { postCreateInput } from "@acme/api/src/inputs/post";
-import { Form } from "@acme/ui/atoms";
+import { Form, FormBottom } from "@acme/ui/atoms";
 import {
   Button,
   FormCheckbox,
@@ -77,9 +77,11 @@ export const PostCreateForm: FC = () => {
         errors={errors}
       />
 
-      <Button type="submit" disabled={isSubmitting}>
-        Create
-      </Button>
+      <FormBottom>
+        <Button type="submit" disabled={isSubmitting}>
+          Create
+        </Button>
+      </FormBottom>
     </Form>
   );
 };

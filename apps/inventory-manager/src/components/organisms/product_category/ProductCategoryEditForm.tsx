@@ -1,11 +1,11 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import type { FC } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { productCategoryUpdateInput } from "@acme/api/src/inputs/product_category";
-import { Form } from "@acme/ui/atoms";
+import { Form, FormBottom } from "@acme/ui/atoms";
 import { Button, FormInput } from "@acme/ui/molecules";
 
 import type { RouterInputs, RouterOutputs } from "~/utils/api";
@@ -14,9 +14,9 @@ import { api } from "~/utils/api";
 type ProductCategoryEditFormFields = RouterInputs["productCategory"]["update"];
 type ProductCategory = NonNullable<RouterOutputs["productCategory"]["get"]>;
 
-export const ProductCategoryEditForm: FC<{ productCategory: ProductCategory }> = ({
-  productCategory: initialProductCategory,
-}) => {
+export const ProductCategoryEditForm: FC<{
+  productCategory: ProductCategory;
+}> = ({ productCategory: initialProductCategory }) => {
   const context = api.useContext();
   const [productCategory] = api.productCategory.get.useSuspenseQuery(
     { id: initialProductCategory.id },
@@ -55,9 +55,11 @@ export const ProductCategoryEditForm: FC<{ productCategory: ProductCategory }> =
         register={register}
       />
 
-      <Button type="submit" disabled={isSubmitting}>
-        Update
-      </Button>
+      <FormBottom>
+        <Button type="submit" disabled={isSubmitting}>
+          Update
+        </Button>
+      </FormBottom>
     </Form>
   );
 };

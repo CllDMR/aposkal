@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 
 import { supplierUpdateInput } from "@acme/api/src/inputs/supplier";
-import { Form } from "@acme/ui/atoms";
+import { Form, FormBottom } from "@acme/ui/atoms";
 import { Button, FormDropdownInput, FormInput } from "@acme/ui/molecules";
 
 import type { RouterInputs, RouterOutputs } from "~/utils/api";
@@ -61,7 +61,7 @@ export const SupplierEditForm: FC<{ supplier: Supplier }> = ({
     control,
   });
 
-  const { productIds, ...restErrors } = errors;
+  const { productIds: _, ...restErrors } = errors;
 
   const onSubmit = handleSubmit(async (data) => {
     return await mutateAsync(data);
@@ -107,9 +107,11 @@ export const SupplierEditForm: FC<{ supplier: Supplier }> = ({
         Add Product
       </Button>
 
-      <Button type="submit" disabled={isSubmitting}>
-        Update
-      </Button>
+      <FormBottom>
+        <Button type="submit" disabled={isSubmitting}>
+          Update
+        </Button>
+      </FormBottom>
     </Form>
   );
 };

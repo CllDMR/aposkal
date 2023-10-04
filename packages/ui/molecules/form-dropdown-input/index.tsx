@@ -51,8 +51,8 @@ export const FormDropdownInput = <TFormValues extends FieldValues>({
   control,
   // option,
   options, // onChange,
-  // onChangeQueryText, // className,
-} // queryText,
+  // queryText,
+} // onChangeQueryText, // className,
 // ...props
 : FormDropdownInputProps<TFormValues>): JSX.Element => {
   // const errorMessages = get(errors, name);
@@ -63,7 +63,7 @@ export const FormDropdownInput = <TFormValues extends FieldValues>({
     value: "",
   } as PathValue<TFormValues, Path<TFormValues>>;
 
-  const [openCreateModal, setOpenCreateModal] = useState(false);
+  const [_openCreateModal, setOpenCreateModal] = useState(false);
   // const [selected, setSelected] = useState<{
   //   id: string;
   //   value: string;
@@ -90,11 +90,15 @@ export const FormDropdownInput = <TFormValues extends FieldValues>({
     defaultValue: defaultValue,
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleOnChange = (val: any) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     if (!val?.id) {
       /* empty */
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     } else if (val?.id === "new") {
       setOpenCreateModal(true);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     } else fOnChange(val.value);
   };
 

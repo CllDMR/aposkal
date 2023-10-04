@@ -3,6 +3,7 @@ export type { CheckboxProps, CheckboxSize } from "./checkbox";
 export { DateInput } from "./date-input";
 export type { DateInputProps } from "./date-input";
 export { Form } from "./form";
+export { FormBottom } from "./form-bottom";
 export { FormErrorMessage } from "./form-error-message";
 export type { FormErrorMessageProps } from "./form-error-message";
 export { FormSection } from "./form-section";

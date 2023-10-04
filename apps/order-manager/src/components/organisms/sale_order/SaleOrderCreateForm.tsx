@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { saleOrderCreateInput } from "@acme/api/src/inputs/sale_order";
-import { Form, FormSection } from "@acme/ui/atoms";
+import { Form, FormBottom, FormSection } from "@acme/ui/atoms";
 import {
   Button,
   FormDateInput,
@@ -145,11 +145,11 @@ export const SaleOrderCreateForm: FC<SaleOrderCreateFormProps> = ({
         />
       </FormSection>
 
-      <div className="flex justify-end pt-4">
+      <FormBottom>
         <Button type="submit" disabled={isSubmitting}>
           Create
         </Button>
-      </div>
+      </FormBottom>
     </Form>
   );
 };

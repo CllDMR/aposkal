@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { productCategoryCreateInput } from "@acme/api/src/inputs/product_category";
-import { Form } from "@acme/ui/atoms";
+import { Form, FormBottom } from "@acme/ui/atoms";
 import { Button, FormInput } from "@acme/ui/molecules";
 
 import type { RouterInputs } from "~/utils/api";
@@ -46,9 +46,11 @@ export const ProductCategoryCreateForm: FC = () => {
         register={register}
       />
 
-      <Button type="submit" disabled={isSubmitting}>
-        Create
-      </Button>
+      <FormBottom>
+        <Button type="submit" disabled={isSubmitting}>
+          Create
+        </Button>
+      </FormBottom>
     </Form>
   );
 };
