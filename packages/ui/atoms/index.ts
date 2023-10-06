@@ -1,3 +1,4 @@
+export { Card } from "./card";
 export { Checkbox } from "./checkbox";
 export type { CheckboxProps, CheckboxSize } from "./checkbox";
 export { DateInput } from "./date-input";
