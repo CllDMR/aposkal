@@ -3,7 +3,7 @@ import type { FC, HTMLAttributes } from "react";
 import { cn } from "../../utils/cn";
 
 type FormProps = HTMLAttributes<HTMLFormElement> & {
-  variant?: "sections" | "grid";
+  variant?: "sections" | "grid" | "none";
 };
 
 export const Form: FC<FormProps> = ({
@@ -20,7 +20,6 @@ export const Form: FC<FormProps> = ({
             variant === "grid",
           "divide-y": variant === "sections",
         },
-        "rounded-lg border p-4 shadow",
         className,
       )}
       {...rest}
