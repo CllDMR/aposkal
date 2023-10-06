@@ -59,7 +59,7 @@ export function Button({
   onClick,
 }: ButtonProps) {
   const css = clsx(
-    "inline-flex items-center justify-center rounded-md px-3 py-2 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:bg-disabled-600",
+    "inline-flex items-center justify-center rounded-md px-3 py-2 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:bg-disabled-500 disabled:text-gray-400",
     VARIANT_MAPS[variant],
     SIZE_MAPS[size],
 
