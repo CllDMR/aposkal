@@ -28,6 +28,8 @@ export const config = {
     "/dashboard",
     "/addresses",
     "/addresses/(.*)",
+    "/sale-offers",
+    "/sale-offers/(.*)",
     "/sale-orders",
     "/sale-orders/(.*)",
     "/posts",

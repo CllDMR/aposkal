@@ -8,6 +8,13 @@ export const saleOfferListInput = selectSaleOfferSchema
   .partial({
     createdAt: true,
     updatedAt: true,
+    addressId: true,
+    currency: true,
+    customerId: true,
+    endDate: true,
+    no: true,
+    paymentEndDate: true,
+    startDate: true,
   });
 
 export const saleOfferGetInput = selectSaleOfferSchema.pick({
