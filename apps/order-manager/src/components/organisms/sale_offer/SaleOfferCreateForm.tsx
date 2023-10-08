@@ -6,7 +6,11 @@ import { useForm } from "react-hook-form";
 
 import { saleOfferCreateInput } from "@acme/api/src/inputs/sale_offer";
 import { Form, FormSection } from "@acme/ui/atoms";
-import { FormDateInput, FormDropdownInput } from "@acme/ui/molecules";
+import {
+  FormDateInput,
+  FormDropdownInput,
+  FormInput,
+} from "@acme/ui/molecules";
 import { TabPanel } from "@acme/ui/organisms";
 
 import type { RouterInputs, RouterOutputs } from "~/utils/api";
@@ -16,12 +20,10 @@ type SaleOfferCreateFormFields = RouterInputs["saleOffer"]["create"];
 
 interface SaleOfferCreateFormProps {
   customers: RouterOutputs["customer"]["list"];
-  addresses: RouterOutputs["address"]["list"];
 }
 
 export const SaleOfferCreateForm: FC<SaleOfferCreateFormProps> = ({
   customers: initialCustomers,
-  addresses: initialAddresses,
 }) => {
   const context = api.useContext();
   const { mutateAsync } = api.saleOffer.create.useMutation({
@@ -36,24 +38,12 @@ export const SaleOfferCreateForm: FC<SaleOfferCreateFormProps> = ({
       initialData: initialCustomers,
     },
   );
-  const { data: addresses } = api.address.list.useQuery(
-    {},
-    {
-      initialData: initialAddresses,
-    },
-  );
 
   const formattedCustomers =
     customers?.map((customer) => ({
       id: customer.id,
       label: `${customer.firstname} ${customer.middlename} ${customer.lastname}`,
       value: customer.id,
-    })) ?? [];
-  const formattedAddresses =
-    addresses?.map((address) => ({
-      id: address.id,
-      label: address.name,
-      value: address.id,
     })) ?? [];
 
   const {
@@ -80,14 +70,13 @@ export const SaleOfferCreateForm: FC<SaleOfferCreateFormProps> = ({
             label="Müşteri Bilgileri"
             description="Bir müşteri seçin veya yeni müşteri ekleyin."
           >
-            {/* <FormInput<SaleOfferCreateFormFields>
-              id="priority"
-              label="Priority"
-              name="priority"
-              type="text"
+            <FormDropdownInput<SaleOfferCreateFormFields>
+              label="Müşteri"
+              name="customerId"
               errors={errors}
-              register={register}
-            /> */}
+              control={control}
+              options={formattedCustomers}
+            />
           </FormSection>
 
           <FormSection
@@ -96,17 +85,25 @@ export const SaleOfferCreateForm: FC<SaleOfferCreateFormProps> = ({
           >
             <FormDateInput<SaleOfferCreateFormFields>
               id="startDate"
-              label="Start Date"
+              label="Teklif Tarihi"
               name="startDate"
               control={control}
               errors={errors}
             />
             <FormDateInput<SaleOfferCreateFormFields>
               id="endDate"
-              label="End Date"
+              label="Geçerlilik Tarihi"
               name="endDate"
               control={control}
               errors={errors}
+            />
+            <FormInput<SaleOfferCreateFormFields>
+              id="no"
+              label="No"
+              name="no"
+              type="text"
+              errors={errors}
+              register={register}
             />
           </FormSection>
 
@@ -114,19 +111,20 @@ export const SaleOfferCreateForm: FC<SaleOfferCreateFormProps> = ({
             label="Ödeme Bilgileri"
             description="Ödeme vadesi ve varsa döviz cinsini giriniz."
           >
-            <FormDropdownInput<SaleOfferCreateFormFields>
-              label="Customer"
-              name="customerId"
-              errors={errors}
+            <FormDateInput<SaleOfferCreateFormFields>
+              id="paymentEndDate"
+              label="Ödeme Tarihi"
+              name="paymentEndDate"
               control={control}
-              options={formattedCustomers}
+              errors={errors}
             />
-            <FormDropdownInput<SaleOfferCreateFormFields>
-              label="Address"
-              name="addressId"
+            <FormInput<SaleOfferCreateFormFields>
+              id="currency"
+              label="Döviz Cinsi"
+              name="currency"
+              type="text"
               errors={errors}
-              control={control}
-              options={formattedAddresses}
+              register={register}
             />
           </FormSection>
 
@@ -135,7 +133,7 @@ export const SaleOfferCreateForm: FC<SaleOfferCreateFormProps> = ({
             description="Maliyet ve karlılığı proje bazında takip etmek istiyorsanız bir proje seçin veya ekleyin. Zorunlu değildir."
           >
             <FormDropdownInput<SaleOfferCreateFormFields>
-              label="Customer"
+              label="Proje"
               name="customerId"
               errors={errors}
               control={control}
