@@ -18,6 +18,9 @@ import * as productsToCategories from "./schema/products_to_categories";
 import * as productsToSuppliers from "./schema/products_to_suppliers";
 import * as productsToTags from "./schema/products_to_tags";
 import * as purchaseOrder from "./schema/purchase_order";
+import * as saleOffer from "./schema/sale_offer";
+import * as saleOfferNote from "./schema/sale_offer_note";
+import * as saleOfferProduct from "./schema/sale_offer_product";
 import * as saleOrder from "./schema/sale_order";
 import * as supplier from "./schema/supplier";
 import * as warehouse from "./schema/warehouse";
@@ -41,6 +44,9 @@ export const schema = {
   ...productsToSuppliers,
   ...productsToTags,
   ...purchaseOrder,
+  ...saleOffer,
+  ...saleOfferProduct,
+  ...saleOfferNote,
   ...saleOrder,
   ...supplier,
   ...warehouse,
