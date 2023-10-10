@@ -42,6 +42,8 @@ export const SaleOfferCreateInfoPanel: FC<
     control,
   } = useFormContext<SaleOfferCreateFormInfoPanelFields>();
 
+  const { saleOfferNotes: _, saleOfferProducts: __, ...restErrors } = errors;
+
   return (
     <div className="divide-y">
       <FormSection
@@ -51,7 +53,7 @@ export const SaleOfferCreateInfoPanel: FC<
         <FormDropdownInput<SaleOfferCreateFormInfoPanelFields>
           label="Müşteri"
           name="customerId"
-          errors={errors}
+          errors={restErrors}
           control={control}
           options={formattedCustomers}
         />
@@ -66,21 +68,21 @@ export const SaleOfferCreateInfoPanel: FC<
           label="Teklif Tarihi"
           name="startDate"
           control={control}
-          errors={errors}
+          errors={restErrors}
         />
         <FormDateInput<SaleOfferCreateFormInfoPanelFields>
           id="endDate"
           label="Geçerlilik Tarihi"
           name="endDate"
           control={control}
-          errors={errors}
+          errors={restErrors}
         />
         <FormInput<SaleOfferCreateFormInfoPanelFields>
           id="no"
           label="No"
           name="no"
           type="text"
-          errors={errors}
+          errors={restErrors}
           register={register}
         />
       </FormSection>
@@ -94,14 +96,14 @@ export const SaleOfferCreateInfoPanel: FC<
           label="Ödeme Tarihi"
           name="paymentEndDate"
           control={control}
-          errors={errors}
+          errors={restErrors}
         />
         <FormInput<SaleOfferCreateFormInfoPanelFields>
           id="currency"
           label="Döviz Cinsi"
           name="currency"
           type="text"
-          errors={errors}
+          errors={restErrors}
           register={register}
         />
       </FormSection>
@@ -113,7 +115,7 @@ export const SaleOfferCreateInfoPanel: FC<
         <FormDropdownInput<SaleOfferCreateFormInfoPanelFields>
           label="Proje"
           name="customerId"
-          errors={errors}
+          errors={restErrors}
           control={control}
           options={formattedCustomers}
         />

@@ -20,9 +20,20 @@ export default async function SaleOrderEditPage({ params: { id } }: PageProps) {
       eq(schema.saleOrder.tenantId, session.user.ti),
       eq(schema.saleOrder.id, id),
     ),
+    with: {
+      customer: true,
+      toAddress: true,
+    },
   });
 
   if (!saleOrder) notFound();
 
-  return <SaleOrderEditForm saleOrder={saleOrder} />;
+  const customers = await db.query.customer.findMany({
+    where: and(
+      eq(schema.customer.tenantId, session.user.ti),
+      eq(schema.customer.id, id),
+    ),
+  });
+
+  return <SaleOrderEditForm saleOrder={saleOrder} customers={customers} />;
 }

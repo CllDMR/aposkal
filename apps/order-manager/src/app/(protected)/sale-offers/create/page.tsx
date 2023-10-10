@@ -7,17 +7,11 @@ export default async function SaleOfferCreatePage() {
   const session = await getServerSession(authOptions);
   if (!session) throw new Error("No Session");
 
-  const addresses = await db
-    .select()
-    .from(schema.address)
-    .where(eq(schema.address.tenantId, session.user.ti))
-    .orderBy(desc(schema.address.id));
-
   const customers = await db
     .select()
     .from(schema.customer)
     .where(eq(schema.customer.tenantId, session.user.ti))
     .orderBy(desc(schema.customer.id));
 
-  return <SaleOfferCreateForm addresses={addresses} customers={customers} />;
+  return <SaleOfferCreateForm customers={customers} />;
 }

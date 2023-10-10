@@ -10,11 +10,7 @@ import type { RouterInputs } from "~/utils/api";
 
 type SaleOfferCreateFormFields = RouterInputs["saleOffer"]["create"];
 
-interface SaleOfferCreateFormProductPanelProps {}
-
-export const SaleOfferCreateProductPanel: FC<
-  SaleOfferCreateFormProductPanelProps
-> = () => {
+export const SaleOfferCreateProductPanel: FC = () => {
   const {
     register,
     formState: { errors },

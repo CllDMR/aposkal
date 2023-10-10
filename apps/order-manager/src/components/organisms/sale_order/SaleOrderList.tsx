@@ -31,7 +31,10 @@ export const SaleOrderList: FC<SaleOrderListProps> = ({ saleOrders }) => {
     <>
       {data.map((saleOrder) => (
         <div key={saleOrder.id}>
-          <span>{saleOrder.title}</span>
+          <span>
+            Sale Order Customer: {saleOrder.customer.firstname}{" "}
+            {saleOrder.customer.middlename} {saleOrder.customer.lastname}
+          </span>
           <LinkButton href={`/sale-orders/${saleOrder.id}`}>Go</LinkButton>
           <LinkButton href={`/sale-orders/${saleOrder.id}/edit`}>
             Edit

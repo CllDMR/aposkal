@@ -2,10 +2,6 @@
 
 import type { FC } from "react";
 
-interface SaleOfferCreateFormPreviewPanelProps {}
-
-export const SaleOfferCreatePreviewPanel: FC<
-  SaleOfferCreateFormPreviewPanelProps
-> = () => {
+export const SaleOfferCreatePreviewPanel: FC = () => {
   return <div className="divide-y">Preview</div>;
 };

@@ -51,7 +51,6 @@ export const SaleOfferEditForm: FC<SaleOfferEditFormProps> = ({
 
   const {
     handleSubmit,
-    register,
     formState: { errors, isSubmitting },
     control,
   } = useForm<SaleOfferEditFormFields>({
@@ -63,6 +62,8 @@ export const SaleOfferEditForm: FC<SaleOfferEditFormProps> = ({
     return await mutateAsync(data);
   });
 
+  const { saleOfferNotes: _, saleOfferProducts: __, ...restErrors } = errors;
+
   return (
     <Form onSubmit={onSubmit}>
       <FormDateInput<SaleOfferEditFormFields>
@@ -70,19 +71,19 @@ export const SaleOfferEditForm: FC<SaleOfferEditFormProps> = ({
         label="Start Date"
         name="startDate"
         control={control}
-        errors={errors}
+        errors={restErrors}
       />
       <FormDateInput<SaleOfferEditFormFields>
         id="endDate"
         label="End Date"
         name="endDate"
         control={control}
-        errors={errors}
+        errors={restErrors}
       />
       <FormDropdownInput<SaleOfferEditFormFields>
         label="Customer"
         name="customerId"
-        errors={errors}
+        errors={restErrors}
         control={control}
         options={formattedCustomers}
       />
@@ -92,7 +93,7 @@ export const SaleOfferEditForm: FC<SaleOfferEditFormProps> = ({
         label="Customer Type"
         name="customerType"
         type="text"
-        errors={errors}
+        errors={restErrors}
         register={register}
       /> */}
 
