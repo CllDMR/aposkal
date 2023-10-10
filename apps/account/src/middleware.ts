@@ -10,7 +10,8 @@ export default withAuth({
   callbacks: {
     authorized({ token, req }) {
       if (req.nextUrl.pathname.startsWith("/auth"))
-        return !!token?.sub && !!token.email;
+        if (req.nextUrl.pathname.startsWith("/auth/register")) return true;
+        else return !!token?.sub && !!token.email;
 
       return !!token?.sub && !!token.email && !!token.ti && !!token.tn;
     },
