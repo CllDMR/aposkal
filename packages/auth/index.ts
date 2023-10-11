@@ -19,6 +19,8 @@ export const providers = [""] as const;
 export type OAuthProviders = (typeof providers)[number];
 
 const domain = process.env.NODE_ENV === "production" ? env.DOMAIN : undefined;
+console.log({ domain });
+
 const cookiePrefix = "__Secure";
 const useSecureCookies = process.env.NODE_ENV === "production";
 
@@ -41,7 +43,7 @@ export const authOptions: NextAuthOptions = {
         sameSite: "lax",
         path: "/",
         secure: true,
-        domain,
+        // domain,
       },
     },
     csrfToken: {
@@ -51,7 +53,7 @@ export const authOptions: NextAuthOptions = {
         sameSite: "lax",
         path: "/",
         secure: true,
-        domain,
+        // domain,
       },
     },
     pkceCodeVerifier: {
@@ -62,7 +64,7 @@ export const authOptions: NextAuthOptions = {
         path: "/",
         secure: useSecureCookies,
         maxAge: 900,
-        domain,
+        // domain,
       },
     },
     state: {
@@ -73,7 +75,7 @@ export const authOptions: NextAuthOptions = {
         path: "/",
         secure: useSecureCookies,
         maxAge: 900,
-        domain,
+        // domain,
       },
     },
     nonce: {
@@ -83,7 +85,7 @@ export const authOptions: NextAuthOptions = {
         sameSite: "lax",
         path: "/",
         secure: useSecureCookies,
-        domain,
+        // domain,
       },
     },
   },
