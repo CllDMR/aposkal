@@ -5,6 +5,8 @@ import Credentials from "next-auth/providers/credentials";
 
 import { db, eq, schema, tableCreator } from "@acme/db";
 
+import { env } from "./env.mjs";
+
 // import { sendMail } from "./mailer";
 
 export type { Session } from "next-auth";
@@ -16,6 +18,7 @@ export type { SessionContextValue } from "next-auth/react";
 export const providers = [""] as const;
 export type OAuthProviders = (typeof providers)[number];
 
+const domain = process.env.NODE_ENV === "production" ? env.DOMAIN : undefined;
 const cookiePrefix = "__Secure";
 const useSecureCookies = process.env.NODE_ENV === "production";
 
@@ -29,6 +32,7 @@ export const authOptions: NextAuthOptions = {
         sameSite: "lax",
         path: "/",
         secure: true,
+        domain,
       },
     },
     callbackUrl: {
@@ -37,6 +41,7 @@ export const authOptions: NextAuthOptions = {
         sameSite: "lax",
         path: "/",
         secure: true,
+        domain,
       },
     },
     csrfToken: {
@@ -46,6 +51,7 @@ export const authOptions: NextAuthOptions = {
         sameSite: "lax",
         path: "/",
         secure: true,
+        domain,
       },
     },
     pkceCodeVerifier: {
@@ -56,6 +62,7 @@ export const authOptions: NextAuthOptions = {
         path: "/",
         secure: useSecureCookies,
         maxAge: 900,
+        domain,
       },
     },
     state: {
@@ -66,6 +73,7 @@ export const authOptions: NextAuthOptions = {
         path: "/",
         secure: useSecureCookies,
         maxAge: 900,
+        domain,
       },
     },
     nonce: {
@@ -75,6 +83,7 @@ export const authOptions: NextAuthOptions = {
         sameSite: "lax",
         path: "/",
         secure: useSecureCookies,
+        domain,
       },
     },
   },
