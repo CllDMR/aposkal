@@ -16,8 +16,69 @@ export type { SessionContextValue } from "next-auth/react";
 export const providers = [""] as const;
 export type OAuthProviders = (typeof providers)[number];
 
+const cookiePrefix = "__Secure";
+// const useSecureCookies = process.env.NODE_ENV === "production";
+const useSecureCookies = false;
+
 export const authOptions: NextAuthOptions = {
   session: { strategy: "jwt" },
+  cookies: {
+    sessionToken: {
+      name: `__Secure-next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: true,
+      },
+    },
+    callbackUrl: {
+      name: `__Secure-next-auth.callback-url`,
+      options: {
+        sameSite: "lax",
+        path: "/",
+        secure: true,
+      },
+    },
+    csrfToken: {
+      name: `__Host-next-auth.csrf-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: true,
+      },
+    },
+    pkceCodeVerifier: {
+      name: `${cookiePrefix}next-auth.pkce.code_verifier`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: useSecureCookies,
+        maxAge: 900,
+      },
+    },
+    state: {
+      name: `${cookiePrefix}next-auth.state`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: useSecureCookies,
+        maxAge: 900,
+      },
+    },
+    nonce: {
+      name: `${cookiePrefix}next-auth.nonce`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: useSecureCookies,
+      },
+    },
+  },
   adapter: DrizzleAdapter(db, tableCreator),
   pages: {
     signIn: "/auth/login",

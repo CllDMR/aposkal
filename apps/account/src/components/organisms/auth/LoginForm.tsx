@@ -35,6 +35,7 @@ export default function LoginForm() {
     const params = new URLSearchParams();
     const combinedCallbackUrls = searchParamsCallbackUrls.reduce(
       (p, c) => p + c,
+      "",
     );
 
     // params.append("callbackUrl", encodeURIComponent(s));

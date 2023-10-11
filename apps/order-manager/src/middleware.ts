@@ -21,6 +21,11 @@ export default withAuth({
       return !!token?.sub && !!token.email && !!token.ti && !!token.tn;
     },
   },
+  cookies: {
+    sessionToken: {
+      name: `__Secure-next-auth.session-token`,
+    },
+  },
 });
 
 export const config = {

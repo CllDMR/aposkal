@@ -9,11 +9,18 @@ export default withAuth({
   },
   callbacks: {
     authorized({ token, req }) {
+      console.log({ pathname: req.nextUrl.pathname, token });
+
       if (req.nextUrl.pathname.startsWith("/auth"))
         if (req.nextUrl.pathname.startsWith("/auth/register")) return true;
         else return !!token?.sub && !!token.email;
 
       return !!token?.sub && !!token.email && !!token.ti && !!token.tn;
+    },
+  },
+  cookies: {
+    sessionToken: {
+      name: `__Secure-next-auth.session-token`,
     },
   },
 });
