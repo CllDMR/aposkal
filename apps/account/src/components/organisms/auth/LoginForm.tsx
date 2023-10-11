@@ -20,7 +20,8 @@ const loginInput = z.object({
 });
 
 export default function LoginForm() {
-  const searchParamsCallbackUrls = useSearchParams().getAll("callbackUrl");
+  const searchParamsCallbackUrls =
+    useSearchParams().getAll("callbackUrl") ?? [];
 
   const {
     handleSubmit,
