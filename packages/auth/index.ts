@@ -17,8 +17,7 @@ export const providers = [""] as const;
 export type OAuthProviders = (typeof providers)[number];
 
 const cookiePrefix = "__Secure";
-// const useSecureCookies = process.env.NODE_ENV === "production";
-const useSecureCookies = false;
+const useSecureCookies = process.env.NODE_ENV === "production";
 
 export const authOptions: NextAuthOptions = {
   session: { strategy: "jwt" },
