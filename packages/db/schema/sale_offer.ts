@@ -8,11 +8,8 @@ import { mySqlTable } from "./_table";
 import { address } from "./address";
 import { tenant } from "./auth/tenant";
 import { customer } from "./customer";
-import { insertSaleOfferNoteSchema, saleOfferNote } from "./sale_offer_note";
-import {
-  insertSaleOfferProductSchema,
-  saleOfferProduct,
-} from "./sale_offer_product";
+import { saleOfferNote } from "./sale_offer_note";
+import { saleOfferProduct } from "./sale_offer_product";
 
 export const saleOffer = mySqlTable(
   "sale_offer",
@@ -61,20 +58,20 @@ export const saleOfferRelations = relations(saleOffer, ({ one, many }) => ({
 export const insertSaleOfferSchema = createInsertSchema(saleOffer).extend({
   customerId: z.string(),
   addressId: z.string(),
-  saleOfferProducts: insertSaleOfferProductSchema
-    .omit({
-      id: true,
-      createdAt: true,
-      updatedAt: true,
-      tenantId: true,
+  saleOfferProducts: z
+    .object({
+      currency: z.string(),
+      amount: z.number(),
+      unitPrice: z.number(),
+      kdv: z.number(),
+      total: z.number(),
     })
     .array(),
-  saleOfferNotes: insertSaleOfferNoteSchema
-    .omit({
-      id: true,
-      createdAt: true,
-      updatedAt: true,
-      tenantId: true,
+  saleOfferNotes: z
+    .object({
+      text: z.string(),
+      tenantId: z.string(),
+      saleOfferId: z.string(),
     })
     .array(),
 });
