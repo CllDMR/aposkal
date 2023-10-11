@@ -60,6 +60,8 @@ export const insertSaleOfferSchema = createInsertSchema(saleOffer).extend({
   addressId: z.string(),
   saleOfferProducts: z
     .object({
+      saleOfferId: z.string(),
+      productId: z.string(),
       currency: z.string(),
       amount: z.number(),
       unitPrice: z.number(),
