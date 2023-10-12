@@ -14,6 +14,7 @@ export const env = createEnv({
    * built with invalid env vars.
    */
   server: {
+    DOMAIN: z.string().url(),
     NEXTAUTH_URL: z.string().url(),
     DATABASE_URL: z.string().url(),
   },
@@ -28,6 +29,7 @@ export const env = createEnv({
    * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
    */
   runtimeEnv: {
+    DOMAIN: process.env.DOMAIN,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     VERCEL_URL: process.env.VERCEL_URL,
     PORT: process.env.PORT,

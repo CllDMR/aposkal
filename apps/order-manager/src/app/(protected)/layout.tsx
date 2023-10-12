@@ -5,6 +5,7 @@ import { Drawer, DrawerMobileWrapper, Navbar } from "@acme/ui/organisms";
 import type { DrawerNavigationPath } from "@acme/ui/organisms/drawer";
 import type { NavbarNavigationPath } from "@acme/ui/organisms/navbar";
 
+import { env } from "~/env.mjs";
 import { getBaseAuthUrl } from "~/utils/get-base-url";
 
 const baseAuthUrl = getBaseAuthUrl();
@@ -144,7 +145,11 @@ export default async function Layout(props: { children: React.ReactNode }) {
 
   return (
     <>
-      <Navbar session={session} navigationPaths={navbarNavigationPaths} />
+      <Navbar
+        session={session}
+        navigationPaths={navbarNavigationPaths}
+        domain={env.DOMAIN}
+      />
       <div>
         <DrawerMobileWrapper navigationPaths={drawerNavigationPaths} />
 

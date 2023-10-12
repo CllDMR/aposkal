@@ -18,6 +18,7 @@ import { useSidebarStore } from "../../store/sidebar";
 type NavbarProps = PropsWithChildren & {
   session: Session;
   navigationPaths: NavbarNavigationPath[];
+  domain: string;
 };
 
 export interface NavbarNavigationPath {
@@ -33,6 +34,7 @@ export const Navbar: FC<NavbarProps> = ({
   children,
   session,
   navigationPaths,
+  domain,
 }) => {
   const { setOpen } = useSidebarStore();
 
@@ -57,7 +59,7 @@ export const Navbar: FC<NavbarProps> = ({
         </div> */}
         <div className="flex flex-1 items-center">{children}</div>
         <div className="flex items-center gap-x-4 lg:gap-x-6">
-          <AppsDropdown />
+          <AppsDropdown domain={domain} />
 
           <button
             type="button"
@@ -88,36 +90,46 @@ const solutions = [
   {
     name: "Membership Manager",
     description: "Control your accounts, users, organizations and billing",
-    href: "http://localhost:3000",
+    subdomain: "account",
+    port: "3000",
+    pathname: "/",
     icon: IconOne,
   },
   {
     name: "Inventory Manager",
     description: "Keep your products organized",
-    href: "http://localhost:3001/dashboard",
+    subdomain: "inventory",
+    port: "3001",
+    pathname: "/dashboard",
     icon: IconTwo,
   },
   {
     name: "Logistic Manager",
     description: "Track and analyze your logictics",
-    href: "http://localhost:3002/dashboard",
+    subdomain: "logistic",
+    port: "3002",
+    pathname: "/dashboard",
     icon: IconThree,
   },
   {
     name: "Order Manager",
     description: "Interact with your orders of customers and suppliers",
-    href: "http://localhost:3003/dashboard",
+    subdomain: "order",
+    port: "3003",
+    pathname: "/dashboard",
     icon: IconThree,
   },
   {
     name: "Customer Manager",
     description: "Manage and track relationships with your customers",
-    href: "http://localhost:3004/dashboard",
+    subdomain: "customer",
+    port: "3004",
+    pathname: "/dashboard",
     icon: IconThree,
   },
 ];
 
-const AppsDropdown: FC = () => (
+const AppsDropdown: FC<{ domain: string }> = ({ domain }) => (
   <Popover className="relative">
     {({ open }) => (
       <>
@@ -156,7 +168,15 @@ const AppsDropdown: FC = () => (
                 {solutions.map((item) => (
                   <a
                     key={item.name}
-                    href={item.href}
+                    href={
+                      process.env.NODE_ENV === "production"
+                        ? "https://" +
+                          item.subdomain +
+                          "." +
+                          domain +
+                          item.pathname
+                        : "http://localhost:" + item.port + item.pathname
+                    }
                     className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-primary-500 focus-visible:ring-opacity-50"
                   >
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center text-white sm:h-12 sm:w-12">

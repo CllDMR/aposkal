@@ -19,8 +19,6 @@ export const providers = [""] as const;
 export type OAuthProviders = (typeof providers)[number];
 
 const domain = process.env.NODE_ENV === "production" ? env.DOMAIN : undefined;
-console.log({ domain });
-
 const cookiePrefix = "__Secure";
 const useSecureCookies = process.env.NODE_ENV === "production";
 
