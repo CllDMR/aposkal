@@ -3,9 +3,7 @@ import { Inter } from "next/font/google";
 
 import "~/styles/globals.css";
 
-import { getServerSession } from "next-auth";
-
-import { authOptions } from "@acme/auth";
+import { authOptions, getServerSession } from "@acme/auth";
 
 import { Providers } from "./providers";
 
