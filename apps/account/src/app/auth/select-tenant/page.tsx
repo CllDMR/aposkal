@@ -1,12 +1,10 @@
-import { revalidatePath } from "next/cache";
-import { nanoid } from "nanoid";
-import { getServerSession } from "next-auth";
-import { zfd } from "zod-form-data";
+import Image from "next/image";
 
-import { authOptions } from "@acme/auth";
+import type { RouterOutputs } from "@acme/api";
+import { authOptions, getServerSession } from "@acme/auth";
 import { db, desc, eq, inArray, schema } from "@acme/db";
-import { Button } from "@acme/ui/molecules";
 
+import { CreateTenant } from "~/components/organisms/auth/CreateTenant";
 import { SelectTenant } from "~/components/organisms/auth/SelectTenant";
 
 export default async function SelectTenantPage() {
@@ -19,10 +17,7 @@ export default async function SelectTenantPage() {
     .where(eq(schema.usersToTenants.userId, session.user.id))
     .orderBy(desc(schema.usersToTenants.tenantId));
 
-  let tenants: {
-    name: string;
-    id: string;
-  }[] = [];
+  let tenants: RouterOutputs["tenant"]["listOfUserTenants"] = [];
 
   if (usertenants.length > 0) {
     tenants = await db
@@ -37,76 +32,30 @@ export default async function SelectTenantPage() {
       .orderBy(desc(schema.tenant.name));
   }
 
-  async function createAction(formData: FormData) {
-    "use server";
-    const validationSchema = zfd.formData({
-      name: zfd.text(),
-    });
-
-    const result = validationSchema.safeParse(formData);
-
-    if (result.success) {
-      const session = await getServerSession(authOptions);
-
-      if (!session) throw new Error("No Session");
-
-      const tenantId = nanoid();
-
-      await db
-        .insert(schema.tenant)
-        .values({ ...result.data, id: tenantId })
-        .execute();
-
-      await db
-        .insert(schema.usersToTenants)
-        .values({
-          tenantId: tenantId,
-          userId: session.user.id,
-        })
-        .execute();
-
-      revalidatePath("/auth/select-tenant");
-    } else console.error(result.error.flatten());
-  }
-
-  async function deleteAction(formData: FormData) {
-    "use server";
-    const validationSchema = zfd.formData({
-      id: zfd.text(),
-    });
-
-    const result = validationSchema.safeParse(formData);
-
-    if (result.success) {
-      await db
-        .delete(schema.tenant)
-        .where(eq(schema.tenant.id, result.data.id));
-      revalidatePath("/auth/select-tenant");
-    } else console.error(result.error.flatten());
-  }
-
   return (
     <main>
-      <form className="" action={createAction}>
-        <div>
-          <label htmlFor="name">Name</label>
-          <input type="text" id="name" name="name" />
-        </div>
+      <div className="bg-slate-50 min-h-screen p-10 md:px-36">
+        <div className="xl:px-60 ">
+          <div className="xl:mb-20">
+            <div className="flex justify-center ">
+              <Image
+                className="h-48 w-48"
+                src="/logo.svg"
+                alt="Logo"
+                width={800}
+                height={800}
+              />
+            </div>
+            {/* <p className="text-center text-sm text-gray-500">
+              {packageJson.version}
+            </p> */}
+          </div>
 
-        <Button type="submit">Send</Button>
-      </form>
+          <CreateTenant />
 
-      {tenants?.map((tenant) => (
-        <div key={tenant.id} className="flex gap-2">
-          <span>{tenant.name}</span>
-          <form action={deleteAction}>
-            <input type="hidden" name="id" defaultValue={tenant.id} />
-            <Button type="submit">Delete</Button>
-          </form>
-          <SelectTenant id={tenant.id} name={tenant.name} />
+          <SelectTenant tenants={tenants} />
         </div>
-      ))}
-      {tenants.length === 0 && <p>No tenant</p>}
+      </div>
     </main>
   );
 }
