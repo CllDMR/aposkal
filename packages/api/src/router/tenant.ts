@@ -1,6 +1,7 @@
+import { nanoid } from "nanoid";
 import { z } from "zod";
 
-import { desc, eq, schema } from "@acme/db";
+import { desc, eq, inArray, schema } from "@acme/db";
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
@@ -8,6 +9,32 @@ export const tenantRouter = createTRPCRouter({
   list: publicProcedure.query(({ ctx }) =>
     ctx.db.select().from(schema.tenant).orderBy(desc(schema.tenant.id)),
   ),
+
+  listOfUserTenants: protectedProcedure.query(async ({ ctx }) => {
+    const usertenants = await ctx.db
+      .select()
+      .from(schema.usersToTenants)
+      .where(eq(schema.usersToTenants.userId, ctx.session.user.id))
+      .orderBy(desc(schema.usersToTenants.tenantId));
+
+    let tenants: (typeof schema.tenant.$inferSelect)[] = [];
+
+    if (usertenants.length > 0) {
+      tenants = await ctx.db
+        .select()
+        .from(schema.tenant)
+        .where(
+          inArray(
+            schema.tenant.id,
+            usertenants.map((e) => e.tenantId),
+          ),
+        )
+        .orderBy(desc(schema.tenant.name))
+        .execute();
+    }
+
+    return tenants;
+  }),
 
   get: publicProcedure
     .input(z.object({ id: z.string() }))
@@ -33,7 +60,24 @@ export const tenantRouter = createTRPCRouter({
 
   create: protectedProcedure
     .input(z.object({ name: z.string().min(1) }))
-    .mutation(({ ctx, input }) => ctx.db.insert(schema.tenant).values(input)),
+    .mutation(async ({ ctx, input }) => {
+      const tenantId = nanoid();
+
+      const insertedTenant = await ctx.db
+        .insert(schema.tenant)
+        .values({ ...input, id: tenantId })
+        .execute();
+
+      await ctx.db
+        .insert(schema.usersToTenants)
+        .values({
+          tenantId: tenantId,
+          userId: ctx.session.user.id,
+        })
+        .execute();
+
+      return insertedTenant;
+    }),
 
   update: protectedProcedure
     .input(z.object({ id: z.string(), name: z.string().min(1).optional() }))
