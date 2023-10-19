@@ -11,7 +11,7 @@ export const FormErrorMessage: FC<FormErrorMessageProps> = ({
 }) => (
   <p
     className={clsx(
-      "block text-left font-serif text-sm text-red-600",
+      "block text-left font-serif text-sm text-danger-600",
       className,
     )}
   >

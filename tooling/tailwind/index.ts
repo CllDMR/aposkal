@@ -18,7 +18,6 @@ export default {
       warning: colors.orange,
       danger: colors.red,
       disabled: colors.slate,
-      yellow: colors.yellow,
     },
     extend: {},
   },

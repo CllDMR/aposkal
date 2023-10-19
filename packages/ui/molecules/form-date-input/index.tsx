@@ -48,7 +48,7 @@ export const FormDateInput = <TFormValues extends FieldValues>({
         <DateInput
           // aria-invalid={hasError}
           // className={clsx({
-          //   "border-red-600 hover:border-red-600 focus:border-red-600 focus:ring-red-600 transition-colors focus:outline-none focus:ring-2 focus:ring-opacity-50":
+          //   "border-danger-600 hover:border-danger-600 focus:border-danger-600 focus:ring-danger-600 transition-colors focus:outline-none focus:ring-2 focus:ring-opacity-50":
           //     hasError,
           // })}
           name={_name}

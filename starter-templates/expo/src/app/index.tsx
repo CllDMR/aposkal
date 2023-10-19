@@ -22,7 +22,7 @@ function PostCard(props: {
           }}
         >
           <TouchableOpacity>
-            <Text className="text-pink-400 text-xl font-semibold">
+            <Text className="text-xl font-semibold text-danger-400">
               {props.post.title}
             </Text>
             <Text className="mt-2 text-white">{props.post.content}</Text>
@@ -30,7 +30,7 @@ function PostCard(props: {
         </Link>
       </View>
       <TouchableOpacity onPress={props.onDelete}>
-        <Text className="text-pink-400 font-bold uppercase">Delete</Text>
+        <Text className="font-bold uppercase text-danger-400">Delete</Text>
       </TouchableOpacity>
     </View>
   );
@@ -60,7 +60,7 @@ function CreatePost() {
         placeholder="Title"
       />
       {error?.data?.zodError?.fieldErrors.title && (
-        <Text className="text-red-500 mb-2">
+        <Text className="mb-2 text-danger-500">
           {error.data.zodError.fieldErrors.title}
         </Text>
       )}
@@ -72,12 +72,12 @@ function CreatePost() {
         placeholder="Content"
       />
       {error?.data?.zodError?.fieldErrors.content && (
-        <Text className="text-red-500 mb-2">
+        <Text className="mb-2 text-danger-500">
           {error.data.zodError.fieldErrors.content}
         </Text>
       )}
       <TouchableOpacity
-        className="bg-pink-400 rounded p-2"
+        className="rounded bg-danger-400 p-2"
         onPress={() => {
           mutate({
             title,
@@ -108,7 +108,7 @@ const Index = () => {
       <Stack.Screen options={{ title: "Home Page" }} />
       <View className="h-full w-full p-4">
         <Text className="mx-auto pb-2 text-5xl font-bold text-white">
-          Create <Text className="text-pink-400">T3</Text> Turbo
+          Create <Text className="text-danger-400">T3</Text> Turbo
         </Text>
 
         <Button

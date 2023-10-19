@@ -49,7 +49,7 @@ export const Checkbox: FC<CheckboxProps> = forwardRef<
         aria-label={label}
         placeholder={placeholder}
         className={clsx([
-          "hover:border-blue-400 focus:border-blue-400 focus:ring-blue-400 rounded border border-gray-300 bg-gray-50 leading-none text-gray-700 placeholder-gray-500 transition-colors ease-in-out focus:outline-none focus:ring-4 focus:ring-opacity-30",
+          "rounded border border-gray-300 bg-gray-50 leading-none text-gray-700 placeholder-gray-500 transition-colors ease-in-out hover:border-primary-400 focus:border-primary-400 focus:outline-none focus:ring-4 focus:ring-primary-400 focus:ring-opacity-30",
           sizeMap[size],
           className,
         ])}

@@ -34,7 +34,7 @@ export default async function SelectTenantPage() {
 
   return (
     <main>
-      <div className="bg-slate-50 min-h-screen p-10 md:px-36">
+      <div className="min-h-screen bg-gray-50 p-10 md:px-36">
         <div className="xl:px-60 ">
           <div className="xl:mb-20">
             <div className="flex justify-center ">
