@@ -41,7 +41,7 @@ export const FormCheckbox = <TFormValues extends FieldValues>({
   return (
     <div className={clsx("", className)} aria-live="polite">
       <div className="flex">
-        <Label label={label} name={name} />
+        {label ? <Label label={label} name={name} /> : null}
         <Checkbox
           name={name}
           label={label}

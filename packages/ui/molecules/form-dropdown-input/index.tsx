@@ -26,7 +26,7 @@ interface Option {
 }
 
 export interface FormDropdownInputProps<TFormValues extends FieldValues> {
-  label: string;
+  label?: string;
   name: Path<TFormValues>;
   rules?: RegisterOptions;
   // register?: UseFormRegister<TFormValues>;
@@ -104,7 +104,7 @@ export const FormDropdownInput = <TFormValues extends FieldValues>({
 
   return (
     <div className="">
-      <Label label={label} name={name} />
+      {label ? <Label label={label} name={name} /> : null}
 
       <Combobox
         value={

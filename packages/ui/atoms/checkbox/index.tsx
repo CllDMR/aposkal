@@ -7,7 +7,7 @@ export type CheckboxSize = "medium" | "large";
 export type CheckboxProps = {
   id: string;
   name: string;
-  label: string;
+  label?: string;
   size?: CheckboxSize;
   className?: string;
 } & Omit<

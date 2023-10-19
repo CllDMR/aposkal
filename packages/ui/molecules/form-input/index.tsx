@@ -20,7 +20,7 @@ import { Input } from "../../atoms/input";
 import { Label } from "../../atoms/label";
 
 export type FormInputProps<TFormValues extends FieldValues> = {
-  label: string;
+  label?: string;
   name: Path<TFormValues>;
   rules?: RegisterOptions;
   register?: UseFormRegister<TFormValues>;
@@ -41,7 +41,7 @@ export const FormInput = <TFormValues extends FieldValues>({
 
   return (
     <div className={clsx("", className)} aria-live="polite">
-      <Label label={label} name={name} />
+      {label ? <Label label={label} name={name} /> : null}
       <Input
         name={name}
         label={label}

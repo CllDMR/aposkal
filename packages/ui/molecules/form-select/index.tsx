@@ -41,7 +41,7 @@ export const FormSelect = <TFormValues extends FieldValues>({
 
   return (
     <div className={clsx("", className)} aria-live="polite">
-      <Label label={label} name={name} />
+      {label ? <Label label={label} name={name} /> : null}
       <Select
         name={name}
         label={label}

@@ -21,7 +21,7 @@ import { Label } from "../../atoms/label";
 export type FormTextareaProps<TFormValues extends FieldValues> = {
   id: string;
   name: Path<TFormValues>;
-  label: string;
+  label?: string;
   className?: string;
   rules?: RegisterOptions;
   register?: UseFormRegister<TFormValues>;
@@ -46,7 +46,7 @@ export const FormTextarea = <TFormValues extends FieldValues>({
 
   return (
     <div className={className}>
-      <Label label={label} name={name} />
+      {label ? <Label label={label} name={name} /> : null}
       <textarea
         id={id}
         name={name}

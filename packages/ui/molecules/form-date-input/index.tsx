@@ -44,7 +44,7 @@ export const FormDateInput = <TFormValues extends FieldValues>({
   return (
     <div className={clsx("", className)} aria-live="polite">
       <div className="flex">
-        <Label label={label} name={name} />
+        {label ? <Label label={label} name={name} /> : null}
         <DateInput
           // aria-invalid={hasError}
           // className={clsx({
