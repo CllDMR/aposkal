@@ -2,6 +2,9 @@ import type { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from "react";
 import clsx from "clsx";
 
 enum ButtonVariant {
+  PRIMARY,
+  SECONDARY,
+  ACCENT,
   ERROR,
   WARNING,
   SUCCESS,
@@ -19,6 +22,12 @@ const SIZE_MAPS: Record<ButtonSize, string> = {
 };
 
 const VARIANT_MAPS: Record<ButtonVariant, string> = {
+  [ButtonVariant.PRIMARY]:
+    "bg-primary-100 text-primary-800 hover:bg-primary-500 focus-visible:outline-primary-600",
+  [ButtonVariant.SECONDARY]:
+    "bg-secondary-100 text-secondary-800 hover:bg-secondary-500 focus-visible:outline-secondary-600",
+  [ButtonVariant.ACCENT]:
+    "bg-accent-100 text-accent-800 hover:bg-accent-500 focus-visible:outline-accent-600",
   [ButtonVariant.SUCCESS]:
     "bg-success-100 text-success-800 hover:bg-success-500 focus-visible:outline-success-600",
   [ButtonVariant.INFO]:
@@ -53,7 +62,7 @@ interface ButtonProps {
 export function Button({
   children,
   type,
-  variant = ButtonVariant.INFO,
+  variant = ButtonVariant.PRIMARY,
   size = ButtonSize.SMALL,
   disabled = false,
   onClick,
