@@ -146,40 +146,51 @@ export const FormDropdownInput = <TFormValues extends FieldValues>({
                 <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
                   Nothing found.
                 </div>
-              ) : (
-                filteredOptions.map((filteredOption) => (
-                  <Combobox.Option
-                    key={filteredOption.id}
-                    className={({ active }) =>
-                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                        active ? "bg-primary-600 text-white" : "text-gray-900"
-                      }`
-                    }
-                    value={filteredOption}
-                  >
-                    {({ selected, active }) => (
-                      <>
-                        <span
-                          className={`block truncate ${
-                            selected ? "font-medium" : "font-normal"
-                          }`}
-                        >
-                          {filteredOption.label}
-                        </span>
-                        {selected ? (
+              ) : null}
+
+              {filteredOptions.length === 0 && queryText === "" ? (
+                <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
+                  No option found. Create new.
+                </div>
+              ) : null}
+
+              {filteredOptions.length !== 0
+                ? filteredOptions.map((filteredOption) => (
+                    <Combobox.Option
+                      key={filteredOption.id}
+                      className={({ active }) =>
+                        `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                          active ? "bg-primary-600 text-white" : "text-gray-900"
+                        }`
+                      }
+                      value={filteredOption}
+                    >
+                      {({ selected, active }) => (
+                        <>
                           <span
-                            className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                              active ? "text-white" : "text-primary-600"
+                            className={`block truncate ${
+                              selected ? "font-medium" : "font-normal"
                             }`}
                           >
-                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                            {filteredOption.label}
                           </span>
-                        ) : null}
-                      </>
-                    )}
-                  </Combobox.Option>
-                ))
-              )}
+                          {selected ? (
+                            <span
+                              className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
+                                active ? "text-white" : "text-primary-600"
+                              }`}
+                            >
+                              <CheckIcon
+                                className="h-5 w-5"
+                                aria-hidden="true"
+                              />
+                            </span>
+                          ) : null}
+                        </>
+                      )}
+                    </Combobox.Option>
+                  ))
+                : null}
             </Combobox.Options>
           </Transition>
         </div>
