@@ -1,5 +1,5 @@
 import type { FC, PropsWithChildren } from "react";
-import { Children, useState } from "react";
+import { Children, useId, useState } from "react";
 
 import { Card } from "../../atoms";
 import { Button } from "../../molecules";
@@ -17,13 +17,15 @@ export const TabPanel: FC<TabPanelProps> = ({
   hasTabNav = true,
 }) => {
   const [currentTab, setCurrentTab] = useState(0);
+  const key = useId();
 
   return (
     <div className="space-y-4">
       {hasTabNav && (
-        <Card className="space-x-2">
+        <Card key={key} id={key} className="space-x-2">
           {labels.map((label, i) => (
             <Button
+              key={key + "-" + i + "-" + "button"}
               type="button"
               onClick={() => {
                 setCurrentTab(i);
@@ -35,40 +37,49 @@ export const TabPanel: FC<TabPanelProps> = ({
         </Card>
       )}
       {Children.map(children, (child, index) => {
-        return (
-          currentTab === index && (
-            <Card>
-              {child}
+        const key2 = useId();
 
-              <div className="mt-4 flex justify-end space-x-4 border-t pt-4">
+        return (
+          <Card
+            key={key + "-" + index}
+            id={key + "-" + index}
+            className={currentTab === index ? "initial" : "hidden"}
+          >
+            {child}
+
+            <div className="mt-4 flex justify-end space-x-4 border-t pt-4">
+              <Button
+                type="button"
+                disabled={index <= 0}
+                onClick={() => {
+                  setCurrentTab(index - 1);
+                }}
+              >
+                Previous
+              </Button>
+
+              {index + 1 >= Children.count(children) ? (
                 <Button
+                  key={key2 + "-" + index + "-" + "submit"}
+                  type="submit"
+                  disabled={isSubmitting}
+                >
+                  Submit
+                </Button>
+              ) : (
+                <Button
+                  key={key2 + "-" + index + "-" + "next"}
                   type="button"
-                  disabled={index <= 0}
+                  disabled={index + 1 >= Children.count(children)}
                   onClick={() => {
-                    setCurrentTab(index - 1);
+                    setCurrentTab(index + 1);
                   }}
                 >
-                  Previous
+                  Next
                 </Button>
-
-                {index + 1 >= Children.count(children) ? (
-                  <Button type="submit" disabled={isSubmitting}>
-                    Submit
-                  </Button>
-                ) : (
-                  <Button
-                    type="button"
-                    disabled={index + 1 >= Children.count(children)}
-                    onClick={() => {
-                      setCurrentTab(index + 1);
-                    }}
-                  >
-                    Next
-                  </Button>
-                )}
-              </div>
-            </Card>
-          )
+              )}
+            </div>
+          </Card>
         );
       })}
     </div>
