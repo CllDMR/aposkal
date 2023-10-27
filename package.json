@@ -17,14 +17,18 @@
     "format:fix": "turbo format --continue -- --write --cache --cache-location='node_modules/.cache/.prettiercache'",
     "lint": "turbo lint --continue -- --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg check",
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg fix",
-    "typecheck": "turbo typecheck"
+    "typecheck": "turbo typecheck",
+    "ci:pull": "turbo ci:pull",
+    "ci:build": "turbo ci:build",
+    "ci:deploy": "turbo ci:deploy"
   },
   "dependencies": {
     "@acme/prettier-config": "^0.1.0",
     "@manypkg/cli": "^0.21.0",
     "prettier": "^3.0.2",
     "turbo": "^1.10.12",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "vercel": "^32.5.0"
   },
   "prettier": "@acme/prettier-config"
 }

@@ -5,6 +5,18 @@
     "topo": {
       "dependsOn": ["^topo"]
     },
+    "ci:pull": {
+      "dependsOn": ["^ci:pull"],
+      "outputs": [".vercel/**"]
+    },
+    "ci:build": {
+      "dependsOn": ["^ci:build", "^ci:pull"],
+      "outputs": [".vercel/**"]
+    },
+    "ci:deploy": {
+      "dependsOn": ["^ci:build", "^ci:pull", "^ci:deploy"],
+      "outputs": [".vercel/**"]
+    },
     "build": {
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**", "next-env.d.ts", ".expo/**"]
@@ -36,6 +48,7 @@
     }
   },
   "globalEnv": [
+    "VERCEL_TOKEN",
     "TURBO_TOKEN",
     "TURBO_TEAM",
     "DATABASE_URL",

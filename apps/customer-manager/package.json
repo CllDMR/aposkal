@@ -9,7 +9,10 @@
     "lint": "dotenv -v SKIP_ENV_VALIDATION=1 next lint",
     "format": "prettier --ignore-path ../../.gitignore --check \"./src/**/*.{js,cjs,mjs,ts,tsx,md,json}\"",
     "start": "dotenv -e ../../.env -e .env.local -- bash -c 'next start -p \"$PORT\"'",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "ci:pull": "vercel env pull .env --yes",
+    "ci:build": "vercel build",
+    "ci:deploy": "vercel deploy --prebuilt"
   },
   "dependencies": {
     "@acme/api": "^0.1.0",

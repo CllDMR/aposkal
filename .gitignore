@@ -36,10 +36,17 @@ yarn-error.log*
 .env*.local
 
 # vercel
-.vercel
+# .vercel
+# https://www.atlassian.com/git/tutorials/saving-changes/gitignore
+# !.vercel/project.json 
+.vercel/outputs
 
 # typescript
 *.tsbuildinfo
 
 # turbo
 .turbo
+
+# act - local github actions
+act.secrets
+act.variables
