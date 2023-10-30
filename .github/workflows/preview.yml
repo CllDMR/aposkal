@@ -1,4 +1,4 @@
-name: CI & CD - Preview
+name: CI
 
 on:
   pull_request:
@@ -13,7 +13,7 @@ env:
   TURBO_TEAM: ${{ vars.TURBO_TEAM }}
 
 jobs:
-  build-lint:
+  check:
     runs-on: ubuntu-latest
 
     steps:
@@ -48,17 +48,17 @@ jobs:
       - name: Install deps (with cache)
         run: pnpm install
 
-      # - name: lint, format and type-check
-      #   run: pnpm lint format typecheck
+      - name: lint, format and type-check
+        run: pnpm lint format typecheck
 
-      # - name: Check workspaces
-      #   run: pnpm manypkg check
+      - name: Check workspaces
+        run: pnpm manypkg check
 
-      - name: Pull Project Artifacts
-        run: pnpm ci:pull -- --environment=preview --token="${{ secrets.VERCEL_TOKEN }}"
+      # - name: Pull Project Artifacts
+      #   run: pnpm --concurrency=80% ci:pull -- --environment=preview --token="${{ secrets.VERCEL_TOKEN }}"
 
-      - name: Build Project Artifacts
-        run: pnpm ci:build -- --token="${{ secrets.VERCEL_TOKEN }}"
+      # - name: Build Project Artifacts
+      #   run: pnpm --concurrency=80% ci:build -- --token="${{ secrets.VERCEL_TOKEN }}"
 
-      - name: Deploy Project Artifacts to Vercel
-        run: pnpm ci:deploy -- --token="${{ secrets.VERCEL_TOKEN }}"
+      # - name: Deploy Project Artifacts to Vercel
+      #   run: pnpm --concurrency=80% ci:deploy -- --token="${{ secrets.VERCEL_TOKEN }}"
