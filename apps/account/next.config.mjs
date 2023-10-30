@@ -21,6 +21,11 @@ const config = {
       skipDefaultConversion: true,
       // preventFullImport: true,
     },
+    "@acme/ui/organisms/landing": {
+      transform: "@acme/ui/organisms/landing/{{ kebabCase member }}",
+      skipDefaultConversion: true,
+      // preventFullImport: true,
+    },
   },
   /** Enables hot reloading for local packages without a build step */
   transpilePackages: ["@acme/api", "@acme/auth", "@acme/db", "@acme/ui"],

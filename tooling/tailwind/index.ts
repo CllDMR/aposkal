@@ -10,7 +10,7 @@ export default {
       black: colors.black,
       white: colors.white,
       gray: colors.slate,
-      primary: colors.indigo,
+      primary: colors.blue,
       secondary: colors.emerald,
       accent: colors.amber,
       success: colors.teal,

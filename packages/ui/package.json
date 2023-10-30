@@ -14,6 +14,10 @@
     "./organisms/*": {
       "types": "./organisms/*/index.tsx",
       "default": "./organisms/*/index.tsx"
+    },
+    "./organisms/landing/*": {
+      "types": "./organisms/landing/*/index.tsx",
+      "default": "./organisms/landing/*/index.tsx"
     }
   },
   "license": "MIT",
