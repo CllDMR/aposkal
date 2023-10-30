@@ -1,28 +1,33 @@
-import { authOptions, getServerSession } from "@acme/auth";
-import { LinkButton } from "@acme/ui/molecules";
-
 // export const runtime = "edge";
 
-export default async function HomePage() {
-  const session = await getServerSession(authOptions);
+import {
+  CallToAction,
+  Faqs,
+  Footer,
+  Header,
+  Hero,
+  Pricing,
+  PrimaryFeatures,
+  SecondaryFeatures,
+  Testimonials,
+} from "@acme/ui/organisms/landing";
 
+export default function HomePage() {
   return (
-    <main>
-      <span>Home Page</span>
-      {session ? (
-        <div>
-          <p>
-            {session.user.ti} - {session.user.tn} - {session.user.id} -{" "}
-            {session.user.name}
-          </p>
-          <LinkButton href="/auth/logout">Logout</LinkButton>
-        </div>
-      ) : (
-        <>
-          <LinkButton href="/auth/login">Login</LinkButton>
-          <LinkButton href="/auth/register">Register</LinkButton>
-        </>
-      )}
-    </main>
+    <>
+      <Header />
+
+      <main>
+        <Hero />
+        <PrimaryFeatures />
+        <SecondaryFeatures />
+        <CallToAction />
+        <Testimonials />
+        <Pricing />
+        <Faqs />
+      </main>
+
+      <Footer />
+    </>
   );
 }
