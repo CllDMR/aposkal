@@ -12,10 +12,14 @@ import {
   Testimonials,
 } from "@acme/ui/organisms/landing";
 
+import { getBaseAuthUrl } from "~/utils/get-base-url";
+
 export default function HomePage() {
+  const baseAuthUrl = getBaseAuthUrl() ?? "";
+
   return (
     <>
-      <Header />
+      <Header baseAuthUrl={baseAuthUrl} />
 
       <main>
         <Hero />

@@ -54,7 +54,11 @@ const MobileNavIcon: FC<MobileNavIconProps> = ({ open }) => {
   );
 };
 
-function MobileNavigation() {
+interface MobileNavigationProps {
+  baseAuthUrl: string;
+}
+
+const MobileNavigation: FC<MobileNavigationProps> = ({ baseAuthUrl }) => {
   return (
     <Popover>
       <Popover.Button
@@ -92,21 +96,27 @@ function MobileNavigation() {
             <MobileNavLink href="#testimonials">Görüşler</MobileNavLink>
             <MobileNavLink href="#pricing">Fiyatlar</MobileNavLink>
             <hr className="m-2 border-gray-300/40" />
-            <MobileNavLink href="/auth/signin">Giriş</MobileNavLink>
+            <MobileNavLink href={baseAuthUrl + "/auth/login"}>
+              Giriş
+            </MobileNavLink>
           </Popover.Panel>
         </Transition.Child>
       </Transition.Root>
     </Popover>
   );
+};
+
+interface HeaderProps {
+  baseAuthUrl: string;
 }
 
-export function Header() {
+export const Header: FC<HeaderProps> = ({ baseAuthUrl }) => {
   return (
     <header className="py-10">
       <Container>
         <nav className="relative z-50 flex justify-between">
           <div className="flex items-center md:gap-x-12">
-            <Link href="#" aria-label="Home">
+            <Link href="/" aria-label="Home">
               <Logo className="h-12 w-auto " />
             </Link>
             <div className="hidden md:flex md:gap-x-6">
@@ -117,19 +127,19 @@ export function Header() {
           </div>
           <div className="flex items-center gap-x-5 md:gap-x-8">
             <div className="hidden md:block">
-              <NavLink href="/auth/signin">Giriş</NavLink>
+              <NavLink href={baseAuthUrl + "/auth/login"}>Giriş</NavLink>
             </div>
-            <Button href="/auth/signup" color="blue">
+            <Button href={baseAuthUrl + "/auth/register"} color="blue">
               <span>
                 Şimdi Kaydol <span className="hidden lg:inline"></span>
               </span>
             </Button>
             <div className="-mr-1 md:hidden">
-              <MobileNavigation />
+              <MobileNavigation baseAuthUrl={baseAuthUrl} />
             </div>
           </div>
         </nav>
       </Container>
     </header>
   );
-}
+};
