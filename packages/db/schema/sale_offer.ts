@@ -26,8 +26,8 @@ export const saleOffer = mySqlTable(
     startDate: timestamp("start_date").notNull(),
     endDate: timestamp("end_date").notNull(),
     paymentEndDate: timestamp("payment_end_date").notNull(),
-    no: varchar("tenant_id", { length: 255 }).notNull(),
-    currency: varchar("tenant_id", { length: 255 }).notNull(),
+    no: varchar("no", { length: 255 }).notNull(),
+    currency: varchar("currency", { length: 255 }).notNull(),
 
     tenantId: varchar("tenant_id", { length: 255 }).notNull(),
     addressId: varchar("address_id", { length: 255 }).notNull(),
@@ -55,26 +55,27 @@ export const saleOfferRelations = relations(saleOffer, ({ one, many }) => ({
   saleOfferNotes: many(saleOfferNote),
 }));
 
-export const insertSaleOfferSchema = createInsertSchema(saleOffer).extend({
-  customerId: z.string(),
-  addressId: z.string(),
-  saleOfferProducts: z
-    .object({
-      saleOfferId: z.string(),
-      productId: z.string(),
-      currency: z.string(),
-      amount: z.number(),
-      unitPrice: z.number(),
-      kdv: z.number(),
-      total: z.number(),
-    })
-    .array(),
-  saleOfferNotes: z
-    .object({
-      text: z.string(),
-      tenantId: z.string(),
-      saleOfferId: z.string(),
-    })
-    .array(),
-});
+export const insertSaleOfferSchema = createInsertSchema(saleOffer)
+  .extend({
+    customerId: z.string(),
+    addressId: z.string(),
+    saleOfferProducts: z
+      .object({
+        productId: z.string(),
+        currency: z.string(),
+        amount: z.number(),
+        unitPrice: z.number(),
+        kdv: z.number(),
+        total: z.number(),
+      })
+      .array(),
+    saleOfferNotes: z
+      .object({
+        text: z.string(),
+      })
+      .array(),
+  })
+  .omit({
+    no: true,
+  });
 export const selectSaleOfferSchema = createSelectSchema(saleOffer);

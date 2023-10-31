@@ -13,5 +13,11 @@ export default async function SaleOfferCreatePage() {
     .where(eq(schema.customer.tenantId, session.user.ti))
     .orderBy(desc(schema.customer.id));
 
-  return <SaleOfferCreateForm customers={customers} />;
+  const addresses = await db
+    .select()
+    .from(schema.address)
+    .where(eq(schema.address.tenantId, session.user.ti))
+    .orderBy(desc(schema.address.id));
+
+  return <SaleOfferCreateForm customers={customers} addresses={addresses} />;
 }

@@ -41,9 +41,12 @@ export const saleOfferRouter = createTRPCRouter({
   create: protectedProcedure
     .input(saleOfferCreateInput)
     .mutation(async ({ ctx, input }) => {
+      const no = "TEST No";
+
       return await ctx.db.insert(schema.saleOffer).values({
         ...input,
         tenantId: ctx.session.user.ti,
+        no,
       });
     }),
 

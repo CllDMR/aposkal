@@ -32,15 +32,30 @@ export const SaleOfferCard: FC<SaleOfferCardProps> = ({
   });
 
   return (
-    <div>
-      <span className="pr-4">No: {saleOffer.no}</span>
-      <LinkButton href={`/sale-offers/${saleOffer.id}/edit`}>Edit</LinkButton>
-      <Button
-        onClick={async () => await mutateAsync(saleOffer.id)}
-        disabled={isLoading}
-      >
-        Delete
-      </Button>
+    <div className="">
+      <div>
+        <span className="pr-4">No: {saleOffer.no}</span>
+        <LinkButton href={`/sale-offers/${saleOffer.id}/edit`}>Edit</LinkButton>
+        <Button
+          onClick={async () => await mutateAsync(saleOffer.id)}
+          disabled={isLoading}
+        >
+          Delete
+        </Button>
+      </div>
+      <div className="">
+        <p className="">
+          <span className="">Customer Name: </span>
+          <span className="">
+            {saleOffer.customer.firstname} {saleOffer.customer.middlename}{" "}
+            {saleOffer.customer.lastname}
+          </span>
+        </p>
+        <p className="">
+          <span className="">To Address: </span>
+          <span className="">{saleOffer.toAddress.city}</span>
+        </p>
+      </div>
     </div>
   );
 };

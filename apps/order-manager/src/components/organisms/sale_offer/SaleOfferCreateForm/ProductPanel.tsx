@@ -17,7 +17,6 @@ interface TableItem {
   currency: string;
   kdv: number;
   productId: string;
-  saleOfferId: string;
   total: number;
   unitPrice: number;
 }
@@ -164,7 +163,6 @@ export const SaleOfferCreateProductPanel: FC = () => {
             currency: "",
             kdv: 0,
             productId: "",
-            saleOfferId: "",
             total: 0,
             unitPrice: 0,
           })

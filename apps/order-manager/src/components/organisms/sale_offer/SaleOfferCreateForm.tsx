@@ -19,10 +19,12 @@ type SaleOfferCreateFormFields = RouterInputs["saleOffer"]["create"];
 
 interface SaleOfferCreateFormProps {
   customers: RouterOutputs["customer"]["list"];
+  addresses: RouterOutputs["address"]["list"];
 }
 
 export const SaleOfferCreateForm: FC<SaleOfferCreateFormProps> = ({
   customers: initialCustomers,
+  addresses: initialAddresses,
 }) => {
   const context = api.useContext();
   const { mutateAsync } = api.saleOffer.create.useMutation({
@@ -51,7 +53,10 @@ export const SaleOfferCreateForm: FC<SaleOfferCreateFormProps> = ({
           ]}
           isSubmitting={methods.formState.isSubmitting}
         >
-          <SaleOfferCreateInfoPanel customers={initialCustomers} />
+          <SaleOfferCreateInfoPanel
+            customers={initialCustomers}
+            addresses={initialAddresses}
+          />
           <SaleOfferCreateProductPanel />
           <SaleOfferCreateNotePanel />
           <SaleOfferCreatePreviewPanel />

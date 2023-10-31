@@ -52,13 +52,13 @@ export const SaleOfferTable: FC<SaleOfferTableProps> = ({ saleOffers }) => {
       {
         header: "Start Date",
         cell: (row) => (row.renderValue() as Date).toLocaleDateString(),
-        accessorKey: "startdate",
+        accessorKey: "startDate",
         footer: "Start Date",
       },
       {
         header: "End Date",
         cell: (row) => (row.renderValue() as Date).toLocaleDateString(),
-        accessorKey: "enddate",
+        accessorKey: "endDate",
         footer: "End Date",
       },
       {

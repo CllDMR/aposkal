@@ -17,11 +17,12 @@ type SaleOfferCreateFormInfoPanelFields = RouterInputs["saleOffer"]["create"];
 
 interface SaleOfferCreateFormInfoPanelProps {
   customers: RouterOutputs["customer"]["list"];
+  addresses: RouterOutputs["address"]["list"];
 }
 
 export const SaleOfferCreateInfoPanel: FC<
   SaleOfferCreateFormInfoPanelProps
-> = ({ customers: initialCustomers }) => {
+> = ({ customers: initialCustomers, addresses: initialAddresses }) => {
   const { data: customers } = api.customer.list.useQuery(
     {},
     {
@@ -34,6 +35,20 @@ export const SaleOfferCreateInfoPanel: FC<
       id: customer.id,
       label: `${customer.firstname} ${customer.middlename} ${customer.lastname}`,
       value: customer.id,
+    })) ?? [];
+
+  const { data: addresses } = api.address.list.useQuery(
+    {},
+    {
+      initialData: initialAddresses,
+    },
+  );
+
+  const formattedAddresses =
+    addresses?.map((address) => ({
+      id: address.id,
+      label: address.name,
+      value: address.id,
     })) ?? [];
 
   const {
@@ -77,13 +92,12 @@ export const SaleOfferCreateInfoPanel: FC<
           control={control}
           errors={restErrors}
         />
-        <FormInput<SaleOfferCreateFormInfoPanelFields>
-          id="no"
-          label="No"
-          name="no"
-          type="text"
+        <FormDropdownInput<SaleOfferCreateFormInfoPanelFields>
+          label="Adres"
+          name="addressId"
           errors={restErrors}
-          register={register}
+          control={control}
+          options={formattedAddresses}
         />
       </FormSection>
 
