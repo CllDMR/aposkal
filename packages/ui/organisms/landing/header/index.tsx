@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Popover, Transition } from "@headlessui/react";
 import clsx from "clsx";
+import type { Session } from "next-auth";
 
 import { Button } from "../button";
 import { Container } from "../container";
@@ -57,10 +58,16 @@ const MobileNavIcon: FC<MobileNavIconProps> = ({ open }) => {
 
 interface MobileNavigationProps {
   baseAuthUrl: string;
+  session?: Session | null;
 }
 
-const MobileNavigation: FC<MobileNavigationProps> = ({ baseAuthUrl }) => {
-  const basePath = window?.location.origin ?? "";
+const MobileNavigation: FC<MobileNavigationProps> = ({
+  baseAuthUrl,
+  session,
+}) => {
+  const basePath =
+    // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
+    (typeof window !== "undefined" && window.location.origin) ?? "";
   const pathName = usePathname();
 
   return (
@@ -100,16 +107,20 @@ const MobileNavigation: FC<MobileNavigationProps> = ({ baseAuthUrl }) => {
             <MobileNavLink href="#testimonials">Görüşler</MobileNavLink>
             <MobileNavLink href="#pricing">Fiyatlar</MobileNavLink>
             <hr className="m-2 border-gray-300/40" />
-            <MobileNavLink
-              href={
-                baseAuthUrl +
-                "/auth/login" +
-                "?callbackUrl=" +
-                encodeURIComponent(basePath + pathName)
-              }
-            >
-              Giriş
-            </MobileNavLink>
+            {session ? (
+              <MobileNavLink href={"/dashboard"}>Dashboard</MobileNavLink>
+            ) : (
+              <MobileNavLink
+                href={
+                  baseAuthUrl +
+                  "/auth/login" +
+                  "?callbackUrl=" +
+                  encodeURIComponent(basePath + pathName)
+                }
+              >
+                Giriş
+              </MobileNavLink>
+            )}
           </Popover.Panel>
         </Transition.Child>
       </Transition.Root>
@@ -119,10 +130,13 @@ const MobileNavigation: FC<MobileNavigationProps> = ({ baseAuthUrl }) => {
 
 interface HeaderProps {
   baseAuthUrl: string;
+  session?: Session | null;
 }
 
-export const Header: FC<HeaderProps> = ({ baseAuthUrl }) => {
-  const basePath = window?.location.origin ?? "";
+export const Header: FC<HeaderProps> = ({ baseAuthUrl, session }) => {
+  const basePath =
+    // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
+    (typeof window !== "undefined" && window.location.origin) ?? "";
   const pathName = usePathname();
 
   return (
@@ -139,36 +153,47 @@ export const Header: FC<HeaderProps> = ({ baseAuthUrl }) => {
               <NavLink href="#pricing">Fiyatlar</NavLink>
             </div>
           </div>
-          <div className="flex items-center gap-x-5 md:gap-x-8">
-            <div className="hidden md:block">
-              <NavLink
+          {session ? (
+            <div className="flex items-center gap-x-5 md:gap-x-8">
+              <Button href={"/dashboard"} color="blue">
+                Dashboard
+              </Button>
+              <div className="-mr-1 md:hidden">
+                <MobileNavigation baseAuthUrl={baseAuthUrl} />
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-center gap-x-5 md:gap-x-8">
+              <div className="hidden md:block">
+                <NavLink
+                  href={
+                    baseAuthUrl +
+                    "/auth/login" +
+                    "?callbackUrl=" +
+                    encodeURIComponent(basePath + pathName)
+                  }
+                >
+                  Giriş
+                </NavLink>
+              </div>
+              <Button
                 href={
                   baseAuthUrl +
-                  "/auth/login" +
+                  "/auth/register" +
                   "?callbackUrl=" +
                   encodeURIComponent(basePath + pathName)
                 }
+                color="blue"
               >
-                Giriş
-              </NavLink>
+                <span>
+                  Şimdi Kaydol <span className="hidden lg:inline"></span>
+                </span>
+              </Button>
+              <div className="-mr-1 md:hidden">
+                <MobileNavigation baseAuthUrl={baseAuthUrl} />
+              </div>
             </div>
-            <Button
-              href={
-                baseAuthUrl +
-                "/auth/register" +
-                "?callbackUrl=" +
-                encodeURIComponent(basePath + pathName)
-              }
-              color="blue"
-            >
-              <span>
-                Şimdi Kaydol <span className="hidden lg:inline"></span>
-              </span>
-            </Button>
-            <div className="-mr-1 md:hidden">
-              <MobileNavigation baseAuthUrl={baseAuthUrl} />
-            </div>
-          </div>
+          )}
         </nav>
       </Container>
     </header>

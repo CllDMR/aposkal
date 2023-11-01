@@ -1,5 +1,6 @@
 // export const runtime = "edge";
 
+import { authOptions, getServerSession } from "@acme/auth";
 import {
   CallToAction,
   Faqs,
@@ -14,12 +15,13 @@ import {
 
 import { getBaseUrl } from "~/utils/get-base-url";
 
-export default function HomePage() {
+export default async function HomePage() {
   const baseUrl = getBaseUrl() ?? "";
+  const session = await getServerSession(authOptions);
 
   return (
     <>
-      <Header baseAuthUrl={baseUrl} />
+      <Header baseAuthUrl={baseUrl} session={session} />
 
       <main>
         <Hero />
