@@ -24,8 +24,9 @@ export const saleOfferNote = mySqlTable(
     tenantId: varchar("tenant_id", { length: 255 }).notNull(),
     saleOfferId: varchar("sale_offer_id", { length: 255 }).notNull(),
   },
-  ({ tenantId }) => ({
+  ({ tenantId, saleOfferId }) => ({
     tenantIdX: index("tenant_id_index").on(tenantId),
+    saleOfferIdX: index("saleOffer_id_index").on(saleOfferId),
   }),
 );
 

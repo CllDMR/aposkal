@@ -33,8 +33,10 @@ export const saleOffer = mySqlTable(
     addressId: varchar("address_id", { length: 255 }).notNull(),
     companyId: varchar("company_id", { length: 255 }).notNull(),
   },
-  ({ tenantId }) => ({
+  ({ tenantId, addressId, companyId }) => ({
     tenantIdX: index("tenant_id_index").on(tenantId),
+    addressIdX: index("address_id_index").on(addressId),
+    companyIdX: index("company_id_index").on(companyId),
   }),
 );
 

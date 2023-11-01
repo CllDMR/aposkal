@@ -30,8 +30,10 @@ export const saleOfferProduct = mySqlTable(
     saleOfferId: varchar("sale_offer_id", { length: 255 }).notNull(),
     productId: varchar("product_id", { length: 255 }).notNull(),
   },
-  ({ tenantId }) => ({
+  ({ tenantId, saleOfferId, productId }) => ({
     tenantIdX: index("tenant_id_index").on(tenantId),
+    saleOfferIdX: index("saleOffer_id_index").on(saleOfferId),
+    productIdX: index("product_id_index").on(productId),
   }),
 );
 
