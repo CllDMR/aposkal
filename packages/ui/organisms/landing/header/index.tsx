@@ -3,6 +3,7 @@
 import type { FC, PropsWithChildren } from "react";
 import { Fragment } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Popover, Transition } from "@headlessui/react";
 import clsx from "clsx";
 
@@ -59,6 +60,9 @@ interface MobileNavigationProps {
 }
 
 const MobileNavigation: FC<MobileNavigationProps> = ({ baseAuthUrl }) => {
+  const basePath = window?.location.origin ?? "";
+  const pathName = usePathname();
+
   return (
     <Popover>
       <Popover.Button
@@ -96,7 +100,14 @@ const MobileNavigation: FC<MobileNavigationProps> = ({ baseAuthUrl }) => {
             <MobileNavLink href="#testimonials">Görüşler</MobileNavLink>
             <MobileNavLink href="#pricing">Fiyatlar</MobileNavLink>
             <hr className="m-2 border-gray-300/40" />
-            <MobileNavLink href={baseAuthUrl + "/auth/login"}>
+            <MobileNavLink
+              href={
+                baseAuthUrl +
+                "/auth/login" +
+                "?callbackUrl=" +
+                encodeURIComponent(basePath + pathName)
+              }
+            >
               Giriş
             </MobileNavLink>
           </Popover.Panel>
@@ -111,6 +122,9 @@ interface HeaderProps {
 }
 
 export const Header: FC<HeaderProps> = ({ baseAuthUrl }) => {
+  const basePath = window?.location.origin ?? "";
+  const pathName = usePathname();
+
   return (
     <header className="py-10">
       <Container>
@@ -127,9 +141,26 @@ export const Header: FC<HeaderProps> = ({ baseAuthUrl }) => {
           </div>
           <div className="flex items-center gap-x-5 md:gap-x-8">
             <div className="hidden md:block">
-              <NavLink href={baseAuthUrl + "/auth/login"}>Giriş</NavLink>
+              <NavLink
+                href={
+                  baseAuthUrl +
+                  "/auth/login" +
+                  "?callbackUrl=" +
+                  encodeURIComponent(basePath + pathName)
+                }
+              >
+                Giriş
+              </NavLink>
             </div>
-            <Button href={baseAuthUrl + "/auth/register"} color="blue">
+            <Button
+              href={
+                baseAuthUrl +
+                "/auth/register" +
+                "?callbackUrl=" +
+                encodeURIComponent(basePath + pathName)
+              }
+              color="blue"
+            >
               <span>
                 Şimdi Kaydol <span className="hidden lg:inline"></span>
               </span>
