@@ -13,18 +13,38 @@ import {
   FormInput,
 } from "@acme/ui/molecules";
 
-import type { RouterInputs } from "~/utils/api";
+import type { RouterInputs, RouterOutputs } from "~/utils/api";
 import { api } from "~/utils/api";
 
 type CompanyCreateFormFields = RouterInputs["company"]["create"];
 
-export const CompanyCreateForm: FC = () => {
+interface CompanyCreateFormProps {
+  addresses: RouterOutputs["address"]["list"];
+}
+
+export const CompanyCreateForm: FC<CompanyCreateFormProps> = ({
+  addresses: initialAddresses,
+}) => {
   const context = api.useContext();
   const { mutateAsync } = api.company.create.useMutation({
     async onSettled() {
       await context.company.list.invalidate();
     },
   });
+
+  const { data: addresses } = api.address.list.useQuery(
+    {},
+    {
+      initialData: initialAddresses,
+    },
+  );
+
+  const formattedAddresses =
+    addresses?.map((address) => ({
+      id: address.id,
+      label: address.name,
+      value: address.id,
+    })) ?? [];
 
   const {
     handleSubmit,
@@ -77,6 +97,13 @@ export const CompanyCreateForm: FC = () => {
             value: "other",
           },
         ]}
+      />
+      <FormDropdownInput<CompanyCreateFormFields>
+        label="Address"
+        name="addressId"
+        errors={errors}
+        control={control}
+        options={formattedAddresses}
       />
       <FormCheckbox<CompanyCreateFormFields>
         id="isForeign"
