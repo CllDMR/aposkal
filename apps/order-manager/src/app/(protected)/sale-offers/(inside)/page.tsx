@@ -11,7 +11,7 @@ export default async function SaleOffersPage() {
     where: eq(schema.saleOffer.tenantId, session.user.ti),
     orderBy: desc(schema.saleOffer.id),
     with: {
-      customer: true,
+      company: true,
       toAddress: true,
     },
   });

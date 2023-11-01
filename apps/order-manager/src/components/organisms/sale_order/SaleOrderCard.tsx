@@ -33,10 +33,7 @@ export const SaleOrderCard: FC<SaleOrderCardProps> = ({
 
   return (
     <div>
-      <span className="pr-4">
-        Customer: {saleOrder.customer.firstname} {saleOrder.customer.middlename}{" "}
-        {saleOrder.customer.lastname}
-      </span>
+      <span className="pr-4">Company: {saleOrder.company.title}</span>
       <LinkButton href={`/sale-orders/${saleOrder.id}/edit`}>Edit</LinkButton>
       <Button
         onClick={async () => await mutateAsync(saleOrder.id)}

@@ -24,7 +24,7 @@ interface CreatePDFTemplateSaleOfferArgs {
     };
   };
   offerDetails: {
-    product: { name: string };
+    productName: string;
     amount: string;
     unit: string;
     unitPrice: string;
@@ -104,7 +104,7 @@ export const createPDFTemplateSaleOffer = ({
     logoURL: selectedCompany?.companyLogo ?? "",
   };
   const offerItems = offerDetails?.map((item) => ({
-    productName: item?.product?.name ?? "",
+    productName: item?.productName ?? "",
     amount: item?.amount ?? "",
     unit: item?.unit ?? "",
     unitPrice: item?.unitPrice ?? "",

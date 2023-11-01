@@ -16,14 +16,14 @@ interface TableItem {
   priority: string;
   startdate: Date;
   enddate: Date;
-  customerType: string;
+  companyType: string;
   source: string;
 
-  customer: RouterOutputs["saleOrder"]["list"][number]["customer"];
+  company: RouterOutputs["saleOrder"]["list"][number]["company"];
   toAddress: RouterOutputs["saleOrder"]["list"][number]["toAddress"];
 
   addressId: string;
-  customerId: string;
+  companyId: string;
 }
 
 interface SaleOrderTableProps {
@@ -68,10 +68,10 @@ export const SaleOrderTable: FC<SaleOrderTableProps> = ({ saleOrders }) => {
         footer: "End Date",
       },
       {
-        header: "Customer Type",
+        header: "Company Type",
         cell: (row) => row.renderValue(),
-        accessorKey: "customerType",
-        footer: "Customer Type",
+        accessorKey: "companyType",
+        footer: "Company Type",
       },
       {
         header: "Source",
@@ -86,14 +86,14 @@ export const SaleOrderTable: FC<SaleOrderTableProps> = ({ saleOrders }) => {
         footer: "Address",
       },
       {
-        header: "Customer",
+        header: "Company",
         cell: (row) => {
-          const customer = row.getValue() as TableItem["customer"];
+          const company = row.getValue() as TableItem["company"];
 
-          return `${customer.firstname} ${customer.middlename} ${customer.lastname}`;
+          return company.title;
         },
-        accessorKey: "customer",
-        footer: "Customer",
+        accessorKey: "company",
+        footer: "Company",
       },
       {
         header: "Actions",

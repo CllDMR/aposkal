@@ -16,25 +16,25 @@ import { api } from "~/utils/api";
 type SaleOfferCreateFormInfoPanelFields = RouterInputs["saleOffer"]["create"];
 
 interface SaleOfferCreateFormInfoPanelProps {
-  customers: RouterOutputs["customer"]["list"];
+  companies: RouterOutputs["company"]["list"];
   addresses: RouterOutputs["address"]["list"];
 }
 
 export const SaleOfferCreateInfoPanel: FC<
   SaleOfferCreateFormInfoPanelProps
-> = ({ customers: initialCustomers, addresses: initialAddresses }) => {
-  const { data: customers } = api.customer.list.useQuery(
+> = ({ companies: initialCompanies, addresses: initialAddresses }) => {
+  const { data: companies } = api.company.list.useQuery(
     {},
     {
-      initialData: initialCustomers,
+      initialData: initialCompanies,
     },
   );
 
-  const formattedCustomers =
-    customers?.map((customer) => ({
-      id: customer.id,
-      label: `${customer.firstname} ${customer.middlename} ${customer.lastname}`,
-      value: customer.id,
+  const formattedCompanies =
+    companies?.map((company) => ({
+      id: company.id,
+      label: company.title,
+      value: company.id,
     })) ?? [];
 
   const { data: addresses } = api.address.list.useQuery(
@@ -67,10 +67,10 @@ export const SaleOfferCreateInfoPanel: FC<
       >
         <FormDropdownInput<SaleOfferCreateFormInfoPanelFields>
           label="Müşteri"
-          name="customerId"
+          name="companyId"
           errors={restErrors}
           control={control}
-          options={formattedCustomers}
+          options={formattedCompanies}
         />
       </FormSection>
 
@@ -128,10 +128,10 @@ export const SaleOfferCreateInfoPanel: FC<
       >
         <FormDropdownInput<SaleOfferCreateFormInfoPanelFields>
           label="Proje"
-          name="customerId"
+          name="companyId"
           errors={restErrors}
           control={control}
-          options={formattedCustomers}
+          options={formattedCompanies}
         />
       </FormSection>
     </div>

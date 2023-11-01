@@ -66,8 +66,8 @@ const drawerNavigationPaths: DrawerNavigationPath[] = [
     ],
   },
   {
-    name: "Customers",
-    href: "/customers",
+    name: "Companies",
+    href: "/companies",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -85,8 +85,8 @@ const drawerNavigationPaths: DrawerNavigationPath[] = [
       </svg>
     ),
     children: [
-      { name: "All", href: "/customers" },
-      { name: "Create New", href: "/customers/create" },
+      { name: "All", href: "/companies" },
+      { name: "Create New", href: "/companies/create" },
     ],
   },
 ];

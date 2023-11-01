@@ -19,12 +19,12 @@ import { api } from "~/utils/api";
 type SaleOrderCreateFormFields = RouterInputs["saleOrder"]["create"];
 
 interface SaleOrderCreateFormProps {
-  customers: RouterOutputs["customer"]["list"];
+  companies: RouterOutputs["company"]["list"];
   addresses: RouterOutputs["address"]["list"];
 }
 
 export const SaleOrderCreateForm: FC<SaleOrderCreateFormProps> = ({
-  customers: initialCustomers,
+  companies: initialCompanies,
   addresses: initialAddresses,
 }) => {
   const context = api.useContext();
@@ -34,10 +34,10 @@ export const SaleOrderCreateForm: FC<SaleOrderCreateFormProps> = ({
     },
   });
 
-  const { data: customers } = api.customer.list.useQuery(
+  const { data: companies } = api.company.list.useQuery(
     {},
     {
-      initialData: initialCustomers,
+      initialData: initialCompanies,
     },
   );
   const { data: addresses } = api.address.list.useQuery(
@@ -47,11 +47,11 @@ export const SaleOrderCreateForm: FC<SaleOrderCreateFormProps> = ({
     },
   );
 
-  const formattedCustomers =
-    customers?.map((customer) => ({
-      id: customer.id,
-      label: `${customer.firstname} ${customer.middlename} ${customer.lastname}`,
-      value: customer.id,
+  const formattedCompanies =
+    companies?.map((company) => ({
+      id: company.id,
+      label: company.title,
+      value: company.id,
     })) ?? [];
   const formattedAddresses =
     addresses?.map((address) => ({
@@ -119,11 +119,11 @@ export const SaleOrderCreateForm: FC<SaleOrderCreateFormProps> = ({
             description="Ödeme vadesi ve varsa döviz cinsini giriniz."
           >
             <FormDropdownInput<SaleOrderCreateFormFields>
-              label="Customer"
-              name="customerId"
+              label="Company"
+              name="companyId"
               errors={errors}
               control={control}
-              options={formattedCustomers}
+              options={formattedCompanies}
             />
             <FormDropdownInput<SaleOrderCreateFormFields>
               label="Address"
@@ -133,9 +133,9 @@ export const SaleOrderCreateForm: FC<SaleOrderCreateFormProps> = ({
               options={formattedAddresses}
             />
             <FormInput<SaleOrderCreateFormFields>
-              id="customerType"
-              label="Customer Type"
-              name="customerType"
+              id="companyType"
+              label="Company Type"
+              name="companyType"
               type="text"
               errors={errors}
               register={register}
@@ -155,11 +155,11 @@ export const SaleOrderCreateForm: FC<SaleOrderCreateFormProps> = ({
             description="Maliyet ve karlılığı proje bazında takip etmek istiyorsanız bir proje seçin veya ekleyin. Zorunlu değildir."
           >
             <FormDropdownInput<SaleOrderCreateFormFields>
-              label="Customer"
-              name="customerId"
+              label="Company"
+              name="companyId"
               errors={errors}
               control={control}
-              options={formattedCustomers}
+              options={formattedCompanies}
             />
           </FormSection>
         </div>

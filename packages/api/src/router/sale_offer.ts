@@ -18,7 +18,7 @@ export const saleOfferRouter = createTRPCRouter({
         where: eq(schema.saleOffer.tenantId, ctx.session.user.ti),
         orderBy: desc(schema.saleOffer.id),
         with: {
-          customer: true,
+          company: true,
           toAddress: true,
           // saleOfferNotes: true,
           // saleOfferProducts: true,
@@ -32,7 +32,7 @@ export const saleOfferRouter = createTRPCRouter({
       return await ctx.db.query.saleOffer.findFirst({
         where: eq(schema.saleOffer.id, input.id),
         with: {
-          customer: true,
+          company: true,
           toAddress: true,
         },
       });

@@ -15,12 +15,12 @@ type SaleOfferEditFormFields = RouterInputs["saleOffer"]["update"];
 
 interface SaleOfferEditFormProps {
   saleOffer: NonNullable<RouterOutputs["saleOffer"]["get"]>;
-  customers: RouterOutputs["customer"]["list"];
+  companies: RouterOutputs["company"]["list"];
 }
 
 export const SaleOfferEditForm: FC<SaleOfferEditFormProps> = ({
   saleOffer: initialSaleOffer,
-  customers: initialCustomers,
+  companies: initialCompanies,
 }) => {
   const context = api.useContext();
   const { mutateAsync } = api.saleOffer.update.useMutation({
@@ -35,18 +35,18 @@ export const SaleOfferEditForm: FC<SaleOfferEditFormProps> = ({
     { initialData: initialSaleOffer },
   );
 
-  const { data: customers } = api.customer.list.useQuery(
+  const { data: companies } = api.company.list.useQuery(
     {},
     {
-      initialData: initialCustomers,
+      initialData: initialCompanies,
     },
   );
 
-  const formattedCustomers =
-    customers?.map((customer) => ({
-      id: customer.id,
-      label: `${customer.firstname} ${customer.middlename} ${customer.lastname}`,
-      value: customer.id,
+  const formattedCompanies =
+    companies?.map((company) => ({
+      id: company.id,
+      label: company.title,
+      value: company.id,
     })) ?? [];
 
   const {
@@ -81,17 +81,17 @@ export const SaleOfferEditForm: FC<SaleOfferEditFormProps> = ({
         errors={restErrors}
       />
       <FormDropdownInput<SaleOfferEditFormFields>
-        label="Customer"
-        name="customerId"
+        label="Company"
+        name="companyId"
         errors={restErrors}
         control={control}
-        options={formattedCustomers}
+        options={formattedCompanies}
       />
 
       {/* <FormInput<SaleOfferEditFormFields>
-        id="customerType"
-        label="Customer Type"
-        name="customerType"
+        id="companyType"
+        label="Company Type"
+        name="companyType"
         type="text"
         errors={restErrors}
         register={register}

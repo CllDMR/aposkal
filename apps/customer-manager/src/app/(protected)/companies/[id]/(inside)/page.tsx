@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { authOptions, getServerSession } from "@acme/auth";
 import { and, db, eq, schema } from "@acme/db";
 
-import { CustomerCard } from "~/components/organisms/customer/CustomerCard";
+import { CompanyCard } from "~/components/organisms/company/CompanyCard";
 
 interface PageProps {
   params: {
@@ -11,23 +11,23 @@ interface PageProps {
   };
 }
 
-export default async function CustomerPage({ params: { id } }: PageProps) {
+export default async function CompanyPage({ params: { id } }: PageProps) {
   const session = await getServerSession(authOptions);
   if (!session) throw new Error("No Session");
 
-  const customer = await db
+  const company = await db
     .select()
-    .from(schema.customer)
+    .from(schema.company)
     .where(
       and(
-        eq(schema.customer.tenantId, session.user.ti),
-        eq(schema.customer.id, id),
+        eq(schema.company.tenantId, session.user.ti),
+        eq(schema.company.id, id),
       ),
     )
     .limit(1)
     .then((a) => a[0]);
 
-  if (!customer) notFound();
+  if (!company) notFound();
 
-  return <CustomerCard initCustomer={customer} id={id} />;
+  return <CompanyCard initCompany={company} id={id} />;
 }

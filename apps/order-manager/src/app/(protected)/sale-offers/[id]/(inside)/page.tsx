@@ -21,7 +21,7 @@ export default async function SaleOfferPage({ params: { id } }: PageProps) {
       eq(schema.saleOffer.id, id),
     ),
     with: {
-      customer: true,
+      company: true,
       toAddress: true,
     },
   });

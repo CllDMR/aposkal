@@ -7,7 +7,7 @@ import { z } from "zod";
 import { mySqlTable } from "./_table";
 import { address } from "./address";
 import { tenant } from "./auth/tenant";
-import { customer } from "./customer";
+import { company } from "./company";
 import { saleOfferNote } from "./sale_offer_note";
 import { saleOfferProduct } from "./sale_offer_product";
 
@@ -31,7 +31,7 @@ export const saleOffer = mySqlTable(
 
     tenantId: varchar("tenant_id", { length: 255 }).notNull(),
     addressId: varchar("address_id", { length: 255 }).notNull(),
-    customerId: varchar("customer_id", { length: 255 }).notNull(),
+    companyId: varchar("company_id", { length: 255 }).notNull(),
   },
   ({ tenantId }) => ({
     tenantIdX: index("tenant_id_index").on(tenantId),
@@ -47,9 +47,9 @@ export const saleOfferRelations = relations(saleOffer, ({ one, many }) => ({
     fields: [saleOffer.addressId],
     references: [address.id],
   }),
-  customer: one(customer, {
-    fields: [saleOffer.customerId],
-    references: [customer.id],
+  company: one(company, {
+    fields: [saleOffer.companyId],
+    references: [company.id],
   }),
   saleOfferProducts: many(saleOfferProduct),
   saleOfferNotes: many(saleOfferNote),
@@ -57,7 +57,7 @@ export const saleOfferRelations = relations(saleOffer, ({ one, many }) => ({
 
 export const insertSaleOfferSchema = createInsertSchema(saleOffer)
   .extend({
-    customerId: z.string(),
+    companyId: z.string(),
     addressId: z.string(),
     saleOfferProducts: z
       .object({

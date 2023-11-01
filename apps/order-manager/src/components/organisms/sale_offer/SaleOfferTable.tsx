@@ -19,11 +19,11 @@ interface TableItem {
   no: string;
   currency: string;
 
-  customer: RouterOutputs["saleOffer"]["list"][number]["customer"];
+  company: RouterOutputs["saleOffer"]["list"][number]["company"];
   toAddress: RouterOutputs["saleOffer"]["list"][number]["toAddress"];
 
   addressId: string;
-  customerId: string;
+  companyId: string;
 }
 
 interface SaleOfferTableProps {
@@ -68,14 +68,14 @@ export const SaleOfferTable: FC<SaleOfferTableProps> = ({ saleOffers }) => {
         footer: "Address",
       },
       {
-        header: "Customer",
+        header: "Company",
         cell: (row) => {
-          const customer = row.getValue() as TableItem["customer"];
+          const company = row.getValue() as TableItem["company"];
 
-          return `${customer.firstname} ${customer.middlename} ${customer.lastname}`;
+          return company.title;
         },
-        accessorKey: "customer",
-        footer: "Customer",
+        accessorKey: "company",
+        footer: "Company",
       },
       {
         header: "Actions",

@@ -20,12 +20,12 @@ type SaleOrderEditFormFields = RouterInputs["saleOrder"]["update"];
 
 interface SaleOrderEditFormProps {
   saleOrder: NonNullable<RouterOutputs["saleOrder"]["get"]>;
-  customers: RouterOutputs["customer"]["list"];
+  companies: RouterOutputs["company"]["list"];
 }
 
 export const SaleOrderEditForm: FC<SaleOrderEditFormProps> = ({
   saleOrder: initialSaleOrder,
-  customers: initialCustomers,
+  companies: initialCompanies,
 }) => {
   const context = api.useContext();
   const { mutateAsync } = api.saleOrder.update.useMutation({
@@ -40,18 +40,18 @@ export const SaleOrderEditForm: FC<SaleOrderEditFormProps> = ({
     { initialData: initialSaleOrder },
   );
 
-  const { data: customers } = api.customer.list.useQuery(
+  const { data: companies } = api.company.list.useQuery(
     {},
     {
-      initialData: initialCustomers,
+      initialData: initialCompanies,
     },
   );
 
-  const formattedCustomers =
-    customers?.map((customer) => ({
-      id: customer.id,
-      label: `${customer.firstname} ${customer.middlename} ${customer.lastname}`,
-      value: customer.id,
+  const formattedCompanies =
+    companies?.map((company) => ({
+      id: company.id,
+      label: company.title,
+      value: company.id,
     })) ?? [];
 
   const {
@@ -93,17 +93,17 @@ export const SaleOrderEditForm: FC<SaleOrderEditFormProps> = ({
         errors={errors}
       />
       <FormDropdownInput<SaleOrderEditFormFields>
-        label="Customer"
-        name="customerId"
+        label="Company"
+        name="companyId"
         errors={errors}
         control={control}
-        options={formattedCustomers}
+        options={formattedCompanies}
       />
 
       <FormInput<SaleOrderEditFormFields>
-        id="customerType"
-        label="Customer Type"
-        name="customerType"
+        id="companyType"
+        label="Company Type"
+        name="companyType"
         type="text"
         errors={errors}
         register={register}

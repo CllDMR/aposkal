@@ -7,7 +7,7 @@ import { z } from "zod";
 import { mySqlTable } from "./_table";
 import { address } from "./address";
 import { tenant } from "./auth/tenant";
-import { customer } from "./customer";
+import { company } from "./company";
 
 export const saleOrder = mySqlTable(
   "sale_order",
@@ -24,12 +24,12 @@ export const saleOrder = mySqlTable(
     priority: varchar("priority", { length: 256 }).notNull(),
     startdate: timestamp("start_date").notNull(),
     enddate: timestamp("end_date").notNull(),
-    customerType: varchar("customer_type", { length: 256 }).notNull(),
+    companyType: varchar("company_type", { length: 256 }).notNull(),
     source: varchar("source", { length: 256 }).notNull(),
 
     tenantId: varchar("tenant_id", { length: 255 }).notNull(),
     addressId: varchar("address_id", { length: 255 }).notNull(),
-    customerId: varchar("customer_id", { length: 255 }).notNull(),
+    companyId: varchar("company_id", { length: 255 }).notNull(),
   },
   ({ tenantId }) => ({
     tenantIdIdx: index("tenant_id_idx").on(tenantId),
@@ -45,14 +45,14 @@ export const saleOrderRelations = relations(saleOrder, ({ one }) => ({
     fields: [saleOrder.addressId],
     references: [address.id],
   }),
-  customer: one(customer, {
-    fields: [saleOrder.customerId],
-    references: [customer.id],
+  company: one(company, {
+    fields: [saleOrder.companyId],
+    references: [company.id],
   }),
 }));
 
 export const insertSaleOrderSchema = createInsertSchema(saleOrder).extend({
-  customerId: z.string(),
+  companyId: z.string(),
   addressId: z.string(),
 });
 export const selectSaleOrderSchema = createSelectSchema(saleOrder);

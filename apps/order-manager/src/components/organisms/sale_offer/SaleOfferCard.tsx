@@ -45,11 +45,8 @@ export const SaleOfferCard: FC<SaleOfferCardProps> = ({
       </div>
       <div className="">
         <p className="">
-          <span className="">Customer Name: </span>
-          <span className="">
-            {saleOffer.customer.firstname} {saleOffer.customer.middlename}{" "}
-            {saleOffer.customer.lastname}
-          </span>
+          <span className="">Company Name: </span>
+          <span className="">{saleOffer.company.title}</span>
         </p>
         <p className="">
           <span className="">To Address: </span>

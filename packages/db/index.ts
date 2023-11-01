@@ -8,8 +8,8 @@ import * as tenant from "./schema/auth/tenant";
 import * as user from "./schema/auth/user";
 import * as usersToTenants from "./schema/auth/usersToTenants";
 import * as verificationToken from "./schema/auth/verificationToken";
-import * as customer from "./schema/customer";
-import * as customersToAddresses from "./schema/customers_to_addresses";
+import * as companiesToAddresses from "./schema/companies_to_addresses";
+import * as company from "./schema/company";
 import * as post from "./schema/post";
 import * as product from "./schema/product";
 import * as productCategory from "./schema/product_category";
@@ -34,8 +34,8 @@ export const schema = {
   ...verificationToken,
 
   ...address,
-  ...customer,
-  ...customersToAddresses,
+  ...company,
+  ...companiesToAddresses,
   ...post,
   ...product,
   ...productCategory,

@@ -21,7 +21,7 @@ export default async function SaleOrderPage({ params: { id } }: PageProps) {
       eq(schema.saleOrder.id, id),
     ),
     with: {
-      customer: true,
+      company: true,
       toAddress: true,
     },
   });

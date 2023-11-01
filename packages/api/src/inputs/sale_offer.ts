@@ -10,7 +10,7 @@ export const saleOfferListInput = selectSaleOfferSchema
     updatedAt: true,
     addressId: true,
     currency: true,
-    customerId: true,
+    companyId: true,
     endDate: true,
     no: true,
     paymentEndDate: true,

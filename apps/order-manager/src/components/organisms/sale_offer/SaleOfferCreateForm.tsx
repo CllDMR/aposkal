@@ -18,12 +18,12 @@ import { SaleOfferCreateProductPanel } from "./SaleOfferCreateForm/ProductPanel"
 type SaleOfferCreateFormFields = RouterInputs["saleOffer"]["create"];
 
 interface SaleOfferCreateFormProps {
-  customers: RouterOutputs["customer"]["list"];
+  companies: RouterOutputs["company"]["list"];
   addresses: RouterOutputs["address"]["list"];
 }
 
 export const SaleOfferCreateForm: FC<SaleOfferCreateFormProps> = ({
-  customers: initialCustomers,
+  companies: initialCompanies,
   addresses: initialAddresses,
 }) => {
   const context = api.useContext();
@@ -54,7 +54,7 @@ export const SaleOfferCreateForm: FC<SaleOfferCreateFormProps> = ({
           isSubmitting={methods.formState.isSubmitting}
         >
           <SaleOfferCreateInfoPanel
-            customers={initialCustomers}
+            companies={initialCompanies}
             addresses={initialAddresses}
           />
           <SaleOfferCreateProductPanel />

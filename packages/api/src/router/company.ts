@@ -3,58 +3,58 @@ import { z } from "zod";
 import { desc, eq, schema } from "@acme/db";
 
 import {
-  customerCreateInput,
-  customerGetInput,
-  customerListInput,
-  customerUpdateInput,
-} from "../inputs/customer";
+  companyCreateInput,
+  companyGetInput,
+  companyListInput,
+  companyUpdateInput,
+} from "../inputs/company";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
-export const customerRouter = createTRPCRouter({
+export const companyRouter = createTRPCRouter({
   list: protectedProcedure
-    .input(customerListInput)
+    .input(companyListInput)
     .query(async ({ ctx, input: _ }) => {
       return await ctx.db
         .select()
-        .from(schema.customer)
-        .where(eq(schema.customer.tenantId, ctx.session.user.ti))
-        .orderBy(desc(schema.customer.id));
+        .from(schema.company)
+        .where(eq(schema.company.tenantId, ctx.session.user.ti))
+        .orderBy(desc(schema.company.id));
     }),
 
   get: protectedProcedure
-    .input(customerGetInput)
+    .input(companyGetInput)
     .query(async ({ ctx, input }) => {
       return await ctx.db
         .select()
-        .from(schema.customer)
-        .where(eq(schema.customer.id, input.id))
+        .from(schema.company)
+        .where(eq(schema.company.id, input.id))
         .limit(1)
         .then((a) => a[0]);
     }),
 
   create: protectedProcedure
-    .input(customerCreateInput)
+    .input(companyCreateInput)
     .mutation(async ({ ctx, input }) => {
-      return await ctx.db.insert(schema.customer).values({
+      return await ctx.db.insert(schema.company).values({
         ...input,
         tenantId: ctx.session.user.ti,
       });
     }),
 
   update: protectedProcedure
-    .input(customerUpdateInput)
+    .input(companyUpdateInput)
     .mutation(async ({ ctx, input: { id, ...rest } }) => {
       await ctx.db
-        .update(schema.customer)
+        .update(schema.company)
         .set(rest)
-        .where(eq(schema.customer.id, id));
+        .where(eq(schema.company.id, id));
     }),
 
   delete: protectedProcedure
     .input(z.string())
     .mutation(async ({ ctx, input }) => {
       return await ctx.db
-        .delete(schema.customer)
-        .where(eq(schema.customer.id, input));
+        .delete(schema.company)
+        .where(eq(schema.company.id, input));
     }),
 });

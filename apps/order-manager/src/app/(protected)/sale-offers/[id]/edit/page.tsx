@@ -21,19 +21,19 @@ export default async function SaleOfferEditPage({ params: { id } }: PageProps) {
       eq(schema.saleOffer.id, id),
     ),
     with: {
-      customer: true,
+      company: true,
       toAddress: true,
     },
   });
 
   if (!saleOffer) notFound();
 
-  const customers = await db.query.customer.findMany({
+  const companies = await db.query.company.findMany({
     where: and(
-      eq(schema.customer.tenantId, session.user.ti),
-      eq(schema.customer.id, id),
+      eq(schema.company.tenantId, session.user.ti),
+      eq(schema.company.id, id),
     ),
   });
 
-  return <SaleOfferEditForm saleOffer={saleOffer} customers={customers} />;
+  return <SaleOfferEditForm saleOffer={saleOffer} companies={companies} />;
 }
