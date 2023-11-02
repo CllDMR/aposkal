@@ -35,8 +35,8 @@ export function Drawer({
           <Image
             className="h-16 w-auto"
             src="/logo.svg"
-            width={100}
-            height={100}
+            width={286.3}
+            height={141.73}
             alt="Company Logo"
           />
         </div>

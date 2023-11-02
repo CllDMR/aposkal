@@ -42,8 +42,8 @@ export default async function SelectTenantPage() {
                 className="h-48 w-48"
                 src="/logo.svg"
                 alt="Logo"
-                width={800}
-                height={800}
+                width={286.3}
+                height={141.73}
               />
             </div>
             {/* <p className="text-center text-sm text-gray-500">
