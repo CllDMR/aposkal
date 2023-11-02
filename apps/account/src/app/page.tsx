@@ -21,7 +21,12 @@ export default async function HomePage() {
 
   return (
     <>
-      <Header baseAuthUrl={baseUrl} session={session} />
+      <Header
+        baseAuthUrl={baseUrl}
+        hasSessionRedirectPathname="/profile"
+        hasSessionRedirectButtonTitle="Profile"
+        session={session}
+      />
 
       <main>
         <Hero />

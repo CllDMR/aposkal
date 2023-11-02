@@ -130,10 +130,17 @@ const MobileNavigation: FC<MobileNavigationProps> = ({
 
 interface HeaderProps {
   baseAuthUrl: string;
+  hasSessionRedirectPathname?: string;
+  hasSessionRedirectButtonTitle?: string;
   session?: Session | null;
 }
 
-export const Header: FC<HeaderProps> = ({ baseAuthUrl, session }) => {
+export const Header: FC<HeaderProps> = ({
+  baseAuthUrl,
+  hasSessionRedirectPathname = "/dashboard",
+  hasSessionRedirectButtonTitle = "Dashboard",
+  session,
+}) => {
   const basePath =
     // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
     (typeof window !== "undefined" && window.location.origin) ?? "";
@@ -153,10 +160,11 @@ export const Header: FC<HeaderProps> = ({ baseAuthUrl, session }) => {
               <NavLink href="#pricing">Fiyatlar</NavLink>
             </div>
           </div>
+          {/* Maybe change this with AppsDropdown and ProfileDropdown */}
           {session ? (
             <div className="flex items-center gap-x-5 md:gap-x-8">
-              <Button href={"/dashboard"} color="blue">
-                Dashboard
+              <Button href={hasSessionRedirectPathname} color="blue">
+                {hasSessionRedirectButtonTitle}
               </Button>
               <div className="-mr-1 md:hidden">
                 <MobileNavigation baseAuthUrl={baseAuthUrl} />
