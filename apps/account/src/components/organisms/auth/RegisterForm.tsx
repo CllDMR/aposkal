@@ -1,11 +1,13 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Form } from "@acme/ui/atoms";
+import { Card, Form } from "@acme/ui/atoms";
 import { Button, FormInput } from "@acme/ui/molecules";
 
 interface RegisterFormFields {
@@ -37,40 +39,69 @@ export default function RegisterForm() {
   });
 
   return (
-    <Form className="" onSubmit={onSubmit}>
-      <FormInput<RegisterFormFields>
-        id="email"
-        label="Email"
-        name="email"
-        type="email"
-        autoComplete="email"
-        errors={errors}
-        register={register}
-      />
+    <div className="grid min-h-screen min-w-full items-center justify-center">
+      <Card>
+        <Image
+          className="mb-12 h-24"
+          src="/logo.svg"
+          alt="Aposkal Logo"
+          width={286.3}
+          height={141.73}
+        />
 
-      <FormInput<RegisterFormFields>
-        id="name"
-        label="Name"
-        name="name"
-        type="text"
-        autoComplete="name"
-        errors={errors}
-        register={register}
-      />
+        <Form
+          variant="none"
+          className="flex flex-col space-y-3"
+          onSubmit={onSubmit}
+        >
+          <FormInput<RegisterFormFields>
+            id="email"
+            label="Email"
+            name="email"
+            type="email"
+            autoComplete="email"
+            errors={errors}
+            register={register}
+          />
 
-      <FormInput<RegisterFormFields>
-        id="password"
-        label="Password"
-        name="password"
-        type="password"
-        autoComplete="password"
-        errors={errors}
-        register={register}
-      />
+          <FormInput<RegisterFormFields>
+            id="name"
+            label="Name"
+            name="name"
+            type="text"
+            autoComplete="name"
+            errors={errors}
+            register={register}
+          />
 
-      <Button type="submit" disabled={isSubmitting}>
-        Register
-      </Button>
-    </Form>
+          <FormInput<RegisterFormFields>
+            id="password"
+            label="Password"
+            name="password"
+            type="password"
+            autoComplete="password"
+            errors={errors}
+            register={register}
+          />
+
+          <div className="mt-4">
+            <Link
+              href="/auth/login"
+              className="text-gray-500 hover:text-gray-900 hover:underline focus-visible:text-gray-900 focus-visible:underline"
+            >
+              <span className="text-sm font-light">
+                Do you have an account? Login.
+              </span>
+            </Link>
+          </div>
+
+          <div className="mt-4 flex w-full justify-end">
+            <Button type="submit" disabled={isSubmitting}>
+              Register
+            </Button>
+          </div>
+        </Form>
+      </Card>
+    </div>
   );
 }
