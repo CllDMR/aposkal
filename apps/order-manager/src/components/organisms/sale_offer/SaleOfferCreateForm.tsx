@@ -59,7 +59,10 @@ export const SaleOfferCreateForm: FC<SaleOfferCreateFormProps> = ({
           />
           <SaleOfferCreateProductPanel />
           <SaleOfferCreateNotePanel />
-          <SaleOfferCreatePreviewPanel />
+          <SaleOfferCreatePreviewPanel
+            companies={initialCompanies}
+            addresses={initialAddresses}
+          />
         </TabPanel>
       </Form>
     </FormProvider>

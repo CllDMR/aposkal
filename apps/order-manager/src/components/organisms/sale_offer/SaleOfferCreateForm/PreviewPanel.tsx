@@ -6,7 +6,7 @@ import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import { useFormContext } from "react-hook-form";
 
-import type { RouterInputs } from "@acme/api";
+import type { RouterInputs, RouterOutputs } from "@acme/api";
 import { Button } from "@acme/ui/molecules";
 
 import { api } from "~/utils/api";
@@ -17,122 +17,132 @@ import { createPDFTemplateSaleOffer } from "~/utils/pdf-templates/sale-offer";
 
 type SaleOfferCreateFormFields = RouterInputs["saleOffer"]["create"];
 
-export const SaleOfferCreatePreviewPanel: FC = () => {
-  const [pdfData, setPdfData] = useState<null | string>(null);
-  const [formValues, setFormValues] = useState({});
+interface SaleOfferCreatePreviewPanelProps {
+  companies: RouterOutputs["company"]["list"];
+  addresses: RouterOutputs["address"]["list"];
+}
 
-  const { getValues, watch } = useFormContext<SaleOfferCreateFormFields>();
+export const SaleOfferCreatePreviewPanel: FC<
+  SaleOfferCreatePreviewPanelProps
+> = ({ companies: initialCompanies, addresses: initialAddresses }) => {
+  const [pdfData, setPdfData] = useState<null | string>(null);
+  const [formValues, setFormValues] =
+    useState<Partial<SaleOfferCreateFormFields> | null>(null);
+
+  const { getValues } = useFormContext<SaleOfferCreateFormFields>();
+
+  const { data: company } = api.company.get.useQuery(
+    {
+      id: formValues?.companyId!,
+    },
+    {
+      initialData: initialCompanies.find((o) => o.id === formValues?.companyId),
+      enabled:
+        Boolean(formValues?.companyId) &&
+        typeof formValues?.companyId === "string",
+    },
+  );
+
+  const { data: address } = api.address.get.useQuery(
+    {
+      id: formValues?.addressId!,
+    },
+    {
+      initialData: initialAddresses.find((o) => o.id === formValues?.addressId),
+      enabled:
+        Boolean(formValues?.addressId) &&
+        typeof formValues?.addressId === "string",
+    },
+  );
 
   useEffect(() => {
-    const { unsubscribe } = watch(
-      ({
-        addressId,
-        currency,
-        companyId,
-        endDate,
-        paymentEndDate,
-        saleOfferProducts,
-        startDate,
-        saleOfferNotes,
-      }) => {
-        const { data: company } = api.company.get.useQuery(
-          {
-            id: companyId!,
+    if (company && address) {
+      const template = createPDFTemplateSaleOffer({
+        offerInfo: {
+          documentNumber: "documentNumber",
+          date:
+            formValues?.startDate?.toISOString() ??
+            new Date(Date.now()).toISOString(),
+          validUntil:
+            formValues?.endDate?.toISOString() ??
+            new Date(Date.now()).toISOString(),
+          dueDate:
+            formValues?.paymentEndDate?.toISOString() ??
+            new Date(Date.now()).toISOString(),
+          currency: formValues?.currency ?? "currency",
+          company: {
+            title: company.title,
+            address: address.name,
+            // address: company.address.name,
+            tcVkn: company.taxNo ?? "tcVkn",
+            taxAdmin: company.taxOffice ?? "taxAdmin",
+            phoneNumber: company.firmPhoneNumber ?? "phoneNumber",
+            email: company.email ?? "email",
+            web: "web",
+            // web: company.web ?? "web",
+            // ticaretSicilNo: company.ticaretSicilNo ?? "ticaretSicilNo",
+            // mersisNo: company.mersisNo ?? "mersisNo",
+            ticaretSicilNo: "ticaretSicilNo",
+            mersisNo: "mersisNo",
           },
-          {
-            enabled: Boolean(companyId),
+        },
+        offerDetails:
+          formValues?.saleOfferProducts?.map((saleOfferProduct) => ({
+            // productName: saleOfferProduct.product.name ?? "productName",
+            productName: "productName",
+            amount: "" + saleOfferProduct.amount,
+            unit: "unit",
+            unitPrice: "" + saleOfferProduct.unitPrice,
+            vatRate: saleOfferProduct.kdv,
+            total: "" + saleOfferProduct.total,
+            description: "description",
+            gtipNo: "gtipNo",
+            imageURL: "imageURL",
+          })) ?? [],
+        offerNotes:
+          formValues?.saleOfferNotes?.map((saleOfferNote) => ({
+            hideNote: false,
+            text: saleOfferNote?.text ?? "Test",
+          })) ?? [],
+        offerTotals: {
+          totalCurrency: {
+            total: "total",
+            totalExcludingVat: "totalExcludingVat",
+            totalInWords: "totalInWords",
+            totalVat: "totalVat",
           },
-        );
+          totalTRY: {
+            total: "total",
+            totalExcludingVat: "totalExcludingVat",
+            totalInWords: "totalInWords",
+            totalVat: "totalVat",
+          },
+        },
+        selectedCompany: {
+          title: company.title,
+          address: address.name,
+          // address: company.address.name,
+          tcVkn: company.taxNo ?? "tcVkn",
+          taxAdmin: company.taxOffice ?? "taxAdmin",
+          phoneNumber: company.firmPhoneNumber ?? "phoneNumber",
+          email: company.email ?? "email",
+          web: "web",
+          // web: company.web ?? "web",
+          // ticaretSicilNo: company.ticaretSicilNo ?? "ticaretSicilNo",
+          // mersisNo: company.mersisNo ?? "mersisNo",
+          ticaretSicilNo: "ticaretSicilNo",
+          mersisNo: "mersisNo",
+          companyLogo: "companyLogo",
+        },
+      });
 
-        const { data: address } = api.address.get.useQuery(
-          {
-            id: companyId!,
-          },
-          {
-            enabled: Boolean(companyId),
-          },
-        );
-
-        if (company && address) {
-          const template = createPDFTemplateSaleOffer({
-            offerInfo: {
-              documentNumber: "Test",
-              date: "Test",
-              validUntil: "Test",
-              dueDate: "Test",
-              currency: "Test",
-              company: {
-                title: company.title,
-                address: address.name,
-                tcVkn: "Test",
-                taxAdmin: "Test",
-                phoneNumber: "Test",
-                email: "Test",
-                web: "Test",
-                ticaretSicilNo: "Test",
-                mersisNo: "Test",
-              },
-            },
-            offerDetails: [
-              {
-                productName: "Test",
-                amount: "Test",
-                unit: "Test",
-                unitPrice: "Test",
-                vatRate: 9999,
-                total: "Test",
-                description: "Test",
-                gtipNo: "Test",
-                imageURL: "Test",
-              },
-            ],
-            offerNotes: saleOfferNotes?.map((saleOfferNote) => ({
-              hideNote: false,
-              text: saleOfferNote?.text ?? "Test",
-            })) ?? [
-              {
-                hideNote: false,
-                text: "Test",
-              },
-            ],
-            offerTotals: {
-              totalCurrency: {
-                total: "Test",
-                totalExcludingVat: "Test",
-                totalInWords: "Test",
-                totalVat: "Test",
-              },
-              totalTRY: {
-                total: "Test",
-                totalExcludingVat: "Test",
-                totalInWords: "Test",
-                totalVat: "Test",
-              },
-            },
-            selectedCompany: {
-              title: "Test",
-              address: "Test",
-              tcVkn: "Test",
-              taxAdmin: "Test",
-              ticaretSicilNo: "Test",
-              mersisNo: "Test",
-              phoneNumber: "Test",
-              email: "Test",
-              web: "Test",
-              companyLogo: "Test",
-            },
-          });
-
-          const pdfDocGenerator = pdfMake.createPdf(template);
-          // PDF verisini bileşen durumuna kaydedin
-          pdfDocGenerator.getBase64((data) => {
-            setPdfData(data);
-          });
-        }
-      },
-    );
-    return () => unsubscribe();
-  }, [watch]);
+      const pdfDocGenerator = pdfMake.createPdf(template);
+      // PDF verisini bileşen durumuna kaydedin
+      pdfDocGenerator.getBase64((data) => {
+        setPdfData(data);
+      });
+    }
+  }, [address, company, formValues]);
 
   return (
     <div className="">
@@ -141,16 +151,20 @@ export const SaleOfferCreatePreviewPanel: FC = () => {
           Önizleme
         </h3>
       </div>
-
-      <div className="mt-2">
+      <div className="">
+        <Button type="button" onClick={() => setFormValues(getValues())}>
+          Refresh
+        </Button>
+      </div>
+      {/* <div className="mt-2">
         <Button type="button" onClick={() => setFormValues(getValues())}>
           Get Form Values
         </Button>
-      </div>
+      </div> */}
 
-      <div className="">
+      {/* <div className="">
         <pre className="">{JSON.stringify(formValues, null, 4)}</pre>
-      </div>
+      </div> */}
 
       <div className="">
         {pdfData ? (
