@@ -12,8 +12,21 @@ import {
   SecondaryFeatures,
   Testimonials,
 } from "@acme/ui/organisms/landing";
+import type { NavbarNavigationPath } from "@acme/ui/organisms/navbar";
 
+import { env } from "~/env.mjs";
 import { getBaseAuthUrl } from "~/utils/get-base-url";
+
+const baseAuthUrl = getBaseAuthUrl();
+
+const toAuthURL = (path: string) => `${baseAuthUrl}${path}`;
+
+const navbarNavigationPaths: NavbarNavigationPath[] = [
+  { name: "Select Tenant", href: toAuthURL("/auth/select-tenant") },
+  { name: "Your profile", href: toAuthURL("/profile") },
+  { name: "Settings - Tenant", href: toAuthURL("/settings/tenant") },
+  { name: "Logout", href: toAuthURL("/auth/logout") },
+];
 
 export default async function HomePage() {
   const baseAuthUrl = getBaseAuthUrl() ?? "";
@@ -21,7 +34,12 @@ export default async function HomePage() {
 
   return (
     <>
-      <Header baseAuthUrl={baseAuthUrl} session={session} />
+      <Header
+        baseAuthUrl={baseAuthUrl}
+        session={session}
+        navigationPaths={navbarNavigationPaths}
+        domain={env.DOMAIN}
+      />
 
       <main>
         <Hero />

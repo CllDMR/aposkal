@@ -5,9 +5,13 @@ import { Fragment } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Popover, Transition } from "@headlessui/react";
+import { BellIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import type { Session } from "next-auth";
 
+import type { NavbarNavigationPath } from "../../navbar";
+import { AppsDropdown } from "../../navbar/apps-dropdown";
+import { ProfileDropdown } from "../../navbar/profile-dropdown";
 import { Button } from "../button";
 import { Container } from "../container";
 import { Logo } from "../logo";
@@ -133,6 +137,8 @@ interface HeaderProps {
   hasSessionRedirectPathname?: string;
   hasSessionRedirectButtonTitle?: string;
   session?: Session | null;
+  navigationPaths: NavbarNavigationPath[];
+  domain: string;
 }
 
 export const Header: FC<HeaderProps> = ({
@@ -140,6 +146,8 @@ export const Header: FC<HeaderProps> = ({
   hasSessionRedirectPathname = "/dashboard",
   hasSessionRedirectButtonTitle = "Dashboard",
   session,
+  navigationPaths,
+  domain,
 }) => {
   const basePath =
     // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
@@ -163,15 +171,51 @@ export const Header: FC<HeaderProps> = ({
           {/* Maybe change this with AppsDropdown and ProfileDropdown */}
           {session ? (
             <div className="flex items-center gap-x-5 md:gap-x-8">
-              <Button href={hasSessionRedirectPathname} color="blue">
-                {hasSessionRedirectButtonTitle}
-              </Button>
+              <div className="flex items-center gap-x-4 lg:gap-x-6">
+                <AppsDropdown domain={domain} />
+
+                <button
+                  type="button"
+                  className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500"
+                >
+                  <span className="sr-only">View notifications</span>
+                  <BellIcon className="h-6 w-6" aria-hidden="true" />
+                </button>
+
+                {/* Separator */}
+                <div
+                  className="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-900/10"
+                  aria-hidden="true"
+                />
+
+                {/* Profile dropdown */}
+                <ProfileDropdown
+                  navigationPaths={navigationPaths}
+                  session={session}
+                />
+
+                <Button href={hasSessionRedirectPathname} color="blue">
+                  {hasSessionRedirectButtonTitle}
+                </Button>
+              </div>
               <div className="-mr-1 md:hidden">
                 <MobileNavigation baseAuthUrl={baseAuthUrl} />
               </div>
             </div>
           ) : (
             <div className="flex items-center gap-x-5 md:gap-x-8">
+              <div className="flex items-center gap-x-4 lg:gap-x-6">
+                <AppsDropdown domain={domain} />
+
+                <button
+                  type="button"
+                  className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500"
+                >
+                  <span className="sr-only">View notifications</span>
+                  <BellIcon className="h-6 w-6" aria-hidden="true" />
+                </button>
+              </div>
+
               <div className="hidden md:block">
                 <NavLink
                   href={
