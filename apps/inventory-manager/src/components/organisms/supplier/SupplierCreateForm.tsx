@@ -68,7 +68,7 @@ export const SupplierCreateForm: FC<SupplierCreateFormProps> = ({
         name="address"
         type="text"
         autoComplete="address"
-        errors={restErrors}
+        // errors={restErrors}
         register={register}
       />
       <FormInput<SupplierCreateFormFields>
@@ -77,7 +77,7 @@ export const SupplierCreateForm: FC<SupplierCreateFormProps> = ({
         name="name"
         type="text"
         autoComplete="name"
-        errors={restErrors}
+        // errors={restErrors}
         register={register}
       />
       {fields.map((field, index) => {

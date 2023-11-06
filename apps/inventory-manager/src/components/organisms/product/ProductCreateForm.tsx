@@ -83,7 +83,7 @@ export const ProductCreateForm: FC<ProductCreateFormProps> = ({
         name="name"
         type="text"
         autoComplete="name"
-        errors={restErrors}
+        // errors={restErrors}
         register={register}
       />
       <FormInput<ProductCreateFormFields>
@@ -92,14 +92,14 @@ export const ProductCreateForm: FC<ProductCreateFormProps> = ({
         name="price"
         type="number"
         autoComplete="price"
-        errors={restErrors}
+        // errors={restErrors}
         register={register}
         rules={{ valueAsNumber: true }}
       />
       <FormDropdownInput<ProductCreateFormFields>
         label="Product Category"
         name="productCategoryId"
-        errors={restErrors}
+        // errors={restErrors}
         control={control}
         options={formattedProductCategories}
       />

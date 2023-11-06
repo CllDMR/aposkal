@@ -75,7 +75,7 @@ export const SupplierEditForm: FC<{ supplier: Supplier }> = ({
         name="address"
         type="text"
         autoComplete="address"
-        errors={restErrors}
+        // errors={restErrors}
         register={register}
       />
       <FormInput<SupplierEditFormFields>
@@ -83,7 +83,7 @@ export const SupplierEditForm: FC<{ supplier: Supplier }> = ({
         label="Name"
         name="name"
         type="text"
-        errors={restErrors}
+        // errors={restErrors}
         register={register}
       />
       {fields.map((field, index) => {

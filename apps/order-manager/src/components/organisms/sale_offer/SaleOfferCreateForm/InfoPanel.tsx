@@ -68,7 +68,7 @@ export const SaleOfferCreateInfoPanel: FC<
         <FormDropdownInput<SaleOfferCreateFormInfoPanelFields>
           label="Müşteri"
           name="companyId"
-          errors={restErrors}
+          // errors={restErrors}
           control={control}
           options={formattedCompanies}
         />
@@ -83,19 +83,19 @@ export const SaleOfferCreateInfoPanel: FC<
           label="Teklif Tarihi"
           name="startDate"
           control={control}
-          errors={restErrors}
+          // errors={restErrors}
         />
         <FormDateInput<SaleOfferCreateFormInfoPanelFields>
           id="endDate"
           label="Geçerlilik Tarihi"
           name="endDate"
           control={control}
-          errors={restErrors}
+          // errors={restErrors}
         />
         <FormDropdownInput<SaleOfferCreateFormInfoPanelFields>
           label="Adres"
           name="addressId"
-          errors={restErrors}
+          // errors={restErrors}
           control={control}
           options={formattedAddresses}
         />
@@ -110,14 +110,14 @@ export const SaleOfferCreateInfoPanel: FC<
           label="Ödeme Tarihi"
           name="paymentEndDate"
           control={control}
-          errors={restErrors}
+          // errors={restErrors}
         />
         <FormInput<SaleOfferCreateFormInfoPanelFields>
           id="currency"
           label="Döviz Cinsi"
           name="currency"
           type="text"
-          errors={restErrors}
+          // errors={restErrors}
           register={register}
         />
       </FormSection>
@@ -129,7 +129,7 @@ export const SaleOfferCreateInfoPanel: FC<
         <FormDropdownInput<SaleOfferCreateFormInfoPanelFields>
           label="Proje"
           name="companyId"
-          errors={restErrors}
+          // errors={restErrors}
           control={control}
           options={formattedCompanies}
         />

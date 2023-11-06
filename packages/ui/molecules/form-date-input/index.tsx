@@ -7,6 +7,7 @@ import type {
   Control,
   DeepMap,
   FieldError,
+  FieldErrors,
   FieldName,
   FieldValues,
   Path,
@@ -23,7 +24,7 @@ export type FormDateInputProps<TFormValues extends FieldValues> = {
   name: Path<TFormValues>;
   control: Control<TFormValues>;
   rules?: RegisterOptions;
-  errors?: Partial<DeepMap<TFormValues, FieldError>>;
+  errors?: Partial<FieldErrors>;
 } & Omit<InputProps, "name" | "type" | "onChange" | "value">;
 
 export const FormDateInput = <TFormValues extends FieldValues>({

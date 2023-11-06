@@ -7,6 +7,7 @@ import get from "lodash.get";
 import type {
   DeepMap,
   FieldError,
+  FieldErrors,
   FieldName,
   FieldValues,
   Path,
@@ -23,7 +24,7 @@ export type FormSelectProps<TFormValues extends FieldValues> = {
   name: Path<TFormValues>;
   rules?: RegisterOptions;
   register?: UseFormRegister<TFormValues>;
-  errors?: Partial<DeepMap<TFormValues, FieldError>>;
+  errors?: Partial<FieldErrors>;
 } & Omit<SelectProps, "name">;
 
 export const FormSelect = <TFormValues extends FieldValues>({

@@ -71,19 +71,19 @@ export const SaleOfferEditForm: FC<SaleOfferEditFormProps> = ({
         label="Start Date"
         name="startDate"
         control={control}
-        errors={restErrors}
+        // errors={restErrors}
       />
       <FormDateInput<SaleOfferEditFormFields>
         id="endDate"
         label="End Date"
         name="endDate"
         control={control}
-        errors={restErrors}
+        // errors={restErrors}
       />
       <FormDropdownInput<SaleOfferEditFormFields>
         label="Company"
         name="companyId"
-        errors={restErrors}
+        // errors={restErrors}
         control={control}
         options={formattedCompanies}
       />
@@ -93,7 +93,7 @@ export const SaleOfferEditForm: FC<SaleOfferEditFormProps> = ({
         label="Company Type"
         name="companyType"
         type="text"
-        errors={restErrors}
+        // errors={restErrors}
         register={register}
       /> */}
 

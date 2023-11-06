@@ -9,6 +9,7 @@ import type {
   Control,
   DeepMap,
   FieldError,
+  FieldErrors,
   FieldName,
   FieldValues,
   Path,
@@ -30,7 +31,7 @@ export interface FormDropdownInputProps<TFormValues extends FieldValues> {
   name: Path<TFormValues>;
   rules?: RegisterOptions;
   // register?: UseFormRegister<TFormValues>;
-  errors?: Partial<DeepMap<TFormValues, FieldError>>;
+  errors?: Partial<FieldErrors>;
   control: Control<TFormValues>;
 
   // option: Option | null;
@@ -51,8 +52,8 @@ export const FormDropdownInput = <TFormValues extends FieldValues>({
   control,
   // option,
   options, // onChange,
-  // queryText,
-} // onChangeQueryText, // className,
+  // onChangeQueryText, // className,
+} // queryText,
 // ...props
 : FormDropdownInputProps<TFormValues>): JSX.Element => {
   // const errorMessages = get(errors, name);

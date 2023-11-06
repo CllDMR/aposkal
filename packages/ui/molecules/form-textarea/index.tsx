@@ -7,6 +7,7 @@ import get from "lodash.get";
 import type {
   DeepMap,
   FieldError,
+  FieldErrors,
   FieldName,
   FieldValues,
   Path,
@@ -25,7 +26,7 @@ export type FormTextareaProps<TFormValues extends FieldValues> = {
   className?: string;
   rules?: RegisterOptions;
   register?: UseFormRegister<TFormValues>;
-  errors?: Partial<DeepMap<TFormValues, FieldError>>;
+  errors?: Partial<FieldErrors>;
 } & DetailedHTMLProps<
   TextareaHTMLAttributes<HTMLTextAreaElement>,
   HTMLTextAreaElement
