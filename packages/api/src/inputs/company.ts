@@ -17,6 +17,9 @@ export const companyListInput = selectCompanySchema
     taxOffice: true,
     title: true,
     type: true,
+    mersisNo: true,
+    ticaretSicilNo: true,
+    web: true,
   });
 
 export const companyGetInput = selectCompanySchema.pick({ id: true });
@@ -45,4 +48,7 @@ export const companyUpdateInput = insertCompanySchema
     taxOffice: true,
     title: true,
     type: true,
+    mersisNo: true,
+    ticaretSicilNo: true,
+    web: true,
   });

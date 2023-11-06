@@ -40,6 +40,9 @@ export const company = mySqlTable(
       length: 256,
     }).notNull(),
     email: varchar("email", { length: 256 }).notNull(),
+    web: varchar("web", { length: 256 }).notNull(),
+    ticaretSicilNo: varchar("ticaretSicilNo", { length: 256 }).notNull(),
+    mersisNo: varchar("mersisNo", { length: 256 }).notNull(),
 
     tenantId: varchar("tenant_id", { length: 255 }).notNull(),
     addressId: varchar("address_id", { length: 255 }).notNull(),

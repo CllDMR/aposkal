@@ -15,17 +15,15 @@ export default async function CompanyPage({ params: { id } }: PageProps) {
   const session = await getServerSession(authOptions);
   if (!session) throw new Error("No Session");
 
-  const company = await db
-    .select()
-    .from(schema.company)
-    .where(
-      and(
-        eq(schema.company.tenantId, session.user.ti),
-        eq(schema.company.id, id),
-      ),
-    )
-    .limit(1)
-    .then((a) => a[0]);
+  const company = await db.query.company.findFirst({
+    where: and(
+      eq(schema.company.tenantId, session.user.ti),
+      eq(schema.company.id, id),
+    ),
+    with: {
+      address: true,
+    },
+  });
 
   if (!company) notFound();
 

@@ -3,12 +3,21 @@ import { z } from "zod";
 
 import { desc, eq, inArray, schema } from "@acme/db";
 
+import {
+  tenantAddUserInput,
+  tenantCreateInput,
+  tenantGetInput,
+  tenantListInput,
+  tenantUpdateInput,
+} from "../inputs/tenant";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
 export const tenantRouter = createTRPCRouter({
-  list: publicProcedure.query(({ ctx }) =>
-    ctx.db.select().from(schema.tenant).orderBy(desc(schema.tenant.id)),
-  ),
+  list: publicProcedure
+    .input(tenantListInput)
+    .query(({ ctx }) =>
+      ctx.db.select().from(schema.tenant).orderBy(desc(schema.tenant.id)),
+    ),
 
   listOfUserTenants: protectedProcedure.query(async ({ ctx }) => {
     const usertenants = await ctx.db
@@ -29,23 +38,21 @@ export const tenantRouter = createTRPCRouter({
             usertenants.map((e) => e.tenantId),
           ),
         )
-        .orderBy(desc(schema.tenant.name))
+        .orderBy(desc(schema.tenant.title))
         .execute();
     }
 
     return tenants;
   }),
 
-  get: publicProcedure
-    .input(z.object({ id: z.string() }))
-    .query(({ ctx, input }) =>
-      ctx.db
-        .select()
-        .from(schema.tenant)
-        .where(eq(schema.tenant.id, input.id))
-        .limit(1)
-        .then((a) => a[0]),
-    ),
+  get: publicProcedure.input(tenantGetInput).query(({ ctx, input }) =>
+    ctx.db
+      .select()
+      .from(schema.tenant)
+      .where(eq(schema.tenant.id, input.id))
+      .limit(1)
+      .then((a) => a[0]),
+  ),
 
   getWithUsers: protectedProcedure.query(({ ctx }) =>
     ctx.db.query.tenant.findFirst({
@@ -59,7 +66,7 @@ export const tenantRouter = createTRPCRouter({
   ),
 
   create: protectedProcedure
-    .input(z.object({ name: z.string().min(1) }))
+    .input(tenantCreateInput)
     .mutation(async ({ ctx, input }) => {
       const tenantId = nanoid();
 
@@ -80,7 +87,7 @@ export const tenantRouter = createTRPCRouter({
     }),
 
   update: protectedProcedure
-    .input(z.object({ id: z.string(), name: z.string().min(1).optional() }))
+    .input(tenantUpdateInput)
     .mutation(
       ({ ctx, input }) =>
         void ctx.db
@@ -97,7 +104,7 @@ export const tenantRouter = createTRPCRouter({
     ),
 
   addUser: protectedProcedure
-    .input(z.object({ email: z.string().email() }))
+    .input(tenantAddUserInput)
     .mutation(async ({ ctx, input }) => {
       const user = await ctx.db
         .select()

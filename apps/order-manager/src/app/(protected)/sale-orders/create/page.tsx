@@ -13,11 +13,13 @@ export default async function SaleOrderCreatePage() {
     .where(eq(schema.address.tenantId, session.user.ti))
     .orderBy(desc(schema.address.id));
 
-  const companies = await db
-    .select()
-    .from(schema.company)
-    .where(eq(schema.company.tenantId, session.user.ti))
-    .orderBy(desc(schema.company.id));
+  const companies = await db.query.company.findMany({
+    where: eq(schema.company.tenantId, session.user.ti),
+    orderBy: desc(schema.company.id),
+    with: {
+      address: true,
+    },
+  });
 
   return <SaleOrderCreateForm addresses={addresses} companies={companies} />;
 }

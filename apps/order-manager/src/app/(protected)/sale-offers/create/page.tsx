@@ -7,11 +7,13 @@ export default async function SaleOfferCreatePage() {
   const session = await getServerSession(authOptions);
   if (!session) throw new Error("No Session");
 
-  const companies = await db
-    .select()
-    .from(schema.company)
-    .where(eq(schema.company.tenantId, session.user.ti))
-    .orderBy(desc(schema.company.id));
+  const companies = await db.query.company.findMany({
+    where: eq(schema.company.tenantId, session.user.ti),
+    orderBy: desc(schema.company.id),
+    with: {
+      address: true,
+    },
+  });
 
   const addresses = await db
     .select()

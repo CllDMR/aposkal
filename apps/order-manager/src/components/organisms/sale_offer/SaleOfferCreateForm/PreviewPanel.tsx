@@ -33,6 +33,7 @@ export const SaleOfferCreatePreviewPanel: FC<
 
   const { data: company } = api.company.get.useQuery(
     {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
       id: formValues?.companyId!,
     },
     {
@@ -45,6 +46,7 @@ export const SaleOfferCreatePreviewPanel: FC<
 
   const { data: address } = api.address.get.useQuery(
     {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
       id: formValues?.addressId!,
     },
     {
@@ -72,18 +74,14 @@ export const SaleOfferCreatePreviewPanel: FC<
           currency: formValues?.currency ?? "currency",
           company: {
             title: company.title,
-            address: address.name,
-            // address: company.address.name,
+            address: company.address.name,
             tcVkn: company.taxNo ?? "tcVkn",
             taxAdmin: company.taxOffice ?? "taxAdmin",
             phoneNumber: company.firmPhoneNumber ?? "phoneNumber",
             email: company.email ?? "email",
-            web: "web",
-            // web: company.web ?? "web",
-            // ticaretSicilNo: company.ticaretSicilNo ?? "ticaretSicilNo",
-            // mersisNo: company.mersisNo ?? "mersisNo",
-            ticaretSicilNo: "ticaretSicilNo",
-            mersisNo: "mersisNo",
+            web: company.web ?? "web",
+            ticaretSicilNo: company.ticaretSicilNo ?? "ticaretSicilNo",
+            mersisNo: company.mersisNo ?? "mersisNo",
           },
         },
         offerDetails:
@@ -120,19 +118,15 @@ export const SaleOfferCreatePreviewPanel: FC<
         },
         selectedCompany: {
           title: company.title,
-          address: address.name,
-          // address: company.address.name,
+          address: company.address.name,
           tcVkn: company.taxNo ?? "tcVkn",
           taxAdmin: company.taxOffice ?? "taxAdmin",
           phoneNumber: company.firmPhoneNumber ?? "phoneNumber",
           email: company.email ?? "email",
-          web: "web",
-          // web: company.web ?? "web",
-          // ticaretSicilNo: company.ticaretSicilNo ?? "ticaretSicilNo",
-          // mersisNo: company.mersisNo ?? "mersisNo",
-          ticaretSicilNo: "ticaretSicilNo",
-          mersisNo: "mersisNo",
-          companyLogo: "companyLogo",
+          web: company.email ?? "web",
+          ticaretSicilNo: company.email ?? "ticaretSicilNo",
+          mersisNo: company.email ?? "mersisNo",
+          companyLogo: company.email ?? "companyLogo",
         },
       });
 
@@ -156,15 +150,6 @@ export const SaleOfferCreatePreviewPanel: FC<
           Refresh
         </Button>
       </div>
-      {/* <div className="mt-2">
-        <Button type="button" onClick={() => setFormValues(getValues())}>
-          Get Form Values
-        </Button>
-      </div> */}
-
-      {/* <div className="">
-        <pre className="">{JSON.stringify(formValues, null, 4)}</pre>
-      </div> */}
 
       <div className="">
         {pdfData ? (

@@ -26,7 +26,7 @@ export default async function SettingsTenantPage() {
   return (
     <Main>
       <div className="flex justify-between">
-        <p>{tenantWithUsers.name}</p>
+        <p>{tenantWithUsers.title}</p>
 
         <LinkButton href={`/settings/tenant/add-user`}>Add User</LinkButton>
       </div>

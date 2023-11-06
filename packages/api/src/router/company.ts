@@ -14,22 +14,24 @@ export const companyRouter = createTRPCRouter({
   list: protectedProcedure
     .input(companyListInput)
     .query(async ({ ctx, input: _ }) => {
-      return await ctx.db
-        .select()
-        .from(schema.company)
-        .where(eq(schema.company.tenantId, ctx.session.user.ti))
-        .orderBy(desc(schema.company.id));
+      return await ctx.db.query.company.findMany({
+        where: eq(schema.company.tenantId, ctx.session.user.ti),
+        orderBy: desc(schema.company.id),
+        with: {
+          address: true,
+        },
+      });
     }),
 
   get: protectedProcedure
     .input(companyGetInput)
     .query(async ({ ctx, input }) => {
-      return await ctx.db
-        .select()
-        .from(schema.company)
-        .where(eq(schema.company.id, input.id))
-        .limit(1)
-        .then((a) => a[0]);
+      return await ctx.db.query.company.findFirst({
+        where: eq(schema.company.id, input.id),
+        with: {
+          address: true,
+        },
+      });
     }),
 
   create: protectedProcedure

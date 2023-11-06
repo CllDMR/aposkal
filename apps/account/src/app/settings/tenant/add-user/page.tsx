@@ -25,7 +25,7 @@ export default async function SettingsTenantAddUserPage() {
   return (
     <Main>
       <div className="flex justify-between">
-        <p>{tenantWithUsers.name}</p>
+        <p>{tenantWithUsers.title}</p>
       </div>
 
       <TenantAddUserForm />

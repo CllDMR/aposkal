@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { authOptions, getServerSession } from "@acme/auth";
-import { and, db, eq, schema } from "@acme/db";
+import { and, db, desc, eq, schema } from "@acme/db";
 
 import { SaleOrderEditForm } from "~/components/organisms/sale_order/SaleOrderEditForm";
 
@@ -33,6 +33,10 @@ export default async function SaleOrderEditPage({ params: { id } }: PageProps) {
       eq(schema.company.tenantId, session.user.ti),
       eq(schema.company.id, id),
     ),
+    orderBy: desc(schema.company.id),
+    with: {
+      address: true,
+    },
   });
 
   return <SaleOrderEditForm saleOrder={saleOrder} companies={companies} />;

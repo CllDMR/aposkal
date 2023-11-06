@@ -41,7 +41,7 @@ export const SelectTenant: FC<SelectTenantProps> = ({
 
                   await update({
                     ...data,
-                    user: { ...data?.user, ti: tenant.id, tn: tenant.name },
+                    user: { ...data?.user, ti: tenant.id, tn: tenant.title },
                   });
 
                   router.push(searchParamsCallbackUrl ?? "/");
@@ -55,7 +55,7 @@ export const SelectTenant: FC<SelectTenantProps> = ({
                     <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
                       <div className="truncate">
                         <div className="flex text-sm">
-                          <p className="truncate font-medium">{tenant.name}</p>
+                          <p className="truncate font-medium">{tenant.title}</p>
                         </div>
                         <div className="flex p-0.5">
                           <div className="flex items-center text-sm text-gray-500">

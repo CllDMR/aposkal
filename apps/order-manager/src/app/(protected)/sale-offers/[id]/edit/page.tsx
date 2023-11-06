@@ -33,6 +33,9 @@ export default async function SaleOfferEditPage({ params: { id } }: PageProps) {
       eq(schema.company.tenantId, session.user.ti),
       eq(schema.company.id, id),
     ),
+    with: {
+      address: true,
+    },
   });
 
   return <SaleOfferEditForm saleOffer={saleOffer} companies={companies} />;
