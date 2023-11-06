@@ -54,6 +54,16 @@ export const tenantRouter = createTRPCRouter({
       .then((a) => a[0]),
   ),
 
+  getWithAddress: protectedProcedure.query(({ ctx }) =>
+    ctx.db.query.tenant.findFirst({
+      where: eq(schema.tenant.id, ctx.session.user.ti),
+      orderBy: desc(schema.tenant.id),
+      with: {
+        address: true,
+      },
+    }),
+  ),
+
   getWithUsers: protectedProcedure.query(({ ctx }) =>
     ctx.db.query.tenant.findFirst({
       with: {
@@ -67,12 +77,18 @@ export const tenantRouter = createTRPCRouter({
 
   create: protectedProcedure
     .input(tenantCreateInput)
-    .mutation(async ({ ctx, input }) => {
+    .mutation(async ({ ctx, input: { address, ...restInput } }) => {
+      const addressId = nanoid();
       const tenantId = nanoid();
+
+      await ctx.db
+        .insert(schema.address)
+        .values({ ...address, tenantId, id: addressId })
+        .execute();
 
       const insertedTenant = await ctx.db
         .insert(schema.tenant)
-        .values({ ...input, id: tenantId })
+        .values({ ...restInput, id: tenantId, addressId: addressId })
         .execute();
 
       await ctx.db

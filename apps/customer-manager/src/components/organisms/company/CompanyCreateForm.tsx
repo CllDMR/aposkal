@@ -157,6 +157,33 @@ export const CompanyCreateForm: FC<CompanyCreateFormProps> = ({
         errors={errors}
         register={register}
       />
+      <FormInput<CompanyCreateFormFields>
+        id="web"
+        label="Web"
+        name="web"
+        type="text"
+        autoComplete="web"
+        errors={errors}
+        register={register}
+      />
+      <FormInput<CompanyCreateFormFields>
+        id="ticaretSicilNo"
+        label="Ticaret Sicil No"
+        name="ticaretSicilNo"
+        type="text"
+        autoComplete="ticaretSicilNo"
+        errors={errors}
+        register={register}
+      />
+      <FormInput<CompanyCreateFormFields>
+        id="mersisNo"
+        label="Mersis No"
+        name="mersisNo"
+        type="text"
+        autoComplete="mersisNo"
+        errors={errors}
+        register={register}
+      />
 
       <FormBottom>
         <Button type="submit" disabled={isSubmitting}>

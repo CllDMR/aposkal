@@ -59,7 +59,7 @@ export const SelectTenant: FC<SelectTenantProps> = ({
                         </div>
                         <div className="flex p-0.5">
                           <div className="flex items-center text-sm text-gray-500">
-                            <p>Vkn:</p>
+                            <p>Vkn: {tenant.taxNo}</p>
                           </div>
                         </div>
                       </div>
