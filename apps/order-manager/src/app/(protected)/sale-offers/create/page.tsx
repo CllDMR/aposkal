@@ -21,5 +21,19 @@ export default async function SaleOfferCreatePage() {
     .where(eq(schema.address.tenantId, session.user.ti))
     .orderBy(desc(schema.address.id));
 
-  return <SaleOfferCreateForm companies={companies} addresses={addresses} />;
+  const tenant = await db.query.tenant.findFirst({
+    where: eq(schema.tenant.id, session.user.ti),
+    orderBy: desc(schema.tenant.id),
+    with: {
+      address: true,
+    },
+  });
+
+  return (
+    <SaleOfferCreateForm
+      companies={companies}
+      addresses={addresses}
+      tenant={tenant}
+    />
+  );
 }

@@ -20,11 +20,16 @@ type SaleOfferCreateFormFields = RouterInputs["saleOffer"]["create"];
 interface SaleOfferCreatePreviewPanelProps {
   companies: RouterOutputs["company"]["list"];
   addresses: RouterOutputs["address"]["list"];
+  tenant: RouterOutputs["tenant"]["getWithAddress"];
 }
 
 export const SaleOfferCreatePreviewPanel: FC<
   SaleOfferCreatePreviewPanelProps
-> = ({ companies: initialCompanies, addresses: initialAddresses }) => {
+> = ({
+  companies: initialCompanies,
+  addresses: initialAddresses,
+  tenant: initialTenant,
+}) => {
   const [pdfData, setPdfData] = useState<null | string>(null);
   const [formValues, setFormValues] =
     useState<Partial<SaleOfferCreateFormFields> | null>(null);
@@ -57,8 +62,12 @@ export const SaleOfferCreatePreviewPanel: FC<
     },
   );
 
+  const { data: tenant } = api.tenant.getWithAddress.useQuery(undefined, {
+    initialData: initialTenant,
+  });
+
   useEffect(() => {
-    if (company && address) {
+    if (company && address && tenant) {
       const template = createPDFTemplateSaleOffer({
         offerInfo: {
           documentNumber: "documentNumber",
@@ -75,13 +84,13 @@ export const SaleOfferCreatePreviewPanel: FC<
           company: {
             title: company.title,
             address: company.address.name,
-            tcVkn: company.taxNo ?? "tcVkn",
-            taxAdmin: company.taxOffice ?? "taxAdmin",
-            phoneNumber: company.firmPhoneNumber ?? "phoneNumber",
-            email: company.email ?? "email",
-            web: company.web ?? "web",
-            ticaretSicilNo: company.ticaretSicilNo ?? "ticaretSicilNo",
-            mersisNo: company.mersisNo ?? "mersisNo",
+            tcVkn: company.taxNo,
+            taxAdmin: company.taxOffice,
+            phoneNumber: company.firmPhoneNumber,
+            email: company.email,
+            web: company.web,
+            ticaretSicilNo: company.ticaretSicilNo,
+            mersisNo: company.mersisNo,
           },
         },
         offerDetails:
@@ -117,16 +126,16 @@ export const SaleOfferCreatePreviewPanel: FC<
           },
         },
         selectedCompany: {
-          title: company.title,
-          address: company.address.name,
-          tcVkn: company.taxNo ?? "tcVkn",
-          taxAdmin: company.taxOffice ?? "taxAdmin",
-          phoneNumber: company.firmPhoneNumber ?? "phoneNumber",
-          email: company.email ?? "email",
-          web: company.email ?? "web",
-          ticaretSicilNo: company.email ?? "ticaretSicilNo",
-          mersisNo: company.email ?? "mersisNo",
-          companyLogo: company.email ?? "companyLogo",
+          title: tenant.title,
+          address: tenant.address.name,
+          tcVkn: tenant.taxNo,
+          taxAdmin: tenant.taxOffice,
+          phoneNumber: tenant.firmPhoneNumber,
+          email: tenant.email,
+          web: tenant.web,
+          ticaretSicilNo: tenant.ticaretSicilNo,
+          mersisNo: tenant.mersisNo,
+          companyLogo: "<companyLogo>",
         },
       });
 
@@ -136,7 +145,7 @@ export const SaleOfferCreatePreviewPanel: FC<
         setPdfData(data);
       });
     }
-  }, [address, company, formValues]);
+  }, [address, company, tenant, formValues]);
 
   return (
     <div className="">
