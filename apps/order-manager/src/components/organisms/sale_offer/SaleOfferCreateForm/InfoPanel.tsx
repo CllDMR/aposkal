@@ -51,13 +51,10 @@ export const SaleOfferCreateInfoPanel: FC<
       value: address.id,
     })) ?? [];
 
-  const {
-    register,
-    formState: { errors },
-    control,
-  } = useFormContext<SaleOfferCreateFormInfoPanelFields>();
+  const { register, control } =
+    useFormContext<SaleOfferCreateFormInfoPanelFields>();
 
-  const { saleOfferNotes: _, saleOfferProducts: __, ...restErrors } = errors;
+  // const { saleOfferNotes: _, saleOfferProducts: __, ...restErrors } = errors;
 
   return (
     <div className="divide-y">

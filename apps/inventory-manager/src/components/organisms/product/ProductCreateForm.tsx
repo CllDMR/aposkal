@@ -58,7 +58,7 @@ export const ProductCreateForm: FC<ProductCreateFormProps> = ({
   const {
     handleSubmit,
     register,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
     control,
   } = useForm<ProductCreateFormFields>({
     resolver: zodResolver(productCreateInput),
@@ -69,7 +69,7 @@ export const ProductCreateForm: FC<ProductCreateFormProps> = ({
     control,
   });
 
-  const { productTagIds: _, ...restErrors } = errors;
+  // const { productTagIds: _, ...restErrors } = errors;
 
   const onSubmit = handleSubmit(async (data) => {
     await mutateAsync(data);

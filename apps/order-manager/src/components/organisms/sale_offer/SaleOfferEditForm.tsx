@@ -51,7 +51,7 @@ export const SaleOfferEditForm: FC<SaleOfferEditFormProps> = ({
 
   const {
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
     control,
   } = useForm<SaleOfferEditFormFields>({
     resolver: zodResolver(saleOfferUpdateInput),
@@ -62,7 +62,7 @@ export const SaleOfferEditForm: FC<SaleOfferEditFormProps> = ({
     return await mutateAsync(data);
   });
 
-  const { saleOfferNotes: _, saleOfferProducts: __, ...restErrors } = errors;
+  // const { saleOfferNotes: _, saleOfferProducts: __, ...restErrors } = errors;
 
   return (
     <Form onSubmit={onSubmit}>

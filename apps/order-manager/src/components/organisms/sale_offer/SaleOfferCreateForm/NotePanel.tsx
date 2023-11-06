@@ -9,11 +9,7 @@ import { Button, FormInput } from "@acme/ui/molecules";
 type SaleOfferCreateFormFields = RouterInputs["saleOffer"]["create"];
 
 export const SaleOfferCreateNotePanel: FC = () => {
-  const {
-    register,
-    formState: { errors },
-    control,
-  } = useFormContext<SaleOfferCreateFormFields>();
+  const { register, control } = useFormContext<SaleOfferCreateFormFields>();
 
   const { fields, append, remove } = useFieldArray({
     name: "saleOfferNotes",

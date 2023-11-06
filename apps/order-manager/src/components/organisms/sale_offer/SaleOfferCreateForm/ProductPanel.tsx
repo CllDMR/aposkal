@@ -24,11 +24,7 @@ interface TableItem {
 type SaleOfferCreateFormFields = RouterInputs["saleOffer"]["create"];
 
 export const SaleOfferCreateProductPanel: FC = () => {
-  const {
-    register,
-    formState: { errors },
-    control,
-  } = useFormContext<SaleOfferCreateFormFields>();
+  const { register, control } = useFormContext<SaleOfferCreateFormFields>();
 
   const { fields, append, remove } = useFieldArray({
     name: "saleOfferProducts",
@@ -44,7 +40,7 @@ export const SaleOfferCreateProductPanel: FC = () => {
             id={`saleOfferProducts.${row.row.index}.currency`}
             name={`saleOfferProducts.${row.row.index}.currency`}
             type="text"
-            errors={errors.saleOfferProducts?.[row.row.index]}
+            // errors={errors.saleOfferProducts?.[row.row.index]}
             register={register}
           />
         ),
@@ -58,7 +54,7 @@ export const SaleOfferCreateProductPanel: FC = () => {
             id={`saleOfferProducts.${row.row.index}.amount`}
             name={`saleOfferProducts.${row.row.index}.amount`}
             type="number"
-            errors={errors.saleOfferProducts?.[row.row.index]}
+            // errors={errors.saleOfferProducts?.[row.row.index]}
             register={register}
             rules={{ valueAsNumber: true }}
           />
@@ -73,7 +69,7 @@ export const SaleOfferCreateProductPanel: FC = () => {
             id={`saleOfferProducts.${row.row.index}.unitPrice`}
             name={`saleOfferProducts.${row.row.index}.unitPrice`}
             type="number"
-            errors={errors.saleOfferProducts?.[row.row.index]}
+            // errors={errors.saleOfferProducts?.[row.row.index]}
             register={register}
             rules={{ valueAsNumber: true }}
           />
@@ -88,7 +84,7 @@ export const SaleOfferCreateProductPanel: FC = () => {
             id={`saleOfferProducts.${row.row.index}.kdv`}
             name={`saleOfferProducts.${row.row.index}.kdv`}
             type="number"
-            errors={errors.saleOfferProducts?.[row.row.index]}
+            // errors={errors.saleOfferProducts?.[row.row.index]}
             register={register}
             rules={{ valueAsNumber: true }}
           />
@@ -103,7 +99,7 @@ export const SaleOfferCreateProductPanel: FC = () => {
             id={`saleOfferProducts.${row.row.index}.total`}
             name={`saleOfferProducts.${row.row.index}.total`}
             type="number"
-            errors={errors.saleOfferProducts?.[row.row.index]}
+            // errors={errors.saleOfferProducts?.[row.row.index]}
             register={register}
             rules={{ valueAsNumber: true }}
           />
@@ -132,7 +128,7 @@ export const SaleOfferCreateProductPanel: FC = () => {
         footer: "",
       },
     ],
-    [errors.saleOfferProducts, register, remove],
+    [register, remove],
   );
 
   return (

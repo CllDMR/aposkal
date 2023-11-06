@@ -76,7 +76,7 @@ export const ProductEditForm: FC<ProductEditFormProps> = ({
   const {
     handleSubmit,
     register,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
     control,
   } = useForm<ProductEditFormFields>({
     resolver: zodResolver(productUpdateInput),
@@ -92,7 +92,7 @@ export const ProductEditForm: FC<ProductEditFormProps> = ({
     control,
   });
 
-  const { productCategoryId: _, productTagIds: __, ...restErrors } = errors;
+  // const { productCategoryId: _, productTagIds: __, ...restErrors } = errors;
 
   const onSubmit = handleSubmit(async (data) => {
     return await mutateAsync(data);
@@ -106,7 +106,7 @@ export const ProductEditForm: FC<ProductEditFormProps> = ({
         name="name"
         type="text"
         autoComplete="name"
-        errors={restErrors}
+        // errors={restErrors}
         register={register}
       />
       <FormInput<ProductEditFormFields>
@@ -115,14 +115,14 @@ export const ProductEditForm: FC<ProductEditFormProps> = ({
         name="price"
         type="text"
         autoComplete="price"
-        errors={restErrors}
+        // errors={restErrors}
         register={register}
         rules={{ valueAsNumber: true }}
       />
       <FormDropdownInput<ProductEditFormFields>
         label="Product Category"
         name="productCategoryId"
-        errors={restErrors}
+        // errors={restErrors}
         control={control}
         options={formattedProductCategories}
       />

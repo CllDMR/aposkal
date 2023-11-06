@@ -488,15 +488,15 @@ export const createPDFTemplateSaleOffer = ({
   return template;
 };
 
-const convertUrlToBase64 = async (logoURL: string) => {
-  try {
-    const response = await fetch(logoURL);
-    const blob = await response.blob();
-    return await convertBlobToBase64(blob);
-  } catch (error) {
-    return null;
-  }
-};
+// const convertUrlToBase64 = async (logoURL: string) => {
+//   try {
+//     const response = await fetch(logoURL);
+//     const blob = await response.blob();
+//     return await convertBlobToBase64(blob);
+//   } catch (error) {
+//     return null;
+//   }
+// };
 
 const convertDate = (date?: string) => {
   //  2023-06-12T17:27:12.137Z => 12.06.2023
@@ -517,22 +517,22 @@ const renderPercentage = (value: number) => {
   return "%" + (value * 100).toFixed(0);
 };
 
-const convertBlobToBase64 = (blob: Blob): Promise<string | null> => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onerror = reject;
-    reader.onload = () => {
-      if (typeof reader.result === "string") {
-        resolve(reader.result);
-      } else if (reader.result === null) {
-        resolve(null);
-      } else {
-        resolve(null);
-      }
-    };
-    reader.readAsDataURL(blob);
-  });
-};
+// const convertBlobToBase64 = (blob: Blob): Promise<string | null> => {
+//   return new Promise((resolve, reject) => {
+//     const reader = new FileReader();
+//     reader.onerror = reject;
+//     reader.onload = () => {
+//       if (typeof reader.result === "string") {
+//         resolve(reader.result);
+//       } else if (reader.result === null) {
+//         resolve(null);
+//       } else {
+//         resolve(null);
+//       }
+//     };
+//     reader.readAsDataURL(blob);
+//   });
+// };
 
 const numberFormat = (value: string, digit = 2, string = false) => {
   if (!value) return "0";

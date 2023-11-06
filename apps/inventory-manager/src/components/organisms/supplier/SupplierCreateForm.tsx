@@ -43,7 +43,7 @@ export const SupplierCreateForm: FC<SupplierCreateFormProps> = ({
   const {
     handleSubmit,
     register,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
     control,
   } = useForm<SupplierCreateFormFields>({
     resolver: zodResolver(supplierCreateInput),
@@ -54,7 +54,7 @@ export const SupplierCreateForm: FC<SupplierCreateFormProps> = ({
     control,
   });
 
-  const { productIds: _, ...restErrors } = errors;
+  // const { productIds: _, ...restErrors } = errors;
 
   const onSubmit = handleSubmit(async (data) => {
     await mutateAsync(data);

@@ -46,7 +46,7 @@ export const SupplierEditForm: FC<{ supplier: Supplier }> = ({
   const {
     handleSubmit,
     register,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
     control,
   } = useForm<SupplierEditFormFields>({
     resolver: zodResolver(supplierUpdateInput),
@@ -61,7 +61,7 @@ export const SupplierEditForm: FC<{ supplier: Supplier }> = ({
     control,
   });
 
-  const { productIds: _, ...restErrors } = errors;
+  // const { productIds: _, ...restErrors } = errors;
 
   const onSubmit = handleSubmit(async (data) => {
     return await mutateAsync(data);
