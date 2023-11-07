@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth";
 
 import { authOptions } from "@acme/auth";
-import { and, db, desc, eq, schema } from "@acme/db";
+import { and, db, eq, schema } from "@acme/db";
 
 import { CompanyEditForm } from "~/components/organisms/company/CompanyEditForm";
 
@@ -22,17 +22,11 @@ export default async function CompanyEditPage({ params: { id } }: PageProps) {
       eq(schema.company.id, id),
     ),
     with: {
-      address: true,
+      addresses: true,
     },
   });
 
   if (!company) notFound();
 
-  const addresses = await db
-    .select()
-    .from(schema.address)
-    .where(eq(schema.address.tenantId, session.user.ti))
-    .orderBy(desc(schema.address.id));
-
-  return <CompanyEditForm company={company} addresses={addresses} />;
+  return <CompanyEditForm company={company} />;
 }

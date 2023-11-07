@@ -18,7 +18,7 @@ export const companyRouter = createTRPCRouter({
         where: eq(schema.company.tenantId, ctx.session.user.ti),
         orderBy: desc(schema.company.id),
         with: {
-          address: true,
+          addresses: true,
         },
       });
     }),
@@ -29,7 +29,7 @@ export const companyRouter = createTRPCRouter({
       return await ctx.db.query.company.findFirst({
         where: eq(schema.company.id, input.id),
         with: {
-          address: true,
+          addresses: true,
         },
       });
     }),

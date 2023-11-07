@@ -45,23 +45,18 @@ export const company = mySqlTable(
     mersisNo: varchar("mersisNo", { length: 256 }).notNull(),
 
     tenantId: varchar("tenant_id", { length: 255 }).notNull(),
-    addressId: varchar("address_id", { length: 255 }).notNull(),
   },
-  ({ tenantId, addressId }) => ({
+  ({ tenantId }) => ({
     tenantIdIdx: index("tenant_id_idx").on(tenantId),
-    addressIdIdx: index("address_id_idx").on(addressId),
   }),
 );
 
-export const companyRelations = relations(company, ({ one }) => ({
+export const companyRelations = relations(company, ({ one, many }) => ({
   tenant: one(tenant, {
     fields: [company.tenantId],
     references: [tenant.id],
   }),
-  address: one(address, {
-    fields: [company.addressId],
-    references: [address.id],
-  }),
+  addresses: many(address),
 }));
 
 export const insertCompanySchema = createInsertSchema(company);

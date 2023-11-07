@@ -21,7 +21,7 @@ export default async function CompanyPage({ params: { id } }: PageProps) {
       eq(schema.company.id, id),
     ),
     with: {
-      address: true,
+      addresses: true,
     },
   });
 

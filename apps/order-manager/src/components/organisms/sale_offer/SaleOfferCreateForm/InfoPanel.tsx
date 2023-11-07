@@ -119,7 +119,7 @@ export const SaleOfferCreateInfoPanel: FC<
         />
       </FormSection>
 
-      <FormSection
+      {/* <FormSection
         label="Proje Bilgileri"
         description="Maliyet ve karlılığı proje bazında takip etmek istiyorsanız bir proje seçin veya ekleyin. Zorunlu değildir."
       >
@@ -130,7 +130,7 @@ export const SaleOfferCreateInfoPanel: FC<
           control={control}
           options={formattedCompanies}
         />
-      </FormSection>
+      </FormSection> */}
     </div>
   );
 };

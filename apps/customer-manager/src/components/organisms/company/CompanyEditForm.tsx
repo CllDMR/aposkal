@@ -21,31 +21,16 @@ type Company = NonNullable<RouterOutputs["company"]["get"]>;
 
 interface CompanyEditFormProps {
   company: Company;
-  addresses: RouterOutputs["address"]["list"];
 }
 
 export const CompanyEditForm: FC<CompanyEditFormProps> = ({
   company: initialCompany,
-  addresses: initialAddresses,
 }) => {
   const context = api.useContext();
   const [company] = api.company.get.useSuspenseQuery(
     { id: initialCompany.id },
     { initialData: initialCompany },
   );
-  const { data: addresses } = api.address.list.useQuery(
-    {},
-    {
-      initialData: initialAddresses,
-    },
-  );
-
-  const formattedAddresses =
-    addresses?.map((address) => ({
-      id: address.id,
-      label: address.name,
-      value: address.id,
-    })) ?? [];
 
   const { mutateAsync } = api.company.update.useMutation({
     async onSettled() {
@@ -106,13 +91,6 @@ export const CompanyEditForm: FC<CompanyEditFormProps> = ({
             value: "other",
           },
         ]}
-      />
-      <FormDropdownInput<CompanyEditFormFields>
-        label="Address"
-        name="addressId"
-        errors={errors}
-        control={control}
-        options={formattedAddresses}
       />
       <FormCheckbox<CompanyEditFormFields>
         id="isForeign"

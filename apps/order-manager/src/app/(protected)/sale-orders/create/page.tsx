@@ -17,7 +17,7 @@ export default async function SaleOrderCreatePage() {
     where: eq(schema.company.tenantId, session.user.ti),
     orderBy: desc(schema.company.id),
     with: {
-      address: true,
+      addresses: true,
     },
   });
 

@@ -8,7 +8,6 @@ export const companyListInput = selectCompanySchema
   .partial({
     createdAt: true,
     updatedAt: true,
-    addressId: true,
     email: true,
     firmPhoneNumber: true,
     isForeign: true,
@@ -39,7 +38,6 @@ export const companyUpdateInput = insertCompanySchema
     tenantId: true,
   })
   .partial({
-    addressId: true,
     email: true,
     firmPhoneNumber: true,
     isForeign: true,

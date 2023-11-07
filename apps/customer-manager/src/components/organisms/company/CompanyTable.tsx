@@ -23,7 +23,6 @@ interface TableItem {
   taxOffice: string;
   firmPhoneNumber: string;
   qualifiedPhoneNumber: string;
-  addressId: string;
 }
 
 interface CompanyTableProps {

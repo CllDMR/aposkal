@@ -35,7 +35,7 @@ export default async function SaleOrderEditPage({ params: { id } }: PageProps) {
     ),
     orderBy: desc(schema.company.id),
     with: {
-      address: true,
+      addresses: true,
     },
   });
 

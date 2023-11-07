@@ -83,7 +83,7 @@ export const SaleOfferCreatePreviewPanel: FC<
           currency: formValues?.currency ?? "currency",
           company: {
             title: company.title,
-            address: company.address.name,
+            address: address.name,
             tcVkn: company.taxNo,
             taxAdmin: company.taxOffice,
             phoneNumber: company.firmPhoneNumber,
