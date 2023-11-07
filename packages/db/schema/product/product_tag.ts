@@ -3,12 +3,12 @@ import { index, timestamp, varchar } from "drizzle-orm/mysql-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { nanoid } from "nanoid";
 
-import { mySqlTable } from "./_table";
-import { tenant } from "./auth/tenant";
-import { productsToCategories } from "./products_to_categories";
+import { mySqlTable } from "../_table";
+import { tenant } from "../auth/tenant";
+import { productsToTags } from "./products_to_tags";
 
-export const productCategory = mySqlTable(
-  "product_category",
+export const productTag = mySqlTable(
+  "product_tag",
   {
     id: varchar("id", { length: 255 })
       .$defaultFn(nanoid)
@@ -28,16 +28,13 @@ export const productCategory = mySqlTable(
   }),
 );
 
-export const productCategoryRelations = relations(
-  productCategory,
-  ({ one, many }) => ({
-    tenant: one(tenant, {
-      fields: [productCategory.tenantId],
-      references: [tenant.id],
-    }),
-    productsToCategories: many(productsToCategories),
+export const productTagRelations = relations(productTag, ({ one, many }) => ({
+  tenant: one(tenant, {
+    fields: [productTag.tenantId],
+    references: [tenant.id],
   }),
-);
+  productsToTags: many(productsToTags),
+}));
 
-export const insertProductCategorySchema = createInsertSchema(productCategory);
-export const selectProductCategorySchema = createSelectSchema(productCategory);
+export const insertProductTagSchema = createInsertSchema(productTag);
+export const selectProductTagSchema = createSelectSchema(productTag);

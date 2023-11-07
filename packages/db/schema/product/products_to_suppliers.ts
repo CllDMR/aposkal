@@ -2,9 +2,9 @@ import { relations } from "drizzle-orm";
 import { primaryKey, varchar } from "drizzle-orm/mysql-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
-import { mySqlTable } from "./_table";
+import { mySqlTable } from "../_table";
+import { supplier } from "../supplier";
 import { product } from "./product";
-import { supplier } from "./supplier";
 
 export const productsToSuppliers = mySqlTable(
   "p_to_s",

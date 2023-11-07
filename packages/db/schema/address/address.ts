@@ -3,8 +3,9 @@ import { index, timestamp, varchar } from "drizzle-orm/mysql-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { nanoid } from "nanoid";
 
-import { mySqlTable } from "./_table";
-import { tenant } from "./auth/tenant";
+import { mySqlTable } from "../_table";
+import { tenant } from "../auth/tenant";
+import { companiesToAddresses } from "../company/companies_to_addresses";
 
 export const address = mySqlTable(
   "address",
@@ -34,11 +35,12 @@ export const address = mySqlTable(
   }),
 );
 
-export const addressRelations = relations(address, ({ one }) => ({
+export const addressRelations = relations(address, ({ one, many }) => ({
   tenant: one(tenant, {
     fields: [address.tenantId],
     references: [tenant.id],
   }),
+  companiesToAddresses: many(companiesToAddresses),
 }));
 
 export const insertAddressSchema = createInsertSchema(address);

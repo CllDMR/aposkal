@@ -6,7 +6,7 @@ import { z } from "zod";
 
 import { mySqlTable } from "./_table";
 import { tenant } from "./auth/tenant";
-import { productsToSuppliers } from "./products_to_suppliers";
+import { productsToSuppliers } from "./product/products_to_suppliers";
 
 export const supplier = mySqlTable(
   "supplier",

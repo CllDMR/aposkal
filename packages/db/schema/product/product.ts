@@ -4,8 +4,8 @@ import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { nanoid } from "nanoid";
 import { z } from "zod";
 
-import { mySqlTable } from "./_table";
-import { tenant } from "./auth/tenant";
+import { mySqlTable } from "../_table";
+import { tenant } from "../auth/tenant";
 import { productsToCategories } from "./products_to_categories";
 import { productsToSuppliers } from "./products_to_suppliers";
 import { productsToTags } from "./products_to_tags";

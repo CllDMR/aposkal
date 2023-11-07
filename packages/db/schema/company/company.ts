@@ -9,9 +9,9 @@ import {
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { nanoid } from "nanoid";
 
-import { mySqlTable } from "./_table";
-import { address } from "./address";
-import { tenant } from "./auth/tenant";
+import { mySqlTable } from "../_table";
+import { tenant } from "../auth/tenant";
+import { companiesToAddresses } from "./companies_to_addresses";
 
 export const company = mySqlTable(
   "company",
@@ -56,7 +56,7 @@ export const companyRelations = relations(company, ({ one, many }) => ({
     fields: [company.tenantId],
     references: [tenant.id],
   }),
-  addresses: many(address),
+  companiesToAddresses: many(companiesToAddresses),
 }));
 
 export const insertCompanySchema = createInsertSchema(company);

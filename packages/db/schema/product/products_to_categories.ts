@@ -2,7 +2,7 @@ import { relations } from "drizzle-orm";
 import { primaryKey, varchar } from "drizzle-orm/mysql-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
-import { mySqlTable } from "./_table";
+import { mySqlTable } from "../_table";
 import { product } from "./product";
 import { productCategory } from "./product_category";
 

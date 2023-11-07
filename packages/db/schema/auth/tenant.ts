@@ -4,7 +4,7 @@ import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { nanoid } from "nanoid";
 
 import { mySqlTable } from "../_table";
-import { address } from "../address";
+import { address } from "../address/address";
 import { post } from "../post";
 import { usersToTenants } from "./usersToTenants";
 

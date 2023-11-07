@@ -4,10 +4,10 @@ import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { nanoid } from "nanoid";
 import { z } from "zod";
 
-import { mySqlTable } from "./_table";
-import { address } from "./address";
-import { tenant } from "./auth/tenant";
-import { company } from "./company";
+import { mySqlTable } from "../_table";
+import { address } from "../address/address";
+import { tenant } from "../auth/tenant";
+import { company } from "../company/company";
 
 export const saleOrder = mySqlTable(
   "sale_order",

@@ -3,9 +3,9 @@ import { double, index, int, timestamp, varchar } from "drizzle-orm/mysql-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { nanoid } from "nanoid";
 
-import { mySqlTable } from "./_table";
-import { tenant } from "./auth/tenant";
-import { product } from "./product";
+import { mySqlTable } from "../_table";
+import { tenant } from "../auth/tenant";
+import { product } from "../product/product";
 import { saleOffer } from "./sale_offer";
 
 export const saleOfferProduct = mySqlTable(

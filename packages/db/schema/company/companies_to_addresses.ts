@@ -2,8 +2,8 @@ import { relations } from "drizzle-orm";
 import { primaryKey, varchar } from "drizzle-orm/mysql-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
-import { mySqlTable } from "./_table";
-import { address } from "./address";
+import { mySqlTable } from "../_table";
+import { address } from "../address/address";
 import { company } from "./company";
 
 export const companiesToAddresses = mySqlTable(

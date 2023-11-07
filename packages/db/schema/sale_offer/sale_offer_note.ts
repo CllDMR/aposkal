@@ -3,8 +3,8 @@ import { index, timestamp, varchar } from "drizzle-orm/mysql-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { nanoid } from "nanoid";
 
-import { mySqlTable } from "./_table";
-import { tenant } from "./auth/tenant";
+import { mySqlTable } from "../_table";
+import { tenant } from "../auth/tenant";
 import { saleOffer } from "./sale_offer";
 
 export const saleOfferNote = mySqlTable(
