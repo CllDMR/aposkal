@@ -9,15 +9,17 @@ export default async function SaleOrderCreatePage() {
 
   const addresses = await db
     .select()
-    .from(schema.address)
-    .where(eq(schema.address.tenantId, session.user.ti))
-    .orderBy(desc(schema.address.id));
+    .from(schema.addressCompany)
+    .where(eq(schema.addressCompany.tenantId, session.user.ti))
+    .orderBy(desc(schema.addressCompany.id));
 
   const companies = await db.query.company.findMany({
     where: eq(schema.company.tenantId, session.user.ti),
     orderBy: desc(schema.company.id),
     with: {
-      addresses: true,
+      companiesToAddresses: {
+        with: { address: true },
+      },
     },
   });
 

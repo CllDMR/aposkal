@@ -4,7 +4,7 @@ import type { FC } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 
-import { productUpdateInput } from "@acme/api/src/inputs/product";
+import { productUpdateInput } from "@acme/api/src/inputs/product/product";
 import { Form, FormBottom } from "@acme/ui/atoms";
 import { Button, FormDropdownInput, FormInput } from "@acme/ui/molecules";
 

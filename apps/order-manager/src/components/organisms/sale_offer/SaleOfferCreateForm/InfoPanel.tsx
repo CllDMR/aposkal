@@ -17,12 +17,20 @@ type SaleOfferCreateFormInfoPanelFields = RouterInputs["saleOffer"]["create"];
 
 interface SaleOfferCreateFormInfoPanelProps {
   companies: RouterOutputs["company"]["list"];
-  addresses: RouterOutputs["address"]["list"];
 }
 
 export const SaleOfferCreateInfoPanel: FC<
   SaleOfferCreateFormInfoPanelProps
-> = ({ companies: initialCompanies, addresses: initialAddresses }) => {
+> = ({ companies: initialCompanies }) => {
+  const {
+    register,
+    control,
+    formState: { errors },
+    watch,
+  } = useFormContext<SaleOfferCreateFormInfoPanelFields>();
+
+  const companyId = watch("companyId");
+
   const { data: companies } = api.company.list.useQuery(
     {},
     {
@@ -37,10 +45,13 @@ export const SaleOfferCreateInfoPanel: FC<
       value: company.id,
     })) ?? [];
 
-  const { data: addresses } = api.address.list.useQuery(
-    {},
+  const { data: addresses } = api.addressCompany.list.useQuery(
     {
-      initialData: initialAddresses,
+      companyId:
+        typeof companyId === "string" && !!companyId ? companyId : undefined,
+    },
+    {
+      enabled: typeof companyId === "string" && !!companyId,
     },
   );
 
@@ -51,11 +62,6 @@ export const SaleOfferCreateInfoPanel: FC<
       value: address.id,
     })) ?? [];
 
-  const { register, control } =
-    useFormContext<SaleOfferCreateFormInfoPanelFields>();
-
-  // const { saleOfferNotes: _, saleOfferProducts: __, ...restErrors } = errors;
-
   return (
     <div className="divide-y">
       <FormSection
@@ -65,9 +71,17 @@ export const SaleOfferCreateInfoPanel: FC<
         <FormDropdownInput<SaleOfferCreateFormInfoPanelFields>
           label="Müşteri"
           name="companyId"
-          // errors={restErrors}
+          errors={errors}
           control={control}
           options={formattedCompanies}
+        />
+        <FormDropdownInput<SaleOfferCreateFormInfoPanelFields>
+          label="Adres"
+          name="addressId"
+          errors={errors}
+          control={control}
+          options={formattedAddresses}
+          disabled={typeof companyId !== "string" || !companyId}
         />
       </FormSection>
 
@@ -80,21 +94,14 @@ export const SaleOfferCreateInfoPanel: FC<
           label="Teklif Tarihi"
           name="startDate"
           control={control}
-          // errors={restErrors}
+          errors={errors}
         />
         <FormDateInput<SaleOfferCreateFormInfoPanelFields>
           id="endDate"
           label="Geçerlilik Tarihi"
           name="endDate"
           control={control}
-          // errors={restErrors}
-        />
-        <FormDropdownInput<SaleOfferCreateFormInfoPanelFields>
-          label="Adres"
-          name="addressId"
-          // errors={restErrors}
-          control={control}
-          options={formattedAddresses}
+          errors={errors}
         />
       </FormSection>
 
@@ -107,14 +114,14 @@ export const SaleOfferCreateInfoPanel: FC<
           label="Ödeme Tarihi"
           name="paymentEndDate"
           control={control}
-          // errors={restErrors}
+          errors={errors}
         />
         <FormInput<SaleOfferCreateFormInfoPanelFields>
           id="currency"
           label="Döviz Cinsi"
           name="currency"
           type="text"
-          // errors={restErrors}
+          errors={errors}
           register={register}
         />
       </FormSection>
@@ -126,7 +133,7 @@ export const SaleOfferCreateInfoPanel: FC<
         <FormDropdownInput<SaleOfferCreateFormInfoPanelFields>
           label="Proje"
           name="companyId"
-          // errors={restErrors}
+          errors={errors}
           control={control}
           options={formattedCompanies}
         />

@@ -1,10 +1,12 @@
 import { Client } from "@planetscale/database";
 import { drizzle } from "drizzle-orm/planetscale-serverless";
 
-import * as address from "./schema/address/address";
+import * as addressCompany from "./schema/address/address_company";
+import * as addressTenant from "./schema/address/address_tenant";
 import * as account from "./schema/auth/account";
 import * as session from "./schema/auth/session";
 import * as tenant from "./schema/auth/tenant";
+import * as tenantsToAddresses from "./schema/auth/tenants_to_addresses";
 import * as user from "./schema/auth/user";
 import * as usersToTenants from "./schema/auth/usersToTenants";
 import * as verificationToken from "./schema/auth/verificationToken";
@@ -29,11 +31,13 @@ export const schema = {
   ...account,
   ...session,
   ...tenant,
+  ...tenantsToAddresses,
   ...user,
   ...usersToTenants,
   ...verificationToken,
 
-  ...address,
+  ...addressCompany,
+  ...addressTenant,
   ...company,
   ...companiesToAddresses,
   ...post,

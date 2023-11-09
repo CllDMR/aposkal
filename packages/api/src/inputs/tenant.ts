@@ -5,7 +5,7 @@ import {
   selectTenantSchema,
 } from "@acme/db/schema/auth/tenant";
 
-import { addressCreateInput } from "./address";
+import { addressTenantCreateInput } from "./address/address_tenant";
 
 export const tenantListInput = selectTenantSchema.omit({ id: true }).partial({
   addressId: true,
@@ -29,7 +29,7 @@ export const tenantCreateInput = insertTenantSchema
     id: true,
     addressId: true,
   })
-  .merge(z.object({ address: addressCreateInput }));
+  .merge(z.object({ address: addressTenantCreateInput }));
 
 export const tenantUpdateInput = insertTenantSchema.required().partial({
   addressId: true,

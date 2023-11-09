@@ -19,7 +19,7 @@ type SaleOfferCreateFormFields = RouterInputs["saleOffer"]["create"];
 
 interface SaleOfferCreatePreviewPanelProps {
   companies: RouterOutputs["company"]["list"];
-  addresses: RouterOutputs["address"]["list"];
+  addresses: RouterOutputs["addressCompany"]["list"];
   tenant: RouterOutputs["tenant"]["getWithAddress"];
 }
 
@@ -49,7 +49,7 @@ export const SaleOfferCreatePreviewPanel: FC<
     },
   );
 
-  const { data: address } = api.address.get.useQuery(
+  const { data: address } = api.addressCompany.get.useQuery(
     {
       // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
       id: formValues?.addressId!,

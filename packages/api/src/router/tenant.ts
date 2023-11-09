@@ -82,7 +82,7 @@ export const tenantRouter = createTRPCRouter({
       const tenantId = nanoid();
 
       await ctx.db
-        .insert(schema.address)
+        .insert(schema.addressTenant)
         .values({ ...address, tenantId, id: addressId })
         .execute();
 
@@ -96,6 +96,14 @@ export const tenantRouter = createTRPCRouter({
         .values({
           tenantId: tenantId,
           userId: ctx.session.user.id,
+        })
+        .execute();
+
+      await ctx.db
+        .insert(schema.tenantsToAddresses)
+        .values({
+          tenantId: tenantId,
+          addressId: addressId,
         })
         .execute();
 

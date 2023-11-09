@@ -11,15 +11,17 @@ export default async function SaleOfferCreatePage() {
     where: eq(schema.company.tenantId, session.user.ti),
     orderBy: desc(schema.company.id),
     with: {
-      addresses: true,
+      companiesToAddresses: {
+        with: { address: true },
+      },
     },
   });
 
   const addresses = await db
     .select()
-    .from(schema.address)
-    .where(eq(schema.address.tenantId, session.user.ti))
-    .orderBy(desc(schema.address.id));
+    .from(schema.addressCompany)
+    .where(eq(schema.addressCompany.tenantId, session.user.ti))
+    .orderBy(desc(schema.addressCompany.id));
 
   const tenant = await db.query.tenant.findFirst({
     where: eq(schema.tenant.id, session.user.ti),

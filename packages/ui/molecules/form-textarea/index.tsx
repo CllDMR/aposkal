@@ -26,7 +26,7 @@ export type FormTextareaProps<TFormValues extends FieldValues> = {
   className?: string;
   rules?: RegisterOptions;
   register?: UseFormRegister<TFormValues>;
-  errors?: Partial<FieldErrors>;
+  errors?: Partial<FieldErrors<TFormValues>>;
 } & DetailedHTMLProps<
   TextareaHTMLAttributes<HTMLTextAreaElement>,
   HTMLTextAreaElement

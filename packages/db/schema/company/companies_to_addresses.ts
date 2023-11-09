@@ -3,7 +3,7 @@ import { primaryKey, varchar } from "drizzle-orm/mysql-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
 import { mySqlTable } from "../_table";
-import { address } from "../address/address";
+import { addressCompany } from "../address/address_company";
 import { company } from "./company";
 
 export const companiesToAddresses = mySqlTable(
@@ -26,9 +26,9 @@ export const companiesToAddressesRelations = relations(
       fields: [companiesToAddresses.companyId],
       references: [company.id],
     }),
-    address: one(address, {
+    address: one(addressCompany, {
       fields: [companiesToAddresses.addressId],
-      references: [address.id],
+      references: [addressCompany.id],
     }),
   }),
 );

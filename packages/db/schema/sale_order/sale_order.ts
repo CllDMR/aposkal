@@ -5,7 +5,7 @@ import { nanoid } from "nanoid";
 import { z } from "zod";
 
 import { mySqlTable } from "../_table";
-import { address } from "../address/address";
+import { addressCompany } from "../address/address_company";
 import { tenant } from "../auth/tenant";
 import { company } from "../company/company";
 
@@ -43,9 +43,9 @@ export const saleOrderRelations = relations(saleOrder, ({ one }) => ({
     fields: [saleOrder.tenantId],
     references: [tenant.id],
   }),
-  toAddress: one(address, {
+  toAddress: one(addressCompany, {
     fields: [saleOrder.addressId],
-    references: [address.id],
+    references: [addressCompany.id],
   }),
   company: one(company, {
     fields: [saleOrder.companyId],

@@ -22,7 +22,9 @@ export default async function CompanyEditPage({ params: { id } }: PageProps) {
       eq(schema.company.id, id),
     ),
     with: {
-      addresses: true,
+      companiesToAddresses: {
+        with: { address: true },
+      },
     },
   });
 

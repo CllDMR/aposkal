@@ -31,8 +31,9 @@ export interface FormDropdownInputProps<TFormValues extends FieldValues> {
   name: Path<TFormValues>;
   rules?: RegisterOptions;
   // register?: UseFormRegister<TFormValues>;
-  errors?: Partial<FieldErrors>;
+  errors?: Partial<FieldErrors<TFormValues>>;
   control: Control<TFormValues>;
+  disabled?: boolean;
 
   // option: Option | null;
   options: Option[];
@@ -50,6 +51,7 @@ export const FormDropdownInput = <TFormValues extends FieldValues>({
   rules,
   // errors,
   control,
+  disabled,
   // option,
   options, // onChange,
   // onChangeQueryText, // className,
@@ -117,6 +119,7 @@ export const FormDropdownInput = <TFormValues extends FieldValues>({
         nullable
         defaultValue={defaultValue}
         // name={_name}
+        disabled={disabled}
       >
         <div className="relative mt-1">
           <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-300 sm:text-sm">

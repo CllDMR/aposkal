@@ -28,6 +28,29 @@ export const CreateTenant: FC = () => {
     reset,
     control,
   } = useForm<CreateTenantFromFields>({
+    defaultValues: {
+      address: {
+        city: "İstanbul",
+        country: "Türkiye",
+        description: "Office address - 1",
+        district: "Şişli",
+        longAddressDescription: "Long office address - 1",
+        name: "Test Address - 1",
+        state: "Türkiye",
+        street: "Çiçek",
+      },
+      title: "Test Tenant - 1",
+      type: "personal",
+      isForeign: false,
+      taxNo: "111111111",
+      taxOffice: "Tax Office - 1",
+      firmPhoneNumber: "+905312345678",
+      qualifiedPhoneNumber: "+905312345678",
+      email: "test-tenant-1@example.com",
+      web: "test-tenant-1.com",
+      ticaretSicilNo: "111111111",
+      mersisNo: "111111111",
+    },
     resolver: zodResolver(tenantCreateInput),
   });
 

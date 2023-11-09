@@ -4,7 +4,7 @@ import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { nanoid } from "nanoid";
 
 import { mySqlTable } from "../_table";
-import { address } from "../address/address";
+import { addressTenant } from "../address/address_tenant";
 import { post } from "../post";
 import { usersToTenants } from "./usersToTenants";
 
@@ -46,9 +46,9 @@ export type InsertTenant = typeof tenant.$inferInsert;
 export const tenantRelations = relations(tenant, ({ many, one }) => ({
   usersToTenants: many(usersToTenants),
   posts: many(post),
-  address: one(address, {
+  address: one(addressTenant, {
     fields: [tenant.addressId],
-    references: [address.id],
+    references: [addressTenant.id],
   }),
 }));
 

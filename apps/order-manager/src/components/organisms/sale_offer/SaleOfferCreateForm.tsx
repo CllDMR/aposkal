@@ -4,7 +4,7 @@ import type { FC } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 
-import { saleOfferCreateInput } from "@acme/api/src/inputs/sale_offer";
+import { saleOfferCreateInput } from "@acme/api/src/inputs/sale_offer/sale_offer";
 import { Form } from "@acme/ui/atoms";
 import { TabPanel } from "@acme/ui/organisms";
 
@@ -19,7 +19,7 @@ type SaleOfferCreateFormFields = RouterInputs["saleOffer"]["create"];
 
 interface SaleOfferCreateFormProps {
   companies: RouterOutputs["company"]["list"];
-  addresses: RouterOutputs["address"]["list"];
+  addresses: RouterOutputs["addressCompany"]["list"];
   tenant: RouterOutputs["tenant"]["getWithAddress"];
 }
 
@@ -55,10 +55,7 @@ export const SaleOfferCreateForm: FC<SaleOfferCreateFormProps> = ({
           ]}
           isSubmitting={methods.formState.isSubmitting}
         >
-          <SaleOfferCreateInfoPanel
-            companies={initialCompanies}
-            addresses={initialAddresses}
-          />
+          <SaleOfferCreateInfoPanel companies={initialCompanies} />
           <SaleOfferCreateProductPanel />
           <SaleOfferCreateNotePanel />
           <SaleOfferCreatePreviewPanel

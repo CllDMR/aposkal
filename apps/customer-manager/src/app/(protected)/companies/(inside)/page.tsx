@@ -10,7 +10,11 @@ export default async function CompaniesPage() {
   const companies = await db.query.company.findMany({
     where: eq(schema.company.tenantId, session.user.ti),
     orderBy: desc(schema.company.id),
-    with: { addresses: true },
+    with: {
+      companiesToAddresses: {
+        with: { address: true },
+      },
+    },
   });
 
   return <CompanyTable companies={companies} />;

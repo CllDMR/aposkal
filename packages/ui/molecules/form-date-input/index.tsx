@@ -24,7 +24,7 @@ export type FormDateInputProps<TFormValues extends FieldValues> = {
   name: Path<TFormValues>;
   control: Control<TFormValues>;
   rules?: RegisterOptions;
-  errors?: Partial<FieldErrors>;
+  errors?: Partial<FieldErrors<TFormValues>>;
 } & Omit<InputProps, "name" | "type" | "onChange" | "value">;
 
 export const FormDateInput = <TFormValues extends FieldValues>({

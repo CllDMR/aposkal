@@ -25,7 +25,7 @@ export type FormInputProps<TFormValues extends FieldValues> = {
   name: Path<TFormValues>;
   rules?: RegisterOptions;
   register?: UseFormRegister<TFormValues>;
-  errors?: Partial<FieldErrors>;
+  errors?: Partial<FieldErrors<TFormValues>>;
 } & Omit<InputProps, "name">;
 
 export const FormInput = <TFormValues extends FieldValues>({

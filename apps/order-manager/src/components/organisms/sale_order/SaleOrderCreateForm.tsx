@@ -4,7 +4,7 @@ import type { FC } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { saleOrderCreateInput } from "@acme/api/src/inputs/sale_order";
+import { saleOrderCreateInput } from "@acme/api/src/inputs/sale_order/sale_order";
 import { Form, FormSection } from "@acme/ui/atoms";
 import {
   FormDateInput,
@@ -20,7 +20,7 @@ type SaleOrderCreateFormFields = RouterInputs["saleOrder"]["create"];
 
 interface SaleOrderCreateFormProps {
   companies: RouterOutputs["company"]["list"];
-  addresses: RouterOutputs["address"]["list"];
+  addresses: RouterOutputs["addressCompany"]["list"];
 }
 
 export const SaleOrderCreateForm: FC<SaleOrderCreateFormProps> = ({
@@ -40,7 +40,7 @@ export const SaleOrderCreateForm: FC<SaleOrderCreateFormProps> = ({
       initialData: initialCompanies,
     },
   );
-  const { data: addresses } = api.address.list.useQuery(
+  const { data: addresses } = api.addressCompany.list.useQuery(
     {},
     {
       initialData: initialAddresses,
