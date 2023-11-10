@@ -5,34 +5,107 @@ import { useMemo } from "react";
 import type { ColumnDef } from "@tanstack/react-table";
 import { useFieldArray, useFormContext } from "react-hook-form";
 
-import { Button, FormInput } from "@acme/ui/molecules";
+import { Button, FormDropdownInput, FormInput } from "@acme/ui/molecules";
 import { Table } from "@acme/ui/organisms";
 
-import type { RouterInputs } from "~/utils/api";
+import type { RouterInputs, RouterOutputs } from "~/utils/api";
+import { api } from "~/utils/api";
 
 interface TableItem {
   id: string;
 
-  amount: number;
-  currency: string;
-  kdv: number;
   productId: string;
-  total: number;
+  currency: string;
   unitPrice: number;
+  kdv: number;
+  amount: number;
+  total: number;
 }
 
 type SaleOfferCreateFormFields = RouterInputs["saleOffer"]["create"];
 
-export const SaleOfferCreateProductPanel: FC = () => {
-  const { register, control } = useFormContext<SaleOfferCreateFormFields>();
+interface SaleOfferCreateProductPanelProps {
+  products: RouterOutputs["product"]["list"];
+}
 
-  const { fields, append, remove } = useFieldArray({
+export const SaleOfferCreateProductPanel: FC<
+  SaleOfferCreateProductPanelProps
+> = ({ products: initialProducts }) => {
+  const { data: products } = api.product.list.useQuery(
+    {},
+    { initialData: initialProducts },
+  );
+
+  const {
+    register,
+    control,
+    formState: { errors },
+    getValues,
+  } = useFormContext<SaleOfferCreateFormFields>();
+
+  const { fields, append, remove, update } = useFieldArray({
     name: "saleOfferProducts",
     control,
   });
 
-  const cols = useMemo<ColumnDef<TableItem>[]>(
-    () => [
+  const cols = useMemo<ColumnDef<TableItem>[]>(() => {
+    fields; // using at dependency array of useMemo
+
+    const formattedProducts =
+      products?.map((product) => ({
+        id: product.id,
+        label: product.name,
+        value: product.id,
+      })) ?? [];
+
+    return [
+      {
+        header: "Ürün",
+        cell: (row) => (
+          <FormDropdownInput<SaleOfferCreateFormFields>
+            name={`saleOfferProducts.${row.row.index}.productId`}
+            errors={errors}
+            control={control}
+            options={formattedProducts}
+            onChange={(val) => {
+              const currentValues = getValues();
+              const product = products.find((e) => e.id === val.id);
+
+              update(row.row.index, {
+                productId:
+                  currentValues.saleOfferProducts[row.row.index]?.productId ??
+                  "",
+                name:
+                  product?.name ??
+                  currentValues.saleOfferProducts[row.row.index]?.name ??
+                  "",
+                currency:
+                  product?.currency ??
+                  currentValues.saleOfferProducts[row.row.index]?.currency ??
+                  "",
+                unit:
+                  product?.unit ??
+                  currentValues.saleOfferProducts[row.row.index]?.unit ??
+                  "",
+                unitPrice:
+                  product?.unitPrice ??
+                  currentValues.saleOfferProducts[row.row.index]?.unitPrice ??
+                  0,
+                kdv:
+                  product?.kdv ??
+                  currentValues.saleOfferProducts[row.row.index]?.kdv ??
+                  0,
+                amount:
+                  currentValues.saleOfferProducts[row.row.index]?.amount ?? 0,
+                total:
+                  currentValues.saleOfferProducts[row.row.index]?.total ?? 0,
+              });
+            }}
+          />
+        ),
+        accessorKey: "productId",
+        footer: "Ürün",
+      },
       {
         header: "Döviz Cinsi",
         cell: (row) => (
@@ -40,7 +113,7 @@ export const SaleOfferCreateProductPanel: FC = () => {
             id={`saleOfferProducts.${row.row.index}.currency`}
             name={`saleOfferProducts.${row.row.index}.currency`}
             type="text"
-            // errors={errors.saleOfferProducts?.[row.row.index]}
+            errors={errors}
             register={register}
           />
         ),
@@ -54,7 +127,7 @@ export const SaleOfferCreateProductPanel: FC = () => {
             id={`saleOfferProducts.${row.row.index}.amount`}
             name={`saleOfferProducts.${row.row.index}.amount`}
             type="number"
-            // errors={errors.saleOfferProducts?.[row.row.index]}
+            errors={errors}
             register={register}
             rules={{ valueAsNumber: true }}
           />
@@ -69,7 +142,7 @@ export const SaleOfferCreateProductPanel: FC = () => {
             id={`saleOfferProducts.${row.row.index}.unitPrice`}
             name={`saleOfferProducts.${row.row.index}.unitPrice`}
             type="number"
-            // errors={errors.saleOfferProducts?.[row.row.index]}
+            errors={errors}
             register={register}
             rules={{ valueAsNumber: true }}
           />
@@ -84,7 +157,7 @@ export const SaleOfferCreateProductPanel: FC = () => {
             id={`saleOfferProducts.${row.row.index}.kdv`}
             name={`saleOfferProducts.${row.row.index}.kdv`}
             type="number"
-            // errors={errors.saleOfferProducts?.[row.row.index]}
+            errors={errors}
             register={register}
             rules={{ valueAsNumber: true }}
           />
@@ -99,7 +172,7 @@ export const SaleOfferCreateProductPanel: FC = () => {
             id={`saleOfferProducts.${row.row.index}.total`}
             name={`saleOfferProducts.${row.row.index}.total`}
             type="number"
-            // errors={errors.saleOfferProducts?.[row.row.index]}
+            errors={errors}
             register={register}
             rules={{ valueAsNumber: true }}
           />
@@ -127,9 +200,8 @@ export const SaleOfferCreateProductPanel: FC = () => {
         },
         footer: "",
       },
-    ],
-    [register, remove],
-  );
+    ];
+  }, [control, errors, getValues, products, register, remove, update, fields]);
 
   return (
     <div className="divide-y">
@@ -155,12 +227,14 @@ export const SaleOfferCreateProductPanel: FC = () => {
         type="button"
         onClick={() =>
           append({
-            amount: 0,
-            currency: "",
-            kdv: 0,
             productId: "",
-            total: 0,
+            name: "",
+            currency: "",
+            unit: "",
             unitPrice: 0,
+            kdv: 0,
+            amount: 0,
+            total: 0,
           })
         }
       >

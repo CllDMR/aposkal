@@ -21,12 +21,14 @@ interface SaleOfferCreateFormProps {
   companies: RouterOutputs["company"]["list"];
   addresses: RouterOutputs["addressCompany"]["list"];
   tenant: RouterOutputs["tenant"]["getWithAddress"];
+  products: RouterOutputs["product"]["list"];
 }
 
 export const SaleOfferCreateForm: FC<SaleOfferCreateFormProps> = ({
   companies: initialCompanies,
   addresses: initialAddresses,
   tenant: initialTenant,
+  products: initialProducts,
 }) => {
   const context = api.useContext();
   const { mutateAsync } = api.saleOffer.create.useMutation({
@@ -56,7 +58,7 @@ export const SaleOfferCreateForm: FC<SaleOfferCreateFormProps> = ({
           isSubmitting={methods.formState.isSubmitting}
         >
           <SaleOfferCreateInfoPanel companies={initialCompanies} />
-          <SaleOfferCreateProductPanel />
+          <SaleOfferCreateProductPanel products={initialProducts} />
           <SaleOfferCreateNotePanel />
           <SaleOfferCreatePreviewPanel
             companies={initialCompanies}

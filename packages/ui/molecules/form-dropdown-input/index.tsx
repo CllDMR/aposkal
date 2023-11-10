@@ -37,7 +37,7 @@ export interface FormDropdownInputProps<TFormValues extends FieldValues> {
 
   // option: Option | null;
   options: Option[];
-  // onChange: (val: Option) => void;
+  onChange?: (val: Option) => void;
   // queryText: string;
   // onChangeQueryText: (val: string) => void;
 }
@@ -54,9 +54,9 @@ export const FormDropdownInput = <TFormValues extends FieldValues>({
   disabled,
   // option,
   options, // onChange,
+  onChange, // queryText,
   // onChangeQueryText, // className,
-} // queryText,
-// ...props
+} // ...props
 : FormDropdownInputProps<TFormValues>): JSX.Element => {
   // const errorMessages = get(errors, name);
   // const hasError = !!(errors && errorMessages);
@@ -101,8 +101,12 @@ export const FormDropdownInput = <TFormValues extends FieldValues>({
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     } else if (val?.id === "new") {
       setOpenCreateModal(true);
+    } else {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      if (onChange) onChange(val);
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    } else fOnChange(val.value);
+      fOnChange(val.value);
+    }
   };
 
   return (

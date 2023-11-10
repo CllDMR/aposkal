@@ -17,6 +17,23 @@ export default async function SaleOfferCreatePage() {
     },
   });
 
+  const products = await db.query.product.findMany({
+    where: eq(schema.product.tenantId, session.user.ti),
+    orderBy: desc(schema.product.id),
+    with: {
+      productsToCategories: {
+        with: {
+          productCategory: true,
+        },
+      },
+      productsToTags: {
+        with: {
+          productTag: true,
+        },
+      },
+    },
+  });
+
   const addresses = await db
     .select()
     .from(schema.addressCompany)
@@ -36,6 +53,7 @@ export default async function SaleOfferCreatePage() {
       companies={companies}
       addresses={addresses}
       tenant={tenant}
+      products={products}
     />
   );
 }

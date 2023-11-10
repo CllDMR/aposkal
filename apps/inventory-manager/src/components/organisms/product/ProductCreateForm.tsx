@@ -58,7 +58,7 @@ export const ProductCreateForm: FC<ProductCreateFormProps> = ({
   const {
     handleSubmit,
     register,
-    formState: { isSubmitting },
+    formState: { errors, isSubmitting },
     control,
   } = useForm<ProductCreateFormFields>({
     resolver: zodResolver(productCreateInput),
@@ -68,8 +68,6 @@ export const ProductCreateForm: FC<ProductCreateFormProps> = ({
     name: "productTagIds",
     control,
   });
-
-  // const { productTagIds: _, ...restErrors } = errors;
 
   const onSubmit = handleSubmit(async (data) => {
     await mutateAsync(data);
@@ -83,23 +81,51 @@ export const ProductCreateForm: FC<ProductCreateFormProps> = ({
         name="name"
         type="text"
         autoComplete="name"
-        // errors={restErrors}
+        errors={errors}
         register={register}
       />
       <FormInput<ProductCreateFormFields>
-        id="price"
-        label="Price"
-        name="price"
+        id="currency"
+        label="Currency"
+        name="currency"
+        type="text"
+        autoComplete="currency"
+        errors={errors}
+        register={register}
+      />
+      <FormInput<ProductCreateFormFields>
+        id="unit"
+        label="Unit"
+        name="unit"
+        type="text"
+        autoComplete="unit"
+        errors={errors}
+        register={register}
+      />
+      <FormInput<ProductCreateFormFields>
+        id="unitPrice"
+        label="Unit Price"
+        name="unitPrice"
         type="number"
-        autoComplete="price"
-        // errors={restErrors}
+        autoComplete="unitPrice"
+        errors={errors}
+        register={register}
+        rules={{ valueAsNumber: true }}
+      />
+      <FormInput<ProductCreateFormFields>
+        id="kdv"
+        label="KDV"
+        name="kdv"
+        type="number"
+        autoComplete="kdv"
+        errors={errors}
         register={register}
         rules={{ valueAsNumber: true }}
       />
       <FormDropdownInput<ProductCreateFormFields>
         label="Product Category"
         name="productCategoryId"
-        // errors={restErrors}
+        errors={errors}
         control={control}
         options={formattedProductCategories}
       />
@@ -110,7 +136,7 @@ export const ProductCreateForm: FC<ProductCreateFormProps> = ({
               key={field.id}
               label="Product Tag"
               name={`productTagIds.${index}.id`}
-              // errors={{ productTagIds }}
+              errors={errors}
               control={control}
               options={formattedProductTags}
             />

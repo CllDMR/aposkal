@@ -23,7 +23,10 @@ export const product = mySqlTable(
     updatedAt: timestamp("updated_at").onUpdateNow(),
 
     name: varchar("name", { length: 256 }).notNull(),
-    price: int("price").notNull(),
+    currency: varchar("currency", { length: 256 }).notNull(),
+    unit: varchar("unit", { length: 256 }).notNull(),
+    unitPrice: int("unit_price").notNull(),
+    kdv: int("kdv").notNull(),
 
     tenantId: varchar("tenant_id", { length: 255 }).notNull(),
   },

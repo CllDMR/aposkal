@@ -13,7 +13,10 @@ import { api } from "~/utils/api";
 interface TableItem {
   id: string;
   name: string;
-  price: number;
+  currency: string;
+  unit: string;
+  unitPrice: number;
+  kdv: number;
   productsToCategories: RouterOutputs["product"]["list"][number]["productsToCategories"];
   productsToTags: RouterOutputs["product"]["list"][number]["productsToTags"];
 }
@@ -47,10 +50,28 @@ export const ProductTable: FC<ProductTableProps> = ({ products }) => {
         footer: "Name",
       },
       {
-        header: "Price",
+        header: "Currency",
         cell: (row) => row.renderValue(),
-        accessorKey: "price",
-        footer: "Price",
+        accessorKey: "currency",
+        footer: "Currency",
+      },
+      {
+        header: "Unit",
+        cell: (row) => row.renderValue(),
+        accessorKey: "unit",
+        footer: "Unit",
+      },
+      {
+        header: "Unit Price",
+        cell: (row) => row.renderValue(),
+        accessorKey: "unitPrice",
+        footer: "Unit Price",
+      },
+      {
+        header: "KDV",
+        cell: (row) => row.renderValue(),
+        accessorKey: "kdv",
+        footer: "KDV",
       },
       {
         header: "Categories",
@@ -59,6 +80,7 @@ export const ProductTable: FC<ProductTableProps> = ({ products }) => {
           originalRow?.productsToCategories
             ?.map((e) => e.productCategory.name)
             .join(" "),
+        footer: "Categories",
       },
       {
         header: "Tags",
@@ -67,6 +89,7 @@ export const ProductTable: FC<ProductTableProps> = ({ products }) => {
           originalRow?.productsToTags
             ?.map((e) => e?.productTag?.name)
             .join(" "),
+        footer: "Tags",
       },
       {
         header: "Actions",

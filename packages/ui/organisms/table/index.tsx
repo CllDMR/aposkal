@@ -49,7 +49,10 @@ export const Table = <T extends object>({
   });
   return (
     <div className="flow-root">
-      <div className="overflow-x-auto">
+      <div
+        className="overflow-y-visible overflow-x-scroll"
+        style={{ paddingBottom: "50px", marginBottom: "-50px" }}
+      >
         <div className="inline-block min-w-full py-2 align-middle">
           {showGlobalFilter ? (
             <DebouncedInput

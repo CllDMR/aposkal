@@ -64,10 +64,12 @@ export const insertSaleOfferSchema = createInsertSchema(saleOffer)
     saleOfferProducts: z
       .object({
         productId: z.string(),
+        name: z.string(),
         currency: z.string(),
-        amount: z.number(),
+        unit: z.string(),
         unitPrice: z.number(),
         kdv: z.number(),
+        amount: z.number(),
         total: z.number(),
       })
       .array(),

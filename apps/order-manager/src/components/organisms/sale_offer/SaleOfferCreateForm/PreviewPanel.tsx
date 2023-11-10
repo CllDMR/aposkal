@@ -95,10 +95,9 @@ export const SaleOfferCreatePreviewPanel: FC<
         },
         offerDetails:
           formValues?.saleOfferProducts?.map((saleOfferProduct) => ({
-            // productName: saleOfferProduct.product.name ?? "productName",
-            productName: "productName",
+            productName: saleOfferProduct.name,
             amount: "" + saleOfferProduct.amount,
-            unit: "unit",
+            unit: saleOfferProduct.unit,
             unitPrice: "" + saleOfferProduct.unitPrice,
             vatRate: saleOfferProduct.kdv,
             total: "" + saleOfferProduct.total,

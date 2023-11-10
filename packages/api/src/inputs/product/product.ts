@@ -9,7 +9,10 @@ export const productListInput = selectProductSchema
     createdAt: true,
     updatedAt: true,
     name: true,
-    price: true,
+    unitPrice: true,
+    unit: true,
+    currency: true,
+    kdv: true,
   });
 
 export const productGetInput = selectProductSchema.pick({ id: true });
