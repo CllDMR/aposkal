@@ -112,13 +112,5 @@ export const AddressCompanyTable: FC<AddressCompanyTableProps> = ({
     [isLoading, variables, mutateAsync],
   );
 
-  return (
-    <Table
-      columns={cols}
-      data={data}
-      showFooter
-      showGlobalFilter
-      showNavigation
-    />
-  );
+  return <Table columns={cols} data={data} />;
 };

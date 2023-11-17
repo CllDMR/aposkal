@@ -101,13 +101,5 @@ export const SaleOfferTable: FC<SaleOfferTableProps> = ({ saleOffers }) => {
     [isLoading, variables, mutateAsync],
   );
 
-  return (
-    <Table
-      columns={cols}
-      data={data}
-      showFooter
-      showGlobalFilter
-      showNavigation
-    />
-  );
+  return <Table columns={cols} data={data} />;
 };

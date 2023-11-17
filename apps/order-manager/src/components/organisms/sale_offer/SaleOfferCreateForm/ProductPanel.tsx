@@ -215,13 +215,7 @@ export const SaleOfferCreateProductPanel: FC<
         </p>
       </div>
 
-      <Table
-        columns={cols}
-        data={fields}
-        showFooter={false}
-        showGlobalFilter={false}
-        showNavigation
-      />
+      <Table columns={cols} data={fields} showGlobalFilter={false} />
 
       <Button
         type="button"

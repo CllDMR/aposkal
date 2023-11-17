@@ -71,12 +71,6 @@ export const TenantWithUsersTable: FC<TenantWithUsersTableProps> = ({
   );
 
   return (
-    <Table
-      columns={cols}
-      data={data.usersToTenants.flatMap((a) => a.user)}
-      showFooter
-      showGlobalFilter
-      showNavigation
-    />
+    <Table columns={cols} data={data.usersToTenants.flatMap((a) => a.user)} />
   );
 };

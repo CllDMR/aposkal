@@ -119,13 +119,5 @@ export const CompanyTable: FC<CompanyTableProps> = ({ companies }) => {
     [isLoading, variables, mutateAsync],
   );
 
-  return (
-    <Table
-      columns={cols}
-      data={data}
-      showFooter
-      showGlobalFilter
-      showNavigation
-    />
-  );
+  return <Table columns={cols} data={data} />;
 };

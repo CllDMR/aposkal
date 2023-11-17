@@ -112,13 +112,5 @@ export const AddressTenantTable: FC<AddressTenantTableProps> = ({
     [isLoading, variables, mutateAsync],
   );
 
-  return (
-    <Table
-      columns={cols}
-      data={data}
-      showFooter
-      showGlobalFilter
-      showNavigation
-    />
-  );
+  return <Table columns={cols} data={data} />;
 };

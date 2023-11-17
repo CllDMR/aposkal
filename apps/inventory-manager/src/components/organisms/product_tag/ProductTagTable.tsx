@@ -70,13 +70,5 @@ export const ProductTagTable: FC<ProductTagTableProps> = ({ productTags }) => {
     [isLoading, variables, mutateAsync],
   );
 
-  return (
-    <Table
-      columns={cols}
-      data={data}
-      showFooter
-      showGlobalFilter
-      showNavigation
-    />
-  );
+  return <Table columns={cols} data={data} />;
 };
