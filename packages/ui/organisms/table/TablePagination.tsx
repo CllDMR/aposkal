@@ -1,5 +1,6 @@
 "use client";
 
+import { useId } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import type { Table } from "@tanstack/react-table";
 
@@ -10,30 +11,14 @@ export interface TablePaginationProps<TData> {
 export const TablePagination = <TData extends object>({
   table,
 }: TablePaginationProps<TData>) => {
+  const keyId = useId();
   const pageIndex = table.getState().pagination.pageIndex;
   const totalRows = table.getFilteredRowModel().rows.length;
   const rowsPerPage = table.getState().pagination.pageSize;
-
-  const firstPieceSize = 3;
-  const lastPieceSize = 3;
-
   const totalPaginationPiece = Array.from(
     { length: table.getPageCount() },
     (_, i) => i + 1,
   );
-  let firstPiece: number[] = [];
-  let lastPiece: number[] = [];
-  let showPaginationDivider = false;
-
-  const isNeededToDividePagination = firstPieceSize + lastPieceSize < totalRows;
-
-  if (isNeededToDividePagination) {
-    firstPiece = totalPaginationPiece.slice(0, firstPieceSize - 1);
-    lastPiece = totalPaginationPiece.slice(-lastPieceSize);
-    showPaginationDivider = true;
-  } else {
-    firstPiece = totalPaginationPiece;
-  }
 
   return (
     <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
@@ -81,14 +66,15 @@ export const TablePagination = <TData extends object>({
               <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
             </button>
 
-            {firstPiece.map((e) => {
+            {totalPaginationPiece.map((e) => {
               if (pageIndex + 1 === e)
                 return (
                   <button
+                    key={"TablePagination" + keyId + e}
                     type="button"
                     aria-current="page"
                     className="relative z-10 inline-flex items-center bg-primary-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
-                    onClick={() => table.setPageIndex(e)}
+                    onClick={() => table.setPageIndex(e - 1)}
                   >
                     {e}
                   </button>
@@ -96,46 +82,15 @@ export const TablePagination = <TData extends object>({
               else
                 return (
                   <button
+                    key={"TablePagination" + keyId + e}
                     type="button"
                     className="relative hidden items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex"
-                    onClick={() => table.setPageIndex(e)}
+                    onClick={() => table.setPageIndex(e - 1)}
                   >
                     {e}
                   </button>
                 );
             })}
-
-            {showPaginationDivider ? (
-              <span className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 focus:outline-offset-0">
-                ...
-              </span>
-            ) : null}
-
-            {showPaginationDivider
-              ? lastPiece.map((e) => {
-                  if (pageIndex + 1 === e)
-                    return (
-                      <button
-                        type="button"
-                        aria-current="page"
-                        className="relative z-10 inline-flex items-center bg-primary-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
-                        onClick={() => table.setPageIndex(e)}
-                      >
-                        {e}
-                      </button>
-                    );
-                  else
-                    return (
-                      <button
-                        type="button"
-                        className="relative hidden items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex"
-                        onClick={() => table.setPageIndex(e)}
-                      >
-                        {e}
-                      </button>
-                    );
-                })
-              : null}
 
             <button
               type="button"
@@ -152,3 +107,69 @@ export const TablePagination = <TData extends object>({
     </div>
   );
 };
+
+// const firstPieceSize = 3;
+// const lastPieceSize = 3;
+
+// const totalPaginationPiece = Array.from(
+//   { length: table.getPageCount() },
+//   (_, i) => i + 1,
+// );
+// let firstPiece: number[] = [];
+// let lastPiece: number[] = [];
+// let showPaginationDivider = false;
+
+// const isNeededToDividePagination =
+//   firstPieceSize + lastPieceSize < totalRows &&
+//   pageIndex + firstPieceSize - 1 < table.getPageCount() - lastPieceSize;
+
+// if (isNeededToDividePagination) {
+//   if (pageIndex + firstPieceSize - 1 < table.getPageCount() - lastPieceSize) {
+//     firstPiece = totalPaginationPiece.slice(
+//       pageIndex,
+//       pageIndex + firstPieceSize - 1,
+//     );
+//     lastPiece = totalPaginationPiece.slice(-lastPieceSize);
+//     showPaginationDivider = true;
+//   } else {
+//     firstPiece = [];
+//     lastPiece = totalPaginationPiece.slice(-lastPieceSize);
+//     showPaginationDivider = true;
+//   }
+// } else {
+//   firstPiece = totalPaginationPiece;
+// }
+
+// {showPaginationDivider ? (
+//   <span className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 focus:outline-offset-0">
+//     ...
+//   </span>
+// ) : null}
+
+// {showPaginationDivider
+//   ? lastPiece.map((e) => {
+//       if (pageIndex + 1 === e)
+//         return (
+//           <button
+//             key={"TablePagination" + keyId + e}
+//             type="button"
+//             aria-current="page"
+//             className="relative z-10 inline-flex items-center bg-primary-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
+//             onClick={() => table.setPageIndex(e - 1)}
+//           >
+//             {e}
+//           </button>
+//         );
+//       else
+//         return (
+//           <button
+//             key={"TablePagination" + keyId + e}
+//             type="button"
+//             className="relative hidden items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex"
+//             onClick={() => table.setPageIndex(e - 1)}
+//           >
+//             {e}
+//           </button>
+//         );
+//     })
+//   : null}
