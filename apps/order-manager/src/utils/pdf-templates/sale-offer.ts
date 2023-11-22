@@ -148,7 +148,7 @@ export const createPDFTemplateSaleOffer = ({
       { text: item?.amount || "", alignment: "right" },
       { text: item?.unit || "", alignment: "right" },
       {
-        text: item?.unitPrice ? numberFormat(item?.unitPrice, 2, true) : "",
+        text: item?.unitPrice ?? "",
         alignment: "right",
       },
       {
@@ -156,9 +156,7 @@ export const createPDFTemplateSaleOffer = ({
         alignment: "right",
       },
       {
-        text: item?.total
-          ? numberFormat(item?.total, 2, true) + " " + documentCurrency
-          : "",
+        text: item?.total ?? "",
         alignment: "right",
       },
     ];
@@ -404,27 +402,15 @@ export const createPDFTemplateSaleOffer = ({
             width: "auto",
             ol: [
               {
-                text: `${numberFormat(
-                  subtotals.totalCurrency.baseAmount,
-                  2,
-                  true,
-                )} ${documentCurrency}`,
+                text: subtotals.totalCurrency.baseAmount,
                 style: "number",
               },
               {
-                text: `${numberFormat(
-                  subtotals.totalCurrency.vatAmount,
-                  2,
-                  true,
-                )} ${documentCurrency}`,
+                text: subtotals.totalCurrency.vatAmount,
                 style: "number",
               },
               {
-                text: `${numberFormat(
-                  subtotals.totalCurrency.totalAmount,
-                  2,
-                  true,
-                )} ${documentCurrency}`,
+                text: subtotals.totalCurrency.totalAmount,
                 style: "number",
               },
             ],
@@ -435,27 +421,15 @@ export const createPDFTemplateSaleOffer = ({
                 type: "none",
                 ol: [
                   {
-                    text: `${numberFormat(
-                      subtotals.totalTRY.baseAmount,
-                      2,
-                      true,
-                    )} TL`,
+                    text: subtotals.totalTRY.baseAmount,
                     style: "number",
                   },
                   {
-                    text: `${numberFormat(
-                      subtotals.totalTRY.vatAmount,
-                      2,
-                      true,
-                    )} TL`,
+                    text: subtotals.totalTRY.vatAmount,
                     style: "number",
                   },
                   {
-                    text: `${numberFormat(
-                      subtotals.totalTRY.totalAmount,
-                      2,
-                      true,
-                    )} TL`,
+                    text: subtotals.totalTRY.totalAmount,
                     style: "subheader",
                     color: primaryColor,
                   },
@@ -534,23 +508,23 @@ const renderPercentage = (value: number) => {
 //   });
 // };
 
-const numberFormat = (value: string, digit = 2, string = false) => {
-  if (!value) return "0";
-  const value_ = Number(value);
+// const numberFormat = (value: string, digit = 2, string = false) => {
+//   if (!value) return "0";
+//   const value_ = Number(value);
 
-  if (string) {
-    return value_.toLocaleString("tr-TR", {
-      minimumFractionDigits: digit,
-      maximumFractionDigits: digit,
-    });
-  }
+//   if (string) {
+//     return value_.toLocaleString("tr-TR", {
+//       minimumFractionDigits: digit,
+//       maximumFractionDigits: digit,
+//     });
+//   }
 
-  let parameter = 1;
-  if (digit > 0) {
-    for (let i = 0; i < digit; i++) {
-      parameter *= 10;
-    }
-  }
+//   let parameter = 1;
+//   if (digit > 0) {
+//     for (let i = 0; i < digit; i++) {
+//       parameter *= 10;
+//     }
+//   }
 
-  return Math.round(value_ * parameter) / parameter;
-};
+//   return Math.round(value_ * parameter) / parameter;
+// };

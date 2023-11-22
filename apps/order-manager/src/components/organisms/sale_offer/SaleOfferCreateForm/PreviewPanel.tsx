@@ -10,6 +10,7 @@ import type { RouterInputs, RouterOutputs } from "@acme/api";
 import { Button } from "@acme/ui/molecules";
 
 import { api } from "~/utils/api";
+import { sayiOkunusu } from "~/utils/number-format";
 import { createPDFTemplateSaleOffer } from "~/utils/pdf-templates/sale-offer";
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
@@ -68,6 +69,28 @@ export const SaleOfferCreatePreviewPanel: FC<
 
   useEffect(() => {
     if (company && address && tenant) {
+      const totalMoney = (
+        formValues?.saleOfferProducts?.map((saleOfferProduct) => ({
+          total: saleOfferProduct.total,
+          totalVat: saleOfferProduct.total * (saleOfferProduct.kdv / 100),
+          totalExcludingVat:
+            saleOfferProduct.total -
+            saleOfferProduct.total * (saleOfferProduct.kdv / 100),
+        })) ?? []
+      ).reduce(
+        (acc, saleOfferProduct) => ({
+          total: acc.total + saleOfferProduct.total,
+          totalExcludingVat:
+            acc.totalExcludingVat + saleOfferProduct.totalExcludingVat,
+          totalVat: acc.totalVat + saleOfferProduct.totalVat,
+        }),
+        {
+          total: 0,
+          totalExcludingVat: 0,
+          totalVat: 0,
+        },
+      );
+
       const template = createPDFTemplateSaleOffer({
         offerInfo: {
           documentNumber: "documentNumber",
@@ -98,12 +121,21 @@ export const SaleOfferCreatePreviewPanel: FC<
             productName: saleOfferProduct.name,
             amount: "" + saleOfferProduct.amount,
             unit: saleOfferProduct.unit,
-            unitPrice: "" + saleOfferProduct.unitPrice,
-            vatRate: saleOfferProduct.kdv,
-            total: "" + saleOfferProduct.total,
-            description: "description",
-            gtipNo: "gtipNo",
-            imageURL: "imageURL",
+            unitPrice: saleOfferProduct.unitPrice.toLocaleString("tr-TR", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            }),
+            vatRate: saleOfferProduct.kdv / 100,
+            total: saleOfferProduct.total.toLocaleString("tr-TR", {
+              style: "currency",
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+              currency: formValues?.currency ?? "TRY",
+              currencyDisplay: "code",
+            }),
+            description: "" + saleOfferProduct.description,
+            gtipNo: "" + saleOfferProduct.gtipNo,
+            imageURL: "" + saleOfferProduct.imageURL,
           })) ?? [],
         offerNotes:
           formValues?.saleOfferNotes?.map((saleOfferNote) => ({
@@ -112,16 +144,61 @@ export const SaleOfferCreatePreviewPanel: FC<
           })) ?? [],
         offerTotals: {
           totalCurrency: {
-            total: "total",
-            totalExcludingVat: "totalExcludingVat",
-            totalInWords: "totalInWords",
-            totalVat: "totalVat",
+            total: totalMoney.total.toLocaleString("tr-TR", {
+              style: "currency",
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+              currency: formValues?.currency ?? "TRY",
+              currencyDisplay: "code",
+            }),
+            totalExcludingVat: totalMoney.totalExcludingVat.toLocaleString(
+              "tr-TR",
+              {
+                style: "currency",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+                currency: formValues?.currency ?? "TRY",
+                currencyDisplay: "code",
+              },
+            ),
+            totalInWords: sayiOkunusu(
+              totalMoney.total,
+              formValues?.currency ?? "TRY",
+            ),
+            totalVat: totalMoney.totalVat.toLocaleString("tr-TR", {
+              style: "currency",
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+              currency: formValues?.currency ?? "TRY",
+              currencyDisplay: "code",
+            }),
           },
           totalTRY: {
-            total: "total",
-            totalExcludingVat: "totalExcludingVat",
-            totalInWords: "totalInWords",
-            totalVat: "totalVat",
+            total: totalMoney.total.toLocaleString("tr-TR", {
+              style: "currency",
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+              currency: "TRY",
+              currencyDisplay: "code",
+            }),
+            totalExcludingVat: totalMoney.totalExcludingVat.toLocaleString(
+              "tr-TR",
+              {
+                style: "currency",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+                currency: "TRY",
+                currencyDisplay: "code",
+              },
+            ),
+            totalInWords: sayiOkunusu(totalMoney.total, "TRY"),
+            totalVat: totalMoney.totalVat.toLocaleString("tr-TR", {
+              style: "currency",
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+              currency: "TRY",
+              currencyDisplay: "code",
+            }),
           },
         },
         selectedCompany: {
@@ -134,7 +211,7 @@ export const SaleOfferCreatePreviewPanel: FC<
           web: tenant.web,
           ticaretSicilNo: tenant.ticaretSicilNo,
           mersisNo: tenant.mersisNo,
-          companyLogo: "<companyLogo>",
+          companyLogo: tenant.logoURL,
         },
       });
 
@@ -144,7 +221,7 @@ export const SaleOfferCreatePreviewPanel: FC<
         setPdfData(data);
       });
     }
-  }, [address, company, tenant, formValues]);
+  }, [address, company, formValues, tenant]);
 
   return (
     <div className="">
