@@ -99,6 +99,14 @@ export const SaleOfferCreateProductPanel: FC<
                   currentValues.saleOfferProducts[row.row.index]?.amount ?? 0,
                 total:
                   currentValues.saleOfferProducts[row.row.index]?.total ?? 0,
+                description:
+                  currentValues.saleOfferProducts[row.row.index]?.description ??
+                  "",
+                gtipNo:
+                  currentValues.saleOfferProducts[row.row.index]?.gtipNo ?? "",
+                imageURL:
+                  currentValues.saleOfferProducts[row.row.index]?.imageURL ??
+                  "",
               });
             }}
           />
@@ -127,6 +135,7 @@ export const SaleOfferCreateProductPanel: FC<
             id={`saleOfferProducts.${row.row.index}.amount`}
             name={`saleOfferProducts.${row.row.index}.amount`}
             type="number"
+            step="0.001"
             errors={errors}
             register={register}
             rules={{ valueAsNumber: true }}
@@ -142,6 +151,7 @@ export const SaleOfferCreateProductPanel: FC<
             id={`saleOfferProducts.${row.row.index}.unitPrice`}
             name={`saleOfferProducts.${row.row.index}.unitPrice`}
             type="number"
+            step="0.001"
             errors={errors}
             register={register}
             rules={{ valueAsNumber: true }}
@@ -172,6 +182,7 @@ export const SaleOfferCreateProductPanel: FC<
             id={`saleOfferProducts.${row.row.index}.total`}
             name={`saleOfferProducts.${row.row.index}.total`}
             type="number"
+            step="0.001"
             errors={errors}
             register={register}
             rules={{ valueAsNumber: true }}
@@ -229,6 +240,9 @@ export const SaleOfferCreateProductPanel: FC<
             kdv: 0,
             amount: 0,
             total: 0,
+            description: "",
+            gtipNo: "",
+            imageURL: "",
           })
         }
       >

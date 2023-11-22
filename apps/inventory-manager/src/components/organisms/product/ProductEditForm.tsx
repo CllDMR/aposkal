@@ -76,7 +76,7 @@ export const ProductEditForm: FC<ProductEditFormProps> = ({
   const {
     handleSubmit,
     register,
-    formState: { isSubmitting },
+    formState: { errors, isSubmitting },
     control,
   } = useForm<ProductEditFormFields>({
     resolver: zodResolver(productUpdateInput),
@@ -92,8 +92,6 @@ export const ProductEditForm: FC<ProductEditFormProps> = ({
     control,
   });
 
-  // const { productCategoryId: _, productTagIds: __, ...restErrors } = errors;
-
   const onSubmit = handleSubmit(async (data) => {
     return await mutateAsync(data);
   });
@@ -106,23 +104,79 @@ export const ProductEditForm: FC<ProductEditFormProps> = ({
         name="name"
         type="text"
         autoComplete="name"
-        // errors={restErrors}
+        errors={errors}
         register={register}
       />
       <FormInput<ProductEditFormFields>
-        id="price"
-        label="Price"
-        name="price"
+        id="gtipNo"
+        label="Gtip No"
+        name="gtipNo"
         type="text"
-        autoComplete="price"
-        // errors={restErrors}
+        autoComplete="gtipNo"
+        errors={errors}
+        register={register}
+      />
+      <FormInput<ProductEditFormFields>
+        id="currency"
+        label="Currency"
+        name="currency"
+        type="text"
+        autoComplete="currency"
+        errors={errors}
+        register={register}
+      />
+      <FormInput<ProductEditFormFields>
+        id="unit"
+        label="Unit"
+        name="unit"
+        type="text"
+        autoComplete="unit"
+        errors={errors}
+        register={register}
+      />
+      <FormInput<ProductEditFormFields>
+        id="description"
+        label="Description"
+        name="description"
+        type="text"
+        autoComplete="description"
+        errors={errors}
+        register={register}
+      />
+      <FormInput<ProductEditFormFields>
+        id="imageURL"
+        label="Image URL"
+        name="imageURL"
+        type="text"
+        autoComplete="imageURL"
+        errors={errors}
+        register={register}
+      />
+      <FormInput<ProductEditFormFields>
+        id="unitPrice"
+        label="Unit Price"
+        name="unitPrice"
+        type="number"
+        step="0.001"
+        autoComplete="unitPrice"
+        errors={errors}
+        register={register}
+        rules={{ valueAsNumber: true }}
+      />
+      <FormInput<ProductEditFormFields>
+        id="kdv"
+        label="KDV"
+        name="kdv"
+        type="number"
+        autoComplete="kdv"
+        errors={errors}
         register={register}
         rules={{ valueAsNumber: true }}
       />
       <FormDropdownInput<ProductEditFormFields>
         label="Product Category"
         name="productCategoryId"
-        // errors={restErrors}
+        errors={errors}
         control={control}
         options={formattedProductCategories}
       />
@@ -133,7 +187,7 @@ export const ProductEditForm: FC<ProductEditFormProps> = ({
               key={field.id}
               label="Product Tag"
               name={`productTagIds.${index}.id`}
-              // errors={{ productTagIds }}
+              errors={errors}
               control={control}
               options={formattedProductTags}
             />

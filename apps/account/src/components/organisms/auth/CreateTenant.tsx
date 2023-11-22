@@ -39,6 +39,7 @@ export const CreateTenant: FC = () => {
         state: "Türkiye",
         street: "Çiçek",
       },
+      logoURL: "Test URL - 1",
       title: "Test Tenant - 1",
       type: "personal",
       isForeign: false,
@@ -74,6 +75,15 @@ export const CreateTenant: FC = () => {
           name="title"
           type="text"
           autoComplete="title"
+          errors={errors}
+          register={register}
+        />
+        <FormInput<CreateTenantFromFields>
+          id="logoURL"
+          label="Logo URL"
+          name="logoURL"
+          type="text"
+          autoComplete="logoURL"
           errors={errors}
           register={register}
         />

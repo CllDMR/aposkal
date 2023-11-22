@@ -85,6 +85,15 @@ export const ProductCreateForm: FC<ProductCreateFormProps> = ({
         register={register}
       />
       <FormInput<ProductCreateFormFields>
+        id="gtipNo"
+        label="Gtip No"
+        name="gtipNo"
+        type="text"
+        autoComplete="gtipNo"
+        errors={errors}
+        register={register}
+      />
+      <FormInput<ProductCreateFormFields>
         id="currency"
         label="Currency"
         name="currency"
@@ -103,10 +112,29 @@ export const ProductCreateForm: FC<ProductCreateFormProps> = ({
         register={register}
       />
       <FormInput<ProductCreateFormFields>
+        id="description"
+        label="Description"
+        name="description"
+        type="text"
+        autoComplete="description"
+        errors={errors}
+        register={register}
+      />
+      <FormInput<ProductCreateFormFields>
+        id="imageURL"
+        label="Image URL"
+        name="imageURL"
+        type="text"
+        autoComplete="imageURL"
+        errors={errors}
+        register={register}
+      />
+      <FormInput<ProductCreateFormFields>
         id="unitPrice"
         label="Unit Price"
         name="unitPrice"
         type="number"
+        step="0.001"
         autoComplete="unitPrice"
         errors={errors}
         register={register}
