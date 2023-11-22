@@ -702,6 +702,9 @@ importers:
       tailwind-merge:
         specifier: ^1.14.0
         version: 1.14.0
+      to-words:
+        specifier: ^3.6.1
+        version: 3.6.1
       zod:
         specifier: ^3.22.2
         version: 3.22.2
@@ -7034,6 +7037,11 @@ packages:
     engines: {node: '>=8.0'}
     dependencies:
       is-number: 7.0.0
+
+  /to-words@3.6.1:
+    resolution: {integrity: sha512-X2KDRjBXM0bQ4eTblqNnVfIBGEwhSClR3eWubD6B7gY29vh1k+ntQGSaShwgrsQT3Akt/tbIjKkn8mMOYHihnw==}
+    engines: {node: '>=12.0.0'}
+    dev: false
 
   /toidentifier@1.0.0:
     resolution: {integrity: sha512-yaOH/Pk/VEhBWWTlhI+qXxDFXlejDGcQipMlyxda9nthulaxLZUNcUqFxokp0vcYnvteJln5FNQDRrxj3YcbVw==}
