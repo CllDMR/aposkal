@@ -20,6 +20,9 @@ export const saleOfferProduct = mySqlTable(
       .notNull(),
     updatedAt: timestamp("updated_at").onUpdateNow(),
 
+    description: varchar("description", { length: 256 }).default(""),
+    imageURL: varchar("image_url", { length: 256 }).default(""),
+    gtipNo: varchar("gtip_no", { length: 256 }).notNull(),
     currency: varchar("currency", { length: 255 }).notNull(),
     amount: double("amount").notNull(),
     unitPrice: double("unit_price").notNull(),

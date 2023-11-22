@@ -23,6 +23,7 @@ export const tenant = mySqlTable(
       "other",
     ]).notNull(),
     isForeign: boolean("is_foreign").notNull(),
+    logoURL: varchar("logo_url", { length: 256 }).notNull(),
     taxNo: varchar("tax_no", { length: 9 }).notNull(),
     taxOffice: varchar("tax_office", { length: 256 }).notNull(),
     firmPhoneNumber: varchar("firm_phone_number", { length: 256 }).notNull(),

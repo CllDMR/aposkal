@@ -63,6 +63,9 @@ export const insertSaleOfferSchema = createInsertSchema(saleOffer)
     addressId: z.string(),
     saleOfferProducts: z
       .object({
+        description: z.string(),
+        imageURL: z.string(),
+        gtipNo: z.string(),
         productId: z.string(),
         name: z.string(),
         currency: z.string(),

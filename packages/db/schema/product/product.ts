@@ -23,6 +23,9 @@ export const product = mySqlTable(
     updatedAt: timestamp("updated_at").onUpdateNow(),
 
     name: varchar("name", { length: 256 }).notNull(),
+    description: varchar("description", { length: 256 }).default(""),
+    imageURL: varchar("image_url", { length: 256 }).default(""),
+    gtipNo: varchar("gtip_no", { length: 256 }).notNull(),
     currency: varchar("currency", { length: 256 }).notNull(),
     unit: varchar("unit", { length: 256 }).notNull(),
     unitPrice: int("unit_price").notNull(),

@@ -13,6 +13,9 @@ export const productListInput = selectProductSchema
     unit: true,
     currency: true,
     kdv: true,
+    description: true,
+    gtipNo: true,
+    imageURL: true,
   });
 
 export const productGetInput = selectProductSchema.pick({ id: true });
@@ -31,4 +34,15 @@ export const productUpdateInput = insertProductSchema
     updatedAt: true,
     tenantId: true,
   })
-  .partial({ name: true, price: true });
+  .partial({
+    name: true,
+    unitPrice: true,
+    unit: true,
+    currency: true,
+    kdv: true,
+    description: true,
+    gtipNo: true,
+    imageURL: true,
+    productCategoryId: true,
+    // productTagIds: true,
+  });
