@@ -161,10 +161,7 @@ export const SaleOfferCreatePreviewPanel: FC<
                 currencyDisplay: "code",
               },
             ),
-            totalInWords: sayiOkunusu(
-              totalMoney.total,
-              formValues?.currency ?? "TRY",
-            ),
+            totalInWords: sayiOkunusu(totalMoney.total),
             totalVat: totalMoney.totalVat.toLocaleString("tr-TR", {
               style: "currency",
               minimumFractionDigits: 2,
@@ -191,7 +188,7 @@ export const SaleOfferCreatePreviewPanel: FC<
                 currencyDisplay: "code",
               },
             ),
-            totalInWords: sayiOkunusu(totalMoney.total, "TRY"),
+            totalInWords: sayiOkunusu(totalMoney.total),
             totalVat: totalMoney.totalVat.toLocaleString("tr-TR", {
               style: "currency",
               minimumFractionDigits: 2,

@@ -26,7 +26,7 @@ const toWords = new ToWords({
 //     maximumFractionDigits: digit,
 //   });
 
-export const sayiOkunusu = (sayi: number, kurCinsi: string) => {
+export const sayiOkunusu = (sayi: number) => {
   let convertedSayi = toWords.convert(sayi);
 
   convertedSayi = convertedSayi.replaceAll("virgül ", "");
