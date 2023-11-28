@@ -101,6 +101,7 @@ export default async function Layout(props: { children: React.ReactNode }) {
         session={session}
         navigationPaths={navbarNavigationPaths}
         domain={env.DOMAIN}
+        projectName="Customer Manager"
       />
       <div>
         <DrawerMobileWrapper navigationPaths={drawerNavigationPaths} />

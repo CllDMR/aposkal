@@ -77,6 +77,7 @@ export default async function Layout(props: { children: React.ReactNode }) {
         session={session}
         navigationPaths={navbarNavigationPaths}
         domain={env.DOMAIN}
+        projectName="Starter Template Project"
       />
       <div>
         <DrawerMobileWrapper navigationPaths={drawerNavigationPaths} />

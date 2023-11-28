@@ -12,6 +12,7 @@ type NavbarProps = PropsWithChildren & {
   session: Session;
   navigationPaths: NavbarNavigationPath[];
   domain: string;
+  projectName: string;
 };
 
 export interface NavbarNavigationPath {
@@ -24,6 +25,7 @@ export const Navbar: FC<NavbarProps> = ({
   session,
   navigationPaths,
   domain,
+  projectName,
 }) => {
   const { setOpen } = useSidebarStore();
 
@@ -48,6 +50,10 @@ export const Navbar: FC<NavbarProps> = ({
         </div> */}
         <div className="flex flex-1 items-center">{children}</div>
         <div className="flex items-center gap-x-4 lg:gap-x-6">
+          <div className="text-sm font-semibold text-gray-400">
+            {projectName}
+          </div>
+
           <AppsDropdown domain={domain} />
 
           <button
