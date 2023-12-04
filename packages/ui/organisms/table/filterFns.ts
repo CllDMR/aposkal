@@ -1,9 +1,9 @@
 import type { RankingInfo } from "@tanstack/match-sorter-utils";
 import { rankings, rankItem } from "@tanstack/match-sorter-utils";
-import type { Row } from "@tanstack/react-table";
+import type { Row, RowData } from "@tanstack/react-table";
 
 // most of table work acceptably well with this function
-const fuzzy = <TData extends object = object>(
+const fuzzy = <TData extends RowData>(
   row: Row<TData>,
   columnId: string,
   filterValue: string | number,
@@ -20,9 +20,7 @@ const fuzzy = <TData extends object = object>(
 // https://github.com/KevinVandy/material-react-table/discussions/223#discussioncomment-4249221
 fuzzy.autoRemove = (val: unknown) => !val;
 
-const contains = <
-  TData extends Record<string, unknown> = Record<string, unknown>,
->(
+const contains = <TData extends RowData = Record<string, unknown>>(
   row: Row<TData>,
   id: string,
   filterValue: string | number,
@@ -36,9 +34,7 @@ const contains = <
 
 contains.autoRemove = (val: unknown) => !val;
 
-const startsWith = <
-  TData extends Record<string, unknown> = Record<string, unknown>,
->(
+const startsWith = <TData extends RowData = Record<string, unknown>>(
   row: Row<TData>,
   id: string,
   filterValue: string | number,

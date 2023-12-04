@@ -2,9 +2,9 @@
 
 import type { FC } from "react";
 import { useMemo } from "react";
-import type { ColumnDef } from "@tanstack/react-table";
+import Link from "next/link";
+import { createColumnHelper } from "@tanstack/react-table";
 
-import { Button, LinkButton } from "@acme/ui/molecules";
 import { Table } from "@acme/ui/organisms";
 
 import type { RouterOutputs } from "~/utils/api";
@@ -28,45 +28,73 @@ export const WarehouseTable: FC<WarehouseTableProps> = ({ warehouses }) => {
     },
   );
 
-  const { mutateAsync, isLoading, variables } =
-    api.warehouse.delete.useMutation({
-      async onSettled() {
-        await context.warehouse.list.invalidate();
-        await context.warehouse.get.invalidate();
-      },
-    });
+  const { mutateAsync } = api.warehouse.deleteMany.useMutation({
+    async onSettled() {
+      await context.warehouse.list.invalidate();
+      await context.warehouse.get.invalidate();
+    },
+  });
 
-  const cols = useMemo<ColumnDef<TableItem>[]>(
-    () => [
-      {
-        header: "Title",
-        cell: (row) => row.renderValue(),
-        accessorKey: "title",
-        footer: "Title",
-      },
-      {
-        header: "Actions",
-        cell: ({ row: { original: warehouse } }) => {
-          return (
-            <div>
-              <LinkButton href={`/warehouses/${warehouse.id}`}>Go</LinkButton>
-              <LinkButton href={`/warehouses/${warehouse.id}/edit`}>
-                Edit
-              </LinkButton>
-              <Button
-                onClick={async () => await mutateAsync(warehouse.id)}
-                disabled={isLoading && warehouse.id === variables}
+  const cols = useMemo(() => {
+    const columnHelper = createColumnHelper<TableItem>();
+
+    return [
+      columnHelper.group({
+        id: "data",
+        columns: [
+          columnHelper.accessor("title", {
+            header: "Title",
+            cell({ getValue, row: { original: warehouse } }) {
+              return (
+                <Link href={`/warehouses/${warehouse.id}`}>{getValue()}</Link>
+              );
+            },
+          }),
+        ],
+      }),
+    ];
+  }, []);
+
+  return (
+    <Table<TableItem>
+      columns={cols}
+      data={data}
+      optionsMatrix={[
+        [
+          {
+            icon: (
+              <svg
+                className="mr-2 h-5 w-5"
+                aria-hidden="true"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                Delete
-              </Button>
-            </div>
-          );
-        },
-        footer: "Actions",
-      },
-    ],
-    [isLoading, variables, mutateAsync],
-  );
+                <path
+                  d="M4 13V16H7L16 7L13 4L4 13Z"
+                  fill="#8B5CF6"
+                  stroke="#C4B5FD"
+                  strokeWidth="2"
+                />
 
-  return <Table columns={cols} data={data} />;
+                <path
+                  className="ui-active:hidden"
+                  d="M4 13V16H7L16 7L13 4L4 13Z"
+                  fill="#EDE9FE"
+                  stroke="#A78BFA"
+                  strokeWidth="2"
+                />
+              </svg>
+            ),
+            label: "Delete All Selected",
+            onClick: async (selectedOptions) => {
+              await mutateAsync(
+                selectedOptions.map((selectedOption) => selectedOption.id),
+              );
+            },
+          },
+        ],
+      ]}
+    />
+  );
 };

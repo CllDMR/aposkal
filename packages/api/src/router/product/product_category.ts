@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { desc, eq, schema } from "@acme/db";
+import { desc, eq, inArray, schema } from "@acme/db";
 
 import {
   productCategoryCreateInput,
@@ -60,5 +60,17 @@ export const productCategoryRouter = createTRPCRouter({
       return await ctx.db
         .delete(schema.productCategory)
         .where(eq(schema.productCategory.id, input));
+    }),
+
+  deleteMany: protectedProcedure
+    .input(z.string().array())
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db
+        .delete(schema.productsToCategories)
+        .where(inArray(schema.productsToCategories.product_categoryId, input));
+
+      return await ctx.db
+        .delete(schema.productCategory)
+        .where(inArray(schema.productCategory.id, input));
     }),
 });

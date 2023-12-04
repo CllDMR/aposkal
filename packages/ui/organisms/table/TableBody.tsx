@@ -1,13 +1,13 @@
 "use client";
 
-import type { Table } from "@tanstack/react-table";
+import type { RowData, Table } from "@tanstack/react-table";
 import { flexRender } from "@tanstack/react-table";
 
 export interface TableBodyProps<TData> {
   table: Table<TData>;
 }
 
-export const TableBody = <TData extends object>({
+export const TableBody = <TData extends RowData>({
   table,
 }: TableBodyProps<TData>) => {
   return (

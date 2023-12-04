@@ -1,4 +1,5 @@
 export { Button } from "./button";
+export { ButtonIcon } from "./button-icon";
 export { FormCheckbox } from "./form-checkbox";
 export type { FormCheckboxProps } from "./form-checkbox";
 export { FormDateInput } from "./form-date-input";

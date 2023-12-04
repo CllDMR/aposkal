@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { desc, eq, schema } from "@acme/db";
+import { desc, eq, inArray, schema } from "@acme/db";
 
 import {
   addressTenantCreateInput,
@@ -56,5 +56,13 @@ export const addressTenantRouter = createTRPCRouter({
       return await ctx.db
         .delete(schema.addressTenant)
         .where(eq(schema.addressTenant.id, input));
+    }),
+
+  deleteMany: protectedProcedure
+    .input(z.string().array())
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db
+        .delete(schema.addressTenant)
+        .where(inArray(schema.addressTenant.id, input));
     }),
 });

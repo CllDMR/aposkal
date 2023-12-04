@@ -2,13 +2,13 @@
 
 import { useId } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
-import type { Table } from "@tanstack/react-table";
+import type { RowData, Table } from "@tanstack/react-table";
 
 export interface TablePaginationProps<TData> {
   table: Table<TData>;
 }
 
-export const TablePagination = <TData extends object>({
+export const TablePagination = <TData extends RowData>({
   table,
 }: TablePaginationProps<TData>) => {
   const keyId = useId();

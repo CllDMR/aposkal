@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
 import { z } from "zod";
 
-import { desc, eq, schema } from "@acme/db";
+import { desc, eq, inArray, schema } from "@acme/db";
 
 import {
   companyCreateInput,
@@ -84,5 +84,13 @@ export const companyRouter = createTRPCRouter({
       return await ctx.db
         .delete(schema.company)
         .where(eq(schema.company.id, input));
+    }),
+
+  deleteMany: protectedProcedure
+    .input(z.string().array())
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db
+        .delete(schema.company)
+        .where(inArray(schema.company.id, input));
     }),
 });

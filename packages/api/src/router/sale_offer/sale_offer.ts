@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { desc, eq, schema } from "@acme/db";
+import { desc, eq, inArray, schema } from "@acme/db";
 
 import {
   saleOfferCreateInput,
@@ -14,7 +14,7 @@ export const saleOfferRouter = createTRPCRouter({
   list: protectedProcedure
     .input(saleOfferListInput)
     .query(async ({ ctx, input: _ }) => {
-      return await ctx.db.query.saleOffer.findMany({
+      const asd = await ctx.db.query.saleOffer.findMany({
         where: eq(schema.saleOffer.tenantId, ctx.session.user.ti),
         orderBy: desc(schema.saleOffer.id),
         with: {
@@ -24,6 +24,9 @@ export const saleOfferRouter = createTRPCRouter({
           // saleOfferProducts: true,
         },
       });
+      asd[0]?.toAddress;
+
+      return asd;
     }),
 
   get: protectedProcedure
@@ -65,5 +68,13 @@ export const saleOfferRouter = createTRPCRouter({
       return await ctx.db
         .delete(schema.saleOffer)
         .where(eq(schema.saleOffer.id, input));
+    }),
+
+  deleteMany: protectedProcedure
+    .input(z.string().array())
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db
+        .delete(schema.saleOffer)
+        .where(inArray(schema.saleOffer.id, input));
     }),
 });

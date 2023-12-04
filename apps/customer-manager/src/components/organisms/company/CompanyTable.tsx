@@ -2,9 +2,9 @@
 
 import type { FC } from "react";
 import { useMemo } from "react";
-import type { ColumnDef } from "@tanstack/react-table";
+import Link from "next/link";
+import { createColumnHelper } from "@tanstack/react-table";
 
-import { Button, LinkButton } from "@acme/ui/molecules";
 import { Table } from "@acme/ui/organisms";
 
 import type { RouterOutputs } from "~/utils/api";
@@ -38,86 +38,94 @@ export const CompanyTable: FC<CompanyTableProps> = ({ companies }) => {
     },
   );
 
-  const { mutateAsync, isLoading, variables } = api.company.delete.useMutation({
+  const { mutateAsync } = api.company.deleteMany.useMutation({
     async onSettled() {
       await context.company.list.invalidate();
       await context.company.get.invalidate();
     },
   });
 
-  const cols = useMemo<ColumnDef<TableItem>[]>(
-    () => [
-      {
-        header: "Title",
-        cell: (row) => row.renderValue(),
-        accessorKey: "title",
-        footer: "Title",
-      },
-      {
-        header: "Type",
-        cell: (row) => row.renderValue(),
-        accessorKey: "type",
-        footer: "Type",
-      },
-      {
-        header: "Is Foreign",
-        cell: (row) => row.renderValue(),
-        accessorKey: "isForeign",
-        footer: "Is Foreign",
-      },
-      {
-        header: "Tax No",
-        cell: (row) => row.renderValue(),
-        accessorKey: "taxNo",
-        footer: "Tax No",
-      },
-      {
-        header: "Tax Office",
-        cell: (row) => row.renderValue(),
-        accessorKey: "taxOffice",
-        footer: "Tax Office",
-      },
-      {
-        header: "Firm Phone Number",
-        cell: (row) => row.renderValue(),
-        accessorKey: "firmPhoneNumber",
-        footer: "Firm Phone Number",
-      },
-      {
-        header: "Qualified Phone Number",
-        cell: (row) => row.renderValue(),
-        accessorKey: "qualifiedPhoneNumber",
-        footer: "Qualified Phone Number",
-      },
-      {
-        header: "Email",
-        cell: (row) => row.renderValue(),
-        accessorKey: "email",
-        footer: "Email",
-      },
-      {
-        header: "Actions",
-        cell: ({ row: { original: company } }) => {
-          return (
-            <div>
-              <LinkButton href={`/companies/${company.id}`}>Go</LinkButton>
-              <LinkButton href={`/companies/${company.id}/edit`}>
-                Edit
-              </LinkButton>
-              <Button
-                onClick={async () => await mutateAsync(company.id)}
-                disabled={isLoading && company.id === variables}
-              >
-                Delete
-              </Button>
-            </div>
-          );
-        },
-        footer: "Actions",
-      },
-    ],
-    [isLoading, variables, mutateAsync],
-  );
+  const cols = useMemo(() => {
+    const columnHelper = createColumnHelper<TableItem>();
 
-  return <Table columns={cols} data={data} />;
+    return [
+      columnHelper.group({
+        id: "data",
+        columns: [
+          columnHelper.accessor("title", {
+            header: "Title",
+            cell({ getValue, row: { original: company } }) {
+              return (
+                <Link href={`/companies/${company.id}`}>{getValue()}</Link>
+              );
+            },
+          }),
+          columnHelper.accessor("type", {
+            header: "Type",
+          }),
+          columnHelper.accessor("isForeign", {
+            header: "Is Foreign",
+          }),
+          columnHelper.accessor("taxNo", {
+            header: "Tax No",
+          }),
+          columnHelper.accessor("taxOffice", {
+            header: "Tax Office",
+          }),
+          columnHelper.accessor("firmPhoneNumber", {
+            header: "Firm Phone Number",
+          }),
+          columnHelper.accessor("qualifiedPhoneNumber", {
+            header: "Qualified Phone Number",
+          }),
+          columnHelper.accessor("email", {
+            header: "Email",
+          }),
+        ],
+      }),
+    ];
+  }, []);
+
+  return (
+    <Table<TableItem>
+      columns={cols}
+      data={data}
+      optionsMatrix={[
+        [
+          {
+            icon: (
+              <svg
+                className="mr-2 h-5 w-5"
+                aria-hidden="true"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M4 13V16H7L16 7L13 4L4 13Z"
+                  fill="#8B5CF6"
+                  stroke="#C4B5FD"
+                  strokeWidth="2"
+                />
+
+                <path
+                  className="ui-active:hidden"
+                  d="M4 13V16H7L16 7L13 4L4 13Z"
+                  fill="#EDE9FE"
+                  stroke="#A78BFA"
+                  strokeWidth="2"
+                />
+              </svg>
+            ),
+            label: "Delete All Selected",
+            onClick: async (selectedOptions) => {
+              await mutateAsync(
+                selectedOptions.map((selectedOption) => selectedOption.id),
+              );
+            },
+          },
+        ],
+      ]}
+    />
+  );
 };

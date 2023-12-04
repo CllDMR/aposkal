@@ -2,9 +2,9 @@
 
 import type { FC } from "react";
 import { useMemo } from "react";
-import type { ColumnDef } from "@tanstack/react-table";
+import Link from "next/link";
+import { createColumnHelper } from "@tanstack/react-table";
 
-import { Button, LinkButton } from "@acme/ui/molecules";
 import { Table } from "@acme/ui/organisms";
 
 import type { RouterOutputs } from "~/utils/api";
@@ -34,86 +34,99 @@ export const ProductTable: FC<ProductTableProps> = ({ products }) => {
     },
   );
 
-  const { mutateAsync, isLoading, variables } = api.product.delete.useMutation({
+  const { mutateAsync } = api.product.deleteMany.useMutation({
     async onSettled() {
       await context.product.list.invalidate();
       await context.product.get.invalidate();
     },
   });
 
-  const cols = useMemo<ColumnDef<TableItem>[]>(
-    () => [
-      {
-        header: "Name",
-        cell: (row) => row.renderValue(),
-        accessorKey: "name",
-        footer: "Name",
-      },
-      {
-        header: "Currency",
-        cell: (row) => row.renderValue(),
-        accessorKey: "currency",
-        footer: "Currency",
-      },
-      {
-        header: "Unit",
-        cell: (row) => row.renderValue(),
-        accessorKey: "unit",
-        footer: "Unit",
-      },
-      {
-        header: "Unit Price",
-        cell: (row) => row.renderValue(),
-        accessorKey: "unitPrice",
-        footer: "Unit Price",
-      },
-      {
-        header: "KDV",
-        cell: (row) => row.renderValue(),
-        accessorKey: "kdv",
-        footer: "KDV",
-      },
-      {
-        header: "Categories",
-        cell: (row) => row.renderValue(),
-        accessorFn: (originalRow) =>
-          originalRow?.productsToCategories
-            ?.map((e) => e.productCategory.name)
-            .join(" "),
-        footer: "Categories",
-      },
-      {
-        header: "Tags",
-        cell: (row) => row.renderValue(),
-        accessorFn: (originalRow) =>
-          originalRow?.productsToTags
-            ?.map((e) => e?.productTag?.name)
-            .join(" "),
-        footer: "Tags",
-      },
-      {
-        header: "Actions",
-        cell: ({ row: { original: product } }) => {
-          return (
-            <div>
-              <LinkButton href={`/products/${product.id}`}>Go</LinkButton>
-              <LinkButton href={`/products/${product.id}/edit`}>
-                Edit
-              </LinkButton>
-              <Button
-                onClick={async () => await mutateAsync(product.id)}
-                disabled={isLoading && product.id === variables}
-              >
-                Delete
-              </Button>
-            </div>
-          );
-        },
-        footer: "Actions",
-      },
-    ],
-    [isLoading, variables, mutateAsync],
-  );
+  const cols = useMemo(() => {
+    const columnHelper = createColumnHelper<TableItem>();
 
-  return <Table columns={cols} data={data} />;
+    return [
+      columnHelper.group({
+        id: "data",
+        columns: [
+          columnHelper.accessor("name", {
+            header: "Name",
+            cell({ getValue, row: { original: product } }) {
+              return <Link href={`/products/${product.id}`}>{getValue()}</Link>;
+            },
+          }),
+          columnHelper.accessor("currency", {
+            header: "Currency",
+          }),
+          columnHelper.accessor("unit", {
+            header: "Unit",
+          }),
+          columnHelper.accessor("unitPrice", {
+            header: "Unit Price",
+          }),
+          columnHelper.accessor("kdv", {
+            header: "KDV",
+          }),
+          columnHelper.accessor(
+            (product) =>
+              product?.productsToCategories
+                ?.map((e) => e.productCategory.name)
+                .join(" "),
+            {
+              header: "Categories",
+            },
+          ),
+          columnHelper.accessor(
+            (product) =>
+              product?.productsToTags?.map((e) => e.productTag.name).join(" "),
+            {
+              header: "Tags",
+            },
+          ),
+        ],
+      }),
+    ];
+  }, []);
+
+  return (
+    <Table<TableItem>
+      columns={cols}
+      data={data}
+      optionsMatrix={[
+        [
+          {
+            icon: (
+              <svg
+                className="mr-2 h-5 w-5"
+                aria-hidden="true"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M4 13V16H7L16 7L13 4L4 13Z"
+                  fill="#8B5CF6"
+                  stroke="#C4B5FD"
+                  strokeWidth="2"
+                />
+
+                <path
+                  className="ui-active:hidden"
+                  d="M4 13V16H7L16 7L13 4L4 13Z"
+                  fill="#EDE9FE"
+                  stroke="#A78BFA"
+                  strokeWidth="2"
+                />
+              </svg>
+            ),
+            label: "Delete All Selected",
+            onClick: async (selectedOptions) => {
+              await mutateAsync(
+                selectedOptions.map((selectedOption) => selectedOption.id),
+              );
+            },
+          },
+        ],
+      ]}
+    />
+  );
 };
