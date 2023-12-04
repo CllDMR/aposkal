@@ -12,7 +12,6 @@ import * as usersToTenants from "./schema/auth/usersToTenants";
 import * as verificationToken from "./schema/auth/verificationToken";
 import * as companiesToAddresses from "./schema/company/companies_to_addresses";
 import * as company from "./schema/company/company";
-import * as post from "./schema/post";
 import * as product from "./schema/product/product";
 import * as productCategory from "./schema/product/product_category";
 import * as productTag from "./schema/product/product_tag";
@@ -40,7 +39,6 @@ export const schema = {
   ...addressTenant,
   ...company,
   ...companiesToAddresses,
-  ...post,
   ...product,
   ...productCategory,
   ...productTag,

@@ -4,7 +4,6 @@ import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { nanoid } from "nanoid";
 
 import { mySqlTable } from "../_table";
-import { post } from "../post";
 import { account } from "./account";
 import { session } from "./session";
 import { usersToTenants } from "./usersToTenants";
@@ -24,7 +23,6 @@ export const userRelations = relations(user, ({ many }) => ({
   usersToTenants: many(usersToTenants),
   accounts: many(account),
   sessions: many(session),
-  posts: many(post),
 }));
 
 export const insertUserSchema = createInsertSchema(user);

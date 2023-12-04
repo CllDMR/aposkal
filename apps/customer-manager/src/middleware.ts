@@ -33,8 +33,6 @@ export const config = {
     "/dashboard",
     "/companies",
     "/companies/(.*)",
-    "/posts",
-    "/posts/(.*)",
     "/settings",
     "/settings/(.*)",
   ],

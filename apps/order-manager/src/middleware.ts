@@ -39,8 +39,6 @@ export const config = {
     "/sale-offers/(.*)",
     "/sale-orders",
     "/sale-orders/(.*)",
-    "/posts",
-    "/posts/(.*)",
     "/settings",
     "/settings/(.*)",
   ],

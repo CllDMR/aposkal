@@ -5,7 +5,6 @@ import { nanoid } from "nanoid";
 
 import { mySqlTable } from "../_table";
 import { addressTenant } from "../address/address_tenant";
-import { post } from "../post";
 import { usersToTenants } from "./usersToTenants";
 
 export const tenant = mySqlTable(
@@ -46,7 +45,6 @@ export type InsertTenant = typeof tenant.$inferInsert;
 
 export const tenantRelations = relations(tenant, ({ many, one }) => ({
   usersToTenants: many(usersToTenants),
-  posts: many(post),
   address: one(addressTenant, {
     fields: [tenant.addressId],
     references: [addressTenant.id],

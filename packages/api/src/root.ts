@@ -1,7 +1,6 @@
 import { addressCompanyRouter } from "./router/address/address_company";
 import { addressTenantRouter } from "./router/address/address_tenant";
 import { companyRouter } from "./router/company/company";
-import { postRouter } from "./router/post";
 import { productRouter } from "./router/product/product";
 import { productCategoryRouter } from "./router/product/product_category";
 import { productTagRouter } from "./router/product/product_tag";
@@ -19,7 +18,6 @@ export const appRouter = createTRPCRouter({
   addressCompany: addressCompanyRouter,
   addressTenant: addressTenantRouter,
   company: companyRouter,
-  post: postRouter,
   product: productRouter,
   productCategory: productCategoryRouter,
   productTag: productTagRouter,

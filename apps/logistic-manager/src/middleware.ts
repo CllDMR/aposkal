@@ -29,11 +29,5 @@ export default withAuth({
 });
 
 export const config = {
-  matcher: [
-    "/dashboard",
-    "/posts",
-    "/posts/(.*)",
-    "/settings",
-    "/settings/(.*)",
-  ],
+  matcher: ["/dashboard", "/settings", "/settings/(.*)"],
 };
