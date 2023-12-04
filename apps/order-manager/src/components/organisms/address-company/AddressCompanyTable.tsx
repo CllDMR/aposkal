@@ -59,7 +59,9 @@ export const AddressCompanyTable: FC<AddressCompanyTableProps> = ({
             header: "Name",
             cell({ getValue, row: { original: address } }) {
               return (
-                <Link href={`/addresses/${address.id}`}>{getValue()}</Link>
+                <Link href={`/address-companies/${address.id}`}>
+                  {getValue()}
+                </Link>
               );
             },
           }),

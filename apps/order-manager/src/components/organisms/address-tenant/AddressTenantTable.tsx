@@ -58,7 +58,9 @@ export const AddressTenantTable: FC<AddressTenantTableProps> = ({
             header: "Name",
             cell({ getValue, row: { original: address } }) {
               return (
-                <Link href={`/addresses/${address.id}`}>{getValue()}</Link>
+                <Link href={`/address-tenants/${address.id}`}>
+                  {getValue()}
+                </Link>
               );
             },
           }),
