@@ -1,5 +1,20 @@
+import { TableSkeleton } from "@acme/ui/organisms";
+
 const Page = () => {
-  return <div>Loading Companies...</div>;
+  return (
+    <TableSkeleton
+      headers={[
+        "Title",
+        "Type",
+        "Is Foreign",
+        "Tax No",
+        "Tax Office",
+        "Firm Phone Number",
+        "Qualified Phone Number",
+        "Email",
+      ]}
+    />
+  );
 };
 
 export default Page;

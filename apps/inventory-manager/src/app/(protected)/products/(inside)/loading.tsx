@@ -1,5 +1,19 @@
+import { TableSkeleton } from "@acme/ui/organisms";
+
 const Page = () => {
-  return <div>Loading Products...</div>;
+  return (
+    <TableSkeleton
+      headers={[
+        "Name",
+        "Currency",
+        "Unit",
+        "Unit Price",
+        "KDV",
+        "Categories",
+        "Tags",
+      ]}
+    />
+  );
 };
 
 export default Page;

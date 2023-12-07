@@ -1,5 +1,20 @@
+import { TableSkeleton } from "@acme/ui/organisms";
+
 const Page = () => {
-  return <div>Loading Address Companies...</div>;
+  return (
+    <TableSkeleton
+      headers={[
+        "Name",
+        "City",
+        "District",
+        "Street",
+        "Country",
+        "State",
+        "Description",
+        "LongAddressDescription",
+      ]}
+    />
+  );
 };
 
 export default Page;

@@ -1,5 +1,7 @@
+import { TableSkeleton } from "@acme/ui/organisms";
+
 const Page = () => {
-  return <div>Loading Suppliers...</div>;
+  return <TableSkeleton headers={["Name", "Address"]} />;
 };
 
 export default Page;

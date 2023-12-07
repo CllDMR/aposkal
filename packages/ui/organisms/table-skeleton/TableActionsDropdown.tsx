@@ -1,25 +1,19 @@
-"use client";
-
-import type { ReactNode } from "react";
+import type { FC, ReactNode } from "react";
 import { Fragment, useId } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import type { RowData, Table as TTable } from "@tanstack/react-table";
 
-export interface TableActionsDropdownOption<TData extends RowData> {
+export interface TableActionsDropdownOption {
   label: string;
-  onClick: (selectedOptions: TData[]) => Promise<void>;
   icon: ReactNode;
 }
 
-interface TableActionsDropdownProps<TData> {
-  table: TTable<TData>;
-  optionsMatrix?: TableActionsDropdownOption<TData>[][];
+interface TableActionsDropdownProps {
+  optionsMatrix?: TableActionsDropdownOption[][];
 }
 
-export const TableActionsDropdown = <TData extends RowData>({
-  table,
+export const TableActionsDropdown: FC<TableActionsDropdownProps> = ({
   optionsMatrix = [],
-}: TableActionsDropdownProps<TData>) => {
+}) => {
   const id = useId();
 
   return (
@@ -50,20 +44,14 @@ export const TableActionsDropdown = <TData extends RowData>({
         <Menu.Items className="absolute left-0 mt-2 w-56 origin-top-left divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
           {optionsMatrix.map((options, optionMatrixIndex) => (
             <div key={id + String(optionMatrixIndex)} className="px-1 py-1">
-              {options.map(({ icon, label, onClick }, optionIndex) => (
+              {options.map(({ icon, label }, optionIndex) => (
                 <Menu.Item
                   key={id + String(optionMatrixIndex) + String(optionIndex)}
                 >
                   <button
                     type="button"
                     className="group flex w-full items-center rounded-md px-2 py-2 text-sm ui-active:bg-primary-500 ui-active:text-white ui-not-active:text-gray-900"
-                    onClick={async () => {
-                      const rows = table.getFilteredSelectedRowModel();
-                      const selectedRowData = rows.flatRows.map(
-                        (row) => row.original,
-                      );
-                      await onClick(selectedRowData);
-                    }}
+                    disabled
                   >
                     {icon}
                     {label}

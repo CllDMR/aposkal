@@ -1,5 +1,11 @@
+import { TableSkeleton } from "@acme/ui/organisms";
+
 const Page = () => {
-  return <div>Loading SaleOffers...</div>;
+  return (
+    <TableSkeleton
+      headers={["No", "Start Date", "End Date", "Address", "Company"]}
+    />
+  );
 };
 
 export default Page;
