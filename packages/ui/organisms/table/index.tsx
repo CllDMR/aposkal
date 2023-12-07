@@ -39,56 +39,57 @@ export const Table = <TData extends RowData, TValue = unknown>({
   showGlobalFilter = false,
   showNavigation = true,
   filterFn = filterFns.fuzzy,
-  optionsMatrix = [],
+  optionsMatrix,
 }: ReactTableProps<TData, TValue>) => {
   // this is the search value
   const [globalFilter, setGlobalFilter] = useState("");
   const columnHelper = createColumnHelper<TData>();
   const actionsId = useId();
-  const _columns = isSelectionMode
-    ? [
-        columnHelper.display({
-          id: "actions",
-          header() {
-            return (
-              <div className="flex items-center gap-2">
-                <Checkbox
-                  id={actionsId}
-                  name={"actions-checkbox-header" + actionsId}
-                  checked={table.getIsAllRowsSelected()}
-                  onChange={table.getToggleAllRowsSelectedHandler()}
-                  indeterminate={table.getIsSomeRowsSelected()}
-                />
-                {optionsMatrix ? (
-                  <TableActionsDropdown
-                    optionsMatrix={optionsMatrix}
-                    table={table}
+  const _columns =
+    isSelectionMode && optionsMatrix
+      ? [
+          columnHelper.display({
+            id: "actions",
+            header() {
+              return (
+                <div className="flex items-center gap-2">
+                  <Checkbox
+                    id={actionsId}
+                    name={"actions-checkbox-header" + actionsId}
+                    checked={table.getIsAllRowsSelected()}
+                    onChange={table.getToggleAllRowsSelectedHandler()}
+                    indeterminate={table.getIsSomeRowsSelected()}
                   />
-                ) : null}
-              </div>
-            );
-          },
-          cell: ({
-            row: {
-              index,
-              id,
-              getIsSelected,
-              getCanSelect,
-              getToggleSelectedHandler,
+                  {optionsMatrix ? (
+                    <TableActionsDropdown
+                      optionsMatrix={optionsMatrix}
+                      table={table}
+                    />
+                  ) : null}
+                </div>
+              );
             },
-          }) => (
-            <Checkbox
-              id={actionsId + index + id}
-              name={"actions-checkbox-cell" + actionsId + index + id}
-              checked={getIsSelected()}
-              disabled={!getCanSelect()}
-              onChange={getToggleSelectedHandler()}
-            />
-          ),
-        }),
-        ...columns,
-      ]
-    : columns;
+            cell: ({
+              row: {
+                index,
+                id,
+                getIsSelected,
+                getCanSelect,
+                getToggleSelectedHandler,
+              },
+            }) => (
+              <Checkbox
+                id={actionsId + index + id}
+                name={"actions-checkbox-cell" + actionsId + index + id}
+                checked={getIsSelected()}
+                disabled={!getCanSelect()}
+                onChange={getToggleSelectedHandler()}
+              />
+            ),
+          }),
+          ...columns,
+        ]
+      : columns;
 
   const table = useReactTable<TData>({
     data,
