@@ -59,10 +59,6 @@ const drawerNavigationPaths: DrawerNavigationPath[] = [
         />
       </svg>
     ),
-    children: [
-      { name: "All", href: "/products" },
-      { name: "Create New", href: "/products/create" },
-    ],
   },
   {
     name: "Product Categories",
@@ -83,10 +79,6 @@ const drawerNavigationPaths: DrawerNavigationPath[] = [
         />
       </svg>
     ),
-    children: [
-      { name: "All", href: "/product-categories" },
-      { name: "Create New", href: "/product-categories/create" },
-    ],
   },
   {
     name: "Product Tags",
@@ -107,10 +99,6 @@ const drawerNavigationPaths: DrawerNavigationPath[] = [
         />
       </svg>
     ),
-    children: [
-      { name: "All", href: "/product-tags" },
-      { name: "Create New", href: "/product-tags/create" },
-    ],
   },
   {
     name: "Warehouses",
@@ -131,10 +119,6 @@ const drawerNavigationPaths: DrawerNavigationPath[] = [
         />
       </svg>
     ),
-    children: [
-      { name: "All", href: "/warehouses" },
-      { name: "Create New", href: "/warehouses/create" },
-    ],
   },
   {
     name: "Suppliers",
@@ -155,10 +139,6 @@ const drawerNavigationPaths: DrawerNavigationPath[] = [
         />
       </svg>
     ),
-    children: [
-      { name: "All", href: "/suppliers" },
-      { name: "Create New", href: "/suppliers/create" },
-    ],
   },
 ];
 

@@ -60,10 +60,6 @@ const drawerNavigationPaths: DrawerNavigationPath[] = [
         />
       </svg>
     ),
-    children: [
-      { name: "All", href: "/companies" },
-      { name: "Create New", href: "/companies/create" },
-    ],
   },
 ];
 
