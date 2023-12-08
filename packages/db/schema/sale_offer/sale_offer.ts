@@ -1,5 +1,5 @@
 import { relations, sql } from "drizzle-orm";
-import { index, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { index, serial, timestamp, varchar } from "drizzle-orm/mysql-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { nanoid } from "nanoid";
 import { z } from "zod";
@@ -26,7 +26,7 @@ export const saleOffer = mySqlTable(
     startDate: timestamp("start_date").notNull(),
     endDate: timestamp("end_date").notNull(),
     paymentEndDate: timestamp("payment_end_date").notNull(),
-    no: varchar("no", { length: 255 }).notNull(),
+    no: serial("no"),
     currency: varchar("currency", { length: 255 }).notNull(),
 
     tenantId: varchar("tenant_id", { length: 255 }).notNull(),
