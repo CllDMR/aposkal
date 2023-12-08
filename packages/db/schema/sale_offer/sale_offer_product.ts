@@ -22,9 +22,11 @@ export const saleOfferProduct = mySqlTable(
 
     description: varchar("description", { length: 256 }).default(""),
     imageURL: varchar("image_url", { length: 256 }).default(""),
+    name: varchar("name", { length: 256 }).notNull(),
     gtipNo: varchar("gtip_no", { length: 256 }).notNull(),
     currency: varchar("currency", { length: 255 }).notNull(),
     amount: double("amount").notNull(),
+    unit: varchar("unit", { length: 256 }).notNull(),
     unitPrice: double("unit_price").notNull(),
     kdv: int("kdv").notNull(),
     total: double("total").notNull(),

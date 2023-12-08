@@ -6,10 +6,11 @@ import { Button, LinkButton } from "@acme/ui/molecules";
 
 import type { RouterOutputs } from "~/utils/api";
 import { api } from "~/utils/api";
+import { useSaleOfferPDFTemplateFromValues } from "~/utils/useSaleOfferPDFTemplate";
 
 interface SaleOfferCardProps {
-  saleOffer: RouterOutputs["saleOffer"]["get"];
-  id: NonNullable<RouterOutputs["saleOffer"]["get"]>["id"];
+  saleOffer: RouterOutputs["saleOffer"]["getWithProductsAndNotes"];
+  id: NonNullable<RouterOutputs["saleOffer"]["getWithProductsAndNotes"]>["id"];
 }
 
 export const SaleOfferCard: FC<SaleOfferCardProps> = ({
@@ -17,7 +18,7 @@ export const SaleOfferCard: FC<SaleOfferCardProps> = ({
   id,
 }) => {
   const context = api.useContext();
-  const [saleOffer] = api.saleOffer.get.useSuspenseQuery(
+  const [saleOffer] = api.saleOffer.getWithProductsAndNotes.useSuspenseQuery(
     { id },
     {
       initialData: initialSaleOffer,
@@ -29,6 +30,18 @@ export const SaleOfferCard: FC<SaleOfferCardProps> = ({
       await context.saleOffer.list.invalidate();
       await context.saleOffer.get.invalidate();
     },
+  });
+
+  const [tenant] = api.tenant.getWithAddress.useSuspenseQuery();
+  const [company] = api.company.get.useSuspenseQuery({
+    id: saleOffer.companyId,
+  });
+
+  const { pdfData } = useSaleOfferPDFTemplateFromValues({
+    address: saleOffer.toAddress,
+    company,
+    tenant,
+    values: saleOffer,
   });
 
   return (
@@ -52,6 +65,17 @@ export const SaleOfferCard: FC<SaleOfferCardProps> = ({
           <span className="">To Address: </span>
           <span className="">{saleOffer.toAddress.city}</span>
         </p>
+      </div>
+      <div className="">
+        {pdfData ? (
+          <iframe
+            title="PDF Viewer"
+            src={`data:application/pdf;base64,${pdfData}`}
+            className="h-screen sm:w-full"
+          ></iframe>
+        ) : (
+          <span className="">No pdf data</span>
+        )}
       </div>
     </div>
   );

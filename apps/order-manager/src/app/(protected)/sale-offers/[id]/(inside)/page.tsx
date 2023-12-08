@@ -23,6 +23,8 @@ export default async function SaleOfferPage({ params: { id } }: PageProps) {
     with: {
       company: true,
       toAddress: true,
+      saleOfferNotes: true,
+      saleOfferProducts: true,
     },
   });
 

@@ -41,6 +41,20 @@ export const saleOfferRouter = createTRPCRouter({
       });
     }),
 
+  getWithProductsAndNotes: protectedProcedure
+    .input(saleOfferGetInput)
+    .query(async ({ ctx, input }) => {
+      return await ctx.db.query.saleOffer.findFirst({
+        where: eq(schema.saleOffer.id, input.id),
+        with: {
+          company: true,
+          toAddress: true,
+          saleOfferNotes: true,
+          saleOfferProducts: true,
+        },
+      });
+    }),
+
   create: protectedProcedure
     .input(saleOfferCreateInput)
     .mutation(async ({ ctx, input }) => {

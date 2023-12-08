@@ -34,6 +34,8 @@ export const sayiOkunusu = (sayi: number) => {
   const words = convertedSayi.split(" ");
 
   for (let i = 0; i < words.length; i++) {
+    if (!words[i]?.[0]) continue;
+
     words[i] = words[i]![0]!.toUpperCase() + words[i]!.slice(1);
   }
 

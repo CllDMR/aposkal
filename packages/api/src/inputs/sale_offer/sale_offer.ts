@@ -35,4 +35,12 @@ export const saleOfferUpdateInput = insertSaleOfferSchema
     updatedAt: true,
     tenantId: true,
   })
-  .partial({});
+  .partial({
+    addressId: true,
+    currency: true,
+    companyId: true,
+    endDate: true,
+    no: true,
+    paymentEndDate: true,
+    startDate: true,
+  });

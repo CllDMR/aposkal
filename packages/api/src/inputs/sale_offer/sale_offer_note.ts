@@ -8,6 +8,8 @@ export const saleOfferNoteListInput = selectSaleOfferNoteSchema
   .partial({
     createdAt: true,
     updatedAt: true,
+    saleOfferId: true,
+    text: true,
   });
 
 export const saleOfferNoteGetInput = selectSaleOfferNoteSchema.pick({
@@ -28,4 +30,7 @@ export const saleOfferNoteUpdateInput = insertSaleOfferNoteSchema
     updatedAt: true,
     tenantId: true,
   })
-  .partial({});
+  .partial({
+    saleOfferId: true,
+    text: true,
+  });

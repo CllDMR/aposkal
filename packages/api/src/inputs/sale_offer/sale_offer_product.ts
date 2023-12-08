@@ -8,6 +8,18 @@ export const saleOfferProductListInput = selectSaleOfferProductSchema
   .partial({
     createdAt: true,
     updatedAt: true,
+    amount: true,
+    currency: true,
+    description: true,
+    gtipNo: true,
+    imageURL: true,
+    kdv: true,
+    name: true,
+    productId: true,
+    saleOfferId: true,
+    total: true,
+    unit: true,
+    unitPrice: true,
   });
 
 export const saleOfferProductGetInput = selectSaleOfferProductSchema.pick({
@@ -28,4 +40,17 @@ export const saleOfferProductUpdateInput = insertSaleOfferProductSchema
     updatedAt: true,
     tenantId: true,
   })
-  .partial({});
+  .partial({
+    amount: true,
+    currency: true,
+    description: true,
+    gtipNo: true,
+    imageURL: true,
+    kdv: true,
+    name: true,
+    productId: true,
+    saleOfferId: true,
+    total: true,
+    unit: true,
+    unitPrice: true,
+  });
