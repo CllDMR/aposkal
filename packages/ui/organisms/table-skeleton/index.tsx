@@ -11,7 +11,7 @@ interface TableSkeletonProps {
   showFooter?: boolean;
   showGlobalFilter?: boolean;
   showNavigation?: boolean;
-  headers: string[];
+  headers: { text: string; maxWidth?: number }[];
   rowsPerPage?: number;
 }
 

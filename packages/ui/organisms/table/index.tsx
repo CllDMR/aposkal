@@ -20,6 +20,12 @@ import { TableGlobalFilter } from "./TableGlobalFilter";
 import { TableHead } from "./TableHead";
 import { TablePagination } from "./TablePagination";
 
+declare module "@tanstack/table-core" {
+  interface ColumnMeta<TData extends RowData, TValue> {
+    maxWidth?: number;
+  }
+}
+
 interface ReactTableProps<TData extends RowData, TValue = unknown> {
   data: TData[];
   columns: ColumnDef<TData, TValue>[];
@@ -86,6 +92,9 @@ export const Table = <TData extends RowData, TValue = unknown>({
                 onChange={getToggleSelectedHandler()}
               />
             ),
+            meta: {
+              maxWidth: 50,
+            },
           }),
           ...columns,
         ]

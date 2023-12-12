@@ -23,7 +23,7 @@ export const TableBody: FC<TableBodyProps> = ({
           className="border-b border-gray-200 bg-white"
         >
           {isSelectionMode && (
-            <td className="h-9 px-4 py-3" key={blankRowsId + String(rowIndex)}>
+            <td className="h-14 px-4 py-3" key={blankRowsId + String(rowIndex)}>
               <input
                 id={blankRowsId + String(rowIndex)}
                 name={"actions-checkbox-cell" + blankRowsId + String(rowIndex)}
@@ -35,12 +35,13 @@ export const TableBody: FC<TableBodyProps> = ({
 
           {new Array(columnSize).fill(null).map((_, cellIndex) => (
             <td
-              className="h-9 px-4 py-3"
+              className="h-14 px-4 py-3"
               key={blankRowsId + String(rowIndex) + String(cellIndex)}
             >
               <div className="h-2 animate-pulse rounded bg-gray-400"></div>
             </td>
           ))}
+          <td key={blankRowsId + "blank-cell-rows"} />
         </tr>
       ))}
     </tbody>

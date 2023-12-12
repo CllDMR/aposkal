@@ -3,6 +3,7 @@
 import type { FC } from "react";
 import { useMemo } from "react";
 import Link from "next/link";
+import type { ColumnDef } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
 
 import { Table } from "@acme/ui/organisms";
@@ -41,22 +42,20 @@ export const ProductCategoryTable: FC<ProductCategoryTableProps> = ({
     const columnHelper = createColumnHelper<TableItem>();
 
     return [
-      columnHelper.group({
-        id: "data",
-        columns: [
-          columnHelper.accessor("name", {
-            header: "Name",
-            cell({ getValue, row: { original: productCategory } }) {
-              return (
-                <Link href={`/product-categories/${productCategory.id}`}>
-                  {getValue()}
-                </Link>
-              );
-            },
-          }),
-        ],
+      columnHelper.accessor("name", {
+        header: "Name",
+        cell({ getValue, row: { original: productCategory } }) {
+          return (
+            <Link href={`/product-categories/${productCategory.id}`}>
+              {getValue()}
+            </Link>
+          );
+        },
+        meta: {
+          maxWidth: 100,
+        },
       }),
-    ];
+    ] as ColumnDef<TableItem, unknown>[];
   }, []);
 
   return (

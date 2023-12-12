@@ -3,6 +3,7 @@
 import type { FC } from "react";
 import { useMemo } from "react";
 import Link from "next/link";
+import type { ColumnDef } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
 
 import { Table } from "@acme/ui/organisms";
@@ -45,46 +46,62 @@ export const ProductTable: FC<ProductTableProps> = ({ products }) => {
     const columnHelper = createColumnHelper<TableItem>();
 
     return [
-      columnHelper.group({
-        id: "data",
-        columns: [
-          columnHelper.accessor("name", {
-            header: "Name",
-            cell({ getValue, row: { original: product } }) {
-              return <Link href={`/products/${product.id}`}>{getValue()}</Link>;
-            },
-          }),
-          columnHelper.accessor("currency", {
-            header: "Currency",
-          }),
-          columnHelper.accessor("unit", {
-            header: "Unit",
-          }),
-          columnHelper.accessor("unitPrice", {
-            header: "Unit Price",
-          }),
-          columnHelper.accessor("kdv", {
-            header: "KDV",
-          }),
-          columnHelper.accessor(
-            (product) =>
-              product?.productsToCategories
-                ?.map((e) => e.productCategory.name)
-                .join(" "),
-            {
-              header: "Categories",
-            },
-          ),
-          columnHelper.accessor(
-            (product) =>
-              product?.productsToTags?.map((e) => e.productTag.name).join(" "),
-            {
-              header: "Tags",
-            },
-          ),
-        ],
+      columnHelper.accessor("name", {
+        header: "Name",
+        cell({ getValue, row: { original: product } }) {
+          return <Link href={`/products/${product.id}`}>{getValue()}</Link>;
+        },
+        meta: {
+          maxWidth: 100,
+        },
       }),
-    ];
+      columnHelper.accessor("currency", {
+        header: "Currency",
+        meta: {
+          maxWidth: 100,
+        },
+      }),
+      columnHelper.accessor("unit", {
+        header: "Unit",
+        meta: {
+          maxWidth: 100,
+        },
+      }),
+      columnHelper.accessor("unitPrice", {
+        header: "Unit Price",
+        meta: {
+          maxWidth: 100,
+        },
+      }),
+      columnHelper.accessor("kdv", {
+        header: "KDV",
+        meta: {
+          maxWidth: 100,
+        },
+      }),
+      columnHelper.accessor(
+        (product) =>
+          product?.productsToCategories
+            ?.map((e) => e.productCategory.name)
+            .join(" "),
+        {
+          header: "Categories",
+          meta: {
+            maxWidth: 100,
+          },
+        },
+      ),
+      columnHelper.accessor(
+        (product) =>
+          product?.productsToTags?.map((e) => e.productTag.name).join(" "),
+        {
+          header: "Tags",
+          meta: {
+            maxWidth: 100,
+          },
+        },
+      ),
+    ] as ColumnDef<TableItem, unknown>[];
   }, []);
 
   return (

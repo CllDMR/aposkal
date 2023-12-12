@@ -3,6 +3,7 @@
 import type { FC } from "react";
 import { useMemo } from "react";
 import Link from "next/link";
+import type { ColumnDef } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
 
 import { Table } from "@acme/ui/organisms";
@@ -21,7 +22,7 @@ interface TableItem {
   startDate: Date;
   endDate: Date;
   paymentEndDate: Date;
-  no: string;
+  no: number;
   company: RouterOutputs["saleOffer"]["list"][number]["company"];
   toAddress: RouterOutputs["saleOffer"]["list"][number]["toAddress"];
 }
@@ -50,32 +51,42 @@ export const SaleOfferTable: FC<SaleOfferTableProps> = ({ saleOffers }) => {
     const columnHelper = createColumnHelper<TableItem>();
 
     return [
-      columnHelper.group({
-        id: "data",
-        columns: [
-          columnHelper.accessor("no", {
-            header: "No",
-            cell({ getValue, row: { original: saleOffer } }) {
-              return (
-                <Link href={`/sale-offers/${saleOffer.id}`}>{getValue()}</Link>
-              );
-            },
-          }),
-          columnHelper.accessor("startDate", {
-            header: "Start Date",
-          }),
-          columnHelper.accessor("endDate", {
-            header: "End Date",
-          }),
-          columnHelper.accessor("toAddress.name", {
-            header: "Address",
-          }),
-          columnHelper.accessor("company.title", {
-            header: "Company",
-          }),
-        ],
+      columnHelper.accessor("no", {
+        header: "No",
+        cell({ getValue, row: { original: saleOffer } }) {
+          return (
+            <Link href={`/sale-offers/${saleOffer.id}`}>{getValue()}</Link>
+          );
+        },
+        meta: {
+          maxWidth: 100,
+        },
       }),
-    ];
+      columnHelper.accessor("startDate", {
+        header: "Start Date",
+        meta: {
+          maxWidth: 100,
+        },
+      }),
+      columnHelper.accessor("endDate", {
+        header: "End Date",
+        meta: {
+          maxWidth: 100,
+        },
+      }),
+      columnHelper.accessor("toAddress.name", {
+        header: "Address",
+        meta: {
+          maxWidth: 100,
+        },
+      }),
+      columnHelper.accessor("company.title", {
+        header: "Company",
+        meta: {
+          maxWidth: 100,
+        },
+      }),
+    ] as ColumnDef<TableItem, unknown>[];
   }, []);
 
   return (

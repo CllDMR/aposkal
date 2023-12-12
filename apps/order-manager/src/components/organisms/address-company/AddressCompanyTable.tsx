@@ -3,6 +3,7 @@
 import type { FC } from "react";
 import { useMemo } from "react";
 import Link from "next/link";
+import type { ColumnDef } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
 
 import { Table } from "@acme/ui/organisms";
@@ -52,43 +53,60 @@ export const AddressCompanyTable: FC<AddressCompanyTableProps> = ({
     const columnHelper = createColumnHelper<TableItem>();
 
     return [
-      columnHelper.group({
-        id: "data",
-        columns: [
-          columnHelper.accessor("name", {
-            header: "Name",
-            cell({ getValue, row: { original: address } }) {
-              return (
-                <Link href={`/address-companies/${address.id}`}>
-                  {getValue()}
-                </Link>
-              );
-            },
-          }),
-          columnHelper.accessor("city", {
-            header: "City",
-          }),
-          columnHelper.accessor("district", {
-            header: "District",
-          }),
-          columnHelper.accessor("street", {
-            header: "Street",
-          }),
-          columnHelper.accessor("country", {
-            header: "Country",
-          }),
-          columnHelper.accessor("state", {
-            header: "State",
-          }),
-          columnHelper.accessor("description", {
-            header: "Description",
-          }),
-          columnHelper.accessor("longAddressDescription", {
-            header: "LongAddressDescription",
-          }),
-        ],
+      columnHelper.accessor("name", {
+        header: "Name",
+        cell({ getValue, row: { original: address } }) {
+          return (
+            <Link href={`/address-companies/${address.id}`}>{getValue()}</Link>
+          );
+        },
+        meta: {
+          maxWidth: 100,
+        },
       }),
-    ];
+      columnHelper.accessor("city", {
+        header: "City",
+        meta: {
+          maxWidth: 100,
+        },
+      }),
+      columnHelper.accessor("district", {
+        header: "District",
+        meta: {
+          maxWidth: 100,
+        },
+      }),
+      columnHelper.accessor("street", {
+        header: "Street",
+        meta: {
+          maxWidth: 100,
+        },
+      }),
+      columnHelper.accessor("country", {
+        header: "Country",
+        meta: {
+          maxWidth: 100,
+        },
+      }),
+      columnHelper.accessor("state", {
+        header: "State",
+        meta: {
+          maxWidth: 100,
+        },
+      }),
+      columnHelper.accessor("description", {
+        header: "Description",
+        meta: {
+          maxWidth: 100,
+        },
+      }),
+      columnHelper.accessor("longAddressDescription", {
+        header: "LongAddressDescription",
+        meta: {
+          maxWidth: 100,
+        },
+      }),
+    ] as ColumnDef<TableItem, unknown>[];
   }, []);
 
   return (

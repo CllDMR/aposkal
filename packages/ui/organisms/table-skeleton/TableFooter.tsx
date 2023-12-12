@@ -13,12 +13,13 @@ export const TableFooter: FC = () => {
           {footers.map((footer) => (
             <th
               key={_id + id + footer.id}
-              className="whitespace-nowrap px-4 py-3 text-left text-sm font-semibold text-gray-900"
+              className="h-14 whitespace-nowrap px-4 py-3 text-left text-sm font-semibold text-gray-900"
               colSpan={footer.colSpan}
             >
               {footer.label}
             </th>
           ))}
+          <th key={_id + "blank-cell-footerGroup.headers"} />
         </tr>
       ))}
     </tfoot>

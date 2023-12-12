@@ -3,6 +3,7 @@
 import type { FC } from "react";
 import { useMemo } from "react";
 import Link from "next/link";
+import type { ColumnDef } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
 
 import { Table } from "@acme/ui/organisms";
@@ -49,41 +50,58 @@ export const CompanyTable: FC<CompanyTableProps> = ({ companies }) => {
     const columnHelper = createColumnHelper<TableItem>();
 
     return [
-      columnHelper.group({
-        id: "data",
-        columns: [
-          columnHelper.accessor("title", {
-            header: "Title",
-            cell({ getValue, row: { original: company } }) {
-              return (
-                <Link href={`/companies/${company.id}`}>{getValue()}</Link>
-              );
-            },
-          }),
-          columnHelper.accessor("type", {
-            header: "Type",
-          }),
-          columnHelper.accessor("isForeign", {
-            header: "Is Foreign",
-          }),
-          columnHelper.accessor("taxNo", {
-            header: "Tax No",
-          }),
-          columnHelper.accessor("taxOffice", {
-            header: "Tax Office",
-          }),
-          columnHelper.accessor("firmPhoneNumber", {
-            header: "Firm Phone Number",
-          }),
-          columnHelper.accessor("qualifiedPhoneNumber", {
-            header: "Qualified Phone Number",
-          }),
-          columnHelper.accessor("email", {
-            header: "Email",
-          }),
-        ],
+      columnHelper.accessor("title", {
+        header: "Title",
+        cell({ getValue, row: { original: company } }) {
+          return <Link href={`/companies/${company.id}`}>{getValue()}</Link>;
+        },
+        meta: {
+          maxWidth: 100,
+        },
       }),
-    ];
+      columnHelper.accessor("type", {
+        header: "Type",
+        meta: {
+          maxWidth: 100,
+        },
+      }),
+      columnHelper.accessor("isForeign", {
+        header: "Is Foreign",
+        meta: {
+          maxWidth: 100,
+        },
+      }),
+      columnHelper.accessor("taxNo", {
+        header: "Tax No",
+        meta: {
+          maxWidth: 100,
+        },
+      }),
+      columnHelper.accessor("taxOffice", {
+        header: "Tax Office",
+        meta: {
+          maxWidth: 100,
+        },
+      }),
+      columnHelper.accessor("firmPhoneNumber", {
+        header: "Firm Phone Number",
+        meta: {
+          maxWidth: 100,
+        },
+      }),
+      columnHelper.accessor("qualifiedPhoneNumber", {
+        header: "Qualified Phone Number",
+        meta: {
+          maxWidth: 100,
+        },
+      }),
+      columnHelper.accessor("email", {
+        header: "Email",
+        meta: {
+          maxWidth: 100,
+        },
+      }),
+    ] as ColumnDef<TableItem, unknown>[];
   }, []);
 
   return (

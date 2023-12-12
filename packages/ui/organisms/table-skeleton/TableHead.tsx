@@ -3,7 +3,7 @@ import { useId } from "react";
 
 interface TableHeadProps {
   isSelectionMode: boolean;
-  headers: string[];
+  headers: { text: string; maxWidth?: number }[];
 }
 
 export const TableHead: FC<TableHeadProps> = ({ isSelectionMode, headers }) => {
@@ -14,8 +14,8 @@ export const TableHead: FC<TableHeadProps> = ({ isSelectionMode, headers }) => {
     <thead>
       <tr>
         {isSelectionMode && (
-          <td className="h-9 px-4 py-3">
-            <div className="flex items-center gap-2">
+          <td className="h-14 px-4 py-3 ">
+            <div className="flex items-center gap-2 ">
               <input
                 id={"actions-checkbox-header" + _id}
                 name={"actions-checkbox-header" + _id}
@@ -26,15 +26,20 @@ export const TableHead: FC<TableHeadProps> = ({ isSelectionMode, headers }) => {
           </td>
         )}
 
-        {headers.map((header, headerIndex) => (
+        {headers.map(({ text, maxWidth }, headerIndex) => (
           <th
             key={_id + headerId + headerIndex}
             scope="col"
-            className="px-4 py-3 text-left text-sm font-semibold text-gray-900 "
+            className="h-14 px-4 py-3 text-left text-sm font-semibold text-gray-900 "
+            style={{
+              maxWidth: maxWidth,
+              width: maxWidth && "100%",
+            }}
           >
-            {header}
+            {text}
           </th>
         ))}
+        <th key={_id + "blank-cell-headerGroup.headers"} />
       </tr>
     </thead>
   );

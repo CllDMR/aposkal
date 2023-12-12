@@ -3,6 +3,7 @@
 import type { FC } from "react";
 import { useMemo } from "react";
 import Link from "next/link";
+import type { ColumnDef } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
 
 import { Table } from "@acme/ui/organisms";
@@ -39,20 +40,16 @@ export const WarehouseTable: FC<WarehouseTableProps> = ({ warehouses }) => {
     const columnHelper = createColumnHelper<TableItem>();
 
     return [
-      columnHelper.group({
-        id: "data",
-        columns: [
-          columnHelper.accessor("title", {
-            header: "Title",
-            cell({ getValue, row: { original: warehouse } }) {
-              return (
-                <Link href={`/warehouses/${warehouse.id}`}>{getValue()}</Link>
-              );
-            },
-          }),
-        ],
+      columnHelper.accessor("title", {
+        header: "Title",
+        cell({ getValue, row: { original: warehouse } }) {
+          return <Link href={`/warehouses/${warehouse.id}`}>{getValue()}</Link>;
+        },
+        meta: {
+          maxWidth: 100,
+        },
       }),
-    ];
+    ] as ColumnDef<TableItem, unknown>[];
   }, []);
 
   return (
