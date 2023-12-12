@@ -46,7 +46,7 @@ export const WarehouseTable: FC<WarehouseTableProps> = ({ warehouses }) => {
           return <Link href={`/warehouses/${warehouse.id}`}>{getValue()}</Link>;
         },
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
     ] as ColumnDef<TableItem, unknown>[];

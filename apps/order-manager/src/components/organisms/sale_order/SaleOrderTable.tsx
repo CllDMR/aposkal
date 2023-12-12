@@ -59,49 +59,49 @@ export const SaleOrderTable: FC<SaleOrderTableProps> = ({ saleOrders }) => {
           );
         },
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor("priority", {
         header: "Priority",
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor("startdate", {
         header: "Start Date",
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor("enddate", {
         header: "End Date",
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor("companyType", {
         header: "Company Type",
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor("source", {
         header: "Source",
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor("toAddress.name", {
         header: "Address",
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor("company.title", {
         header: "Company",
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
     ] as ColumnDef<TableItem, unknown>[];

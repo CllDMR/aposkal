@@ -52,31 +52,31 @@ export const ProductTable: FC<ProductTableProps> = ({ products }) => {
           return <Link href={`/products/${product.id}`}>{getValue()}</Link>;
         },
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor("currency", {
         header: "Currency",
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor("unit", {
         header: "Unit",
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor("unitPrice", {
         header: "Unit Price",
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor("kdv", {
         header: "KDV",
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor(

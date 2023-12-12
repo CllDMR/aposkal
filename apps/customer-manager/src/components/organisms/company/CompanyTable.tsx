@@ -56,49 +56,49 @@ export const CompanyTable: FC<CompanyTableProps> = ({ companies }) => {
           return <Link href={`/companies/${company.id}`}>{getValue()}</Link>;
         },
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor("type", {
         header: "Type",
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor("isForeign", {
         header: "Is Foreign",
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor("taxNo", {
         header: "Tax No",
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor("taxOffice", {
         header: "Tax Office",
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor("firmPhoneNumber", {
         header: "Firm Phone Number",
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor("qualifiedPhoneNumber", {
         header: "Qualified Phone Number",
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor("email", {
         header: "Email",
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
     ] as ColumnDef<TableItem, unknown>[];

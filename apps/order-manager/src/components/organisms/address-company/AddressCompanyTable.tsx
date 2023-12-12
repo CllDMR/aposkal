@@ -61,49 +61,49 @@ export const AddressCompanyTable: FC<AddressCompanyTableProps> = ({
           );
         },
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor("city", {
         header: "City",
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor("district", {
         header: "District",
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor("street", {
         header: "Street",
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor("country", {
         header: "Country",
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor("state", {
         header: "State",
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor("description", {
         header: "Description",
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor("longAddressDescription", {
         header: "LongAddressDescription",
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
     ] as ColumnDef<TableItem, unknown>[];

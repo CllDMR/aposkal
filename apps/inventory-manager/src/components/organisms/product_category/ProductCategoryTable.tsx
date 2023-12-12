@@ -52,7 +52,7 @@ export const ProductCategoryTable: FC<ProductCategoryTableProps> = ({
           );
         },
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
     ] as ColumnDef<TableItem, unknown>[];

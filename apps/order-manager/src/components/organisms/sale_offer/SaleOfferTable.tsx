@@ -59,31 +59,31 @@ export const SaleOfferTable: FC<SaleOfferTableProps> = ({ saleOffers }) => {
           );
         },
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor("startDate", {
         header: "Start Date",
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor("endDate", {
         header: "End Date",
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor("toAddress.name", {
         header: "Address",
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor("company.title", {
         header: "Company",
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
     ] as ColumnDef<TableItem, unknown>[];

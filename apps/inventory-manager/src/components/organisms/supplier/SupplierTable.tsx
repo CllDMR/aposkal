@@ -47,13 +47,13 @@ export const SupplierTable: FC<SupplierTableProps> = ({ suppliers }) => {
           return <Link href={`/suppliers/${supplier.id}`}>{getValue()}</Link>;
         },
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
       columnHelper.accessor("address", {
         header: "Address",
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
     ] as ColumnDef<TableItem, unknown>[];

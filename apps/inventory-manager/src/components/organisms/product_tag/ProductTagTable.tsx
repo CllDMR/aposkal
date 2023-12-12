@@ -48,7 +48,7 @@ export const ProductTagTable: FC<ProductTagTableProps> = ({ productTags }) => {
           );
         },
         meta: {
-          maxWidth: 100,
+          maxWidth: 200,
         },
       }),
     ] as ColumnDef<TableItem, unknown>[];

@@ -4,8 +4,8 @@ const Page = () => {
   return (
     <TableSkeleton
       headers={[
-        { text: "Name", maxWidth: 100 },
-        { text: "Address", maxWidth: 100 },
+        { text: "Name", maxWidth: 200 },
+        { text: "Address", maxWidth: 200 },
       ]}
     />
   );
