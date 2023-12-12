@@ -70,12 +70,20 @@ export const SaleOrderTable: FC<SaleOrderTableProps> = ({ saleOrders }) => {
       }),
       columnHelper.accessor("startdate", {
         header: "Start Date",
+        cell: ({ getValue }) =>
+          getValue().toLocaleDateString("TR-tr", {
+            hourCycle: "h23",
+          }),
         meta: {
           maxWidth: 200,
         },
       }),
       columnHelper.accessor("enddate", {
         header: "End Date",
+        cell: ({ getValue }) =>
+          getValue().toLocaleDateString("TR-tr", {
+            hourCycle: "h23",
+          }),
         meta: {
           maxWidth: 200,
         },

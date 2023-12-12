@@ -64,12 +64,20 @@ export const SaleOfferTable: FC<SaleOfferTableProps> = ({ saleOffers }) => {
       }),
       columnHelper.accessor("startDate", {
         header: "Start Date",
+        cell: ({ getValue }) =>
+          getValue().toLocaleDateString("TR-tr", {
+            hourCycle: "h23",
+          }),
         meta: {
           maxWidth: 200,
         },
       }),
       columnHelper.accessor("endDate", {
         header: "End Date",
+        cell: ({ getValue }) =>
+          getValue().toLocaleDateString("TR-tr", {
+            hourCycle: "h23",
+          }),
         meta: {
           maxWidth: 200,
         },
