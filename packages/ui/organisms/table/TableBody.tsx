@@ -30,6 +30,7 @@ export const TableBody = <TData extends RowData>({
               className="h-14 px-4 py-3 text-sm font-light text-gray-900"
               style={{
                 maxWidth: cell.column.columnDef.meta?.maxWidth,
+                width: cell.column.columnDef.meta?.maxWidth && 1000,
               }}
               key={cell.id}
             >
@@ -57,7 +58,7 @@ export const TableBody = <TData extends RowData>({
               className="h-14 whitespace-break-spaces border-b border-gray-200 px-4 py-3"
               style={{
                 maxWidth: columnDef.meta?.maxWidth,
-                width: columnDef.meta?.maxWidth && "100%",
+                width: columnDef.meta?.maxWidth && 1000,
               }}
               key={blankRowsId + String(rowIndex) + String(cellIndex)}
             />

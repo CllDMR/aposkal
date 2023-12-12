@@ -4,14 +4,14 @@ const Page = () => {
   return (
     <TableSkeleton
       headers={[
-        "Title",
-        "Type",
-        "Is Foreign",
-        "Tax No",
-        "Tax Office",
-        "Firm Phone Number",
-        "Qualified Phone Number",
-        "Email",
+        { text: "Title", maxWidth: 100 },
+        { text: "Type", maxWidth: 100 },
+        { text: "Is Foreign", maxWidth: 100 },
+        { text: "Tax No", maxWidth: 100 },
+        { text: "Tax Office", maxWidth: 100 },
+        { text: "Firm Phone Number", maxWidth: 100 },
+        { text: "Qualified Phone Number", maxWidth: 100 },
+        { text: "Email", maxWidth: 100 },
       ]}
     />
   );

@@ -14,7 +14,13 @@ export const TableHead: FC<TableHeadProps> = ({ isSelectionMode, headers }) => {
     <thead>
       <tr>
         {isSelectionMode && (
-          <td className="h-14 px-4 py-3 ">
+          <td
+            className="h-14 px-4 py-3"
+            style={{
+              maxWidth: 50,
+              width: 1000,
+            }}
+          >
             <div className="flex items-center gap-2 ">
               <input
                 id={"actions-checkbox-header" + _id}
@@ -33,7 +39,7 @@ export const TableHead: FC<TableHeadProps> = ({ isSelectionMode, headers }) => {
             className="h-14 px-4 py-3 text-left text-sm font-semibold text-gray-900 "
             style={{
               maxWidth: maxWidth,
-              width: maxWidth && "100%",
+              width: maxWidth && 1000,
             }}
           >
             {text}

@@ -87,7 +87,7 @@ export const ProductTable: FC<ProductTableProps> = ({ products }) => {
         {
           header: "Categories",
           meta: {
-            maxWidth: 100,
+            maxWidth: 200,
           },
         },
       ),
@@ -96,9 +96,6 @@ export const ProductTable: FC<ProductTableProps> = ({ products }) => {
           product?.productsToTags?.map((e) => e.productTag.name).join(" "),
         {
           header: "Tags",
-          meta: {
-            maxWidth: 100,
-          },
         },
       ),
     ] as ColumnDef<TableItem, unknown>[];

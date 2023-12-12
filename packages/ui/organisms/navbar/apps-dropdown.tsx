@@ -86,15 +86,7 @@ export const AppsDropdown: FC<{ domain: string }> = ({ domain }) => (
                 {solutions.map((item) => (
                   <a
                     key={item.name}
-                    href={
-                      process.env.NODE_ENV === "production"
-                        ? "https://" +
-                          item.subdomain +
-                          "." +
-                          domain +
-                          item.pathname
-                        : "http://localhost:" + item.port + item.pathname
-                    }
+                    href={"http://localhost:" + item.port + item.pathname}
                     className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-primary-500 focus-visible:ring-opacity-50"
                   >
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center text-white sm:h-12 sm:w-12">

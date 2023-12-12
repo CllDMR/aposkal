@@ -4,14 +4,14 @@ const Page = () => {
   return (
     <TableSkeleton
       headers={[
-        "Name",
-        "City",
-        "District",
-        "Street",
-        "Country",
-        "State",
-        "Description",
-        "LongAddressDescription",
+        { text: "Name", maxWidth: 100 },
+        { text: "City", maxWidth: 100 },
+        { text: "District", maxWidth: 100 },
+        { text: "Street", maxWidth: 100 },
+        { text: "Country", maxWidth: 100 },
+        { text: "State", maxWidth: 100 },
+        { text: "Description", maxWidth: 100 },
+        { text: "LongAddressDescription", maxWidth: 100 },
       ]}
     />
   );
