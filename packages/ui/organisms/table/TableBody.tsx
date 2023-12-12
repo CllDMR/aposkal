@@ -27,22 +27,14 @@ export const TableBody = <TData extends RowData>({
         <tr key={row.id} className="border-b border-gray-200 bg-white">
           {row.getVisibleCells().map((cell) => (
             <td
-              className="h-14 px-4 py-3 text-sm font-light text-gray-900"
+              className="h-14 truncate px-4 py-3 text-sm font-light text-gray-900"
               style={{
                 maxWidth: cell.column.columnDef.meta?.maxWidth,
                 width: cell.column.columnDef.meta?.maxWidth && 1000,
               }}
               key={cell.id}
             >
-              <div className="relative">
-                <div className="absolute max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </div>
-                <div className="h-0 overflow-hidden">
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </div>
-                <span>&nbsp;</span>
-              </div>
+              {flexRender(cell.column.columnDef.cell, cell.getContext())}
             </td>
           ))}
           <td key={blankRowsId + "blank-cell-rows"} />
