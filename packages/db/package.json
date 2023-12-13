@@ -10,6 +10,8 @@
     "lint": "eslint .",
     "format": "prettier --ignore-path ../../.gitignore --check \"**/*.{mjs,ts,md,json}\"",
     "push": "drizzle-kit push:mysql",
+    "seed": "tsx ./seed.ts",
+    "seed-small": "tsx ./seed-small.ts",
     "generate": "drizzle-kit generate:mysql",
     "studio": "drizzle-kit studio --port 3100",
     "typecheck": "tsc --noEmit"
@@ -24,10 +26,12 @@
     "@acme/eslint-config": "^0.2.0",
     "@acme/prettier-config": "^0.1.0",
     "@acme/tsconfig": "^0.1.0",
+    "@faker-js/faker": "^8.3.1",
     "dotenv-cli": "^7.3.0",
     "drizzle-kit": "^0.19.13",
     "eslint": "^8.47.0",
     "prettier": "^3.0.2",
+    "tsx": "^4.6.2",
     "typescript": "^5.1.6"
   },
   "eslintConfig": {
