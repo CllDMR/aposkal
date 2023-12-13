@@ -32,7 +32,7 @@ interface ReactTableProps<TData extends RowData, TValue = unknown> {
   isSelectionMode?: boolean;
   showFooter?: boolean;
   showGlobalFilter?: boolean;
-  showNavigation?: boolean;
+  showPagination?: boolean;
   filterFn?: FilterFn<TData>;
   optionsMatrix?: TableActionsDropdownOption<TData>[][];
 }
@@ -43,7 +43,7 @@ export const Table = <TData extends RowData, TValue = unknown>({
   isSelectionMode = true,
   showFooter = false,
   showGlobalFilter = false,
-  showNavigation = true,
+  showPagination = true,
   filterFn = filterFns.fuzzy,
   optionsMatrix,
 }: ReactTableProps<TData, TValue>) => {
@@ -133,7 +133,7 @@ export const Table = <TData extends RowData, TValue = unknown>({
             <TableBody table={table} />
             {showFooter ? <TableFooter table={table} /> : null}
           </table>
-          {showNavigation ? <TablePagination table={table} /> : null}
+          {showPagination ? <TablePagination table={table} /> : null}
         </div>
       </div>
     </div>

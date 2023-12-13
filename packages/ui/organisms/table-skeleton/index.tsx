@@ -10,7 +10,7 @@ interface TableSkeletonProps {
   isSelectionMode?: boolean;
   showFooter?: boolean;
   showGlobalFilter?: boolean;
-  showNavigation?: boolean;
+  showPagination?: boolean;
   headers: { text: string; maxWidth?: number }[];
   rowsPerPage?: number;
 }
@@ -19,7 +19,7 @@ export const TableSkeleton: FC<TableSkeletonProps> = ({
   isSelectionMode = true,
   showFooter = false,
   showGlobalFilter = false,
-  showNavigation = true,
+  showPagination = true,
   headers,
   rowsPerPage = 10,
 }) => (
@@ -39,7 +39,7 @@ export const TableSkeleton: FC<TableSkeletonProps> = ({
           />
           {showFooter ? <TableFooter /> : null}
         </table>
-        {showNavigation ? (
+        {showPagination ? (
           <TablePagination
             pageCount={1}
             pageIndex={0}
