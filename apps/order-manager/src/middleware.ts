@@ -31,8 +31,6 @@ export default withAuth({
 export const config = {
   matcher: [
     "/dashboard",
-    "/address-companies",
-    "/address-companies/(.*)",
     "/address-tenants",
     "/address-tenants/(.*)",
     "/sale-offers",
