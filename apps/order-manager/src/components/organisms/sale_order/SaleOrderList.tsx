@@ -13,7 +13,7 @@ interface SaleOrderListProps {
 
 export const SaleOrderList: FC<SaleOrderListProps> = ({ saleOrders }) => {
   const context = api.useContext();
-  const [data] = api.saleOrder.list.useSuspenseQuery(
+  const [result] = api.saleOrder.list.useSuspenseQuery(
     {},
     {
       initialData: saleOrders,
@@ -29,7 +29,7 @@ export const SaleOrderList: FC<SaleOrderListProps> = ({ saleOrders }) => {
 
   return (
     <>
-      {data.map((saleOrder) => (
+      {result.saleOrders.map((saleOrder) => (
         <div key={saleOrder.id}>
           <span>Sale Order Company: {saleOrder.company.title}</span>
           <LinkButton href={`/sale-orders/${saleOrder.id}`}>Go</LinkButton>

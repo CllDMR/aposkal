@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 import {
   insertSaleOrderSchema,
   selectSaleOrderSchema,
@@ -15,6 +17,10 @@ export const saleOrderListInput = selectSaleOrderSchema
     priority: true,
     source: true,
     startdate: true,
+  })
+  .extend({
+    offset: z.number().default(0),
+    limit: z.number().default(10),
   });
 
 export const saleOrderGetInput = selectSaleOrderSchema.pick({

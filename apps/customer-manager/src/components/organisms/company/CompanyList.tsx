@@ -13,7 +13,7 @@ interface CompanyListProps {
 
 export const CompanyList: FC<CompanyListProps> = ({ companies }) => {
   const context = api.useContext();
-  const [data] = api.company.list.useSuspenseQuery(
+  const [result] = api.company.list.useSuspenseQuery(
     {},
     {
       initialData: companies,
@@ -29,7 +29,7 @@ export const CompanyList: FC<CompanyListProps> = ({ companies }) => {
 
   return (
     <>
-      {data.map((company) => (
+      {result.companies.map((company) => (
         <div key={company.id}>
           <span>{company.title}</span>
           <LinkButton href={`/companies/${company.id}`}>Go</LinkButton>

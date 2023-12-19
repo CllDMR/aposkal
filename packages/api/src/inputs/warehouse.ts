@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 import {
   insertWarehouseSchema,
   selectWarehouseSchema,
@@ -9,6 +11,10 @@ export const warehouseListInput = selectWarehouseSchema
     createdAt: true,
     updatedAt: true,
     title: true,
+  })
+  .extend({
+    offset: z.number().default(0),
+    limit: z.number().default(10),
   });
 
 export const warehouseGetInput = selectWarehouseSchema.pick({

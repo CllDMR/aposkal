@@ -13,7 +13,7 @@ interface ProductTagListProps {
 
 export const ProductTagList: FC<ProductTagListProps> = ({ productTags }) => {
   const context = api.useContext();
-  const [data] = api.productTag.list.useSuspenseQuery(
+  const [result] = api.productTag.list.useSuspenseQuery(
     {},
     {
       initialData: productTags,
@@ -29,7 +29,7 @@ export const ProductTagList: FC<ProductTagListProps> = ({ productTags }) => {
 
   return (
     <>
-      {data.map((productTag) => (
+      {result.productTags.map((productTag) => (
         <div key={productTag.id}>
           <span>{productTag.name}</span>
           <LinkButton href={`/product-tags/${productTag.id}`}>Go</LinkButton>

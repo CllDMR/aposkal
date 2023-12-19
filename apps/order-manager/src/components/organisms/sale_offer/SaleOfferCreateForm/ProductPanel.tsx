@@ -25,15 +25,17 @@ interface TableItem {
 type SaleOfferCreateFormFields = RouterInputs["saleOffer"]["create"];
 
 interface SaleOfferCreateProductPanelProps {
-  products: RouterOutputs["product"]["list"];
+  products: RouterOutputs["product"]["list"]["products"];
 }
 
 export const SaleOfferCreateProductPanel: FC<
   SaleOfferCreateProductPanelProps
 > = ({ products: initialProducts }) => {
-  const { data: products } = api.product.list.useQuery(
+  const {
+    data: { products },
+  } = api.product.list.useQuery(
     {},
-    { initialData: initialProducts },
+    { initialData: { products: initialProducts, totalCount: 0 } },
   );
 
   const {
@@ -226,7 +228,12 @@ export const SaleOfferCreateProductPanel: FC<
         </p>
       </div>
 
-      <Table columns={cols} data={fields} showGlobalFilter={false} />
+      <Table
+        columns={cols}
+        data={fields}
+        showGlobalFilter={false}
+        totalCount={0}
+      />
 
       <Button
         type="button"

@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 import {
   insertSaleOfferProductSchema,
   selectSaleOfferProductSchema,
@@ -20,6 +22,10 @@ export const saleOfferProductListInput = selectSaleOfferProductSchema
     total: true,
     unit: true,
     unitPrice: true,
+  })
+  .extend({
+    offset: z.number().default(0),
+    limit: z.number().default(10),
   });
 
 export const saleOfferProductGetInput = selectSaleOfferProductSchema.pick({

@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 import {
   insertProductCategorySchema,
   selectProductCategorySchema,
@@ -10,6 +12,10 @@ export const productCategoryListInput = selectProductCategorySchema
     updatedAt: true,
     name: true,
     price: true,
+  })
+  .extend({
+    offset: z.number().default(0),
+    limit: z.number().default(10),
   });
 
 export const productCategoryGetInput = selectProductCategorySchema.pick({

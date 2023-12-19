@@ -3,6 +3,7 @@
 import type { FC } from "react";
 import { useMemo } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import type { ColumnDef } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
 
@@ -18,20 +19,35 @@ interface TableItem {
   unit: string;
   unitPrice: number;
   kdv: number;
-  productsToCategories: RouterOutputs["product"]["list"][number]["productsToCategories"];
-  productsToTags: RouterOutputs["product"]["list"][number]["productsToTags"];
+  productsToCategories: RouterOutputs["product"]["list"]["products"][number]["productsToCategories"];
+  productsToTags: RouterOutputs["product"]["list"]["products"][number]["productsToTags"];
 }
 
 interface ProductTableProps {
-  products: RouterOutputs["product"]["list"];
+  products: RouterOutputs["product"]["list"]["products"];
+  totalCount: RouterOutputs["product"]["list"]["totalCount"];
+  pageSize?: number;
+  pageIndex?: number;
 }
 
-export const ProductTable: FC<ProductTableProps> = ({ products }) => {
+export const ProductTable: FC<ProductTableProps> = ({
+  products,
+  totalCount,
+  pageIndex: _pageIndex = 0,
+  pageSize: _pageSize = 10,
+}) => {
+  const searchParams = useSearchParams()!;
+  const pageIndex = +(searchParams.get("pi") ?? _pageIndex);
+  const pageSize = +(searchParams.get("ps") ?? _pageSize);
+
   const context = api.useContext();
-  const [data] = api.product.list.useSuspenseQuery(
-    {},
+  const [result] = api.product.list.useSuspenseQuery(
     {
-      initialData: products,
+      offset: pageIndex * pageSize,
+      limit: pageSize,
+    },
+    {
+      initialData: { products, totalCount },
     },
   );
 
@@ -104,7 +120,10 @@ export const ProductTable: FC<ProductTableProps> = ({ products }) => {
   return (
     <Table<TableItem>
       columns={cols}
-      data={data}
+      data={result.products}
+      totalCount={result.totalCount}
+      pageIndex={pageIndex}
+      pageSize={pageSize}
       optionsMatrix={[
         [
           {

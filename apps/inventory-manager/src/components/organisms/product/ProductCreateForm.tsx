@@ -14,8 +14,8 @@ import { api } from "~/utils/api";
 type ProductCreateFormFields = RouterInputs["product"]["create"];
 
 interface ProductCreateFormProps {
-  productCategories: RouterOutputs["productCategory"]["list"];
-  productTags: RouterOutputs["productTag"]["list"];
+  productCategories: RouterOutputs["productCategory"]["list"]["productCategories"];
+  productTags: RouterOutputs["productTag"]["list"]["productTags"];
 }
 
 export const ProductCreateForm: FC<ProductCreateFormProps> = ({
@@ -29,16 +29,26 @@ export const ProductCreateForm: FC<ProductCreateFormProps> = ({
     },
   });
 
-  const { data: productCategories } = api.productCategory.list.useQuery(
+  const {
+    data: { productCategories },
+  } = api.productCategory.list.useQuery(
     {},
     {
-      initialData: initialProductCategories,
+      initialData: {
+        productCategories: initialProductCategories,
+        totalCount: 0,
+      },
     },
   );
-  const { data: productTags } = api.productTag.list.useQuery(
+  const {
+    data: { productTags },
+  } = api.productTag.list.useQuery(
     {},
     {
-      initialData: initialProductTags,
+      initialData: {
+        productTags: initialProductTags,
+        totalCount: 0,
+      },
     },
   );
 

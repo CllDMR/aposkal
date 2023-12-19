@@ -19,8 +19,8 @@ import { api } from "~/utils/api";
 type SaleOrderCreateFormFields = RouterInputs["saleOrder"]["create"];
 
 interface SaleOrderCreateFormProps {
-  companies: RouterOutputs["company"]["list"];
-  addresses: RouterOutputs["addressCompany"]["list"];
+  companies: RouterOutputs["company"]["list"]["companies"];
+  addresses: RouterOutputs["addressCompany"]["list"]["addressCompanies"];
 }
 
 export const SaleOrderCreateForm: FC<SaleOrderCreateFormProps> = ({
@@ -37,24 +37,24 @@ export const SaleOrderCreateForm: FC<SaleOrderCreateFormProps> = ({
   const { data: companies } = api.company.list.useQuery(
     {},
     {
-      initialData: initialCompanies,
+      initialData: { companies: initialCompanies, totalCount: 0 },
     },
   );
   const { data: addresses } = api.addressCompany.list.useQuery(
     {},
     {
-      initialData: initialAddresses,
+      initialData: { addressCompanies: initialAddresses, totalCount: 0 },
     },
   );
 
   const formattedCompanies =
-    companies?.map((company) => ({
+    companies?.companies?.map((company) => ({
       id: company.id,
       label: company.title,
       value: company.id,
     })) ?? [];
   const formattedAddresses =
-    addresses?.map((address) => ({
+    addresses?.addressCompanies?.map((address) => ({
       id: address.id,
       label: address.name,
       value: address.id,

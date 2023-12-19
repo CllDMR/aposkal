@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { desc, eq, inArray, schema } from "@acme/db";
+import { desc, eq, inArray, schema, sql } from "@acme/db";
 
 import {
   addressCompanyCreateInput,
@@ -14,7 +14,7 @@ export const addressCompanyRouter = createTRPCRouter({
   list: protectedProcedure
     .input(addressCompanyListInput)
     .query(async ({ ctx, input }) => {
-      return await ctx.db
+      const addressCompanies = await ctx.db
         .select()
         .from(schema.addressCompany)
         .where(eq(schema.addressCompany.tenantId, ctx.session.user.ti))
@@ -23,7 +23,20 @@ export const addressCompanyRouter = createTRPCRouter({
             ? eq(schema.addressCompany.companyId, input.companyId)
             : undefined,
         )
-        .orderBy(desc(schema.addressCompany.id));
+        .orderBy(desc(schema.addressCompany.id))
+        .offset(input.offset)
+        .limit(input.limit);
+
+      const { totalCount } = (
+        await ctx.db
+          .select({
+            totalCount: sql`count(*)`.mapWith(Number).as("totalCount"),
+          })
+          .from(schema.addressCompany)
+          .where(eq(schema.addressCompany.tenantId, ctx.session.user.ti))
+      ).at(0) ?? { totalCount: 0 };
+
+      return { addressCompanies, totalCount };
     }),
 
   get: protectedProcedure

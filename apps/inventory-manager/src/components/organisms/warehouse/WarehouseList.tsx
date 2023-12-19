@@ -13,7 +13,7 @@ interface WarehouseListProps {
 
 export const WarehouseList: FC<WarehouseListProps> = ({ warehouses }) => {
   const context = api.useContext();
-  const [data] = api.warehouse.list.useSuspenseQuery(
+  const [result] = api.warehouse.list.useSuspenseQuery(
     {},
     {
       initialData: warehouses,
@@ -29,7 +29,7 @@ export const WarehouseList: FC<WarehouseListProps> = ({ warehouses }) => {
 
   return (
     <>
-      {data.map((warehouse) => (
+      {result.warehouses.map((warehouse) => (
         <div key={warehouse.id}>
           <span>{warehouse.title}</span>
           <LinkButton href={`/warehouses/${warehouse.id}`}>Go</LinkButton>

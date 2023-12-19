@@ -13,7 +13,7 @@ interface ProductListProps {
 
 export const ProductList: FC<ProductListProps> = ({ products }) => {
   const context = api.useContext();
-  const [data] = api.product.list.useSuspenseQuery(
+  const [result] = api.product.list.useSuspenseQuery(
     {},
     {
       initialData: products,
@@ -29,7 +29,7 @@ export const ProductList: FC<ProductListProps> = ({ products }) => {
 
   return (
     <>
-      {data.map((product) => (
+      {result.products.map((product) => (
         <div key={product.id}>
           <span>{product.name}</span>
           <LinkButton href={`/products/${product.id}`}>Go</LinkButton>

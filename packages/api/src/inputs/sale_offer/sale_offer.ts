@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 import {
   insertSaleOfferSchema,
   selectSaleOfferSchema,
@@ -15,6 +17,10 @@ export const saleOfferListInput = selectSaleOfferSchema
     no: true,
     paymentEndDate: true,
     startDate: true,
+  })
+  .extend({
+    offset: z.number().default(0),
+    limit: z.number().default(10),
   });
 
 export const saleOfferGetInput = selectSaleOfferSchema.pick({

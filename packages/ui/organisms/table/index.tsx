@@ -20,14 +20,11 @@ import { TableGlobalFilter } from "./TableGlobalFilter";
 import { TableHead } from "./TableHead";
 import { TablePagination } from "./TablePagination";
 
-declare module "@tanstack/table-core" {
-  interface ColumnMeta<TData extends RowData, TValue> {
-    maxWidth?: number;
-  }
-}
-
 interface ReactTableProps<TData extends RowData, TValue = unknown> {
   data: TData[];
+  totalCount: number;
+  pageSize?: number;
+  pageIndex?: number;
   columns: ColumnDef<TData, TValue>[];
   isSelectionMode?: boolean;
   showFooter?: boolean;
@@ -39,6 +36,9 @@ interface ReactTableProps<TData extends RowData, TValue = unknown> {
 
 export const Table = <TData extends RowData, TValue = unknown>({
   data,
+  totalCount,
+  pageIndex = 0,
+  pageSize = 10,
   columns,
   isSelectionMode = true,
   showFooter = false,
@@ -104,8 +104,14 @@ export const Table = <TData extends RowData, TValue = unknown>({
     data,
     columns: _columns,
     //
+    pageCount: Math.ceil(totalCount / pageSize),
+    manualPagination: true,
     state: {
       globalFilter,
+      pagination: {
+        pageIndex,
+        pageSize,
+      },
     },
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -133,7 +139,9 @@ export const Table = <TData extends RowData, TValue = unknown>({
             <TableBody table={table} />
             {showFooter ? <TableFooter table={table} /> : null}
           </table>
-          {showPagination ? <TablePagination table={table} /> : null}
+          {showPagination ? (
+            <TablePagination table={table} totalCount={totalCount} />
+          ) : null}
         </div>
       </div>
     </div>

@@ -18,10 +18,10 @@ import { SaleOfferCreateProductPanel } from "./SaleOfferCreateForm/ProductPanel"
 type SaleOfferCreateFormFields = RouterInputs["saleOffer"]["create"];
 
 interface SaleOfferCreateFormProps {
-  companies: RouterOutputs["company"]["list"];
-  addresses: RouterOutputs["addressCompany"]["list"];
+  companies: RouterOutputs["company"]["list"]["companies"];
+  addresses: RouterOutputs["addressCompany"]["list"]["addressCompanies"];
   tenant: RouterOutputs["tenant"]["getWithAddress"];
-  products: RouterOutputs["product"]["list"];
+  products: RouterOutputs["product"]["list"]["products"];
 }
 
 export const SaleOfferCreateForm: FC<SaleOfferCreateFormProps> = ({

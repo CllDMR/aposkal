@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
 import { z } from "zod";
 
-import { desc, eq, inArray, schema } from "@acme/db";
+import { desc, eq, inArray, schema, sql } from "@acme/db";
 
 import {
   companyCreateInput,
@@ -14,16 +14,29 @@ import { createTRPCRouter, protectedProcedure } from "../../trpc";
 export const companyRouter = createTRPCRouter({
   list: protectedProcedure
     .input(companyListInput)
-    .query(async ({ ctx, input: _ }) => {
-      return await ctx.db.query.company.findMany({
+    .query(async ({ ctx, input }) => {
+      const companies = await ctx.db.query.company.findMany({
         where: eq(schema.company.tenantId, ctx.session.user.ti),
-        orderBy: desc(schema.company.id),
         with: {
           companiesToAddresses: {
             with: { address: true },
           },
         },
+        orderBy: desc(schema.company.id),
+        offset: input.offset,
+        limit: input.limit,
       });
+
+      const { totalCount } = (
+        await ctx.db
+          .select({
+            totalCount: sql`count(*)`.mapWith(Number).as("totalCount"),
+          })
+          .from(schema.company)
+          .where(eq(schema.company.tenantId, ctx.session.user.ti))
+      ).at(0) ?? { totalCount: 0 };
+
+      return { companies, totalCount };
     }),
 
   get: protectedProcedure

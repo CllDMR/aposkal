@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 import {
   insertProductTagSchema,
   selectProductTagSchema,
@@ -10,6 +12,10 @@ export const productTagListInput = selectProductTagSchema
     updatedAt: true,
     name: true,
     price: true,
+  })
+  .extend({
+    offset: z.number().default(0),
+    limit: z.number().default(10),
   });
 
 export const productTagGetInput = selectProductTagSchema.pick({

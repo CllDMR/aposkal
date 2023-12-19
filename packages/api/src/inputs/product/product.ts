@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 import {
   insertProductSchema,
   selectProductSchema,
@@ -16,6 +18,10 @@ export const productListInput = selectProductSchema
     description: true,
     gtipNo: true,
     imageURL: true,
+  })
+  .extend({
+    offset: z.number().default(0),
+    limit: z.number().default(10),
   });
 
 export const productGetInput = selectProductSchema.pick({ id: true });

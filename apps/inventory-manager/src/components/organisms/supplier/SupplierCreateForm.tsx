@@ -14,7 +14,7 @@ import { api } from "~/utils/api";
 type SupplierCreateFormFields = RouterInputs["supplier"]["create"];
 
 interface SupplierCreateFormProps {
-  products: RouterOutputs["product"]["list"];
+  products: RouterOutputs["product"]["list"]["products"];
 }
 
 export const SupplierCreateForm: FC<SupplierCreateFormProps> = ({
@@ -30,11 +30,11 @@ export const SupplierCreateForm: FC<SupplierCreateFormProps> = ({
   const { data: products } = api.product.list.useQuery(
     {},
     {
-      initialData: initialProducts,
+      initialData: { products: initialProducts, totalCount: 0 },
     },
   );
   const formattedProducts =
-    products?.map((product) => ({
+    products?.products?.map((product) => ({
       id: product.id,
       label: product.name,
       value: product.id,

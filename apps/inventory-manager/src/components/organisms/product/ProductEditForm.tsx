@@ -14,8 +14,8 @@ import { api } from "~/utils/api";
 type ProductEditFormFields = RouterInputs["product"]["update"];
 
 interface ProductEditFormProps {
-  productCategories: RouterOutputs["productCategory"]["list"];
-  productTags: RouterOutputs["productTag"]["list"];
+  productCategories: RouterOutputs["productCategory"]["list"]["productCategories"];
+  productTags: RouterOutputs["productTag"]["list"]["productTags"];
   product: NonNullable<RouterOutputs["product"]["get"]>;
 }
 
@@ -40,24 +40,27 @@ export const ProductEditForm: FC<ProductEditFormProps> = ({
   const { data: productCategories } = api.productCategory.list.useQuery(
     {},
     {
-      initialData: initialProductCategories,
+      initialData: {
+        productCategories: initialProductCategories,
+        totalCount: 0,
+      },
     },
   );
   const { data: productTags } = api.productTag.list.useQuery(
     {},
     {
-      initialData: initialProductTags,
+      initialData: { productTags: initialProductTags, totalCount: 0 },
     },
   );
 
   const formattedProductCategories =
-    productCategories?.map((productCategory) => ({
+    productCategories?.productCategories?.map((productCategory) => ({
       id: productCategory.id,
       label: productCategory.name,
       value: productCategory.id,
     })) ?? [];
   const formattedProductTags =
-    productTags?.map((productTag) => ({
+    productTags?.productTags?.map((productTag) => ({
       id: productTag.id,
       label: productTag.name,
       value: productTag.id,

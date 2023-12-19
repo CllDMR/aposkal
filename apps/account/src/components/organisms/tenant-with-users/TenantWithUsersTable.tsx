@@ -26,7 +26,7 @@ export const TenantWithUsersTable: FC<TenantWithUsersTableProps> = ({
   tenantWithUsers,
 }) => {
   const context = api.useContext();
-  const [data] = api.tenant.getWithUsers.useSuspenseQuery(undefined, {
+  const [result] = api.tenant.getWithUsers.useSuspenseQuery(undefined, {
     initialData: tenantWithUsers,
   });
 
@@ -71,6 +71,9 @@ export const TenantWithUsersTable: FC<TenantWithUsersTableProps> = ({
   );
 
   return (
-    <Table columns={cols} data={data.usersToTenants.flatMap((a) => a.user)} />
+    <Table
+      columns={cols}
+      result={result.usersToTenants.flatMap((a) => a.user)}
+    />
   );
 };

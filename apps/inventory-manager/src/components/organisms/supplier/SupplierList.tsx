@@ -13,7 +13,7 @@ interface SupplierListProps {
 
 export const SupplierList: FC<SupplierListProps> = ({ suppliers }) => {
   const context = api.useContext();
-  const [data] = api.supplier.list.useSuspenseQuery(
+  const [result] = api.supplier.list.useSuspenseQuery(
     {},
     {
       initialData: suppliers,
@@ -29,7 +29,7 @@ export const SupplierList: FC<SupplierListProps> = ({ suppliers }) => {
 
   return (
     <>
-      {data.map((supplier) => (
+      {result.suppliers.map((supplier) => (
         <div key={supplier.id}>
           <span>{supplier.name}</span>
           <LinkButton href={`/suppliers/${supplier.id}`}>Go</LinkButton>

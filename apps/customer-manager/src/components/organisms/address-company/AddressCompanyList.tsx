@@ -15,7 +15,7 @@ export const AddressCompanyList: FC<AddressCompanyListProps> = ({
   addresses,
 }) => {
   const context = api.useContext();
-  const [data] = api.addressCompany.list.useSuspenseQuery(
+  const [result] = api.addressCompany.list.useSuspenseQuery(
     {},
     {
       initialData: addresses,
@@ -31,7 +31,7 @@ export const AddressCompanyList: FC<AddressCompanyListProps> = ({
 
   return (
     <>
-      {data.map((address) => (
+      {result.addressCompanies.map((address) => (
         <div key={address.id}>
           <span>{address.name}</span>
           <LinkButton href={`/addresses/${address.id}`}>Go</LinkButton>

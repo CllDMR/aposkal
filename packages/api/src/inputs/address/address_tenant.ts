@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 import {
   insertAddressTenantSchema,
   selectAddressTenantSchema,
@@ -16,6 +18,10 @@ export const addressTenantListInput = selectAddressTenantSchema
     name: true,
     state: true,
     street: true,
+  })
+  .extend({
+    offset: z.number().default(0),
+    limit: z.number().default(10),
   });
 
 export const addressTenantGetInput = selectAddressTenantSchema.pick({

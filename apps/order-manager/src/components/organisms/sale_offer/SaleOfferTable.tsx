@@ -3,6 +3,7 @@
 import type { FC } from "react";
 import { useMemo } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import type { ColumnDef } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
 
@@ -23,20 +24,35 @@ interface TableItem {
   endDate: Date;
   paymentEndDate: Date;
   no: number;
-  company: RouterOutputs["saleOffer"]["list"][number]["company"];
-  toAddress: RouterOutputs["saleOffer"]["list"][number]["toAddress"];
+  company: RouterOutputs["saleOffer"]["list"]["saleOffers"][number]["company"];
+  toAddress: RouterOutputs["saleOffer"]["list"]["saleOffers"][number]["toAddress"];
 }
 
 interface SaleOfferTableProps {
-  saleOffers: RouterOutputs["saleOffer"]["list"];
+  saleOffers: RouterOutputs["saleOffer"]["list"]["saleOffers"];
+  totalCount: RouterOutputs["saleOffer"]["list"]["totalCount"];
+  pageSize?: number;
+  pageIndex?: number;
 }
 
-export const SaleOfferTable: FC<SaleOfferTableProps> = ({ saleOffers }) => {
+export const SaleOfferTable: FC<SaleOfferTableProps> = ({
+  saleOffers,
+  totalCount,
+  pageIndex: _pageIndex = 0,
+  pageSize: _pageSize = 10,
+}) => {
+  const searchParams = useSearchParams()!;
+  const pageIndex = +(searchParams.get("pi") ?? _pageIndex);
+  const pageSize = +(searchParams.get("ps") ?? _pageSize);
+
   const context = api.useContext();
-  const [data] = api.saleOffer.list.useSuspenseQuery(
-    {},
+  const [result] = api.saleOffer.list.useSuspenseQuery(
     {
-      initialData: saleOffers,
+      offset: pageIndex * pageSize,
+      limit: pageSize,
+    },
+    {
+      initialData: { saleOffers, totalCount },
     },
   );
 
@@ -100,7 +116,10 @@ export const SaleOfferTable: FC<SaleOfferTableProps> = ({ saleOffers }) => {
   return (
     <Table<TableItem>
       columns={cols}
-      data={data}
+      data={result.saleOffers}
+      totalCount={result.totalCount}
+      pageIndex={pageIndex}
+      pageSize={pageSize}
       optionsMatrix={[
         [
           {

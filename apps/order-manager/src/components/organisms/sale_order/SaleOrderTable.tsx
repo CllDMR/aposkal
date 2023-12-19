@@ -3,6 +3,7 @@
 import type { FC } from "react";
 import { useMemo } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import type { ColumnDef } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
 
@@ -23,20 +24,35 @@ interface TableItem {
   enddate: Date;
   companyType: string;
   source: string;
-  company: RouterOutputs["saleOrder"]["list"][number]["company"];
-  toAddress: RouterOutputs["saleOrder"]["list"][number]["toAddress"];
+  company: RouterOutputs["saleOrder"]["list"]["saleOrders"][number]["company"];
+  toAddress: RouterOutputs["saleOrder"]["list"]["saleOrders"][number]["toAddress"];
 }
 
 interface SaleOrderTableProps {
-  saleOrders: RouterOutputs["saleOrder"]["list"];
+  saleOrders: RouterOutputs["saleOrder"]["list"]["saleOrders"];
+  totalCount: RouterOutputs["saleOrder"]["list"]["totalCount"];
+  pageSize?: number;
+  pageIndex?: number;
 }
 
-export const SaleOrderTable: FC<SaleOrderTableProps> = ({ saleOrders }) => {
+export const SaleOrderTable: FC<SaleOrderTableProps> = ({
+  saleOrders,
+  totalCount,
+  pageIndex: _pageIndex = 0,
+  pageSize: _pageSize = 10,
+}) => {
+  const searchParams = useSearchParams()!;
+  const pageIndex = +(searchParams.get("pi") ?? _pageIndex);
+  const pageSize = +(searchParams.get("ps") ?? _pageSize);
+
   const context = api.useContext();
-  const [data] = api.saleOrder.list.useSuspenseQuery(
-    {},
+  const [result] = api.saleOrder.list.useSuspenseQuery(
     {
-      initialData: saleOrders,
+      offset: pageIndex * pageSize,
+      limit: pageSize,
+    },
+    {
+      initialData: { saleOrders, totalCount },
     },
   );
 
@@ -118,7 +134,10 @@ export const SaleOrderTable: FC<SaleOrderTableProps> = ({ saleOrders }) => {
   return (
     <Table<TableItem>
       columns={cols}
-      data={data}
+      data={result.saleOrders}
+      totalCount={result.totalCount}
+      pageIndex={pageIndex}
+      pageSize={pageSize}
       optionsMatrix={[
         [
           {

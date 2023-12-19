@@ -16,7 +16,7 @@ import { api } from "~/utils/api";
 type SaleOfferCreateFormInfoPanelFields = RouterInputs["saleOffer"]["create"];
 
 interface SaleOfferCreateFormInfoPanelProps {
-  companies: RouterOutputs["company"]["list"];
+  companies: RouterOutputs["company"]["list"]["companies"];
 }
 
 export const SaleOfferCreateInfoPanel: FC<
@@ -31,10 +31,12 @@ export const SaleOfferCreateInfoPanel: FC<
 
   const companyId = watch("companyId");
 
-  const { data: companies } = api.company.list.useQuery(
+  const {
+    data: { companies },
+  } = api.company.list.useQuery(
     {},
     {
-      initialData: initialCompanies,
+      initialData: { companies: initialCompanies, totalCount: 0 },
     },
   );
 
@@ -45,7 +47,7 @@ export const SaleOfferCreateInfoPanel: FC<
       value: company.id,
     })) ?? [];
 
-  const { data: addresses } = api.addressCompany.list.useQuery(
+  const { data } = api.addressCompany.list.useQuery(
     {
       companyId:
         typeof companyId === "string" && !!companyId ? companyId : undefined,
@@ -56,7 +58,7 @@ export const SaleOfferCreateInfoPanel: FC<
   );
 
   const formattedAddresses =
-    addresses?.map((address) => ({
+    data?.addressCompanies?.map((address) => ({
       id: address.id,
       label: address.name,
       value: address.id,

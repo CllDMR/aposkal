@@ -3,6 +3,7 @@
 import type { FC } from "react";
 import { useMemo } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import type { ColumnDef } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
 
@@ -27,17 +28,30 @@ interface TableItem {
 }
 
 interface AddressTenantTableProps {
-  addresses: RouterOutputs["addressTenant"]["list"];
+  addressTenants: RouterOutputs["addressTenant"]["list"]["addressTenants"];
+  totalCount: RouterOutputs["addressTenant"]["list"]["totalCount"];
+  pageSize?: number;
+  pageIndex?: number;
 }
 
 export const AddressTenantTable: FC<AddressTenantTableProps> = ({
-  addresses,
+  addressTenants,
+  totalCount,
+  pageIndex: _pageIndex = 0,
+  pageSize: _pageSize = 10,
 }) => {
+  const searchParams = useSearchParams()!;
+  const pageIndex = +(searchParams.get("pi") ?? _pageIndex);
+  const pageSize = +(searchParams.get("ps") ?? _pageSize);
+
   const context = api.useContext();
-  const [data] = api.addressTenant.list.useSuspenseQuery(
-    {},
+  const [result] = api.addressTenant.list.useSuspenseQuery(
     {
-      initialData: addresses,
+      offset: pageIndex * pageSize,
+      limit: pageSize,
+    },
+    {
+      initialData: { addressTenants, totalCount },
     },
   );
 
@@ -111,7 +125,10 @@ export const AddressTenantTable: FC<AddressTenantTableProps> = ({
   return (
     <Table<TableItem>
       columns={cols}
-      data={data}
+      data={result.addressTenants}
+      totalCount={result.totalCount}
+      pageIndex={pageIndex}
+      pageSize={pageSize}
       optionsMatrix={[
         [
           {

@@ -15,7 +15,7 @@ export const ProductCategoryList: FC<ProductCategoryListProps> = ({
   productCategories,
 }) => {
   const context = api.useContext();
-  const [data] = api.productCategory.list.useSuspenseQuery(
+  const [result] = api.productCategory.list.useSuspenseQuery(
     {},
     {
       initialData: productCategories,
@@ -31,7 +31,7 @@ export const ProductCategoryList: FC<ProductCategoryListProps> = ({
 
   return (
     <>
-      {data.map((productCategory) => (
+      {result.productCategories.map((productCategory) => (
         <div key={productCategory.id}>
           <span>{productCategory.name}</span>
           <LinkButton href={`/product-categories/${productCategory.id}`}>

@@ -13,8 +13,8 @@ import { useSaleOfferPDFTemplateFromFormValues } from "~/utils/useSaleOfferPDFTe
 type SaleOfferCreateFormFields = RouterInputs["saleOffer"]["create"];
 
 interface SaleOfferCreatePreviewPanelProps {
-  companies: RouterOutputs["company"]["list"];
-  addresses: RouterOutputs["addressCompany"]["list"];
+  companies: RouterOutputs["company"]["list"]["companies"];
+  addresses: RouterOutputs["addressCompany"]["list"]["addressCompanies"];
   tenant: RouterOutputs["tenant"]["getWithAddress"];
 }
 

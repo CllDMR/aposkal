@@ -3,6 +3,7 @@
 import type { FC } from "react";
 import { useMemo } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import type { ColumnDef } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
 
@@ -17,17 +18,30 @@ interface TableItem {
 }
 
 interface ProductCategoryTableProps {
-  productCategories: RouterOutputs["productCategory"]["list"];
+  productCategories: RouterOutputs["productCategory"]["list"]["productCategories"];
+  totalCount: RouterOutputs["productCategory"]["list"]["totalCount"];
+  pageSize?: number;
+  pageIndex?: number;
 }
 
 export const ProductCategoryTable: FC<ProductCategoryTableProps> = ({
   productCategories,
+  totalCount,
+  pageIndex: _pageIndex = 0,
+  pageSize: _pageSize = 10,
 }) => {
+  const searchParams = useSearchParams()!;
+  const pageIndex = +(searchParams.get("pi") ?? _pageIndex);
+  const pageSize = +(searchParams.get("ps") ?? _pageSize);
+
   const context = api.useContext();
-  const [data] = api.productCategory.list.useSuspenseQuery(
-    {},
+  const [result] = api.productCategory.list.useSuspenseQuery(
     {
-      initialData: productCategories,
+      offset: pageIndex * pageSize,
+      limit: pageSize,
+    },
+    {
+      initialData: { productCategories, totalCount },
     },
   );
 
@@ -61,7 +75,10 @@ export const ProductCategoryTable: FC<ProductCategoryTableProps> = ({
   return (
     <Table<TableItem>
       columns={cols}
-      data={data}
+      data={result.productCategories}
+      totalCount={result.totalCount}
+      pageIndex={pageIndex}
+      pageSize={pageSize}
       optionsMatrix={[
         [
           {

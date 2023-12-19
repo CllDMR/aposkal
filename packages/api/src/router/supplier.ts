@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
 import { z } from "zod";
 
-import { and, eq, inArray, schema } from "@acme/db";
+import { and, desc, eq, inArray, schema, sql } from "@acme/db";
 
 import {
   supplierCreateInput,
@@ -14,8 +14,8 @@ import { createTRPCRouter, protectedProcedure } from "../trpc";
 export const supplierRouter = createTRPCRouter({
   list: protectedProcedure
     .input(supplierListInput)
-    .query(async ({ ctx, input: _ }) => {
-      return await ctx.db.query.supplier.findMany({
+    .query(async ({ ctx, input }) => {
+      const suppliers = await ctx.db.query.supplier.findMany({
         where: eq(schema.supplier.tenantId, ctx.session.user.ti),
         with: {
           productsToSuppliers: {
@@ -24,7 +24,21 @@ export const supplierRouter = createTRPCRouter({
             },
           },
         },
+        orderBy: desc(schema.supplier.id),
+        offset: input.offset,
+        limit: input.limit,
       });
+
+      const { totalCount } = (
+        await ctx.db
+          .select({
+            totalCount: sql`count(*)`.mapWith(Number).as("totalCount"),
+          })
+          .from(schema.supplier)
+          .where(eq(schema.supplier.tenantId, ctx.session.user.ti))
+      ).at(0) ?? { totalCount: 0 };
+
+      return { suppliers, totalCount };
     }),
 
   get: protectedProcedure

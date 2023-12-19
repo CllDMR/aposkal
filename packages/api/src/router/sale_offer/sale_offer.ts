@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { desc, eq, inArray, schema } from "@acme/db";
+import { desc, eq, inArray, schema, sql } from "@acme/db";
 
 import {
   saleOfferCreateInput,
@@ -13,20 +13,28 @@ import { createTRPCRouter, protectedProcedure } from "../../trpc";
 export const saleOfferRouter = createTRPCRouter({
   list: protectedProcedure
     .input(saleOfferListInput)
-    .query(async ({ ctx, input: _ }) => {
-      const asd = await ctx.db.query.saleOffer.findMany({
+    .query(async ({ ctx, input }) => {
+      const saleOffers = await ctx.db.query.saleOffer.findMany({
         where: eq(schema.saleOffer.tenantId, ctx.session.user.ti),
-        orderBy: desc(schema.saleOffer.id),
         with: {
           company: true,
           toAddress: true,
-          // saleOfferNotes: true,
-          // saleOfferProducts: true,
         },
+        orderBy: desc(schema.saleOffer.id),
+        offset: input.offset,
+        limit: input.limit,
       });
-      asd[0]?.toAddress;
 
-      return asd;
+      const { totalCount } = (
+        await ctx.db
+          .select({
+            totalCount: sql`count(*)`.mapWith(Number).as("totalCount"),
+          })
+          .from(schema.saleOffer)
+          .where(eq(schema.saleOffer.tenantId, ctx.session.user.ti))
+      ).at(0) ?? { totalCount: 0 };
+
+      return { saleOffers, totalCount };
     }),
 
   get: protectedProcedure

@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 import {
   insertAddressCompanySchema,
   selectAddressCompanySchema,
@@ -17,6 +19,10 @@ export const addressCompanyListInput = selectAddressCompanySchema
     state: true,
     street: true,
     companyId: true,
+  })
+  .extend({
+    offset: z.number().default(0),
+    limit: z.number().default(10),
   });
 
 export const addressCompanyGetInput = selectAddressCompanySchema.pick({

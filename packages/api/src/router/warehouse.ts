@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { desc, eq, inArray, schema } from "@acme/db";
+import { desc, eq, inArray, schema, sql } from "@acme/db";
 
 import {
   warehouseCreateInput,
@@ -13,12 +13,25 @@ import { createTRPCRouter, protectedProcedure } from "../trpc";
 export const warehouseRouter = createTRPCRouter({
   list: protectedProcedure
     .input(warehouseListInput)
-    .query(async ({ ctx, input: _ }) => {
-      return await ctx.db
+    .query(async ({ ctx, input }) => {
+      const warehouses = await ctx.db
         .select()
         .from(schema.warehouse)
         .where(eq(schema.warehouse.tenantId, ctx.session.user.ti))
-        .orderBy(desc(schema.warehouse.id));
+        .orderBy(desc(schema.warehouse.id))
+        .offset(input.offset)
+        .limit(input.limit);
+
+      const { totalCount } = (
+        await ctx.db
+          .select({
+            totalCount: sql`count(*)`.mapWith(Number).as("totalCount"),
+          })
+          .from(schema.warehouse)
+          .where(eq(schema.warehouse.tenantId, ctx.session.user.ti))
+      ).at(0) ?? { totalCount: 0 };
+
+      return { warehouses, totalCount };
     }),
 
   get: protectedProcedure

@@ -15,7 +15,7 @@ type SaleOfferEditFormFields = RouterInputs["saleOffer"]["update"];
 
 interface SaleOfferEditFormProps {
   saleOffer: NonNullable<RouterOutputs["saleOffer"]["get"]>;
-  companies: RouterOutputs["company"]["list"];
+  companies: RouterOutputs["company"]["list"]["companies"];
 }
 
 export const SaleOfferEditForm: FC<SaleOfferEditFormProps> = ({
@@ -35,10 +35,12 @@ export const SaleOfferEditForm: FC<SaleOfferEditFormProps> = ({
     { initialData: initialSaleOffer },
   );
 
-  const { data: companies } = api.company.list.useQuery(
+  const {
+    data: { companies },
+  } = api.company.list.useQuery(
     {},
     {
-      initialData: initialCompanies,
+      initialData: { companies: initialCompanies, totalCount: 0 },
     },
   );
 

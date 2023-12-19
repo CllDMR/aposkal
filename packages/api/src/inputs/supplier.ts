@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 import {
   insertSupplierSchema,
   selectSupplierSchema,
@@ -10,6 +12,10 @@ export const supplierListInput = selectSupplierSchema
     updatedAt: true,
     address: true,
     name: true,
+  })
+  .extend({
+    offset: z.number().default(0),
+    limit: z.number().default(10),
   });
 
 export const supplierGetInput = selectSupplierSchema.pick({ id: true });

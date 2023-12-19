@@ -3,6 +3,7 @@
 import type { FC } from "react";
 import { useMemo } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import type { ColumnDef } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
 
@@ -17,15 +18,30 @@ interface TableItem {
 }
 
 interface WarehouseTableProps {
-  warehouses: RouterOutputs["warehouse"]["list"];
+  warehouses: RouterOutputs["warehouse"]["list"]["warehouses"];
+  totalCount: RouterOutputs["warehouse"]["list"]["totalCount"];
+  pageSize?: number;
+  pageIndex?: number;
 }
 
-export const WarehouseTable: FC<WarehouseTableProps> = ({ warehouses }) => {
+export const WarehouseTable: FC<WarehouseTableProps> = ({
+  warehouses,
+  totalCount,
+  pageIndex: _pageIndex = 0,
+  pageSize: _pageSize = 10,
+}) => {
+  const searchParams = useSearchParams()!;
+  const pageIndex = +(searchParams.get("pi") ?? _pageIndex);
+  const pageSize = +(searchParams.get("ps") ?? _pageSize);
+
   const context = api.useContext();
-  const [data] = api.warehouse.list.useSuspenseQuery(
-    {},
+  const [result] = api.warehouse.list.useSuspenseQuery(
     {
-      initialData: warehouses,
+      offset: pageIndex * pageSize,
+      limit: pageSize,
+    },
+    {
+      initialData: { warehouses, totalCount },
     },
   );
 
@@ -55,7 +71,10 @@ export const WarehouseTable: FC<WarehouseTableProps> = ({ warehouses }) => {
   return (
     <Table<TableItem>
       columns={cols}
-      data={data}
+      data={result.warehouses}
+      totalCount={result.totalCount}
+      pageIndex={pageIndex}
+      pageSize={pageSize}
       optionsMatrix={[
         [
           {

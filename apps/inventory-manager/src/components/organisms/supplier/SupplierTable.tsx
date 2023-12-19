@@ -3,6 +3,7 @@
 import type { FC } from "react";
 import { useMemo } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import type { ColumnDef } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
 
@@ -18,15 +19,30 @@ interface TableItem {
 }
 
 interface SupplierTableProps {
-  suppliers: RouterOutputs["supplier"]["list"];
+  suppliers: RouterOutputs["supplier"]["list"]["suppliers"];
+  totalCount: RouterOutputs["supplier"]["list"]["totalCount"];
+  pageSize?: number;
+  pageIndex?: number;
 }
 
-export const SupplierTable: FC<SupplierTableProps> = ({ suppliers }) => {
+export const SupplierTable: FC<SupplierTableProps> = ({
+  suppliers,
+  totalCount,
+  pageIndex: _pageIndex = 0,
+  pageSize: _pageSize = 10,
+}) => {
+  const searchParams = useSearchParams()!;
+  const pageIndex = +(searchParams.get("pi") ?? _pageIndex);
+  const pageSize = +(searchParams.get("ps") ?? _pageSize);
+
   const context = api.useContext();
-  const [data] = api.supplier.list.useSuspenseQuery(
-    {},
+  const [result] = api.supplier.list.useSuspenseQuery(
     {
-      initialData: suppliers,
+      offset: pageIndex * pageSize,
+      limit: pageSize,
+    },
+    {
+      initialData: { suppliers, totalCount },
     },
   );
 
@@ -62,7 +78,10 @@ export const SupplierTable: FC<SupplierTableProps> = ({ suppliers }) => {
   return (
     <Table<TableItem>
       columns={cols}
-      data={data}
+      data={result.suppliers}
+      totalCount={result.totalCount}
+      pageIndex={pageIndex}
+      pageSize={pageSize}
       optionsMatrix={[
         [
           {

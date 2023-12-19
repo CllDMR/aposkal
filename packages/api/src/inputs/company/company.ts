@@ -23,6 +23,10 @@ export const companyListInput = selectCompanySchema
     mersisNo: true,
     ticaretSicilNo: true,
     web: true,
+  })
+  .extend({
+    offset: z.number().default(0),
+    limit: z.number().default(10),
   });
 
 export const companyGetInput = selectCompanySchema.pick({ id: true });

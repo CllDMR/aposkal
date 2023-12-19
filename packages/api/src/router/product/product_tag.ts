@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { desc, eq, inArray, schema } from "@acme/db";
+import { desc, eq, inArray, schema, sql } from "@acme/db";
 
 import {
   productTagCreateInput,
@@ -13,12 +13,25 @@ import { createTRPCRouter, protectedProcedure } from "../../trpc";
 export const productTagRouter = createTRPCRouter({
   list: protectedProcedure
     .input(productTagListInput)
-    .query(async ({ ctx, input: _ }) => {
-      return await ctx.db
+    .query(async ({ ctx, input }) => {
+      const productTags = await ctx.db
         .select()
         .from(schema.productTag)
         .where(eq(schema.productTag.tenantId, ctx.session.user.ti))
-        .orderBy(desc(schema.productTag.id));
+        .orderBy(desc(schema.productTag.id))
+        .offset(input.offset)
+        .limit(input.limit);
+
+      const { totalCount } = (
+        await ctx.db
+          .select({
+            totalCount: sql`count(*)`.mapWith(Number).as("totalCount"),
+          })
+          .from(schema.productTag)
+          .where(eq(schema.productTag.tenantId, ctx.session.user.ti))
+      ).at(0) ?? { totalCount: 0 };
+
+      return { productTags, totalCount };
     }),
 
   get: protectedProcedure
