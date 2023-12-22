@@ -1,6 +1,7 @@
 "use client";
 
 import type { FC } from "react";
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
@@ -19,6 +20,8 @@ import { api } from "~/utils/api";
 type CreateTenantFromFields = RouterInputs["tenant"]["create"];
 
 export const CreateTenant: FC = () => {
+  const [openCreateTenantForm, setOpenCreateTenantForm] = useState(false);
+
   const context = api.useContext();
 
   const {
@@ -28,30 +31,33 @@ export const CreateTenant: FC = () => {
     reset,
     control,
   } = useForm<CreateTenantFromFields>({
-    defaultValues: {
-      address: {
-        city: "İstanbul",
-        country: "Türkiye",
-        description: "Office address - 1",
-        district: "Şişli",
-        longAddressDescription: "Long office address - 1",
-        name: "Test Address - 1",
-        state: "Türkiye",
-        street: "Çiçek",
-      },
-      logoURL: "Test URL - 1",
-      title: "Test Tenant - 1",
-      type: "personal",
-      isForeign: false,
-      taxNo: "111111111",
-      taxOffice: "Tax Office - 1",
-      firmPhoneNumber: "+905312345678",
-      qualifiedPhoneNumber: "+905312345678",
-      email: "test-tenant-1@example.com",
-      web: "test-tenant-1.com",
-      ticaretSicilNo: "111111111",
-      mersisNo: "111111111",
-    },
+    defaultValues:
+      process.env.NODE_ENV === "production"
+        ? {
+            address: {
+              city: "",
+              country: "",
+              description: "",
+              district: "",
+              longAddressDescription: "",
+              name: "",
+              state: "",
+              street: "",
+            },
+            logoURL: "",
+            title: "",
+            type: "personal",
+            isForeign: false,
+            taxNo: "",
+            taxOffice: "",
+            firmPhoneNumber: "",
+            qualifiedPhoneNumber: "",
+            email: "",
+            web: "",
+            ticaretSicilNo: "",
+            mersisNo: "",
+          }
+        : defaultValues,
     resolver: zodResolver(tenantCreateInput),
   });
 
@@ -64,11 +70,23 @@ export const CreateTenant: FC = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     await mutateAsync(data);
+    setOpenCreateTenantForm(false);
   });
 
   return (
-    <>
-      <Form className="" onSubmit={onSubmit}>
+    <div className="">
+      <div className="">
+        <Button
+          type="button"
+          onClick={() => setOpenCreateTenantForm(!openCreateTenantForm)}
+        >
+          New Tenant
+        </Button>
+      </div>
+      <Form
+        className={`${!openCreateTenantForm && "hidden"} mb-12 mt-6`}
+        onSubmit={onSubmit}
+      >
         <FormInput<CreateTenantFromFields>
           id="title"
           label="Title"
@@ -264,6 +282,31 @@ export const CreateTenant: FC = () => {
           Add Tenant
         </Button>
       </Form>
-    </>
+    </div>
   );
+};
+
+const defaultValues: CreateTenantFromFields = {
+  address: {
+    city: "İstanbul",
+    country: "Türkiye",
+    description: "Office address - 1",
+    district: "Şişli",
+    longAddressDescription: "Long office address - 1",
+    name: "Test Address - 1",
+    state: "Türkiye",
+    street: "Çiçek",
+  },
+  logoURL: "Test URL - 1",
+  title: "Test Tenant - 1",
+  type: "personal",
+  isForeign: false,
+  taxNo: "111111111",
+  taxOffice: "Tax Office - 1",
+  firmPhoneNumber: "+905312345678",
+  qualifiedPhoneNumber: "+905312345678",
+  email: "test-tenant-1@example.com",
+  web: "test-tenant-1.com",
+  ticaretSicilNo: "111111111",
+  mersisNo: "111111111",
 };
