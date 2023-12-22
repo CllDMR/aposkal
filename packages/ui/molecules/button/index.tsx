@@ -52,6 +52,7 @@ interface ButtonProps {
   size?: ButtonSize;
 
   // State
+  fullwidth?: boolean;
   disabled?: HTMLButtonProps["disabled"];
   // isLoading?: boolean;
 
@@ -65,6 +66,7 @@ export function Button({
   variant = ButtonVariant.PRIMARY,
   size = ButtonSize.SMALL,
   disabled = false,
+  fullwidth = false,
   onClick,
 }: ButtonProps) {
   const css = clsx(
@@ -72,7 +74,7 @@ export function Button({
     VARIANT_MAPS[variant],
     SIZE_MAPS[size],
 
-    {},
+    { "w-full": fullwidth },
   );
 
   return (
