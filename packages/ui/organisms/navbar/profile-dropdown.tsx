@@ -10,6 +10,7 @@ import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import type { Session } from "next-auth";
 
 import type { NavbarNavigationPath } from ".";
+import { cn } from "../../utils/cn";
 
 interface ProfileDropdownProps {
   session: Session;
@@ -105,9 +106,9 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({
                     "?callbackUrl=" +
                     encodeURIComponent(basePath + pathName)
                   }
-                  className={classNames(
-                    active ? "bg-gray-50" : "",
+                  className={cn(
                     "block px-3 py-1 text-sm leading-6 text-gray-900",
+                    { "bg-gray-50": active },
                   )}
                 >
                   {item.name}
@@ -120,7 +121,3 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({
     </Menu>
   );
 };
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}

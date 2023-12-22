@@ -8,16 +8,13 @@ import { Disclosure } from "@headlessui/react";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 
 import { useSidebarStore } from "../../store/sidebar";
+import { cn } from "../../utils/cn";
 
 export interface DrawerNavigationPath {
   name: string;
   href: string;
   icon: ReactElement;
   children?: { name: string; href: string }[];
-}
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
 }
 
 export function Drawer({
@@ -47,11 +44,12 @@ export function Drawer({
                 {!item.children ? (
                   <Link
                     href={item.href}
-                    className={classNames(
-                      pathname.includes(item.href)
-                        ? "bg-gray-50"
-                        : "hover:bg-gray-50",
-                      "group  flex gap-x-3 p-2 text-sm font-medium leading-6 text-gray-700",
+                    className={cn(
+                      "group flex gap-x-3 p-2 text-sm font-medium leading-6 text-gray-700",
+                      {
+                        "bg-gray-50": pathname.includes(item.href),
+                        "hover:bg-gray-50": !pathname.includes(item.href),
+                      },
                     )}
                   >
                     {item.icon}
@@ -66,23 +64,22 @@ export function Drawer({
                     {({ open }) => (
                       <>
                         <Disclosure.Button
-                          className={classNames(
-                            pathname.includes(item.href)
-                              ? "bg-gray-50"
-                              : "hover:bg-gray-50",
+                          className={cn(
                             "flex w-full items-center gap-x-3  p-2 text-left text-sm font-medium leading-6 text-gray-700",
+                            {
+                              "bg-gray-50": pathname.includes(item.href),
+                              "hover:bg-gray-50": !pathname.includes(item.href),
+                            },
                           )}
                         >
                           {item.icon}
 
                           {item.name}
                           <ChevronRightIcon
-                            className={classNames(
-                              open
-                                ? "rotate-90 text-gray-500"
-                                : "text-gray-400",
-                              "ml-auto h-5 w-5 shrink-0",
-                            )}
+                            className={cn("ml-auto h-5 w-5 shrink-0", {
+                              "rotate-90 text-gray-500": open,
+                              "text-gray-400": !open,
+                            })}
                             aria-hidden="true"
                           />
                         </Disclosure.Button>
@@ -92,7 +89,7 @@ export function Drawer({
                               {/* 44px */}
                               <Disclosure.Button
                                 as="div"
-                                className={classNames(
+                                className={cn(
                                   pathname === subItem.href
                                     ? "bg-gray-50"
                                     : "hover:bg-gray-50",

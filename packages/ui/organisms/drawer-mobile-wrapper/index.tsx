@@ -9,11 +9,8 @@ import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
 import { useSidebarStore } from "../../store/sidebar";
+import { cn } from "../../utils/cn";
 import type { DrawerNavigationPath } from "../drawer";
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}
 
 export function DrawerMobileWrapper({
   navigationPaths,
@@ -91,11 +88,14 @@ export function DrawerMobileWrapper({
                           {!item.children ? (
                             <Link
                               href={item.href}
-                              className={classNames(
-                                pathname.includes(item.href)
-                                  ? "bg-gray-50"
-                                  : "hover:bg-gray-50",
+                              className={cn(
                                 "group  flex gap-x-3 p-2 text-sm font-medium leading-6 text-gray-700",
+                                {
+                                  "bg-gray-50": pathname.includes(item.href),
+                                  "hover:bg-gray-50": !pathname.includes(
+                                    item.href,
+                                  ),
+                                },
                               )}
                             >
                               {item.icon}
@@ -110,22 +110,28 @@ export function DrawerMobileWrapper({
                               {({ open }) => (
                                 <>
                                   <Disclosure.Button
-                                    className={classNames(
-                                      pathname.includes(item.href)
-                                        ? "bg-gray-50"
-                                        : "hover:bg-gray-50",
+                                    className={cn(
                                       "flex w-full items-center gap-x-3  p-2 text-left text-sm font-medium leading-6 text-gray-700",
+                                      {
+                                        "bg-gray-50": pathname.includes(
+                                          item.href,
+                                        ),
+                                        "hover:bg-gray-50": !pathname.includes(
+                                          item.href,
+                                        ),
+                                      },
                                     )}
                                   >
                                     {item.icon}
 
                                     {item.name}
                                     <ChevronRightIcon
-                                      className={classNames(
-                                        open
-                                          ? "rotate-90 text-gray-500"
-                                          : "text-gray-400",
+                                      className={cn(
                                         "ml-auto h-5 w-5 shrink-0",
+                                        {
+                                          "rotate-90 text-gray-500": open,
+                                          "text-gray-400": !open,
+                                        },
                                       )}
                                       aria-hidden="true"
                                     />
@@ -136,12 +142,12 @@ export function DrawerMobileWrapper({
                                         {/* 44px */}
                                         <Disclosure.Button
                                           as="div"
-                                          className={classNames(
-                                            pathname === subItem.href
-                                              ? "bg-gray-50"
-                                              : "hover:bg-gray-50",
-                                            "block ",
-                                          )}
+                                          className={cn("block ", {
+                                            "bg-gray-50":
+                                              pathname === subItem.href,
+                                            "hover:bg-gray-50":
+                                              pathname !== subItem.href,
+                                          })}
                                         >
                                           <Link
                                             className="block py-2 pl-9 text-sm font-medium leading-6 text-gray-600"
