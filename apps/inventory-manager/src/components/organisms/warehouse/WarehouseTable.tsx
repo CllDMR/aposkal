@@ -59,7 +59,14 @@ export const WarehouseTable: FC<WarehouseTableProps> = ({
       columnHelper.accessor("title", {
         header: "Title",
         cell({ getValue, row: { original: warehouse } }) {
-          return <Link href={`/warehouses/${warehouse.id}`}>{getValue()}</Link>;
+          return (
+            <Link
+              className="underline hover:text-gray-500"
+              href={`/warehouses/${warehouse.id}`}
+            >
+              {getValue()}
+            </Link>
+          );
         },
         meta: {
           maxWidth: 200,

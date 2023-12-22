@@ -60,7 +60,10 @@ export const ProductCategoryTable: FC<ProductCategoryTableProps> = ({
         header: "Name",
         cell({ getValue, row: { original: productCategory } }) {
           return (
-            <Link href={`/product-categories/${productCategory.id}`}>
+            <Link
+              className="underline hover:text-gray-500"
+              href={`/product-categories/${productCategory.id}`}
+            >
               {getValue()}
             </Link>
           );

@@ -71,7 +71,12 @@ export const SaleOrderTable: FC<SaleOrderTableProps> = ({
         header: "Id",
         cell({ getValue, row: { original: saleOrder } }) {
           return (
-            <Link href={`/sale-orders/${saleOrder.id}`}>{getValue()}</Link>
+            <Link
+              className="underline hover:text-gray-500"
+              href={`/sale-orders/${saleOrder.id}`}
+            >
+              {getValue()}
+            </Link>
           );
         },
         meta: {

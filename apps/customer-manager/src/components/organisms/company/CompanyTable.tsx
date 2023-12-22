@@ -69,7 +69,14 @@ export const CompanyTable: FC<CompanyTableProps> = ({
       columnHelper.accessor("title", {
         header: "Title",
         cell({ getValue, row: { original: company } }) {
-          return <Link href={`/companies/${company.id}`}>{getValue()}</Link>;
+          return (
+            <Link
+              className="underline hover:text-gray-500"
+              href={`/companies/${company.id}`}
+            >
+              {getValue()}
+            </Link>
+          );
         },
         meta: {
           maxWidth: 200,

@@ -60,7 +60,12 @@ export const ProductTagTable: FC<ProductTagTableProps> = ({
         header: "Name",
         cell({ getValue, row: { original: productTag } }) {
           return (
-            <Link href={`/product-tags/${productTag.id}`}>{getValue()}</Link>
+            <Link
+              className="underline hover:text-gray-500"
+              href={`/product-tags/${productTag.id}`}
+            >
+              {getValue()}
+            </Link>
           );
         },
         meta: {

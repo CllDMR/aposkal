@@ -60,7 +60,14 @@ export const SupplierTable: FC<SupplierTableProps> = ({
       columnHelper.accessor("name", {
         header: "Name",
         cell({ getValue, row: { original: supplier } }) {
-          return <Link href={`/suppliers/${supplier.id}`}>{getValue()}</Link>;
+          return (
+            <Link
+              className="underline hover:text-gray-500"
+              href={`/suppliers/${supplier.id}`}
+            >
+              {getValue()}
+            </Link>
+          );
         },
         meta: {
           maxWidth: 200,

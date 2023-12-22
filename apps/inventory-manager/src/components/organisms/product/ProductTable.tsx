@@ -65,7 +65,14 @@ export const ProductTable: FC<ProductTableProps> = ({
       columnHelper.accessor("name", {
         header: "Name",
         cell({ getValue, row: { original: product } }) {
-          return <Link href={`/products/${product.id}`}>{getValue()}</Link>;
+          return (
+            <Link
+              className="underline hover:text-gray-500"
+              href={`/products/${product.id}`}
+            >
+              {getValue()}
+            </Link>
+          );
         },
         meta: {
           maxWidth: 200,
