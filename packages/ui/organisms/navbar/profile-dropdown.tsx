@@ -107,7 +107,7 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({
                     encodeURIComponent(basePath + pathName)
                   }
                   className={cn(
-                    "block px-3 py-1 text-sm leading-6 text-gray-900",
+                    "block whitespace-nowrap px-3 py-1 text-sm leading-6 text-gray-900",
                     { "bg-gray-50": active },
                   )}
                 >
