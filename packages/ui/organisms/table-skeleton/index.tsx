@@ -1,10 +1,18 @@
 import type { FC } from "react";
+import type { RowData } from "@tanstack/react-table";
 
 import { TableBody } from "./TableBody";
 import { TableFooter } from "./TableFooter";
 import { TableGlobalFilter } from "./TableGlobalFilter";
 import { TableHead } from "./TableHead";
 import { TablePagination } from "./TablePagination";
+
+declare module "@tanstack/table-core" {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface ColumnMeta<TData extends RowData, TValue> {
+    maxWidth?: number;
+  }
+}
 
 interface TableSkeletonProps {
   isSelectionMode?: boolean;

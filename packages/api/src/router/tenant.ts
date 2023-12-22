@@ -155,4 +155,12 @@ export const tenantRouter = createTRPCRouter({
         .delete(schema.usersToTenants)
         .where(eq(schema.usersToTenants.userId, input.userId));
     }),
+
+  removeUserMany: protectedProcedure
+    .input(z.string().min(1).array())
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db
+        .delete(schema.usersToTenants)
+        .where(inArray(schema.usersToTenants.userId, input));
+    }),
 });

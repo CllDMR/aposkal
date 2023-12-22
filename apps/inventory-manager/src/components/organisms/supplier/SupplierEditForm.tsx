@@ -32,7 +32,7 @@ export const SupplierEditForm: FC<{ supplier: Supplier }> = ({
 
   const { data: products } = api.product.list.useQuery({});
   const formattedProducts =
-    products?.map((product) => ({
+    products?.products?.map((product) => ({
       id: product.id,
       label: product.name,
       value: product.id,

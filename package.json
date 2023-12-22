@@ -6,7 +6,7 @@
   },
   "packageManager": "pnpm@8.6.12",
   "scripts": {
-    "build": "turbo build",
+    "build": "turbo build --continue",
     "start": "turbo start",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo clean",
@@ -17,7 +17,7 @@
     "format:fix": "turbo format --continue -- --write --cache --cache-location='node_modules/.cache/.prettiercache'",
     "lint": "turbo lint --continue -- --cache --cache-location 'node_modules/.cache/.eslintcache'",
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache'",
-    "typecheck": "turbo typecheck",
+    "typecheck": "turbo typecheck --continue",
     "ci:pull": "turbo ci:pull",
     "ci:build": "turbo ci:build",
     "ci:deploy": "turbo ci:deploy"

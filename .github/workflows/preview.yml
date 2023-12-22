@@ -49,7 +49,7 @@ jobs:
         run: pnpm install
 
       - name: lint, format and type-check
-        run: pnpm lint format typecheck
+        run: pnpm turbo lint format typecheck
 
       - name: Check workspaces
         run: pnpm manypkg check

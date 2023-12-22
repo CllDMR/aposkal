@@ -20,6 +20,13 @@ import { TableGlobalFilter } from "./TableGlobalFilter";
 import { TableHead } from "./TableHead";
 import { TablePagination } from "./TablePagination";
 
+declare module "@tanstack/table-core" {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface ColumnMeta<TData extends RowData, TValue> {
+    maxWidth?: number;
+  }
+}
+
 interface ReactTableProps<TData extends RowData, TValue = unknown> {
   data: TData[];
   totalCount: number;
