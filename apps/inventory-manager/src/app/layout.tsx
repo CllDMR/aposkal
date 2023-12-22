@@ -26,9 +26,11 @@ export default async function Layout(props: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={["font-sans", fontSans.variable].join(" ")}>
-        <Providers headers={headers()} session={session}>
-          {props.children}
-        </Providers>
+        <div>
+          <Providers headers={headers()} session={session}>
+            {props.children}
+          </Providers>
+        </div>
       </body>
     </html>
   );
