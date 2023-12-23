@@ -38,8 +38,6 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({
           alt=""
         />
         <span className="ml-4 hidden lg:flex lg:items-center">
-          {/* {status === "authenticated" && (
-          <> */}
           <span
             className="pr-2 text-sm font-semibold leading-6 text-gray-900"
             aria-hidden="true"
@@ -58,28 +56,6 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({
           >
             {session.user?.tn ?? "No Company"}
           </span>
-          {/* </>
-        )} */}
-          {/* {status === "loading" && (
-          <>
-            <span
-              className="text-sm font-semibold leading-6 text-gray-900"
-              aria-hidden="true"
-            >
-              Loading...
-            </span>
-          </>
-        )} */}
-          {/* {status === "unauthenticated" && (
-          <>
-            <span
-              className="text-sm font-semibold leading-6 text-gray-900"
-              aria-hidden="true"
-            >
-              No User & No Company
-            </span>
-          </>
-        )} */}
           <ChevronDownIcon
             className="ml-2 h-5 w-5 text-gray-400"
             aria-hidden="true"
@@ -100,7 +76,6 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({
             <Menu.Item key={item.name}>
               {({ active }) => (
                 <Link
-                  // href={item.href}
                   href={
                     item.href +
                     "?callbackUrl=" +
