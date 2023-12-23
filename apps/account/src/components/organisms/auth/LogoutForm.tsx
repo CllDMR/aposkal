@@ -28,6 +28,7 @@ export default function LogoutForm() {
           alt="Aposkal Logo"
           width={286.3}
           height={141.73}
+          priority
         />
 
         <Form variant="none" className="" onSubmit={onSubmit}>

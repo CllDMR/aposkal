@@ -78,7 +78,8 @@ export function DrawerMobileWrapper({
                       src="/logo.svg"
                       width={286.3}
                       height={141.73}
-                      alt="Company Logo"
+                      alt="Aposkal Logo"
+                      priority
                     />
                   </div>
                   <nav className="flex flex-1 flex-col">

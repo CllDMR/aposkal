@@ -13,6 +13,7 @@ export const Logo: FC<LogoProps> = (props) => {
       width={200}
       height={200}
       alt="Aposkal Logo"
+      priority
     />
   );
 };

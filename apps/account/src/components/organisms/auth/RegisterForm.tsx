@@ -57,6 +57,7 @@ export default function RegisterForm() {
           alt="Aposkal Logo"
           width={286.3}
           height={141.73}
+          priority
         />
 
         <Form

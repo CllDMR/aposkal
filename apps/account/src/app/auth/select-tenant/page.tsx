@@ -41,9 +41,10 @@ export default async function SelectTenantPage() {
               <Image
                 className="h-48 w-48"
                 src="/logo.svg"
-                alt="Logo"
+                alt="Aposkal Logo"
                 width={286.3}
                 height={141.73}
+                priority
               />
             </div>
             {/* <p className="text-center text-sm text-gray-500">
