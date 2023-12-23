@@ -117,11 +117,21 @@ const main = async () => {
     [];
   let usersToTenantsDatas: (typeof schema.usersToTenants.$inferInsert)[] = [];
 
+  const testUserData = {
+    id: faker.string.nanoid(),
+    email: "test-1@example.com",
+    emailVerified: faker.date.recent(),
+    image: faker.internet.avatar(),
+    name: "Test User-1",
+  };
+
   for (const tenantData of tenantDatas) {
     const _userDatas: (typeof schema.user.$inferInsert)[] =
       faker.helpers.multiple(() => createRandomUser(), {
         count: DATA_SIZE,
       });
+
+    _userDatas.push(testUserData);
 
     const _accountDatas: (typeof schema.account.$inferInsert)[] =
       faker.helpers.multiple(() => createRandomAccount(), {
@@ -355,6 +365,18 @@ const main = async () => {
     productsToTagsDatas.push(..._productsToTagsDatas);
     tenantsToAddressesDatas.push(..._tenantsToAddressesDatas);
     usersToTenantsDatas.push(..._usersToTenantsDatas);
+  }
+
+  const testUserDataIndexes = userDatas
+    .map((elm, idx) => (elm.id === testUserData.id ? idx : ""))
+    .filter((i): i is number => typeof i === "number");
+
+  let diffIndex = 0;
+  for (const testUserDataIndex of testUserDataIndexes) {
+    if (testUserDataIndexes[0] !== testUserDataIndex) {
+      userDatas.splice(testUserDataIndex - diffIndex, 1);
+      diffIndex++;
+    }
   }
 
   const randomTenantToUser = [...userDatas, ...userDatas, ...userDatas]
