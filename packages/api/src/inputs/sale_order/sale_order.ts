@@ -5,23 +5,23 @@ import {
   selectSaleOrderSchema,
 } from "@acme/db/schema/sale_order/sale_order";
 
-export const saleOrderListInput = selectSaleOrderSchema
-  .omit({ id: true, authorId: true, tenantId: true })
-  .partial({
-    createdAt: true,
-    updatedAt: true,
-    addressId: true,
-    companyId: true,
-    companyType: true,
-    enddate: true,
-    priority: true,
-    source: true,
-    startdate: true,
-  })
-  .extend({
-    offset: z.number().default(0),
-    limit: z.number().default(10),
-  });
+export const saleOrderListInput = z.object({
+  ...selectSaleOrderSchema
+    .omit({ id: true, authorId: true, tenantId: true })
+    .partial({
+      createdAt: true,
+      updatedAt: true,
+      addressId: true,
+      companyId: true,
+      companyType: true,
+      enddate: true,
+      priority: true,
+      source: true,
+      startdate: true,
+    }).shape,
+  offset: z.number().default(0),
+  limit: z.number().default(10),
+});
 
 export const saleOrderGetInput = selectSaleOrderSchema.pick({
   id: true,

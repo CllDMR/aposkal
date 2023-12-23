@@ -5,18 +5,18 @@ import {
   selectProductTagSchema,
 } from "@acme/db/schema/product/product_tag";
 
-export const productTagListInput = selectProductTagSchema
-  .omit({ id: true, authorId: true, tenantId: true })
-  .partial({
-    createdAt: true,
-    updatedAt: true,
-    name: true,
-    price: true,
-  })
-  .extend({
-    offset: z.number().default(0),
-    limit: z.number().default(10),
-  });
+export const productTagListInput = z.object({
+  ...selectProductTagSchema
+    .omit({ id: true, authorId: true, tenantId: true })
+    .partial({
+      createdAt: true,
+      updatedAt: true,
+      name: true,
+      price: true,
+    }).shape,
+  offset: z.number().default(0),
+  limit: z.number().default(10),
+});
 
 export const productTagGetInput = selectProductTagSchema.pick({
   id: true,

@@ -5,18 +5,18 @@ import {
   selectProductCategorySchema,
 } from "@acme/db/schema/product/product_category";
 
-export const productCategoryListInput = selectProductCategorySchema
-  .omit({ id: true, authorId: true, tenantId: true })
-  .partial({
-    createdAt: true,
-    updatedAt: true,
-    name: true,
-    price: true,
-  })
-  .extend({
-    offset: z.number().default(0),
-    limit: z.number().default(10),
-  });
+export const productCategoryListInput = z.object({
+  ...selectProductCategorySchema
+    .omit({ id: true, authorId: true, tenantId: true })
+    .partial({
+      createdAt: true,
+      updatedAt: true,
+      name: true,
+      price: true,
+    }).shape,
+  offset: z.number().default(0),
+  limit: z.number().default(10),
+});
 
 export const productCategoryGetInput = selectProductCategorySchema.pick({
   id: true,

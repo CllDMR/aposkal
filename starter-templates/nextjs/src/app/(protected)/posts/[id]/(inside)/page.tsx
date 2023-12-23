@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 
-import { authOptions, getServerSession } from "@acme/auth";
 import { and, db, eq, schema } from "@acme/db";
 
 import { PostCard } from "~/components/organisms/post/PostCard";
@@ -12,7 +11,7 @@ interface PageProps {
 }
 
 export default async function PostPage({ params: { id } }: PageProps) {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   if (!session) throw new Error("No Session");
 
   const post = await db

@@ -1,10 +1,10 @@
-import { authOptions, getServerSession } from "@acme/auth";
+import { auth } from "@acme/auth";
 import { db, desc, eq, schema } from "@acme/db";
 
 import { ProductCreateForm } from "~/components/organisms/product/ProductCreateForm";
 
 export default async function ProductCreatePage() {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   if (!session) throw new Error("No Session");
 
   const productCategories = await db

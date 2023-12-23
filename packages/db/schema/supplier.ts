@@ -38,7 +38,8 @@ export const supplierRelations = relations(supplier, ({ one, many }) => ({
   productsToSuppliers: many(productsToSuppliers),
 }));
 
-export const insertSupplierSchema = createInsertSchema(supplier).extend({
+export const insertSupplierSchema = z.object({
+  ...createInsertSchema(supplier).shape,
   productIds: z.object({ id: z.string() }).array(),
 });
 export const selectSupplierSchema = createSelectSchema(supplier);

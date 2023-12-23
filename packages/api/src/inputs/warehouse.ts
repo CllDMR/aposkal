@@ -5,17 +5,17 @@ import {
   selectWarehouseSchema,
 } from "@acme/db/schema/warehouse";
 
-export const warehouseListInput = selectWarehouseSchema
-  .omit({ id: true, authorId: true, tenantId: true })
-  .partial({
-    createdAt: true,
-    updatedAt: true,
-    title: true,
-  })
-  .extend({
-    offset: z.number().default(0),
-    limit: z.number().default(10),
-  });
+export const warehouseListInput = z.object({
+  ...selectWarehouseSchema
+    .omit({ id: true, authorId: true, tenantId: true })
+    .partial({
+      createdAt: true,
+      updatedAt: true,
+      title: true,
+    }).shape,
+  offset: z.number().default(0),
+  limit: z.number().default(10),
+});
 
 export const warehouseGetInput = selectWarehouseSchema.pick({
   id: true,

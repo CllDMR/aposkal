@@ -1,4 +1,4 @@
-import { authOptions, getServerSession } from "@acme/auth";
+import { auth } from "@acme/auth";
 import { db, desc, eq, schema, sql } from "@acme/db";
 
 import { SaleOrderTable } from "~/components/organisms/sale_order/SaleOrderTable";
@@ -9,7 +9,7 @@ export default async function SaleOrdersPage({
   params: { slug: string };
   searchParams: Record<string, string | string[] | undefined>;
 }) {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   if (!session) throw new Error("No Session");
 
   const pageIndex = +(searchParams.pi ?? 0);

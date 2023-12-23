@@ -48,9 +48,11 @@ export const productRelations = relations(product, ({ one, many }) => ({
   productsToTags: many(productsToTags),
 }));
 
-export const insertProductSchema = createInsertSchema(product).extend({
+export const insertProductSchema = z.object({
+  ...createInsertSchema(product).shape,
   productCategoryId: z.string(),
   productTagIds: z.object({ id: z.string() }).array(),
   // productSupplierId: z.string(),
 });
+
 export const selectProductSchema = createSelectSchema(product);

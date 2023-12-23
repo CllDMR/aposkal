@@ -5,24 +5,24 @@ import {
   selectProductSchema,
 } from "@acme/db/schema/product/product";
 
-export const productListInput = selectProductSchema
-  .omit({ id: true, authorId: true, tenantId: true })
-  .partial({
-    createdAt: true,
-    updatedAt: true,
-    name: true,
-    unitPrice: true,
-    unit: true,
-    currency: true,
-    kdv: true,
-    description: true,
-    gtipNo: true,
-    imageURL: true,
-  })
-  .extend({
-    offset: z.number().default(0),
-    limit: z.number().default(10),
-  });
+export const productListInput = z.object({
+  ...selectProductSchema
+    .omit({ id: true, authorId: true, tenantId: true })
+    .partial({
+      createdAt: true,
+      updatedAt: true,
+      name: true,
+      unitPrice: true,
+      unit: true,
+      currency: true,
+      kdv: true,
+      description: true,
+      gtipNo: true,
+      imageURL: true,
+    }).shape,
+  offset: z.number().default(0),
+  limit: z.number().default(10),
+});
 
 export const productGetInput = selectProductSchema.pick({ id: true });
 

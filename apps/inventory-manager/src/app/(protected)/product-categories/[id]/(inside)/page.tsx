@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { authOptions, getServerSession } from "@acme/auth";
+import { auth } from "@acme/auth";
 import { and, db, eq, schema } from "@acme/db";
 
 import { ProductCategoryCard } from "~/components/organisms/product_category/ProductCategoryCard";
@@ -14,7 +14,7 @@ interface PageProps {
 export default async function ProductCategoryPage({
   params: { id },
 }: PageProps) {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   if (!session) throw new Error("No Session");
 
   const productCategory = await db

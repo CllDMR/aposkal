@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
-import { getServerSession } from "next-auth";
 
-import { authOptions } from "@acme/auth";
+import { auth } from "@acme/auth";
 import { and, db, eq, schema } from "@acme/db";
 
 import { ProductCategoryEditForm } from "~/components/organisms/product_category/ProductCategoryEditForm";
@@ -15,7 +14,7 @@ interface PageProps {
 export default async function ProductCategoryEditPage({
   params: { id },
 }: PageProps) {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   if (!session) throw new Error("No Session");
 
   const productCategory = await db

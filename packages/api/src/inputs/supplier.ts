@@ -5,18 +5,18 @@ import {
   selectSupplierSchema,
 } from "@acme/db/schema/supplier";
 
-export const supplierListInput = selectSupplierSchema
-  .omit({ id: true, authorId: true, tenantId: true })
-  .partial({
-    createdAt: true,
-    updatedAt: true,
-    address: true,
-    name: true,
-  })
-  .extend({
-    offset: z.number().default(0),
-    limit: z.number().default(10),
-  });
+export const supplierListInput = z.object({
+  ...selectSupplierSchema
+    .omit({ id: true, authorId: true, tenantId: true })
+    .partial({
+      createdAt: true,
+      updatedAt: true,
+      address: true,
+      name: true,
+    }).shape,
+  offset: z.number().default(0),
+  limit: z.number().default(10),
+});
 
 export const supplierGetInput = selectSupplierSchema.pick({ id: true });
 

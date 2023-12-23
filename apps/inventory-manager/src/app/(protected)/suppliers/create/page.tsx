@@ -1,10 +1,10 @@
-import { authOptions, getServerSession } from "@acme/auth";
+import { auth } from "@acme/auth";
 import { db, desc, eq, schema } from "@acme/db";
 
 import { SupplierCreateForm } from "~/components/organisms/supplier/SupplierCreateForm";
 
 export default async function SupplierCreatePage() {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   if (!session) throw new Error("No Session");
 
   const products = await db.query.product.findMany({

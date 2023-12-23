@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth";
 
-import { authOptions } from "@acme/auth";
+import "@acme/auth";
+
 import { Drawer, DrawerMobileWrapper, Navbar } from "@acme/ui/organisms";
 import type { DrawerNavigationPath } from "@acme/ui/organisms/drawer";
 import type { NavbarNavigationPath } from "@acme/ui/organisms/navbar";
@@ -68,7 +69,7 @@ const drawerNavigationPaths: DrawerNavigationPath[] = [
 ];
 
 export default async function Layout(props: { children: React.ReactNode }) {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   if (!session) throw new Error("No session");
 
   return (

@@ -57,8 +57,9 @@ export const saleOfferRelations = relations(saleOffer, ({ one, many }) => ({
   saleOfferNotes: many(saleOfferNote),
 }));
 
-export const insertSaleOfferSchema = createInsertSchema(saleOffer)
-  .extend({
+export const insertSaleOfferSchema = z
+  .object({
+    ...createInsertSchema(saleOffer).shape,
     companyId: z.string(),
     addressId: z.string(),
     saleOfferProducts: z

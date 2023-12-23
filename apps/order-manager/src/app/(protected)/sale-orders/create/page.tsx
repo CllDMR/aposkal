@@ -1,10 +1,10 @@
-import { authOptions, getServerSession } from "@acme/auth";
+import { auth } from "@acme/auth";
 import { db, desc, eq, schema } from "@acme/db";
 
 import { SaleOrderCreateForm } from "~/components/organisms/sale_order/SaleOrderCreateForm";
 
 export default async function SaleOrderCreatePage() {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   if (!session) throw new Error("No Session");
 
   const addresses = await db

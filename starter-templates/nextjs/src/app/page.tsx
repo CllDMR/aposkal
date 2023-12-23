@@ -1,10 +1,9 @@
-import { authOptions, getServerSession } from "@acme/auth";
 import { LinkButton } from "@acme/ui/molecules";
 
 // export const runtime = "edge";
 
 export default async function HomePage() {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
 
   return (
     <main>

@@ -5,17 +5,17 @@ import {
   selectPurchaseOrderSchema,
 } from "@acme/db/schema/purchase_order";
 
-export const purchaseOrderListInput = selectPurchaseOrderSchema
-  .omit({ id: true, authorId: true, tenantId: true })
-  .partial({
-    createdAt: true,
-    updatedAt: true,
-    title: true,
-  })
-  .extend({
-    offset: z.number().default(0),
-    limit: z.number().default(10),
-  });
+export const purchaseOrderListInput = z.object({
+  ...selectPurchaseOrderSchema
+    .omit({ id: true, authorId: true, tenantId: true })
+    .partial({
+      createdAt: true,
+      updatedAt: true,
+      title: true,
+    }).shape,
+  offset: z.number().default(0),
+  limit: z.number().default(10),
+});
 
 export const purchaseOrderGetInput = selectPurchaseOrderSchema.pick({
   id: true,

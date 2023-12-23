@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { authOptions, getServerSession } from "@acme/auth";
+import { auth } from "@acme/auth";
 import { and, db, eq, schema } from "@acme/db";
 
 import { SaleOfferCard } from "~/components/organisms/sale_offer/SaleOfferCard";
@@ -12,7 +12,7 @@ interface PageProps {
 }
 
 export default async function SaleOfferPage({ params: { id } }: PageProps) {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   if (!session) throw new Error("No Session");
 
   const saleOffer = await db.query.saleOffer.findFirst({

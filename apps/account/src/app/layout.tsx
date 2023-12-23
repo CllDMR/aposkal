@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 
 import "~/styles/globals.css";
 
-import { authOptions, getServerSession } from "@acme/auth";
+import { auth } from "@acme/auth";
 
 import { Providers } from "./providers";
 
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Layout(props: { children: React.ReactNode }) {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   return (
     <html lang="en">

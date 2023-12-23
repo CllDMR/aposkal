@@ -53,7 +53,8 @@ export const saleOrderRelations = relations(saleOrder, ({ one }) => ({
   }),
 }));
 
-export const insertSaleOrderSchema = createInsertSchema(saleOrder).extend({
+export const insertSaleOrderSchema = z.object({
+  ...createInsertSchema(saleOrder).shape,
   companyId: z.string(),
   addressId: z.string(),
 });

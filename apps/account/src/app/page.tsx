@@ -1,6 +1,6 @@
 // export const runtime = "edge";
 
-import { authOptions, getServerSession } from "@acme/auth";
+import { auth } from "@acme/auth";
 import {
   CallToAction,
   Faqs,
@@ -30,7 +30,7 @@ const navbarNavigationPaths: NavbarNavigationPath[] = [
 
 export default async function HomePage() {
   const baseUrl = getBaseUrl() ?? "";
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   return (
     <>

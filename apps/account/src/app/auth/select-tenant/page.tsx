@@ -1,14 +1,14 @@
 import Image from "next/image";
 
 import type { RouterOutputs } from "@acme/api";
-import { authOptions, getServerSession } from "@acme/auth";
+import { auth } from "@acme/auth";
 import { db, desc, eq, inArray, schema } from "@acme/db";
 
 import { CreateTenant } from "~/components/organisms/auth/CreateTenant";
 import { SelectTenant } from "~/components/organisms/auth/SelectTenant";
 
 export default async function SelectTenantPage() {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   if (!session) throw new Error("No Session");
 
   const usertenants = await db

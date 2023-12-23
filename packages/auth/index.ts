@@ -1,5 +1,4 @@
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
-import type { NextAuthOptions, Session } from "next-auth";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
@@ -7,14 +6,8 @@ import { db, eq, schema, tableCreator } from "@acme/db";
 
 import { env } from "./env.mjs";
 
-// import { sendMail } from "./mailer";
+export type { Session } from "@auth/core";
 
-export type { Session } from "next-auth";
-export { getServerSession } from "next-auth/next";
-export { signIn, signOut, useSession } from "next-auth/react";
-export type { SessionContextValue } from "next-auth/react";
-
-// Update this whenever adding new providers so that the client can
 export const providers = [""] as const;
 export type OAuthProviders = (typeof providers)[number];
 
@@ -22,7 +15,39 @@ const domain = process.env.NODE_ENV === "production" ? env.DOMAIN : undefined;
 const cookiePrefix = "__Secure";
 const useSecureCookies = process.env.NODE_ENV === "production";
 
-export const authOptions: NextAuthOptions = {
+const getBaseUrl = () => {
+  if (typeof window !== "undefined") return ""; // browser should use relative url
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+  if ((env as any).NEXT_PUBLIC_BASE_URL)
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-explicit-any
+    return (env as any).NEXT_PUBLIC_BASE_URL;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-explicit-any
+  if ((env as any).VERCEL_URL!) return (env as any).VERCEL_URL; // SSR should use vercel url
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+  return `http://localhost:${(env as any).PORT}`; // dev SSR should use localhost
+};
+
+const getBaseAuthUrl = () => {
+  return env.NEXTAUTH_URL;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+const baseUrl = getBaseUrl();
+// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+const encodedBaseUrlQuery = `?callbackUrl=${encodeURIComponent(baseUrl)}`;
+const baseAuthUrl = getBaseAuthUrl();
+
+const toAuthURL = (path: string) =>
+  `${baseAuthUrl}${path}${encodedBaseUrlQuery}`;
+
+export const {
+  handlers: { GET, POST },
+  auth,
+  signIn,
+  signOut,
+  update,
+} = NextAuth({
   session: { strategy: "jwt" },
   cookies: {
     sessionToken: {
@@ -89,9 +114,10 @@ export const authOptions: NextAuthOptions = {
   },
   adapter: DrizzleAdapter(db, tableCreator),
   pages: {
-    signIn: "/auth/login",
-    signOut: "/auth/logout",
-    newUser: "/auth/register",
+    signIn: toAuthURL("/auth/login"),
+    signOut: toAuthURL("/auth/logout"),
+    newUser: toAuthURL("/auth/register"),
+    verifyRequest: toAuthURL("/auth/verify-email"),
   },
   providers: [
     Credentials({
@@ -111,7 +137,7 @@ export const authOptions: NextAuthOptions = {
         const user = await db
           .select()
           .from(schema.user)
-          .where(eq(schema.user.email, credentials.email))
+          .where(eq(schema.user.email, credentials.email as string))
           .limit(1)
           .then((a) => a[0]);
 
@@ -141,7 +167,7 @@ export const authOptions: NextAuthOptions = {
         const user = await db
           .select()
           .from(schema.user)
-          .where(eq(schema.user.email, credentials.email))
+          .where(eq(schema.user.email, credentials.email as string))
           .limit(1)
           .then((a) => a[0]);
 
@@ -150,15 +176,15 @@ export const authOptions: NextAuthOptions = {
           await db
             .insert(schema.user)
             .values({
-              email: credentials.email,
-              name: credentials.name,
+              email: credentials.email as string,
+              name: credentials.name as string,
             })
             .execute();
 
           const newUser = await db
             .select()
             .from(schema.user)
-            .where(eq(schema.user.email, credentials.email))
+            .where(eq(schema.user.email, credentials.email as string))
             .limit(1)
             .then((a) => a[0]);
 
@@ -214,7 +240,7 @@ export const authOptions: NextAuthOptions = {
       ...session,
       user: {
         ...session.user,
-        id: token.sub,
+        id: token.sub!,
         ti: token.ti,
         tn: token.tn,
         email: token.email,
@@ -261,8 +287,10 @@ export const authOptions: NextAuthOptions = {
           break;
         case "update":
           if (session) {
-            token.ti = (session as Session)?.user.ti;
-            token.tn = (session as Session)?.user.tn;
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            token.ti = session?.user.ti;
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            token.tn = session?.user.tn;
           }
           break;
 
@@ -272,6 +300,18 @@ export const authOptions: NextAuthOptions = {
 
       return token;
     },
+    authorized: ({ auth, request }) => {
+      if (request.nextUrl.pathname.startsWith("/auth"))
+        if (request.nextUrl.pathname.startsWith("/auth/register")) return true;
+        else return !!auth?.user.id && !!auth?.user.email;
+
+      return (
+        !!auth?.user?.id &&
+        !!auth?.user.email &&
+        !!auth?.user.ti &&
+        !!auth?.user.tn
+      );
+    },
     // signIn({ account, user, credentials, email, profile }) {
     //   return "";
     // },
@@ -280,7 +320,4 @@ export const authOptions: NextAuthOptions = {
     //   return !!auth?.user;
     // },
   },
-};
-
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-export const handler = NextAuth(authOptions);
+});

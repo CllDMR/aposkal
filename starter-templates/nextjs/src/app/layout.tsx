@@ -6,7 +6,7 @@ import "~/styles/globals.css";
 import { headers } from "next/headers";
 import { getServerSession } from "next-auth";
 
-import { authOptions } from "@acme/auth";
+import "@acme/auth";
 
 import { Providers } from "./providers";
 
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Layout(props: { children: React.ReactNode }) {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
 
   return (
     <html lang="en">

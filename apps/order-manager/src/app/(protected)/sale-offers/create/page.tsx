@@ -1,10 +1,10 @@
-import { authOptions, getServerSession } from "@acme/auth";
+import { auth } from "@acme/auth";
 import { db, desc, eq, schema } from "@acme/db";
 
 import { SaleOfferCreateForm } from "~/components/organisms/sale_offer/SaleOfferCreateForm";
 
 export default async function SaleOfferCreatePage() {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   if (!session) throw new Error("No Session");
 
   const companies = await db.query.company.findMany({
