@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
@@ -23,6 +24,15 @@ const registerInput = z.object({
 });
 
 export default function RegisterForm() {
+  const searchParamsCallbackUrls =
+    useSearchParams().getAll("callbackUrl") ?? [];
+  const params = new URLSearchParams();
+  const combinedCallbackUrls = searchParamsCallbackUrls.reduce(
+    (p, c) => p + c,
+    "",
+  );
+  params.append("callbackUrl", combinedCallbackUrls);
+
   const {
     handleSubmit,
     register,
@@ -86,7 +96,7 @@ export default function RegisterForm() {
 
           <div className="mt-4">
             <Link
-              href="/auth/login"
+              href={`/auth/login?${params.toString()}`}
               className="text-gray-500 hover:text-gray-900 hover:underline focus-visible:text-gray-900 focus-visible:underline"
             >
               <span className="text-sm font-light">

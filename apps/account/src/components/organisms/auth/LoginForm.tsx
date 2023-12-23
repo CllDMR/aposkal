@@ -24,6 +24,12 @@ const loginInput = z.object({
 export default function LoginForm() {
   const searchParamsCallbackUrls =
     useSearchParams().getAll("callbackUrl") ?? [];
+  const params = new URLSearchParams();
+  const combinedCallbackUrls = searchParamsCallbackUrls.reduce(
+    (p, c) => p + c,
+    "",
+  );
+  params.append("callbackUrl", combinedCallbackUrls);
 
   const {
     handleSubmit,
@@ -34,15 +40,6 @@ export default function LoginForm() {
   });
 
   const onSubmit = handleSubmit(async (data) => {
-    const params = new URLSearchParams();
-    const combinedCallbackUrls = searchParamsCallbackUrls.reduce(
-      (p, c) => p + c,
-      "",
-    );
-
-    // params.append("callbackUrl", encodeURIComponent(s));
-    params.append("callbackUrl", combinedCallbackUrls);
-
     await signIn("credentials-login", {
       ...data,
       callbackUrl: `/auth/select-tenant?${params.toString()}`,
@@ -87,7 +84,7 @@ export default function LoginForm() {
 
           <div className="mt-4">
             <Link
-              href="/auth/register"
+              href={`/auth/register?${params.toString()}`}
               className="text-gray-500 hover:text-gray-900 hover:underline focus-visible:text-gray-900 focus-visible:underline"
             >
               <span className="text-sm font-light ">
