@@ -10,6 +10,7 @@ import clsx from "clsx";
 import type { Session } from "next-auth";
 
 import type { NavbarNavigationPath } from "../../navbar";
+import type { AppsDropdownSolution } from "../../navbar/apps-dropdown";
 import { AppsDropdown } from "../../navbar/apps-dropdown";
 import { ProfileDropdown } from "../../navbar/profile-dropdown";
 import { Button } from "../button";
@@ -134,24 +135,25 @@ const MobileNavigation: FC<MobileNavigationProps> = ({
 
 interface HeaderProps {
   baseAuthUrl: string;
+  baseUrl: string;
   hasSessionRedirectPathname?: string;
   hasSessionRedirectButtonTitle?: string;
   session?: Session | null;
   navigationPaths: NavbarNavigationPath[];
   domain: string;
+  solutions: AppsDropdownSolution[];
 }
 
 export const Header: FC<HeaderProps> = ({
   baseAuthUrl,
+  baseUrl,
   hasSessionRedirectPathname = "/dashboard",
   hasSessionRedirectButtonTitle = "Dashboard",
   session,
   navigationPaths,
   domain,
+  solutions,
 }) => {
-  const basePath =
-    // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-    (typeof window !== "undefined" && window.location.origin) ?? "";
   const pathName = usePathname();
 
   return (
@@ -172,7 +174,11 @@ export const Header: FC<HeaderProps> = ({
           {session ? (
             <div className="flex items-center gap-x-5 md:gap-x-8">
               <div className="flex items-center gap-x-4 lg:gap-x-6">
-                <AppsDropdown domain={domain} />
+                <AppsDropdown
+                  goToPathname={false}
+                  solutions={solutions}
+                  domain={domain}
+                />
 
                 <button
                   type="button"
@@ -205,7 +211,11 @@ export const Header: FC<HeaderProps> = ({
           ) : (
             <div className="flex items-center gap-x-5 md:gap-x-8">
               <div className="flex items-center gap-x-4 lg:gap-x-6">
-                <AppsDropdown domain={domain} />
+                <AppsDropdown
+                  goToPathname={false}
+                  solutions={solutions}
+                  domain={domain}
+                />
 
                 <button
                   type="button"
@@ -222,7 +232,7 @@ export const Header: FC<HeaderProps> = ({
                     baseAuthUrl +
                     "/auth/login" +
                     "?callbackUrl=" +
-                    encodeURIComponent(basePath + pathName)
+                    encodeURIComponent(baseUrl + pathName)
                   }
                 >
                   Giriş
@@ -233,7 +243,7 @@ export const Header: FC<HeaderProps> = ({
                   baseAuthUrl +
                   "/auth/register" +
                   "?callbackUrl=" +
-                  encodeURIComponent(basePath + pathName)
+                  encodeURIComponent(baseUrl + pathName)
                 }
                 color="blue"
               >

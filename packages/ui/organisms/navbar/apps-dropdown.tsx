@@ -4,50 +4,20 @@ import type { FC } from "react";
 import { Fragment } from "react";
 import { Popover, Transition } from "@headlessui/react";
 
-const solutions = [
-  {
-    name: "Membership Manager",
-    description: "Control your accounts, users, organizations and billing",
-    subdomain: "account",
-    port: "3000",
-    pathname: "/",
-    icon: IconOne,
-  },
-  {
-    name: "Inventory Manager",
-    description: "Keep your products organized",
-    subdomain: "inventory",
-    port: "3001",
-    pathname: "/dashboard",
-    icon: IconTwo,
-  },
-  {
-    name: "Logistic Manager",
-    description: "Track and analyze your logictics",
-    subdomain: "logistic",
-    port: "3002",
-    pathname: "/dashboard",
-    icon: IconThree,
-  },
-  {
-    name: "Order Manager",
-    description: "Interact with your orders of customers and suppliers",
-    subdomain: "order",
-    port: "3003",
-    pathname: "/dashboard",
-    icon: IconThree,
-  },
-  {
-    name: "Customer Manager",
-    description: "Manage and track relationships with your customers",
-    subdomain: "customer",
-    port: "3004",
-    pathname: "/dashboard",
-    icon: IconThree,
-  },
-];
+export interface AppsDropdownSolution {
+  name: string;
+  subdomain: string;
+  pathname: string;
+  port: number;
+  description: string;
+  iconName: "one" | "two" | "three";
+}
 
-export const AppsDropdown: FC<{ domain: string }> = ({ domain }) => (
+export const AppsDropdown: FC<{
+  goToPathname: boolean;
+  domain: string;
+  solutions: AppsDropdownSolution[];
+}> = ({ goToPathname, domain, solutions }) => (
   <Popover className="relative">
     {({ open }) => (
       <>
@@ -92,13 +62,15 @@ export const AppsDropdown: FC<{ domain: string }> = ({ domain }) => (
                           item.subdomain +
                           "." +
                           domain +
-                          item.pathname
-                        : "http://localhost:" + item.port + item.pathname
+                          (goToPathname ? item.pathname : "")
+                        : "http://localhost:" +
+                          item.port +
+                          (goToPathname ? item.pathname : "")
                     }
                     className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-primary-500 focus-visible:ring-opacity-50"
                   >
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center text-white sm:h-12 sm:w-12">
-                      <item.icon aria-hidden="true" />
+                      {renderIcon(item.iconName)}
                     </div>
                     <div className="ml-4">
                       <p className="text-sm font-medium text-gray-900">
@@ -133,6 +105,20 @@ export const AppsDropdown: FC<{ domain: string }> = ({ domain }) => (
     )}
   </Popover>
 );
+
+const renderIcon = (iconName: AppsDropdownSolution["iconName"]) => {
+  switch (iconName) {
+    case "one":
+      return <IconOne aria-hidden="true" />;
+    case "two":
+      return <IconTwo aria-hidden="true" />;
+    case "three":
+      return <IconThree aria-hidden="true" />;
+
+    default:
+      return null;
+  }
+};
 
 function IconOne() {
   return (

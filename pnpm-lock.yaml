@@ -14,6 +14,9 @@ importers:
       '@manypkg/cli':
         specifier: ^0.21.0
         version: 0.21.0
+      dotenv:
+        specifier: ^16.3.1
+        version: 16.3.1
       prettier:
         specifier: ^3.0.2
         version: 3.0.2
@@ -307,9 +310,6 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.7
         version: 18.2.7
-      dotenv-cli:
-        specifier: ^7.3.0
-        version: 7.3.0
       eslint:
         specifier: ^8.47.0
         version: 8.47.0
@@ -455,9 +455,6 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.7
         version: 18.2.7
-      dotenv-cli:
-        specifier: ^7.3.0
-        version: 7.3.0
       eslint:
         specifier: ^8.47.0
         version: 8.47.0
@@ -603,9 +600,6 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.7
         version: 18.2.7
-      dotenv-cli:
-        specifier: ^7.3.0
-        version: 7.3.0
       eslint:
         specifier: ^8.47.0
         version: 8.47.0
@@ -760,9 +754,6 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.7
         version: 18.2.7
-      dotenv-cli:
-        specifier: ^7.3.0
-        version: 7.3.0
       eslint:
         specifier: ^8.47.0
         version: 8.47.0
@@ -4003,7 +3994,6 @@ packages:
   /dotenv@16.3.1:
     resolution: {integrity: sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==}
     engines: {node: '>=12'}
-    dev: true
 
   /dreamopt@0.8.0:
     resolution: {integrity: sha512-vyJTp8+mC+G+5dfgsY+r3ckxlz+QMX40VjPQsZc5gxVAxLmi64TBoVkP54A/pRAXMXsbu2GMMBrZPxNv23waMg==}

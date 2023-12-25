@@ -32,8 +32,8 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # local env files
-.env
-.env*.local
+.env*
+!.env.vault
 
 # vercel
 # .vercel
@@ -50,3 +50,6 @@ yarn-error.log*
 # act - local github actions
 act.secrets
 act.variables
+
+.flaskenv*
+!.env.project

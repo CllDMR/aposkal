@@ -11,35 +11,9 @@ export type { Session } from "@auth/core";
 export const providers = [""] as const;
 export type OAuthProviders = (typeof providers)[number];
 
-const domain = process.env.NODE_ENV === "production" ? env.DOMAIN : undefined;
+const domain = env.NODE_ENV === "production" ? env.DOMAIN : undefined;
 const cookiePrefix = "__Secure";
-const useSecureCookies = process.env.NODE_ENV === "production";
-
-const getBaseUrl = () => {
-  if (typeof window !== "undefined") return ""; // browser should use relative url
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-  if ((env as any).NEXT_PUBLIC_BASE_URL)
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-explicit-any
-    return (env as any).NEXT_PUBLIC_BASE_URL;
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-explicit-any
-  if ((env as any).VERCEL_URL!) return (env as any).VERCEL_URL; // SSR should use vercel url
-
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-  return `http://localhost:${(env as any).PORT}`; // dev SSR should use localhost
-};
-
-const getBaseAuthUrl = () => {
-  return env.NEXTAUTH_URL;
-};
-
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-const baseUrl = getBaseUrl();
-// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-const encodedBaseUrlQuery = `?callbackUrl=${encodeURIComponent(baseUrl)}`;
-const baseAuthUrl = getBaseAuthUrl();
-
-const toAuthURL = (path: string) =>
-  `${baseAuthUrl}${path}${encodedBaseUrlQuery}`;
+const useSecureCookies = env.NODE_ENV === "production";
 
 export const {
   handlers: { GET, POST },
@@ -51,7 +25,10 @@ export const {
   session: { strategy: "jwt" },
   cookies: {
     sessionToken: {
-      name: `__Secure-next-auth.session-token`,
+      name:
+        env.NODE_ENV === "production"
+          ? `__Secure-next-auth.session-token`
+          : `next-auth.session-token`,
       options: {
         httpOnly: true,
         sameSite: "lax",
@@ -61,63 +38,77 @@ export const {
       },
     },
     callbackUrl: {
-      name: `__Secure-next-auth.callback-url`,
+      name:
+        env.NODE_ENV === "production"
+          ? `__Secure-next-auth.callback-url`
+          : `next-auth.callback-url`,
       options: {
         sameSite: "lax",
         path: "/",
         secure: true,
-        // domain,
+        domain,
       },
     },
     csrfToken: {
-      name: `__Host-next-auth.csrf-token`,
+      name:
+        env.NODE_ENV === "production"
+          ? `__Host-next-auth.csrf-token`
+          : `next-auth.csrf-token`,
       options: {
         httpOnly: true,
         sameSite: "lax",
         path: "/",
         secure: true,
-        // domain,
+        domain,
       },
     },
     pkceCodeVerifier: {
-      name: `${cookiePrefix}next-auth.pkce.code_verifier`,
+      name:
+        env.NODE_ENV === "production"
+          ? `${cookiePrefix}next-auth.pkce.code_verifier`
+          : `next-auth.pkce.code_verifier`,
       options: {
         httpOnly: true,
         sameSite: "lax",
         path: "/",
         secure: useSecureCookies,
         maxAge: 900,
-        // domain,
+        domain,
       },
     },
     state: {
-      name: `${cookiePrefix}next-auth.state`,
+      name:
+        env.NODE_ENV === "production"
+          ? `${cookiePrefix}next-auth.state`
+          : `next-auth.state`,
       options: {
         httpOnly: true,
         sameSite: "lax",
         path: "/",
         secure: useSecureCookies,
         maxAge: 900,
-        // domain,
+        domain,
       },
     },
     nonce: {
-      name: `${cookiePrefix}next-auth.nonce`,
+      name:
+        env.NODE_ENV === "production"
+          ? `${cookiePrefix}next-auth.nonce`
+          : `next-auth.nonce`,
       options: {
         httpOnly: true,
         sameSite: "lax",
         path: "/",
         secure: useSecureCookies,
-        // domain,
+        domain,
       },
     },
   },
   adapter: DrizzleAdapter(db, tableCreator),
   pages: {
-    signIn: toAuthURL("/auth/login"),
-    signOut: toAuthURL("/auth/logout"),
-    newUser: toAuthURL("/auth/register"),
-    verifyRequest: toAuthURL("/auth/verify-email"),
+    signIn: "/auth/login",
+    signOut: "/auth/logout",
+    newUser: "/auth/register",
   },
   providers: [
     Credentials({
@@ -188,37 +179,37 @@ export const {
             .limit(1)
             .then((a) => a[0]);
 
-          if (typeof window === "undefined") {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            const {
-              createTransport,
-              getTestMessageUrl,
-              // eslint-disable-next-line @typescript-eslint/no-var-requires
-            } = require("nodemailer");
+          // if (typeof window === "undefined") {
+          //   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          //   const {
+          //     createTransport,
+          //     getTestMessageUrl,
+          //     // eslint-disable-next-line @typescript-eslint/no-var-requires
+          //   } = require("nodemailer");
 
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-            const transporter = createTransport({
-              host: "smtp.ethereal.email",
-              port: 587,
-              auth: {
-                user: "clotilde.weissnat@ethereal.email",
-                pass: "GJ2BZFrt8zG3YQd9JD",
-              },
-            });
+          //   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+          //   const transporter = createTransport({
+          //     host: "smtp.ethereal.email",
+          //     port: 587,
+          //     auth: {
+          //       user: "clotilde.weissnat@ethereal.email",
+          //       pass: "GJ2BZFrt8zG3YQd9JD",
+          //     },
+          //   });
 
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-            const info = await transporter.sendMail({
-              from: '"Clotilde Weissnat" <clotilde.weissnat@ethereal.email>', // sender address
-              to: credentials.email, // list of receivers
-              subject: "Verify Your Email", // Subject line
-              html: `<a href='http://localhost:3000/auth/verify-email?token=${
-                newUser!.id
-              }'>Verify email</a>`, // html body
-            });
+          //   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+          //   const info = await transporter.sendMail({
+          //     from: '"Clotilde Weissnat" <clotilde.weissnat@ethereal.email>', // sender address
+          //     to: credentials.email, // list of receivers
+          //     subject: "Verify Your Email", // Subject line
+          //     html: `<a href='http://localhost:3000/auth/verify-email?token=${
+          //       newUser!.id
+          //     }'>Verify email</a>`, // html body
+          //   });
 
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-            console.log(getTestMessageUrl(info));
-          }
+          //   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+          //   console.log(getTestMessageUrl(info));
+          // }
 
           // await sendMail({
           //   to: credentials.email,

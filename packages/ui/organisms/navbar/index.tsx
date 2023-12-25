@@ -5,6 +5,7 @@ import { Bars3Icon, BellIcon } from "@heroicons/react/24/outline";
 import type { Session } from "next-auth";
 
 import { useSidebarStore } from "../../store/sidebar";
+import type { AppsDropdownSolution } from "./apps-dropdown";
 import { AppsDropdown } from "./apps-dropdown";
 import { ProfileDropdown } from "./profile-dropdown";
 
@@ -13,6 +14,7 @@ type NavbarProps = PropsWithChildren & {
   navigationPaths: NavbarNavigationPath[];
   domain: string;
   projectName: string;
+  solutions: AppsDropdownSolution[];
 };
 
 export interface NavbarNavigationPath {
@@ -26,6 +28,7 @@ export const Navbar: FC<NavbarProps> = ({
   navigationPaths,
   domain,
   projectName,
+  solutions,
 }) => {
   const { setOpen } = useSidebarStore();
 
@@ -54,7 +57,7 @@ export const Navbar: FC<NavbarProps> = ({
             {projectName}
           </div>
 
-          <AppsDropdown domain={domain} />
+          <AppsDropdown goToPathname domain={domain} solutions={solutions} />
 
           <button
             type="button"

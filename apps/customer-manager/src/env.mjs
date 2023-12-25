@@ -7,14 +7,35 @@ export const env = createEnv({
       .string()
       .optional()
       .transform((v) => (v ? `https://${v}` : undefined)),
-    PORT: z.coerce.number().default(3001),
+    NODE_ENV: z.union([
+      z.literal("production"),
+      z.literal("development"),
+      z.literal("test"),
+    ]),
   },
   /**
    * Specify your server-side environment variables schema here. This way you can ensure the app isn't
    * built with invalid env vars.
    */
   server: {
+    ACCOUNT_SUBDOMAIN: z.string(),
+    ACCOUNT_PORT: z.coerce.number(),
+
+    CUSTOMER_SUBDOMAIN: z.string(),
+    CUSTOMER_PORT: z.coerce.number(),
+
+    INVENTORY_SUBDOMAIN: z.string(),
+    INVENTORY_PORT: z.coerce.number(),
+
+    LOGISTIC_SUBDOMAIN: z.string(),
+    LOGISTIC_PORT: z.coerce.number(),
+
+    ORDER_SUBDOMAIN: z.string(),
+    ORDER_PORT: z.coerce.number(),
+
     DOMAIN: z.string(),
+    PORT: z.coerce.number(),
+
     NEXTAUTH_URL: z.string().url(),
     DATABASE_URL: z.string().url(),
   },
@@ -29,10 +50,28 @@ export const env = createEnv({
    * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
    */
   runtimeEnv: {
+    NODE_ENV: process.env.NODE_ENV,
+
+    ACCOUNT_SUBDOMAIN: process.env.ACCOUNT_SUBDOMAIN,
+    ACCOUNT_PORT: process.env.ACCOUNT_PORT,
+
+    CUSTOMER_SUBDOMAIN: process.env.CUSTOMER_SUBDOMAIN,
+    CUSTOMER_PORT: process.env.CUSTOMER_PORT,
+
+    INVENTORY_SUBDOMAIN: process.env.INVENTORY_SUBDOMAIN,
+    INVENTORY_PORT: process.env.INVENTORY_PORT,
+
+    LOGISTIC_SUBDOMAIN: process.env.LOGISTIC_SUBDOMAIN,
+    LOGISTIC_PORT: process.env.LOGISTIC_PORT,
+
+    ORDER_SUBDOMAIN: process.env.ORDER_SUBDOMAIN,
+    ORDER_PORT: process.env.ORDER_PORT,
+
     DOMAIN: process.env.DOMAIN,
+    PORT: process.env.CUSTOMER_PORT,
+
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     VERCEL_URL: process.env.VERCEL_URL,
-    PORT: process.env.PORT,
     DATABASE_URL: process.env.DATABASE_URL,
     NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
   },

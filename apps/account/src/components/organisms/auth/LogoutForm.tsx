@@ -1,24 +1,17 @@
-"use client";
-
 import Image from "next/image";
-import { signOut } from "next-auth/react";
-import { useForm } from "react-hook-form";
 
-import { Card, Form } from "@acme/ui/atoms";
+import { signOut } from "@acme/auth";
+import { Card } from "@acme/ui/atoms";
 import { Button } from "@acme/ui/molecules";
 
-export default function LogoutForm() {
-  const {
-    handleSubmit,
-    formState: { isSubmitting },
-  } = useForm();
-
-  const onSubmit = handleSubmit(async () => {
-    await signOut({
-      callbackUrl: "/",
-    });
+async function logout() {
+  "use server";
+  await signOut({
+    redirectTo: "/",
   });
+}
 
+export default function LogoutForm() {
   return (
     <div className="grid min-h-screen min-w-full items-center justify-center">
       <Card>
@@ -31,14 +24,14 @@ export default function LogoutForm() {
           priority
         />
 
-        <Form variant="none" className="" onSubmit={onSubmit}>
+        <form action={logout}>
           <div className="mb-6">
             <span>You can logout securely now.</span>
           </div>
-          <Button fullwidth type="submit" disabled={isSubmitting}>
+          <Button fullwidth type="submit">
             Logout
           </Button>
-        </Form>
+        </form>
       </Card>
     </div>
   );

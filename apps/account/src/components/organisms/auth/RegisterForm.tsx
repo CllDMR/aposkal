@@ -4,10 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { signIn } from "@acme/auth";
 import { Card, Form } from "@acme/ui/atoms";
 import { Button, FormInput } from "@acme/ui/molecules";
 

@@ -1,6 +1,6 @@
 {
   "$schema": "https://turborepo.org/schema.json",
-  "globalDependencies": ["**/.env"],
+  "globalDependencies": ["**/.env.*local"],
   "pipeline": {
     "topo": {
       "dependsOn": ["^topo"]
@@ -20,6 +20,9 @@
     "build": {
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**", "next-env.d.ts", ".expo/**"]
+    },
+    "preview": {
+      "dependsOn": ["^preview"]
     },
     "start": {
       "dependsOn": ["^start"]
@@ -48,12 +51,22 @@
     }
   },
   "globalEnv": [
-    "VERCEL_TOKEN",
     "TURBO_TOKEN",
     "TURBO_TEAM",
-    "DATABASE_URL",
+    "VERCEL_TOKEN",
     "NEXTAUTH_URL",
     "NEXTAUTH_SECRET",
+    "DATABASE_URL",
+    "ACCOUNT_SUBDOMAIN",
+    "ACCOUNT_PORT",
+    "CUSTOMER_SUBDOMAIN",
+    "CUSTOMER_PORT",
+    "INVENTORY_SUBDOMAIN",
+    "INVENTORY_PORT",
+    "LOGISTIC_SUBDOMAIN",
+    "LOGISTIC_PORT",
+    "ORDER_SUBDOMAIN",
+    "ORDER_PORT",
     "DOMAIN"
   ]
 }
