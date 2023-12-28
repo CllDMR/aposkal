@@ -16,7 +16,7 @@ import type { NavbarNavigationPath } from "@acme/ui/organisms/navbar";
 import type { AppsDropdownSolution } from "@acme/ui/organisms/navbar/apps-dropdown";
 
 import { env } from "~/env.mjs";
-import { getBaseAuthUrl, getBaseUrl } from "~/utils/get-base-url";
+import { getBaseAuthUrl } from "~/utils/get-base-url";
 
 const baseAuthUrl = getBaseAuthUrl();
 
@@ -73,7 +73,6 @@ const solutions: AppsDropdownSolution[] = [
 ];
 
 export default async function HomePage() {
-  const baseUrl = getBaseUrl() ?? "";
   const baseAuthUrl = getBaseAuthUrl() ?? "";
   const session = await auth();
 
@@ -81,7 +80,6 @@ export default async function HomePage() {
     <>
       <Header
         baseAuthUrl={baseAuthUrl}
-        baseUrl={baseUrl}
         session={session}
         navigationPaths={navbarNavigationPaths}
         domain={env.DOMAIN}

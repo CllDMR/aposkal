@@ -1,4 +1,4 @@
-export { auth as middleware } from "@acme/auth";
+export { auth as default, auth as middleware } from "@acme/auth";
 // import { auth } from "@acme/auth";
 
 // export default auth(() => {

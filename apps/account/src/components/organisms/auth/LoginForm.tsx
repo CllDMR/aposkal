@@ -1,50 +1,14 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn } from "next-auth/react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { AuthError } from "next-auth";
 
-import { Card, Form } from "@acme/ui/atoms";
-import { Button, FormInput } from "@acme/ui/molecules";
+import { signIn } from "@acme/auth";
+import { Card } from "@acme/ui/atoms";
 
-interface LoginFormFields {
-  email: string;
-  password: string;
-}
-
-const loginInput = z.object({
-  email: z.string().email(),
-  password: z.string(),
-});
+import { getBaseUrl } from "~/utils/get-base-url";
 
 export default function LoginForm() {
-  const searchParamsCallbackUrls =
-    useSearchParams().getAll("callbackUrl") ?? [];
-  const params = new URLSearchParams();
-  const combinedCallbackUrls = searchParamsCallbackUrls.reduce(
-    (p, c) => p + c,
-    "",
-  );
-  params.append("callbackUrl", combinedCallbackUrls);
-
-  const {
-    handleSubmit,
-    register,
-    formState: { errors, isSubmitting },
-  } = useForm<LoginFormFields>({
-    resolver: zodResolver(loginInput),
-  });
-
-  const onSubmit = handleSubmit(async (data) => {
-    await signIn("credentials-login", {
-      ...data,
-      callbackUrl: `/auth/select-tenant?${params.toString()}`,
-    });
-  });
+  const baseUrl = getBaseUrl();
 
   return (
     <div className="grid min-h-screen min-w-full items-center justify-center">
@@ -58,48 +22,77 @@ export default function LoginForm() {
           priority
         />
 
-        <Form
-          variant="none"
-          className="flex flex-col space-y-3"
-          onSubmit={onSubmit}
+        <form
+          className="flex flex-col"
+          action={async (formData) => {
+            "use server";
+            const { email, password } = JSON.parse(
+              JSON.stringify(Object.fromEntries(formData)),
+            ) as {
+              email: string;
+              password: string;
+            };
+            try {
+              await signIn("credentials", {
+                email,
+                password,
+
+                redirectTo: baseUrl + "/auth/select-tenant",
+              });
+            } catch (error) {
+              // Handle auth errors
+              if (error instanceof AuthError) throw error;
+              throw error; // Rethrow all other errors
+            }
+          }}
         >
-          <FormInput<LoginFormFields>
-            id="email"
-            label="Email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            errors={errors}
-            register={register}
-          />
+          <div className="flex flex-col">
+            <div className="mb-3">
+              <label
+                className="mr-5 text-sm font-medium leading-6 text-gray-900"
+                htmlFor="email"
+              >
+                Email
+              </label>
+              <input
+                className="block w-full rounded-md border-0 p-3 py-1.5 text-base text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6"
+                type="email"
+                name="email"
+                id="email"
+              />
+            </div>
 
-          <FormInput<LoginFormFields>
-            id="password"
-            label="Password"
-            name="password"
-            type="password"
-            autoComplete="password"
-            errors={errors}
-            register={register}
-          />
+            <div className="mt-3">
+              <label
+                className="mr-5 text-sm font-medium leading-6 text-gray-900"
+                htmlFor="password"
+              >
+                Password
+              </label>
+              <input
+                className="block w-full rounded-md border-0 p-3 py-1.5 text-base text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6"
+                type="password"
+                name="password"
+                id="password"
+              />
+            </div>
+          </div>
 
-          <div className="mt-4">
+          <div className="my-4">
             <Link
-              href={`/auth/register?${params.toString()}`}
+              href={`/auth/register`}
               className="text-gray-500 hover:text-gray-900 hover:underline focus-visible:text-gray-900 focus-visible:underline"
             >
-              <span className="text-sm font-light ">
+              <span className="text-sm font-light">
                 Do not have an account? Register.
               </span>
             </Link>
           </div>
 
-          <div className="mt-4 flex w-full justify-end">
-            <Button type="submit" disabled={isSubmitting}>
-              Login
-            </Button>
-          </div>
-        </Form>
+          <button className="inline-flex items-center justify-center rounded-md bg-primary-100 px-2.5 px-3 py-2 text-sm text-xs font-semibold text-primary-800 shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 disabled:bg-disabled-500 disabled:text-gray-400">
+            Login
+          </button>
+        </form>
       </Card>
     </div>
   );

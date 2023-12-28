@@ -1,5 +1,6 @@
 import { db, eq, schema } from "@acme/db";
-import { LinkButton } from "@acme/ui/molecules";
+
+import VerifyEmailForm from "~/components/organisms/auth/VerifyEmailForm";
 
 export default async function VerifyEmailPage({
   searchParams,
@@ -11,25 +12,5 @@ export default async function VerifyEmailPage({
     .set({ emailVerified: new Date() })
     .where(eq(schema.user.id, searchParams.token));
 
-  return (
-    <main>
-      <h1>Verified your email address</h1>
-
-      <p>{searchParams.token}</p>
-
-      <div className="flex">
-        <LinkButton href="/">Go to Home Page</LinkButton>
-
-        <span>or</span>
-
-        <LinkButton href="/auth/select-tenant">
-          Go to Select Tenant Page
-        </LinkButton>
-
-        <span>or</span>
-
-        <LinkButton href="/auth/logout">Go to Logout Page</LinkButton>
-      </div>
-    </main>
-  );
+  return <VerifyEmailForm />;
 }

@@ -4,7 +4,6 @@ import type { FC } from "react";
 import { Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import type { Session } from "next-auth";
@@ -21,11 +20,6 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({
   navigationPaths,
   session,
 }) => {
-  let basePath = "";
-  if (typeof window !== "undefined") basePath = window?.location.origin;
-
-  const pathName = usePathname();
-
   return (
     <Menu as="div" className="relative">
       <Menu.Button className="-m-1.5 flex items-center p-1.5">
@@ -76,11 +70,7 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({
             <Menu.Item key={item.name}>
               {({ active }) => (
                 <Link
-                  href={
-                    item.href +
-                    "?callbackUrl=" +
-                    encodeURIComponent(basePath + pathName)
-                  }
+                  href={item.href}
                   className={cn(
                     "block whitespace-nowrap px-3 py-1 text-sm leading-6 text-gray-900",
                     { "bg-gray-50": active },

@@ -3,7 +3,6 @@
 import type { FC, PropsWithChildren } from "react";
 import { Fragment } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { Popover, Transition } from "@headlessui/react";
 import { BellIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
@@ -70,11 +69,6 @@ const MobileNavigation: FC<MobileNavigationProps> = ({
   baseAuthUrl,
   session,
 }) => {
-  const basePath =
-    // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-    (typeof window !== "undefined" && window.location.origin) ?? "";
-  const pathName = usePathname();
-
   return (
     <Popover>
       <Popover.Button
@@ -115,14 +109,7 @@ const MobileNavigation: FC<MobileNavigationProps> = ({
             {session ? (
               <MobileNavLink href={"/dashboard"}>Dashboard</MobileNavLink>
             ) : (
-              <MobileNavLink
-                href={
-                  baseAuthUrl +
-                  "/auth/login" +
-                  "?callbackUrl=" +
-                  encodeURIComponent(basePath + pathName)
-                }
-              >
+              <MobileNavLink href={baseAuthUrl + "/auth/login"}>
                 Giriş
               </MobileNavLink>
             )}
@@ -135,7 +122,6 @@ const MobileNavigation: FC<MobileNavigationProps> = ({
 
 interface HeaderProps {
   baseAuthUrl: string;
-  baseUrl: string;
   hasSessionRedirectPathname?: string;
   hasSessionRedirectButtonTitle?: string;
   session?: Session | null;
@@ -146,7 +132,6 @@ interface HeaderProps {
 
 export const Header: FC<HeaderProps> = ({
   baseAuthUrl,
-  baseUrl,
   hasSessionRedirectPathname = "/dashboard",
   hasSessionRedirectButtonTitle = "Dashboard",
   session,
@@ -154,8 +139,6 @@ export const Header: FC<HeaderProps> = ({
   domain,
   solutions,
 }) => {
-  const pathName = usePathname();
-
   return (
     <header className="py-10">
       <Container>
@@ -227,26 +210,9 @@ export const Header: FC<HeaderProps> = ({
               </div>
 
               <div className="hidden md:block">
-                <NavLink
-                  href={
-                    baseAuthUrl +
-                    "/auth/login" +
-                    "?callbackUrl=" +
-                    encodeURIComponent(baseUrl + pathName)
-                  }
-                >
-                  Giriş
-                </NavLink>
+                <NavLink href={baseAuthUrl + "/auth/login"}>Giriş</NavLink>
               </div>
-              <Button
-                href={
-                  baseAuthUrl +
-                  "/auth/register" +
-                  "?callbackUrl=" +
-                  encodeURIComponent(baseUrl + pathName)
-                }
-                color="blue"
-              >
+              <Button href={baseAuthUrl + "/auth/register"} color="blue">
                 <span>
                   Şimdi Kaydol <span className="hidden lg:inline"></span>
                 </span>

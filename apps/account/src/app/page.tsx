@@ -80,7 +80,6 @@ export default async function HomePage() {
     <>
       <Header
         baseAuthUrl={baseUrl}
-        baseUrl={baseUrl}
         hasSessionRedirectPathname="/profile"
         hasSessionRedirectButtonTitle="Profile"
         session={session}
