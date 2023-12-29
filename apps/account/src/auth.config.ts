@@ -12,7 +12,7 @@ export const authConfig = {
     sessionToken: {
       name:
         env.NODE_ENV === "production"
-          ? `__Secure-authjs.session-token`
+          ? `${cookiePrefix}-authjs.session-token`
           : `authjs.session-token`,
       options: {
         httpOnly: true,
@@ -25,7 +25,7 @@ export const authConfig = {
     callbackUrl: {
       name:
         env.NODE_ENV === "production"
-          ? `__Secure-authjs.callback-url`
+          ? `${cookiePrefix}-authjs.callback-url`
           : `authjs.callback-url`,
       options: {
         sameSite: "lax",
@@ -37,7 +37,7 @@ export const authConfig = {
     csrfToken: {
       name:
         env.NODE_ENV === "production"
-          ? `__Host-authjs.csrf-token`
+          ? `${cookiePrefix}-authjs.csrf-token`
           : `authjs.csrf-token`,
       options: {
         httpOnly: true,
@@ -50,7 +50,7 @@ export const authConfig = {
     pkceCodeVerifier: {
       name:
         env.NODE_ENV === "production"
-          ? `${cookiePrefix}authjs.pkce.code_verifier`
+          ? `${cookiePrefix}-authjs.pkce.code_verifier`
           : `authjs.pkce.code_verifier`,
       options: {
         httpOnly: true,
@@ -64,7 +64,7 @@ export const authConfig = {
     state: {
       name:
         env.NODE_ENV === "production"
-          ? `${cookiePrefix}authjs.state`
+          ? `${cookiePrefix}-authjs.state`
           : `authjs.state`,
       options: {
         httpOnly: true,
@@ -78,7 +78,7 @@ export const authConfig = {
     nonce: {
       name:
         env.NODE_ENV === "production"
-          ? `${cookiePrefix}authjs.nonce`
+          ? `${cookiePrefix}-authjs.nonce`
           : `authjs.nonce`,
       options: {
         httpOnly: true,

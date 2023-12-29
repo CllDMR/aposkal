@@ -1,7 +1,7 @@
 "use client";
 
 import type { FC } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import { useSession } from "next-auth/react";
 
@@ -17,7 +17,6 @@ interface SelectTenantProps {
 export const SelectTenant: FC<SelectTenantProps> = ({
   tenants: initialTenants,
 }) => {
-  const searchParamsCallbackUrl = useSearchParams().get("callbackUrl");
   const router = useRouter();
 
   const { data, update } = useSession();
@@ -44,7 +43,7 @@ export const SelectTenant: FC<SelectTenantProps> = ({
                     user: { ...data?.user, ti: tenant.id, tn: tenant.title },
                   });
 
-                  router.push(searchParamsCallbackUrl ?? "/");
+                  router.push("/");
                 }}
               >
                 <button
