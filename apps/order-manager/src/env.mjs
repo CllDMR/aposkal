@@ -44,7 +44,11 @@ export const env = createEnv({
    * For them to be exposed to the client, prefix them with `NEXT_PUBLIC_`.
    */
   client: {
-    NEXT_PUBLIC_BASE_URL: z.string().optional(),
+    NEXT_PUBLIC_ACCOUNT_BASE_URL: z.string(),
+    NEXT_PUBLIC_CUSTOMER_BASE_URL: z.string(),
+    NEXT_PUBLIC_INVENTORY_BASE_URL: z.string(),
+    NEXT_PUBLIC_LOGISTIC_BASE_URL: z.string(),
+    NEXT_PUBLIC_ORDER_BASE_URL: z.string(),
   },
   /**
    * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
@@ -73,7 +77,12 @@ export const env = createEnv({
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     VERCEL_URL: process.env.VERCEL_URL,
     DATABASE_URL: process.env.DATABASE_URL,
-    NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
+
+    NEXT_PUBLIC_ACCOUNT_BASE_URL: process.env.NEXT_PUBLIC_ACCOUNT_BASE_URL,
+    NEXT_PUBLIC_CUSTOMER_BASE_URL: process.env.NEXT_PUBLIC_CUSTOMER_BASE_URL,
+    NEXT_PUBLIC_INVENTORY_BASE_URL: process.env.NEXT_PUBLIC_INVENTORY_BASE_URL,
+    NEXT_PUBLIC_LOGISTIC_BASE_URL: process.env.NEXT_PUBLIC_LOGISTIC_BASE_URL,
+    NEXT_PUBLIC_ORDER_BASE_URL: process.env.NEXT_PUBLIC_ORDER_BASE_URL,
   },
   skipValidation:
     !!process.env.CI ||

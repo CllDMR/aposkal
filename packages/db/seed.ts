@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { Client } from "@planetscale/database";
+import { hash } from "bcrypt";
 import * as dotenv from "dotenv";
 import { drizzle } from "drizzle-orm/planetscale-serverless";
 
@@ -117,19 +118,25 @@ const main = async () => {
     [];
   let usersToTenantsDatas: (typeof schema.usersToTenants.$inferInsert)[] = [];
 
+  const saltRounds = 13;
+  const testPassword = "123456";
+
   const testUserData = {
     id: faker.string.nanoid(),
     email: "test-1@example.com",
     emailVerified: faker.date.recent(),
     image: faker.internet.avatar(),
     name: "Test User-1",
+    password: await hash(testPassword, saltRounds),
   };
 
   for (const tenantData of tenantDatas) {
-    const _userDatas: (typeof schema.user.$inferInsert)[] =
-      faker.helpers.multiple(() => createRandomUser(), {
+    const _userDatasPromise: Promise<typeof schema.user.$inferInsert>[] =
+      faker.helpers.multiple(async () => await createRandomUser(), {
         count: DATA_SIZE,
       });
+
+    const _userDatas = await Promise.all(_userDatasPromise);
 
     _userDatas.push(testUserData);
 

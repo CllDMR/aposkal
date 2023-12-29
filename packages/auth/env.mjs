@@ -46,7 +46,11 @@ export const env = createEnv({
     MAILCHIMP_API_KEY: z.string(),
   },
   client: {
-    NEXT_PUBLIC_BASE_URL: z.string().optional(),
+    NEXT_PUBLIC_ACCOUNT_BASE_URL: z.string(),
+    NEXT_PUBLIC_CUSTOMER_BASE_URL: z.string(),
+    NEXT_PUBLIC_INVENTORY_BASE_URL: z.string(),
+    NEXT_PUBLIC_LOGISTIC_BASE_URL: z.string(),
+    NEXT_PUBLIC_ORDER_BASE_URL: z.string(),
   },
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
@@ -71,7 +75,12 @@ export const env = createEnv({
     VERCEL_URL: process.env.VERCEL_URL,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-    NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
+
+    NEXT_PUBLIC_ACCOUNT_BASE_URL: process.env.NEXT_PUBLIC_ACCOUNT_BASE_URL,
+    NEXT_PUBLIC_CUSTOMER_BASE_URL: process.env.NEXT_PUBLIC_CUSTOMER_BASE_URL,
+    NEXT_PUBLIC_INVENTORY_BASE_URL: process.env.NEXT_PUBLIC_INVENTORY_BASE_URL,
+    NEXT_PUBLIC_LOGISTIC_BASE_URL: process.env.NEXT_PUBLIC_LOGISTIC_BASE_URL,
+    NEXT_PUBLIC_ORDER_BASE_URL: process.env.NEXT_PUBLIC_ORDER_BASE_URL,
 
     MAILCHIMP_API_KEY: process.env.MAILCHIMP_API_KEY,
   },

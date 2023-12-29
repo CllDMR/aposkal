@@ -1,30 +1,12 @@
-export { auth as default, auth as middleware } from "@acme/auth";
-// import { auth } from "@acme/auth";
+import NextAuth from "next-auth";
 
-// export default auth(() => {
-//   console.log({
-//     authMiddleware: true,
-//   });
+import { authConfig } from "./auth.config";
 
-//   return false;
-//   // return {
-//   //   pages: {
-//   //     signIn: "/auth/login",
-//   //     signOut: "/auth/logout",
-//   //     newUser: "/auth/register",
-//   //     verifyRequest: "/auth/verify-email",
-//   //     error: "/auth/error",
-//   //   },
-//   // };
-// });
+export default NextAuth(authConfig).auth;
 
 export const config = {
+  // https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
   matcher: [
-    "/auth",
-    "/auth/(.*)",
-    "/settings/(.*)",
-    "/profile",
-    "/settings",
-    "/settings/(.*)",
+    "/((?!api|_next/static|_next/image|auth|images|favicon.ico|robots.txt|.*\\.png|.*\\.svg|$).*)",
   ],
 };

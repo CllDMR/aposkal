@@ -12,6 +12,7 @@ export const user = mySqlTable("user", {
   id: varchar("id", { length: 255 }).$defaultFn(nanoid).notNull().primaryKey(),
   name: varchar("name", { length: 255 }),
   email: varchar("email", { length: 255 }).notNull(),
+  password: varchar("password", { length: 255 }).notNull(),
   emailVerified: timestamp("emailVerified", {
     mode: "date",
     fsp: 3,

@@ -1,39 +1,12 @@
-// import { auth } from "@acme/auth";
+import NextAuth from "next-auth";
 
-// import { getBaseAuthUrl, getBaseUrl } from "./utils/get-base-url";
+import { authConfig } from "./auth.config";
 
-// const baseUrl = getBaseUrl();
-// const encodedBaseUrlQuery = `?callbackUrl=${encodeURIComponent(baseUrl)}`;
-// const baseAuthUrl = getBaseAuthUrl();
-
-// const toAuthURL = (path: string) =>
-//   `${baseAuthUrl}${path}${encodedBaseUrlQuery}`;
-
-// export default auth(() => ({
-//   pages: {
-//     signIn: toAuthURL("/auth/login"),
-//     signOut: toAuthURL("/auth/logout"),
-//     newUser: toAuthURL("/auth/register"),
-//     verifyRequest: toAuthURL("/auth/verify-email"),
-//   },
-// }));
-
-export { auth as middleware } from "@acme/auth";
+export default NextAuth(authConfig).auth;
 
 export const config = {
+  // https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
   matcher: [
-    "/dashboard",
-    "/product-categories",
-    "/product-categories/(.*)",
-    "/product-tags",
-    "/product-tags/(.*)",
-    "/products",
-    "/products/(.*)",
-    "/suppliers",
-    "/suppliers/(.*)",
-    "/warehouses",
-    "/warehouses/(.*)",
-    "/settings",
-    "/settings/(.*)",
+    "/((?!api|_next/static|_next/image|auth|images|favicon.ico|robots.txt|.*\\.png|.*\\.svg|$).*)",
   ],
 };

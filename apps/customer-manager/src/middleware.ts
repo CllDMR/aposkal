@@ -1,13 +1,12 @@
-export { auth as middleware } from "@acme/auth";
+import NextAuth from "next-auth";
+
+import { authConfig } from "./auth.config";
+
+export default NextAuth(authConfig).auth;
 
 export const config = {
+  // https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
   matcher: [
-    "/dashboard",
-    "/companies",
-    "/companies/(.*)",
-    "/address-companies",
-    "/address-companies/(.*)",
-    "/settings",
-    "/settings/(.*)",
+    "/((?!api|_next/static|_next/image|auth|images|favicon.ico|robots.txt|.*\\.png|.*\\.svg|$).*)",
   ],
 };
