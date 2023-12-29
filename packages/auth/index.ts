@@ -13,6 +13,10 @@ export const providers = [""] as const;
 export type OAuthProviders = (typeof providers)[number];
 const saltRounds = 13;
 
+const domain = env.NODE_ENV === "production" ? env.DOMAIN : undefined;
+const cookiePrefix = "__Secure";
+const useSecureCookies = env.NODE_ENV === "production";
+
 const getBaseUrl = () => {
   if (typeof window !== "undefined") return ""; // browser should use relative url
   if (env.NEXT_PUBLIC_ACCOUNT_BASE_URL) return env.NEXT_PUBLIC_ACCOUNT_BASE_URL;
@@ -29,6 +33,87 @@ export const {
 } = NextAuth({
   session: { strategy: "jwt" },
   adapter: DrizzleAdapter(db, tableCreator),
+  cookies: {
+    sessionToken: {
+      name:
+        env.NODE_ENV === "production"
+          ? `__Secure-authjs.session-token`
+          : `authjs.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: true,
+        domain,
+      },
+    },
+    callbackUrl: {
+      name:
+        env.NODE_ENV === "production"
+          ? `__Secure-authjs.callback-url`
+          : `authjs.callback-url`,
+      options: {
+        sameSite: "lax",
+        path: "/",
+        secure: true,
+        domain,
+      },
+    },
+    csrfToken: {
+      name:
+        env.NODE_ENV === "production"
+          ? `__Host-authjs.csrf-token`
+          : `authjs.csrf-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: true,
+        domain,
+      },
+    },
+    pkceCodeVerifier: {
+      name:
+        env.NODE_ENV === "production"
+          ? `${cookiePrefix}authjs.pkce.code_verifier`
+          : `authjs.pkce.code_verifier`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: useSecureCookies,
+        maxAge: 900,
+        domain,
+      },
+    },
+    state: {
+      name:
+        env.NODE_ENV === "production"
+          ? `${cookiePrefix}authjs.state`
+          : `authjs.state`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: useSecureCookies,
+        maxAge: 900,
+        domain,
+      },
+    },
+    nonce: {
+      name:
+        env.NODE_ENV === "production"
+          ? `${cookiePrefix}authjs.nonce`
+          : `authjs.nonce`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: useSecureCookies,
+        domain,
+      },
+    },
+  },
   providers: [
     Credentials({
       id: "credentials",
