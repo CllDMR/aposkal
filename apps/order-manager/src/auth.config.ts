@@ -1,7 +1,94 @@
 import type { NextAuthConfig } from "next-auth";
 
+import { env } from "./env.mjs";
+
+const domain = env.NODE_ENV === "production" ? env.DOMAIN : undefined;
+const cookiePrefix = "__Secure";
+const useSecureCookies = env.NODE_ENV === "production";
+
 export const authConfig = {
   session: { strategy: "jwt" },
+  cookies: {
+    sessionToken: {
+      name:
+        env.NODE_ENV === "production"
+          ? `__Secure-authjs.session-token`
+          : `authjs.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: true,
+        domain,
+      },
+    },
+    callbackUrl: {
+      name:
+        env.NODE_ENV === "production"
+          ? `__Secure-authjs.callback-url`
+          : `authjs.callback-url`,
+      options: {
+        sameSite: "lax",
+        path: "/",
+        secure: true,
+        domain,
+      },
+    },
+    csrfToken: {
+      name:
+        env.NODE_ENV === "production"
+          ? `__Host-authjs.csrf-token`
+          : `authjs.csrf-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: true,
+        domain,
+      },
+    },
+    pkceCodeVerifier: {
+      name:
+        env.NODE_ENV === "production"
+          ? `${cookiePrefix}authjs.pkce.code_verifier`
+          : `authjs.pkce.code_verifier`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: useSecureCookies,
+        maxAge: 900,
+        domain,
+      },
+    },
+    state: {
+      name:
+        env.NODE_ENV === "production"
+          ? `${cookiePrefix}authjs.state`
+          : `authjs.state`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: useSecureCookies,
+        maxAge: 900,
+        domain,
+      },
+    },
+    nonce: {
+      name:
+        env.NODE_ENV === "production"
+          ? `${cookiePrefix}authjs.nonce`
+          : `authjs.nonce`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: useSecureCookies,
+        domain,
+      },
+    },
+  },
   callbacks: {
     session: ({ session, token }) => ({
       ...session,
