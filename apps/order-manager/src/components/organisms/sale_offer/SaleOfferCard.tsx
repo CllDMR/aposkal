@@ -2,7 +2,7 @@
 
 import type { FC } from "react";
 
-import { Button, LinkButton } from "@acme/ui/molecules";
+import { ItemHeader } from "@acme/ui/molecules";
 
 import type { RouterOutputs } from "~/utils/api";
 import { api } from "~/utils/api";
@@ -46,16 +46,13 @@ export const SaleOfferCard: FC<SaleOfferCardProps> = ({
 
   return (
     <div className="">
-      <div>
-        <span className="pr-4">No: {saleOffer.no}</span>
-        <LinkButton href={`/sale-offers/${saleOffer.id}/edit`}>Edit</LinkButton>
-        <Button
-          onClick={async () => await mutateAsync(saleOffer.id)}
-          disabled={isLoading}
-        >
-          Delete
-        </Button>
-      </div>
+      <ItemHeader
+        disabled={isLoading}
+        editHref={`/sale-offers/${saleOffer.id}/edit`}
+        onClickDelete={async () => void (await mutateAsync(saleOffer.id))}
+        title={saleOffer.no.toString()}
+      />
+
       <div className="">
         <p className="">
           <span className="">Company Name: </span>

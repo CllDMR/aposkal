@@ -2,7 +2,7 @@
 
 import type { FC } from "react";
 
-import { Button, LinkButton } from "@acme/ui/molecules";
+import { ItemHeader } from "@acme/ui/molecules";
 
 import type { RouterOutputs } from "~/utils/api";
 import { api } from "~/utils/api";
@@ -33,14 +33,12 @@ export const AddressCompanyCard: FC<AddressCompanyCardProps> = ({
 
   return (
     <div>
-      <span>{address.name}</span>
-      <LinkButton href={`/addresses/${address.id}/edit`}>Edit</LinkButton>
-      <Button
-        onClick={async () => await mutateAsync(address.id)}
+      <ItemHeader
         disabled={isLoading}
-      >
-        Delete
-      </Button>
+        editHref={`/addresses/${address.id}/edit`}
+        onClickDelete={async () => void (await mutateAsync(address.id))}
+        title={address.name}
+      />
     </div>
   );
 };

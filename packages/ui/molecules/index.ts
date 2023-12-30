@@ -12,4 +12,5 @@ export { FormSelect } from "./form-select";
 export type { FormSelectProps } from "./form-select";
 export { FormTextarea } from "./form-textarea";
 export type { FormTextareaProps } from "./form-textarea";
+export { ItemHeader } from "./item-header";
 export { LinkButton } from "./link-button";

@@ -2,7 +2,7 @@
 
 import type { FC } from "react";
 
-import { Button, LinkButton } from "@acme/ui/molecules";
+import { ItemHeader } from "@acme/ui/molecules";
 
 import type { RouterOutputs } from "~/utils/api";
 import { api } from "~/utils/api";
@@ -33,14 +33,12 @@ export const ProductTagCard: FC<ProductTagCardProps> = ({
 
   return (
     <div>
-      <span>{productTag.name}</span>
-      <LinkButton href={`/product-tags/${productTag.id}/edit`}>Edit</LinkButton>
-      <Button
-        onClick={async () => await mutateAsync(productTag.id)}
+      <ItemHeader
         disabled={isLoading}
-      >
-        Delete
-      </Button>
+        editHref={`/product-tags/${productTag.id}/edit`}
+        onClickDelete={async () => void (await mutateAsync(productTag.id))}
+        title={productTag.name}
+      />
     </div>
   );
 };
