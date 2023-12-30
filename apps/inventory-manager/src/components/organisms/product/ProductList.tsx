@@ -12,7 +12,7 @@ interface ProductListProps {
 }
 
 export const ProductList: FC<ProductListProps> = ({ products }) => {
-  const context = api.useContext();
+  const utils = api.useUtils();
   const [result] = api.product.list.useSuspenseQuery(
     {},
     {
@@ -22,8 +22,8 @@ export const ProductList: FC<ProductListProps> = ({ products }) => {
 
   const { mutateAsync, isLoading } = api.product.delete.useMutation({
     async onSettled() {
-      await context.product.list.invalidate();
-      await context.product.get.invalidate();
+      await utils.product.list.invalidate();
+      await utils.product.get.invalidate();
     },
   });
 

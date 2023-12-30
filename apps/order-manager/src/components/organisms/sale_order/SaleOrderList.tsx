@@ -12,7 +12,7 @@ interface SaleOrderListProps {
 }
 
 export const SaleOrderList: FC<SaleOrderListProps> = ({ saleOrders }) => {
-  const context = api.useContext();
+  const utils = api.useUtils();
   const [result] = api.saleOrder.list.useSuspenseQuery(
     {},
     {
@@ -22,8 +22,8 @@ export const SaleOrderList: FC<SaleOrderListProps> = ({ saleOrders }) => {
 
   const { mutateAsync, isLoading } = api.saleOrder.delete.useMutation({
     async onSettled() {
-      await context.saleOrder.list.invalidate();
-      await context.saleOrder.get.invalidate();
+      await utils.saleOrder.list.invalidate();
+      await utils.saleOrder.get.invalidate();
     },
   });
 

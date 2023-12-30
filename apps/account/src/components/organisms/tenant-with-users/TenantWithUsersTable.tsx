@@ -25,16 +25,16 @@ interface TenantWithUsersTableProps {
 export const TenantWithUsersTable: FC<TenantWithUsersTableProps> = ({
   tenantWithUsers,
 }) => {
-  const context = api.useContext();
+  const utils = api.useUtils();
   const [result] = api.tenant.getWithUsers.useSuspenseQuery(undefined, {
     initialData: tenantWithUsers,
   });
 
   const { mutateAsync } = api.tenant.removeUserMany.useMutation({
     async onSettled() {
-      await context.tenant.list.invalidate();
-      await context.tenant.get.invalidate();
-      await context.tenant.getWithUsers.invalidate();
+      await utils.tenant.list.invalidate();
+      await utils.tenant.get.invalidate();
+      await utils.tenant.getWithUsers.invalidate();
     },
   });
 

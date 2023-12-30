@@ -14,10 +14,10 @@ import { api } from "~/utils/api";
 type AddressCompanyCreateFormFields = RouterInputs["addressCompany"]["create"];
 
 export const AddressCompanyCreateForm: FC = () => {
-  const context = api.useContext();
+  const utils = api.useUtils();
   const { mutateAsync } = api.addressCompany.create.useMutation({
     async onSettled() {
-      await context.addressCompany.list.invalidate();
+      await utils.addressCompany.list.invalidate();
     },
   });
 

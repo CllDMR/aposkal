@@ -34,7 +34,7 @@ export const ProductCategoryTable: FC<ProductCategoryTableProps> = ({
   const pageIndex = +(searchParams.get("pi") ?? _pageIndex);
   const pageSize = +(searchParams.get("ps") ?? _pageSize);
 
-  const context = api.useContext();
+  const utils = api.useUtils();
   const [result] = api.productCategory.list.useSuspenseQuery(
     {
       offset: pageIndex * pageSize,
@@ -47,8 +47,8 @@ export const ProductCategoryTable: FC<ProductCategoryTableProps> = ({
 
   const { mutateAsync } = api.productCategory.deleteMany.useMutation({
     async onSettled() {
-      await context.productCategory.list.invalidate();
-      await context.productCategory.get.invalidate();
+      await utils.productCategory.list.invalidate();
+      await utils.productCategory.get.invalidate();
     },
   });
 

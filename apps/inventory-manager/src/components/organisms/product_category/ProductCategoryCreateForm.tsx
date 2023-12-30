@@ -15,10 +15,10 @@ type ProductCategoryCreateFormFields =
   RouterInputs["productCategory"]["create"];
 
 export const ProductCategoryCreateForm: FC = () => {
-  const context = api.useContext();
+  const utils = api.useUtils();
   const { mutateAsync } = api.productCategory.create.useMutation({
     async onSettled() {
-      await context.productCategory.list.invalidate();
+      await utils.productCategory.list.invalidate();
     },
   });
 

@@ -12,7 +12,7 @@ interface WarehouseListProps {
 }
 
 export const WarehouseList: FC<WarehouseListProps> = ({ warehouses }) => {
-  const context = api.useContext();
+  const utils = api.useUtils();
   const [result] = api.warehouse.list.useSuspenseQuery(
     {},
     {
@@ -22,8 +22,8 @@ export const WarehouseList: FC<WarehouseListProps> = ({ warehouses }) => {
 
   const { mutateAsync, isLoading } = api.warehouse.delete.useMutation({
     async onSettled() {
-      await context.warehouse.list.invalidate();
-      await context.warehouse.get.invalidate();
+      await utils.warehouse.list.invalidate();
+      await utils.warehouse.get.invalidate();
     },
   });
 

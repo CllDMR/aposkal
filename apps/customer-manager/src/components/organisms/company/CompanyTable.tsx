@@ -44,7 +44,7 @@ export const CompanyTable: FC<CompanyTableProps> = ({
   const pageIndex = +(searchParams.get("pi") ?? _pageIndex);
   const pageSize = +(searchParams.get("ps") ?? _pageSize);
 
-  const context = api.useContext();
+  const utils = api.useUtils();
   const [result] = api.company.list.useSuspenseQuery(
     {
       offset: pageIndex * pageSize,
@@ -57,8 +57,8 @@ export const CompanyTable: FC<CompanyTableProps> = ({
 
   const { mutateAsync } = api.company.deleteMany.useMutation({
     async onSettled() {
-      await context.company.list.invalidate();
-      await context.company.get.invalidate();
+      await utils.company.list.invalidate();
+      await utils.company.get.invalidate();
     },
   });
 

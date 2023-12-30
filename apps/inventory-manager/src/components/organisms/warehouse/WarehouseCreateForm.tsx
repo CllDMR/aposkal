@@ -14,10 +14,10 @@ import { api } from "~/utils/api";
 type WarehouseCreateFormFields = RouterInputs["warehouse"]["create"];
 
 export const WarehouseCreateForm: FC = () => {
-  const context = api.useContext();
+  const utils = api.useUtils();
   const { mutateAsync } = api.warehouse.create.useMutation({
     async onSettled() {
-      await context.warehouse.list.invalidate();
+      await utils.warehouse.list.invalidate();
     },
   });
 

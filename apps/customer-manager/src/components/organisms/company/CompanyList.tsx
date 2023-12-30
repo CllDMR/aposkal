@@ -12,7 +12,7 @@ interface CompanyListProps {
 }
 
 export const CompanyList: FC<CompanyListProps> = ({ companies }) => {
-  const context = api.useContext();
+  const utils = api.useUtils();
   const [result] = api.company.list.useSuspenseQuery(
     {},
     {
@@ -22,8 +22,8 @@ export const CompanyList: FC<CompanyListProps> = ({ companies }) => {
 
   const { mutateAsync, isLoading } = api.company.delete.useMutation({
     async onSettled() {
-      await context.company.list.invalidate();
-      await context.company.get.invalidate();
+      await utils.company.list.invalidate();
+      await utils.company.get.invalidate();
     },
   });
 

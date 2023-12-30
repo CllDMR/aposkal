@@ -14,7 +14,7 @@ interface AddressCompanyListProps {
 export const AddressCompanyList: FC<AddressCompanyListProps> = ({
   addresses,
 }) => {
-  const context = api.useContext();
+  const utils = api.useUtils();
   const [result] = api.addressCompany.list.useSuspenseQuery(
     {},
     {
@@ -24,8 +24,8 @@ export const AddressCompanyList: FC<AddressCompanyListProps> = ({
 
   const { mutateAsync, isLoading } = api.addressCompany.delete.useMutation({
     async onSettled() {
-      await context.addressCompany.list.invalidate();
-      await context.addressCompany.get.invalidate();
+      await utils.addressCompany.list.invalidate();
+      await utils.addressCompany.get.invalidate();
     },
   });
 

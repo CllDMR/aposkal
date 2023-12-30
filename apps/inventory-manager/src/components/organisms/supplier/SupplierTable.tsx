@@ -35,7 +35,7 @@ export const SupplierTable: FC<SupplierTableProps> = ({
   const pageIndex = +(searchParams.get("pi") ?? _pageIndex);
   const pageSize = +(searchParams.get("ps") ?? _pageSize);
 
-  const context = api.useContext();
+  const utils = api.useUtils();
   const [result] = api.supplier.list.useSuspenseQuery(
     {
       offset: pageIndex * pageSize,
@@ -48,8 +48,8 @@ export const SupplierTable: FC<SupplierTableProps> = ({
 
   const { mutateAsync } = api.supplier.deleteMany.useMutation({
     async onSettled() {
-      await context.supplier.list.invalidate();
-      await context.supplier.get.invalidate();
+      await utils.supplier.list.invalidate();
+      await utils.supplier.get.invalidate();
     },
   });
 

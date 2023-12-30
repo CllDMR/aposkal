@@ -17,7 +17,7 @@ type Warehouse = NonNullable<RouterOutputs["warehouse"]["get"]>;
 export const WarehouseEditForm: FC<{ warehouse: Warehouse }> = ({
   warehouse: initialWarehouse,
 }) => {
-  const context = api.useContext();
+  const utils = api.useUtils();
   const [warehouse] = api.warehouse.get.useSuspenseQuery(
     { id: initialWarehouse.id },
     { initialData: initialWarehouse },
@@ -25,8 +25,8 @@ export const WarehouseEditForm: FC<{ warehouse: Warehouse }> = ({
 
   const { mutateAsync } = api.warehouse.update.useMutation({
     async onSettled() {
-      await context.warehouse.list.invalidate();
-      await context.warehouse.get.invalidate();
+      await utils.warehouse.list.invalidate();
+      await utils.warehouse.get.invalidate();
     },
   });
 

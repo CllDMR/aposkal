@@ -34,7 +34,7 @@ export const WarehouseTable: FC<WarehouseTableProps> = ({
   const pageIndex = +(searchParams.get("pi") ?? _pageIndex);
   const pageSize = +(searchParams.get("ps") ?? _pageSize);
 
-  const context = api.useContext();
+  const utils = api.useUtils();
   const [result] = api.warehouse.list.useSuspenseQuery(
     {
       offset: pageIndex * pageSize,
@@ -47,8 +47,8 @@ export const WarehouseTable: FC<WarehouseTableProps> = ({
 
   const { mutateAsync } = api.warehouse.deleteMany.useMutation({
     async onSettled() {
-      await context.warehouse.list.invalidate();
-      await context.warehouse.get.invalidate();
+      await utils.warehouse.list.invalidate();
+      await utils.warehouse.get.invalidate();
     },
   });
 

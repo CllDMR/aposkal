@@ -30,10 +30,10 @@ export const SaleOfferCreateForm: FC<SaleOfferCreateFormProps> = ({
   tenant: initialTenant,
   products: initialProducts,
 }) => {
-  const context = api.useContext();
+  const utils = api.useUtils();
   const { mutateAsync } = api.saleOffer.create.useMutation({
     async onSettled() {
-      await context.saleOffer.list.invalidate();
+      await utils.saleOffer.list.invalidate();
     },
   });
 

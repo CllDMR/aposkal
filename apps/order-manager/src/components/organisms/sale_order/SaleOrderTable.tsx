@@ -45,7 +45,7 @@ export const SaleOrderTable: FC<SaleOrderTableProps> = ({
   const pageIndex = +(searchParams.get("pi") ?? _pageIndex);
   const pageSize = +(searchParams.get("ps") ?? _pageSize);
 
-  const context = api.useContext();
+  const utils = api.useUtils();
   const [result] = api.saleOrder.list.useSuspenseQuery(
     {
       offset: pageIndex * pageSize,
@@ -58,8 +58,8 @@ export const SaleOrderTable: FC<SaleOrderTableProps> = ({
 
   const { mutateAsync } = api.saleOrder.deleteMany.useMutation({
     async onSettled() {
-      await context.saleOrder.list.invalidate();
-      await context.saleOrder.get.invalidate();
+      await utils.saleOrder.list.invalidate();
+      await utils.saleOrder.get.invalidate();
     },
   });
 

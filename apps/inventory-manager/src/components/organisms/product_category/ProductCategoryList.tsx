@@ -14,7 +14,7 @@ interface ProductCategoryListProps {
 export const ProductCategoryList: FC<ProductCategoryListProps> = ({
   productCategories,
 }) => {
-  const context = api.useContext();
+  const utils = api.useUtils();
   const [result] = api.productCategory.list.useSuspenseQuery(
     {},
     {
@@ -24,8 +24,8 @@ export const ProductCategoryList: FC<ProductCategoryListProps> = ({
 
   const { mutateAsync, isLoading } = api.productCategory.delete.useMutation({
     async onSettled() {
-      await context.productCategory.list.invalidate();
-      await context.productCategory.get.invalidate();
+      await utils.productCategory.list.invalidate();
+      await utils.productCategory.get.invalidate();
     },
   });
 

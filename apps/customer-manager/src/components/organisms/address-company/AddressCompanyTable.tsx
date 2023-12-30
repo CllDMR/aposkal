@@ -45,7 +45,7 @@ export const AddressCompanyTable: FC<AddressCompanyTableProps> = ({
   const pageIndex = +(searchParams.get("pi") ?? _pageIndex);
   const pageSize = +(searchParams.get("ps") ?? _pageSize);
 
-  const context = api.useContext();
+  const utils = api.useUtils();
   const [result] = api.addressCompany.list.useSuspenseQuery(
     {
       offset: pageIndex * pageSize,
@@ -58,8 +58,8 @@ export const AddressCompanyTable: FC<AddressCompanyTableProps> = ({
 
   const { mutateAsync } = api.addressCompany.deleteMany.useMutation({
     async onSettled() {
-      await context.addressCompany.list.invalidate();
-      await context.addressCompany.get.invalidate();
+      await utils.addressCompany.list.invalidate();
+      await utils.addressCompany.get.invalidate();
     },
   });
 

@@ -26,7 +26,7 @@ interface CompanyEditFormProps {
 export const CompanyEditForm: FC<CompanyEditFormProps> = ({
   company: initialCompany,
 }) => {
-  const context = api.useContext();
+  const utils = api.useUtils();
   const [company] = api.company.get.useSuspenseQuery(
     { id: initialCompany.id },
     { initialData: initialCompany },
@@ -34,8 +34,8 @@ export const CompanyEditForm: FC<CompanyEditFormProps> = ({
 
   const { mutateAsync } = api.company.update.useMutation({
     async onSettled() {
-      await context.company.list.invalidate();
-      await context.company.get.invalidate();
+      await utils.company.list.invalidate();
+      await utils.company.get.invalidate();
     },
   });
 

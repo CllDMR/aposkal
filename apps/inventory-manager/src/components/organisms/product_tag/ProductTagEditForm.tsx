@@ -17,7 +17,7 @@ type ProductTag = NonNullable<RouterOutputs["productTag"]["get"]>;
 export const ProductTagEditForm: FC<{ productTag: ProductTag }> = ({
   productTag: initialProductTag,
 }) => {
-  const context = api.useContext();
+  const utils = api.useUtils();
   const [productTag] = api.productTag.get.useSuspenseQuery(
     { id: initialProductTag.id },
     { initialData: initialProductTag },
@@ -25,8 +25,8 @@ export const ProductTagEditForm: FC<{ productTag: ProductTag }> = ({
 
   const { mutateAsync } = api.productTag.update.useMutation({
     async onSettled() {
-      await context.productTag.list.invalidate();
-      await context.productTag.get.invalidate();
+      await utils.productTag.list.invalidate();
+      await utils.productTag.get.invalidate();
     },
   });
 

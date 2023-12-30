@@ -20,10 +20,10 @@ interface SupplierCreateFormProps {
 export const SupplierCreateForm: FC<SupplierCreateFormProps> = ({
   products: initialProducts,
 }) => {
-  const context = api.useContext();
+  const utils = api.useUtils();
   const { mutateAsync } = api.supplier.create.useMutation({
     async onSettled() {
-      await context.supplier.list.invalidate();
+      await utils.supplier.list.invalidate();
     },
   });
 

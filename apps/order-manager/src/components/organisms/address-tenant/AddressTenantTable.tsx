@@ -44,7 +44,7 @@ export const AddressTenantTable: FC<AddressTenantTableProps> = ({
   const pageIndex = +(searchParams.get("pi") ?? _pageIndex);
   const pageSize = +(searchParams.get("ps") ?? _pageSize);
 
-  const context = api.useContext();
+  const utils = api.useUtils();
   const [result] = api.addressTenant.list.useSuspenseQuery(
     {
       offset: pageIndex * pageSize,
@@ -57,8 +57,8 @@ export const AddressTenantTable: FC<AddressTenantTableProps> = ({
 
   const { mutateAsync } = api.addressTenant.deleteMany.useMutation({
     async onSettled() {
-      await context.addressTenant.list.invalidate();
-      await context.addressTenant.get.invalidate();
+      await utils.addressTenant.list.invalidate();
+      await utils.addressTenant.get.invalidate();
     },
   });
 

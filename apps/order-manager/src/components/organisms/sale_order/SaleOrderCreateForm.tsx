@@ -27,10 +27,10 @@ export const SaleOrderCreateForm: FC<SaleOrderCreateFormProps> = ({
   companies: initialCompanies,
   addresses: initialAddresses,
 }) => {
-  const context = api.useContext();
+  const utils = api.useUtils();
   const { mutateAsync } = api.saleOrder.create.useMutation({
     async onSettled() {
-      await context.saleOrder.list.invalidate();
+      await utils.saleOrder.list.invalidate();
     },
   });
 

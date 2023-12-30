@@ -17,7 +17,7 @@ type Supplier = NonNullable<RouterOutputs["supplier"]["get"]>;
 export const SupplierEditForm: FC<{ supplier: Supplier }> = ({
   supplier: initialSupplier,
 }) => {
-  const context = api.useContext();
+  const utils = api.useUtils();
   const [supplier] = api.supplier.get.useSuspenseQuery(
     { id: initialSupplier.id },
     { initialData: initialSupplier },
@@ -25,8 +25,8 @@ export const SupplierEditForm: FC<{ supplier: Supplier }> = ({
 
   const { mutateAsync } = api.supplier.update.useMutation({
     async onSettled() {
-      await context.supplier.list.invalidate();
-      await context.supplier.get.invalidate();
+      await utils.supplier.list.invalidate();
+      await utils.supplier.get.invalidate();
     },
   });
 

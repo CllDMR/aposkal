@@ -17,7 +17,7 @@ export const SaleOfferCard: FC<SaleOfferCardProps> = ({
   saleOffer: initialSaleOffer,
   id,
 }) => {
-  const context = api.useContext();
+  const utils = api.useUtils();
   const [saleOffer] = api.saleOffer.getWithProductsAndNotes.useSuspenseQuery(
     { id },
     {
@@ -27,8 +27,8 @@ export const SaleOfferCard: FC<SaleOfferCardProps> = ({
 
   const { mutateAsync, isLoading } = api.saleOffer.delete.useMutation({
     async onSettled() {
-      await context.saleOffer.list.invalidate();
-      await context.saleOffer.get.invalidate();
+      await utils.saleOffer.list.invalidate();
+      await utils.saleOffer.get.invalidate();
     },
   });
 

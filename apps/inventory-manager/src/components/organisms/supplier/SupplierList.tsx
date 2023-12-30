@@ -12,7 +12,7 @@ interface SupplierListProps {
 }
 
 export const SupplierList: FC<SupplierListProps> = ({ suppliers }) => {
-  const context = api.useContext();
+  const utils = api.useUtils();
   const [result] = api.supplier.list.useSuspenseQuery(
     {},
     {
@@ -22,8 +22,8 @@ export const SupplierList: FC<SupplierListProps> = ({ suppliers }) => {
 
   const { mutateAsync, isLoading } = api.supplier.delete.useMutation({
     async onSettled() {
-      await context.supplier.list.invalidate();
-      await context.supplier.get.invalidate();
+      await utils.supplier.list.invalidate();
+      await utils.supplier.get.invalidate();
     },
   });
 

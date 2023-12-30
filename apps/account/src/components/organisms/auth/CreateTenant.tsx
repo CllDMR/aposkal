@@ -22,7 +22,7 @@ type CreateTenantFromFields = RouterInputs["tenant"]["create"];
 export const CreateTenant: FC = () => {
   const [openCreateTenantForm, setOpenCreateTenantForm] = useState(false);
 
-  const context = api.useContext();
+  const utils = api.useUtils();
 
   const {
     handleSubmit,
@@ -63,7 +63,7 @@ export const CreateTenant: FC = () => {
 
   const { mutateAsync } = api.tenant.create.useMutation({
     async onSettled() {
-      await context.tenant.listOfUserTenants.invalidate();
+      await utils.tenant.listOfUserTenants.invalidate();
       reset();
     },
   });

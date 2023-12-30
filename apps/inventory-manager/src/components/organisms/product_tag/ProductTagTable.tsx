@@ -34,7 +34,7 @@ export const ProductTagTable: FC<ProductTagTableProps> = ({
   const pageIndex = +(searchParams.get("pi") ?? _pageIndex);
   const pageSize = +(searchParams.get("ps") ?? _pageSize);
 
-  const context = api.useContext();
+  const utils = api.useUtils();
   const [result] = api.productTag.list.useSuspenseQuery(
     {
       offset: pageIndex * pageSize,
@@ -47,8 +47,8 @@ export const ProductTagTable: FC<ProductTagTableProps> = ({
 
   const { mutateAsync } = api.productTag.deleteMany.useMutation({
     async onSettled() {
-      await context.productTag.list.invalidate();
-      await context.productTag.get.invalidate();
+      await utils.productTag.list.invalidate();
+      await utils.productTag.get.invalidate();
     },
   });
 

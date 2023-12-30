@@ -16,7 +16,7 @@ export const ProductTagCard: FC<ProductTagCardProps> = ({
   initProductTag,
   id,
 }) => {
-  const context = api.useContext();
+  const utils = api.useUtils();
   const [productTag] = api.productTag.get.useSuspenseQuery(
     { id },
     {
@@ -26,8 +26,8 @@ export const ProductTagCard: FC<ProductTagCardProps> = ({
 
   const { mutateAsync, isLoading } = api.productTag.delete.useMutation({
     async onSettled() {
-      await context.productTag.list.invalidate();
-      await context.productTag.get.invalidate();
+      await utils.productTag.list.invalidate();
+      await utils.productTag.get.invalidate();
     },
   });
 

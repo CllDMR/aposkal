@@ -17,7 +17,7 @@ type Address = NonNullable<RouterOutputs["addressTenant"]["get"]>;
 export const AddressTenantEditForm: FC<{ address: Address }> = ({
   address: initialAddress,
 }) => {
-  const context = api.useContext();
+  const utils = api.useUtils();
   const [address] = api.addressTenant.get.useSuspenseQuery(
     { id: initialAddress.id },
     { initialData: initialAddress },
@@ -25,8 +25,8 @@ export const AddressTenantEditForm: FC<{ address: Address }> = ({
 
   const { mutateAsync } = api.addressTenant.update.useMutation({
     async onSettled() {
-      await context.addressTenant.list.invalidate();
-      await context.addressTenant.get.invalidate();
+      await utils.addressTenant.list.invalidate();
+      await utils.addressTenant.get.invalidate();
     },
   });
 

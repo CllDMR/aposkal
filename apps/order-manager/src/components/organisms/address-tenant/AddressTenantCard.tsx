@@ -16,7 +16,7 @@ export const AddressTenantCard: FC<AddressTenantCardProps> = ({
   initAddress,
   id,
 }) => {
-  const context = api.useContext();
+  const utils = api.useUtils();
   const [address] = api.addressTenant.get.useSuspenseQuery(
     { id },
     {
@@ -26,8 +26,8 @@ export const AddressTenantCard: FC<AddressTenantCardProps> = ({
 
   const { mutateAsync, isLoading } = api.addressTenant.delete.useMutation({
     async onSettled() {
-      await context.addressTenant.list.invalidate();
-      await context.addressTenant.get.invalidate();
+      await utils.addressTenant.list.invalidate();
+      await utils.addressTenant.get.invalidate();
     },
   });
 

@@ -24,11 +24,11 @@ export const ProductEditForm: FC<ProductEditFormProps> = ({
   productTags: initialProductTags,
   product: initialProduct,
 }) => {
-  const context = api.useContext();
+  const utils = api.useUtils();
   const { mutateAsync } = api.product.update.useMutation({
     async onSettled() {
-      await context.product.list.invalidate();
-      await context.product.get.invalidate();
+      await utils.product.list.invalidate();
+      await utils.product.get.invalidate();
     },
   });
 

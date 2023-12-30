@@ -17,7 +17,7 @@ type ProductCategory = NonNullable<RouterOutputs["productCategory"]["get"]>;
 export const ProductCategoryEditForm: FC<{
   productCategory: ProductCategory;
 }> = ({ productCategory: initialProductCategory }) => {
-  const context = api.useContext();
+  const utils = api.useUtils();
   const [productCategory] = api.productCategory.get.useSuspenseQuery(
     { id: initialProductCategory.id },
     { initialData: initialProductCategory },
@@ -25,8 +25,8 @@ export const ProductCategoryEditForm: FC<{
 
   const { mutateAsync } = api.productCategory.update.useMutation({
     async onSettled() {
-      await context.productCategory.list.invalidate();
-      await context.productCategory.get.invalidate();
+      await utils.productCategory.list.invalidate();
+      await utils.productCategory.get.invalidate();
     },
   });
 

@@ -14,10 +14,10 @@ import { api } from "~/utils/api";
 type TenantAddUserFormFields = RouterInputs["tenant"]["addUser"];
 
 export const TenantAddUserForm: FC = () => {
-  const context = api.useContext();
+  const utils = api.useUtils();
   const { mutateAsync } = api.tenant.addUser.useMutation({
     async onSettled() {
-      await context.tenant.list.invalidate();
+      await utils.tenant.list.invalidate();
     },
   });
 

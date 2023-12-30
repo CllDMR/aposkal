@@ -13,7 +13,7 @@ interface CompanyCardProps {
 }
 
 export const CompanyCard: FC<CompanyCardProps> = ({ initCompany, id }) => {
-  const context = api.useContext();
+  const utils = api.useUtils();
   const [company] = api.company.get.useSuspenseQuery(
     { id },
     {
@@ -23,8 +23,8 @@ export const CompanyCard: FC<CompanyCardProps> = ({ initCompany, id }) => {
 
   const { mutateAsync, isLoading } = api.company.delete.useMutation({
     async onSettled() {
-      await context.company.list.invalidate();
-      await context.company.get.invalidate();
+      await utils.company.list.invalidate();
+      await utils.company.get.invalidate();
     },
   });
 

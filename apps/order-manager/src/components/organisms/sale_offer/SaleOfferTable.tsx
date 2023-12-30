@@ -45,7 +45,7 @@ export const SaleOfferTable: FC<SaleOfferTableProps> = ({
   const pageIndex = +(searchParams.get("pi") ?? _pageIndex);
   const pageSize = +(searchParams.get("ps") ?? _pageSize);
 
-  const context = api.useContext();
+  const utils = api.useUtils();
   const [result] = api.saleOffer.list.useSuspenseQuery(
     {
       offset: pageIndex * pageSize,
@@ -58,8 +58,8 @@ export const SaleOfferTable: FC<SaleOfferTableProps> = ({
 
   const { mutateAsync } = api.saleOffer.deleteMany.useMutation({
     async onSettled() {
-      await context.saleOffer.list.invalidate();
-      await context.saleOffer.get.invalidate();
+      await utils.saleOffer.list.invalidate();
+      await utils.saleOffer.get.invalidate();
     },
   });
 

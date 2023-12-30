@@ -19,10 +19,10 @@ import { api } from "~/utils/api";
 type CompanyCreateFormFields = RouterInputs["company"]["create"];
 
 export const CompanyCreateForm: FC = () => {
-  const context = api.useContext();
+  const utils = api.useUtils();
   const { mutateAsync } = api.company.create.useMutation({
     async onSettled() {
-      await context.company.list.invalidate();
+      await utils.company.list.invalidate();
     },
   });
 

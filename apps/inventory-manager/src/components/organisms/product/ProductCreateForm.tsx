@@ -22,10 +22,10 @@ export const ProductCreateForm: FC<ProductCreateFormProps> = ({
   productCategories: initialProductCategories,
   productTags: initialProductTags,
 }) => {
-  const context = api.useContext();
+  const utils = api.useUtils();
   const { mutateAsync } = api.product.create.useMutation({
     async onSettled() {
-      await context.product.list.invalidate();
+      await utils.product.list.invalidate();
     },
   });
 
