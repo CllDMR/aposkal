@@ -2,6 +2,7 @@
 
 import type { FC } from "react";
 import { useMemo } from "react";
+import { useSearchParams } from "next/navigation";
 import type { ColumnDef } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
 
@@ -19,55 +20,39 @@ interface TableItem {
 }
 
 interface TenantWithUsersTableProps {
-  tenantWithUsers: RouterOutputs["tenant"]["getWithUsers"];
+  users: RouterOutputs["tenant"]["getUsersOfTenant"]["users"];
+  totalCount: RouterOutputs["tenant"]["getUsersOfTenant"]["totalCount"];
+  pageSize?: number;
+  pageIndex?: number;
 }
 
 export const TenantWithUsersTable: FC<TenantWithUsersTableProps> = ({
-  tenantWithUsers,
+  users,
+  totalCount,
+  pageIndex: _pageIndex = 0,
+  pageSize: _pageSize = 10,
 }) => {
+  const searchParams = useSearchParams()!;
+  const pageIndex = +(searchParams.get("pi") ?? _pageIndex);
+  const pageSize = +(searchParams.get("ps") ?? _pageSize);
+
   const utils = api.useUtils();
-  const [result] = api.tenant.getWithUsers.useSuspenseQuery(undefined, {
-    initialData: tenantWithUsers,
-  });
+  const [result] = api.tenant.getUsersOfTenant.useSuspenseQuery(
+    {
+      offset: pageIndex * pageSize,
+      limit: pageSize,
+    },
+    {
+      initialData: { users, totalCount },
+    },
+  );
 
   const { mutateAsync } = api.tenant.removeUserMany.useMutation({
     async onSettled() {
       await utils.tenant.list.invalidate();
-      await utils.tenant.get.invalidate();
-      await utils.tenant.getWithUsers.invalidate();
+      await utils.tenant.getUsersOfTenant.invalidate();
     },
   });
-
-  // const cols = useMemo<ColumnDef<TableItem>[]>(
-  //   () => [
-  //     {
-  //       header: "Name",
-  //       cell: (row) => row.renderValue(),
-  //       accessorKey: "name",
-  //       footer: "Name",
-  //     },
-  //     {
-  //       header: "Actions",
-  //       cell: ({ row: { original: tenantUser } }) => {
-  //         return (
-  //           <div>
-  //             <LinkButton href={`/users/${tenantUser.id}`}>Go</LinkButton>
-  //             <Button
-  //               onClick={async () =>
-  //                 await mutateAsync({ userId: tenantUser.id })
-  //               }
-  //               disabled={isLoading && tenantUser.id === variables?.userId}
-  //             >
-  //               Remove
-  //             </Button>
-  //           </div>
-  //         );
-  //       },
-  //       footer: "Actions",
-  //     },
-  //   ],
-  //   [isLoading, variables, mutateAsync],
-  // );
 
   const cols = useMemo(() => {
     const columnHelper = createColumnHelper<TableItem>();
@@ -85,8 +70,10 @@ export const TenantWithUsersTable: FC<TenantWithUsersTableProps> = ({
   return (
     <Table<TableItem>
       columns={cols}
-      data={result.usersToTenants.flatMap((a) => a.user)}
-      totalCount={result.usersToTenants.flatMap((a) => a.user).length}
+      data={result.users}
+      totalCount={result.totalCount}
+      pageIndex={pageIndex}
+      pageSize={pageSize}
       optionsMatrix={[
         [
           {

@@ -1,12 +1,13 @@
 import { nanoid } from "nanoid";
 import { z } from "zod";
 
-import { desc, eq, inArray, schema } from "@acme/db";
+import { desc, eq, inArray, schema, sql } from "@acme/db";
 
 import {
   tenantAddUserInput,
   tenantCreateInput,
   tenantGetInput,
+  tenantGetWithUsersInput,
   tenantListInput,
   tenantUpdateInput,
 } from "../inputs/tenant";
@@ -64,16 +65,29 @@ export const tenantRouter = createTRPCRouter({
     }),
   ),
 
-  getWithUsers: protectedProcedure.query(({ ctx }) =>
-    ctx.db.query.tenant.findFirst({
-      with: {
-        usersToTenants: {
-          with: { user: true },
-        },
-      },
-      where: (tenants, { eq }) => eq(tenants.id, ctx.session.user.ti),
+  getUsersOfTenant: protectedProcedure
+    .input(tenantGetWithUsersInput)
+    .query(async ({ ctx, input }) => {
+      const usersOfTenant = await ctx.db.query.usersToTenants.findMany({
+        where: (usersToTenant, { eq }) =>
+          eq(usersToTenant.tenantId, ctx.session.user.ti),
+        with: { user: true },
+        orderBy: desc(schema.usersToTenants.userId),
+        offset: input.offset,
+        limit: input.limit,
+      });
+
+      const { totalCount } = (
+        await ctx.db
+          .select({
+            totalCount: sql`count(*)`.mapWith(Number).as("totalCount"),
+          })
+          .from(schema.usersToTenants)
+          .where(eq(schema.usersToTenants.tenantId, ctx.session.user.ti))
+      ).at(0) ?? { totalCount: 0 };
+
+      return { users: usersOfTenant.flatMap((e) => e.user), totalCount };
     }),
-  ),
 
   create: protectedProcedure
     .input(tenantCreateInput)
