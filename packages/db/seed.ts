@@ -118,7 +118,7 @@ const main = async () => {
     [];
   let usersToTenantsDatas: (typeof schema.usersToTenants.$inferInsert)[] = [];
 
-  const saltRounds = 13;
+  const saltRounds = 6;
   const testPassword = "123456";
 
   const testUserData = {

@@ -11,7 +11,7 @@ export type { Session } from "@auth/core";
 
 export const providers = [""] as const;
 export type OAuthProviders = (typeof providers)[number];
-const saltRounds = 13;
+const saltRounds = 6;
 
 const domain = env.NODE_ENV === "production" ? env.DOMAIN : undefined;
 const cookiePrefix = "__Secure";

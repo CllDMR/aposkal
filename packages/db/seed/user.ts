@@ -6,7 +6,7 @@ import type { schema } from "../";
 export async function createRandomUser(): Promise<
   typeof schema.user.$inferInsert
 > {
-  const saltRounds = 13;
+  const saltRounds = 6;
   const testPassword = "123456";
 
   return {
