@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./app/*"],
+      "prismaClient": ["./prisma/client"],
+      "@db/*": ["./prisma/services/*"]
+    }
+  }
+}
