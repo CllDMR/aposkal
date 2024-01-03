@@ -33,8 +33,6 @@ export default function RegisterForm() {
     resolver: zodResolver(registerUserSchema),
   });
 
-  console.log(errors);
-
   // do signout
   useEffect(() => {
     signOut({ redirect: false });
@@ -68,9 +66,7 @@ export default function RegisterForm() {
         setSubmitting(false);
       }
     } catch (error) {
-      console.log(error);
       setError(error?.error || "Bir hata oluştu");
-      console.log(error);
       setSubmitting(false);
     }
   });
@@ -89,7 +85,7 @@ export default function RegisterForm() {
         Hesabınız var mı?{" "}
         <Link
           href="/auth/login"
-          className="text-blue-600 font-medium hover:underline"
+          className="font-medium text-blue-600 hover:underline"
         >
           Giriş Yapın
         </Link>{" "}
@@ -142,12 +138,12 @@ export default function RegisterForm() {
             name="agreement"
             id="agreement"
             checked={isAgreed}
-            className="text-blue-600 focus:ring-blue-500 h-4 w-4 rounded border-gray-300"
+            className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
             onChange={(e) => setIsAgreed(e.target.checked)}
           />
           <label htmlFor="agreement2" className="ml-4">
             <span
-              className="hover:text-blue-600 w-full cursor-pointer text-sm text-gray-700"
+              className="w-full cursor-pointer text-sm text-gray-700 hover:text-blue-600"
               id="privacy-policy-description"
               onClick={() => setOpenPrivacyPolicy(true)}
             >
@@ -161,7 +157,7 @@ export default function RegisterForm() {
             name={watch("name")}
           />
         </div>
-        <p className="text-red-500 col-span-full text-sm">{error}</p>
+        <p className="col-span-full text-sm text-red-500">{error}</p>
         <div className="col-span-full">
           <Button
             disabled={!isAgreed || isSubmitting}

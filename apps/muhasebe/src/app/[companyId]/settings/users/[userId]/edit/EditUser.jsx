@@ -50,9 +50,7 @@ const EditUser = ({ currentUserRole, companyUserData, userData }) => {
       }
       router.refresh();
       router.push(`/app/${companyId}/settings/users`);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   const handleDeleteUser = async () => {
@@ -71,16 +69,13 @@ const EditUser = ({ currentUserRole, companyUserData, userData }) => {
 
       const resData = await res.json();
 
-      console.log(resData);
       if (resData.error) {
         // setError(resData.error);
         return;
       }
 
       router.push(`/app/${companyId}/settings/users`);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   return (

@@ -11,8 +11,6 @@ invoice.addProperty("key", "value");
 
 const xmlAsString = invoice.getXml(true);
 
-console.log(xmlAsString);
-
 /*
 
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>

@@ -124,7 +124,6 @@ export default function AcceptInviteForm({ inviteId, userId, email }) {
       }
     } catch (error) {
       // setError(error);
-      console.log(error);
       setSubmitting(false);
     }
   });
@@ -172,7 +171,7 @@ export default function AcceptInviteForm({ inviteId, userId, email }) {
           className="col-span-full"
         />
 
-        <p className="text-red-500 col-span-full text-sm">{error}</p>
+        <p className="col-span-full text-sm text-red-500">{error}</p>
 
         <p className="mt-2 text-sm text-gray-700">
           Parolanızı mı unuttunuz?{" "}
@@ -180,7 +179,7 @@ export default function AcceptInviteForm({ inviteId, userId, email }) {
             onClick={onResetPassword}
             type="button"
             variant="link"
-            className="text-blue-600 font-medium hover:underline"
+            className="font-medium text-blue-600 hover:underline"
           >
             Parolamı sıfırla
           </Button>{" "}

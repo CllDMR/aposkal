@@ -49,7 +49,6 @@ export default function CreateCompany() {
     } catch (error) {
       setError(error);
       setSubmitting(false);
-      console.log({ error });
     }
     // setSubmitting(false);
   });
@@ -66,7 +65,7 @@ export default function CreateCompany() {
       </h2>
       <p className="mt-2 text-sm text-gray-700">
         veya{" "}
-        <Link href="/app" className="text-blue-600 font-medium hover:underline">
+        <Link href="/app" className="font-medium text-blue-600 hover:underline">
           Firma Seçin
         </Link>{" "}
       </p>
@@ -140,7 +139,7 @@ export default function CreateCompany() {
           {...register("email")}
         />
 
-        <p className="text-red-500 col-span-full text-sm">{error}</p>
+        <p className="col-span-full text-sm text-red-500">{error}</p>
 
         <div className="col-span-full">
           <Button

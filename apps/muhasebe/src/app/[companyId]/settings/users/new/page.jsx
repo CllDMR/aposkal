@@ -54,9 +54,7 @@ const NewUser = () => {
         router.push(`/app/${params.companyId}/settings/users`);
       }
     } catch (error) {
-      console.log(error);
       setError(error?.error || "Bir hata oluştu");
-      console.log(error);
       setSubmitting(false);
     }
   });

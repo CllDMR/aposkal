@@ -77,11 +77,9 @@ export default function RegisterForm() {
       }
     } catch (error) {
       setError(error);
-      console.log(error);
       setSubmitting(false);
     }
   });
-  console.log(error);
   return (
     <SlimLayout>
       <div className="flex">
@@ -96,7 +94,7 @@ export default function RegisterForm() {
         Hesabınız yok mu?{" "}
         <Link
           href="/auth/register"
-          className="text-blue-600 font-medium hover:underline"
+          className="font-medium text-blue-600 hover:underline"
         >
           Ücretsiz hesap oluşturun
         </Link>{" "}
@@ -133,13 +131,13 @@ export default function RegisterForm() {
             onClick={onResetPassword}
             type="button"
             variant="link"
-            className="text-blue-600 font-medium hover:underline"
+            className="font-medium text-blue-600 hover:underline"
           >
             Parolamı sıfırla
           </Button>{" "}
         </p>
 
-        <p className="text-red-500 col-span-full text-sm">{error}</p>
+        <p className="col-span-full text-sm text-red-500">{error}</p>
 
         <div className="col-span-full">
           <Button
