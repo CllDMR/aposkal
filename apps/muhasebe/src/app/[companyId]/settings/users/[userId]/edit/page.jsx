@@ -1,4 +1,5 @@
 import { getUserFromCompany } from "@db/index";
+
 import EditUser from "./EditUser";
 
 const Component = async ({ params }) => {

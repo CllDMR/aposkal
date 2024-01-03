@@ -38,7 +38,7 @@ const NextBreadcrumb = ({}) => {
   const pages = createBreadCrumb(paths, root);
 
   return (
-    <nav className="flex ml-8 lg:ml-0" aria-label="Breadcrumb">
+    <nav className="ml-8 flex lg:ml-0" aria-label="Breadcrumb">
       <ol role="list" className="flex items-center space-x-4">
         <li>
           <div>

@@ -1,22 +1,22 @@
 // "use client";
 // import { Bars3Icon } from "@heroicons/react/24/outline";
 import BreacCrumb from "./BreadCrumb";
-
 import ProfileMenu from "./ProfileMenu";
+
 export default function Header({ session, company }) {
   return (
-    <div className=" z-10 flex h-14 items-center justify-between border-b border-gray-200 bg-slate-100 px-4 py-3  sm:px-5 lg:px-5">
+    <div className="bg-slate-100 z-10 flex h-14 items-center justify-between border-b border-gray-200 px-4 py-3 sm:px-5 lg:px-5">
       {/* <button
         type="button"
         className="-m-2.5 p-2.5 text-gray-700 lg:hidden"
         onClick={() => setSidebarOpen(true)}
       >
         <span className="sr-only">Open sidebar</span>
-        <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+        <Bars3Icon className="w-6 h-6" aria-hidden="true" />
       </button> */}
 
       {/* Separator */}
-      {/* <div className="h-6 w-px bg-gray-200 lg:hidden" aria-hidden="true" /> */}
+      {/* <div className="w-px h-6 bg-gray-200 lg:hidden" aria-hidden="true" /> */}
 
       <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
         <div className="relative flex flex-1 ">
@@ -30,7 +30,7 @@ export default function Header({ session, company }) {
             className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500"
           >
             <span className="sr-only">View notifications</span>
-            {/* <BellIcon className="h-6 w-6" aria-hidden="true" /> */}
+            {/* <BellIcon className="w-6 h-6" aria-hidden="true" /> */}
           </button>
 
           {/* Separator */}

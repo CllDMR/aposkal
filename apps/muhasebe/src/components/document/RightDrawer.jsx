@@ -1,8 +1,9 @@
 "use client";
 
+import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { Fragment } from "react";
+
 import Button from "../ui/Button";
 import Input from "../ui/Input";
 
@@ -43,8 +44,8 @@ const RightDrawer = (props) => {
               leaveTo="translate-x-full"
             >
               <div className="w-screen max-w-md">
-                <div className="flex h-full flex-col overflow-y-scroll bg-white py-6 px-6 shadow-xl">
-                  <div className=" ">
+                <div className="flex h-full flex-col overflow-y-scroll bg-white px-6 py-6 shadow-xl">
+                  <div className="">
                     <div className="flex items-start justify-between">
                       <Dialog.Title className="text-base font-medium text-gray-900">
                         {null || "Ürün Detayı"}
@@ -52,7 +53,7 @@ const RightDrawer = (props) => {
                       <div className="ml-3 flex h-7 items-center">
                         <button
                           type="button"
-                          className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+                          className="focus:ring-teal-500 rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2"
                           onClick={onClose}
                         >
                           <span className="sr-only">Close panel</span>
@@ -61,7 +62,7 @@ const RightDrawer = (props) => {
                       </div>
                     </div>
                   </div>
-                  <div className="relative  flex-1 ">
+                  <div className="relative flex-1 ">
                     {/* Replace with your content */}
 
                     <div className="flex space-x-2 py-3">
@@ -86,9 +87,9 @@ const RightDrawer = (props) => {
                       </Button>
                     </div>
 
-                    <div className="h-36  py-1 -mx-6 bg-gray-500">
+                    <div className="-mx-6 h-36 bg-gray-500 py-1">
                       {/* <Image
-                          className="h-full w-full object-contain"
+                          className="object-contain w-full h-full"
                           src={null}
                           alt={product?.name}
                         /> */}
@@ -96,7 +97,7 @@ const RightDrawer = (props) => {
 
                     <div className="space-y-3">
                       <div className="flex justify-end">
-                        <span className="text-sm  text-gray-500">
+                        <span className="text-sm text-gray-500">
                           stokta 34 adet var
                         </span>
                       </div>

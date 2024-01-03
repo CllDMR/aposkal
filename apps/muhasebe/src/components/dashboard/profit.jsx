@@ -36,14 +36,14 @@ const secondaryNavigation = [
 
 export function Profit() {
   return (
-    <div className="relative overflow-hidden border rounded-lg shadow-sm isolate">
+    <div className="relative isolate overflow-hidden rounded-lg border shadow-sm">
       {/* Secondary navigation */}
-      <header className="pt-6 pb-4 sm:pb-6">
-        <div className="flex flex-wrap items-center gap-6 px-4 mx-auto max-w-7xl sm:flex-nowrap sm:px-6 lg:px-8">
+      <header className="pb-4 pt-6 sm:pb-6">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-6 px-4 sm:flex-nowrap sm:px-6 lg:px-8">
           <h1 className="text-base font-semibold leading-7 text-gray-900">
             Gelir ve Giderler
           </h1>
-          <div className="flex order-last w-full text-sm font-semibold leading-6 gap-x-8 sm:order-none sm:w-auto sm:border-l sm:border-gray-200 sm:pl-6 sm:leading-7">
+          <div className="order-last flex w-full gap-x-8 text-sm font-semibold leading-6 sm:order-none sm:w-auto sm:border-l sm:border-gray-200 sm:pl-6 sm:leading-7">
             {secondaryNavigation.map((item) => (
               <a
                 key={item.name}
@@ -59,7 +59,7 @@ export function Profit() {
 
       {/* Stats */}
       <div className="border-b border-b-gray-900/10 lg:border-t lg:border-t-gray-900/5">
-        <dl className="grid grid-cols-1 mx-auto max-w-7xl sm:grid-cols-2 lg:grid-cols-4 lg:px-2 xl:px-0">
+        <dl className="mx-auto grid max-w-7xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:px-2 xl:px-0">
           {stats.map((stat, statIdx) => (
             <div
               key={statIdx}
@@ -69,7 +69,7 @@ export function Profit() {
                   : statIdx === 2
                   ? "lg:border-l"
                   : "",
-                "flex items-baseline flex-wrap justify-between gap-y-2 gap-x-4 border-t border-gray-900/5 px-4 py-10 sm:px-6 lg:border-t-0 xl:px-8"
+                "flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 border-t border-gray-900/5 px-4 py-10 sm:px-6 lg:border-t-0 xl:px-8",
               )}
             >
               <dt className="text-sm font-medium leading-6 text-gray-500">
@@ -80,16 +80,16 @@ export function Profit() {
                   stat.changeType === "negative"
                     ? "text-rose-600"
                     : "text-gray-700",
-                  "text-xs font-medium"
+                  "text-xs font-medium",
                 )}
               >
                 {stat.change}
               </dd>
-              <dd className="flex-none w-full text-2xl font-medium leading-10 tracking-tight text-gray-900">
+              <dd className="w-full flex-none text-2xl font-medium leading-10 tracking-tight text-gray-900">
                 {stat.value} ₺
               </dd>
               {stat.tax && (
-                <dd className="flex-none w-full -my-6 text-xs font-medium leading-10 tracking-tight text-gray-400">
+                <dd className="-my-6 w-full flex-none text-xs font-medium leading-10 tracking-tight text-gray-400">
                   {stat.tax} Tahmini Vergi
                 </dd>
               )}
@@ -99,7 +99,7 @@ export function Profit() {
       </div>
 
       <div
-        className="absolute left-0 origin-top-left -rotate-90 translate-y-40 top-full -z-10 mt-96 transform-gpu opacity-20 blur-3xl sm:left-1/2 sm:-ml-96 sm:-mt-10 sm:translate-y-0 sm:rotate-0 sm:transform-gpu sm:opacity-50"
+        className="absolute left-0 top-full -z-10 mt-96 origin-top-left translate-y-40 -rotate-90 transform-gpu opacity-20 blur-3xl sm:left-1/2 sm:-ml-96 sm:-mt-10 sm:translate-y-0 sm:rotate-0 sm:transform-gpu sm:opacity-50"
         aria-hidden="true"
       >
         <div

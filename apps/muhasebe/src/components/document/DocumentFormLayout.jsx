@@ -8,28 +8,28 @@ const DocumentFormLayout = ({
   total,
 }) => {
   return (
-    <div className="min-h-full md:max-h-full flex flex-col overflow-scroll-y shadow sm:rounded-md container">
-      <div className="bg-slate-50 md:flex border divide-x">
+    <div className="overflow-scroll-y container flex min-h-full flex-col shadow sm:rounded-md md:max-h-full">
+      <div className="bg-slate-50 divide-x border md:flex">
         {/* Header */}
-        <div className="md:w-1/2 px-4 py-6 space-y-4">
-          <h1 className="col-span-full text-gray-600 font-semibold">
+        <div className="space-y-4 px-4 py-6 md:w-1/2">
+          <h1 className="col-span-full font-semibold text-gray-600">
             Müşteri Bilgileri
           </h1>
 
           {companyInfo}
         </div>
 
-        <div className="md:w-1/2 px-4 py-6 space-y-4 ">
-          <h1 className=" text-gray-600 font-semibold "> Belge Bilgileri</h1>
+        <div className="space-y-4 px-4 py-6 md:w-1/2 ">
+          <h1 className="font-semibold text-gray-600 "> Belge Bilgileri</h1>
 
           {docInfo}
         </div>
       </div>
       {/* Lines */}
-      <div className=" min-h-40 bg-white flex border overflow-y-scroll">
-        <div className=" w-full space-y-4  py-6">
+      <div className="flex min-h-40 overflow-y-scroll border bg-white">
+        <div className="w-full space-y-4 py-6 ">
           {" "}
-          <h1 className="col-span-full text-gray-600 px-4 font-semibold">
+          <h1 className="col-span-full px-4 font-semibold text-gray-600">
             {" "}
             Ürün/Hizmet Bilgileri
           </h1>
@@ -37,16 +37,16 @@ const DocumentFormLayout = ({
         </div>
       </div>
       {/* Notes and totals */}
-      <div className="bg-slate-50 md:flex border ">
-        <div className="md:flex flex-1 divide-x">
-          <div className="md:w-2/3 space-y-4 px-4 py-6">
-            <h1 className="col-span-full text-gray-600 font-semibold">
+      <div className="bg-slate-50 border md:flex ">
+        <div className="flex-1 divide-x md:flex">
+          <div className="space-y-4 px-4 py-6 md:w-2/3">
+            <h1 className="col-span-full font-semibold text-gray-600">
               Notlar
             </h1>
             {note}
           </div>
-          <div className=" md:w-1/3 space-y-4 px-4 py-6">
-            <h1 className="col-span-full text-gray-600 font-semibold">
+          <div className="space-y-4 px-4 py-6 md:w-1/3">
+            <h1 className="col-span-full font-semibold text-gray-600">
               Toplamlar
             </h1>
             {total}

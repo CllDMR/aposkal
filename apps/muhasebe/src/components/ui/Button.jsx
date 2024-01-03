@@ -45,7 +45,7 @@ const Button = (props) => {
     >
       {loading && (
         <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-          {/* <LockClosedIcon className="h-5 w-5 text-primary group-hover:text-primary" aria-hidden="true" /> */}
+          {/* <LockClosedIcon className="w-5 h-5 text-primary group-hover:text-primary" aria-hidden="true" /> */}
           <Loader size="12" colorName="white" />
         </span>
       )}

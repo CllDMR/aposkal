@@ -1,14 +1,14 @@
 "use client";
+
+import { useRef } from "react";
+import Link from "next/link";
+import { useParams, usePathname } from "next/navigation";
 import { Logo } from "@/components/landing/Logo";
 import { Disclosure } from "@headlessui/react";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useRef } from "react";
+
 import packageJson from "../../../package.json";
 import sidebarItems from "./sidebaritems";
-
-import { useParams } from "next/navigation";
 
 export default function SideBar({ company }) {
   const params = useParams();
@@ -16,16 +16,16 @@ export default function SideBar({ company }) {
   const navigation = sidebarItems(params.companyId);
 
   return (
-    <div className="  flex h-full grow flex-col gap-y-5 overflow-y-auto border-r bg-slate-100  pb-4">
-      <div className=" mx-auto space-y-3 my-8 ">
+    <div className="bg-slate-100 flex h-full grow flex-col gap-y-5 overflow-y-auto border-r pb-4">
+      <div className="mx-auto my-8 space-y-3 ">
         <div className="flex h-full ">
           <Logo width={125} />
         </div>
         <div>
-          <p className="-mt-4 text-center text-sm font-medium text-secondary">
+          <p className="text-secondary -mt-4 text-center text-sm font-medium">
             Muhasebe
           </p>
-          <p className=" text-center text-sm font-medium text-red-600">
+          <p className="text-red-600 text-center text-sm font-medium ">
             Beta{" "}
             <span className="mt-1 text-center text-xs text-gray-500">
               {packageJson.version}
@@ -34,7 +34,7 @@ export default function SideBar({ company }) {
         </div>
       </div>
 
-      <nav className="flex h-full flex-1 flex-col mt-1">
+      <nav className="mt-1 flex h-full flex-1 flex-col">
         <ul role="list" className="flex flex-1 flex-col gap-y-7">
           <li>
             {navigation
@@ -84,7 +84,7 @@ const Menu = ({ item, index }) => {
     <Disclosure key={index}>
       {({ open }) => {
         return (
-          <div className=" border-b-2 border-gray-50" key={index}>
+          <div className="border-b-2 border-gray-50" key={index}>
             <Disclosure.Button className="w-full" as="div">
               {item.children ? (
                 <div

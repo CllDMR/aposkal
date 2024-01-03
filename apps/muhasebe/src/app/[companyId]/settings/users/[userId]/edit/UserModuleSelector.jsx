@@ -1,8 +1,8 @@
 "use client";
-import sidebarItems from "@/app/[companyId]/sidebaritems";
-import { useParams } from "next/navigation";
 
 import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import sidebarItems from "@/app/[companyId]/sidebaritems";
 
 const permissions = [
   { id: "false", title: "Yetki Yok" },
@@ -37,7 +37,7 @@ const UserModuleSelector = ({ callback, initValue }) => {
       {/* render sidebarItemsNames array items  */}
       {Object.keys(permissionObj).map((item, index) => (
         <div key={index}>
-          <div className="flex items-center justify-between  py-2 px-3 text-sm font-medium   text-gray-700">
+          <div className="flex items-center justify-between px-3 py-2 text-sm font-medium text-gray-700">
             <div className="flex-shrink-0">{item}</div>
 
             <div>
@@ -45,7 +45,7 @@ const UserModuleSelector = ({ callback, initValue }) => {
 
               <fieldset className="">
                 <legend className="sr-only">Notification method</legend>
-                <div className="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
+                <div className="space-y-4 sm:flex sm:items-center sm:space-x-10 sm:space-y-0">
                   {permissions.map((per) => (
                     <div key={per.id} className="flex items-center">
                       <input
@@ -53,7 +53,7 @@ const UserModuleSelector = ({ callback, initValue }) => {
                         name={item}
                         type="radio"
                         defaultChecked={permissionObj[item] === per.id}
-                        className="h-4 w-4 border-gray-300 text-teal-600 focus:ring-teal-500"
+                        className="text-teal-600 focus:ring-teal-500 h-4 w-4 border-gray-300"
                         onChange={(e) => handlePermissionChange(item, per.id)}
                       />
                       <label

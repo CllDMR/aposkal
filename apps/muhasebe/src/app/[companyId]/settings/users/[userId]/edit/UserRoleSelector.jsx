@@ -1,6 +1,7 @@
 "use client";
-import { RadioGroup } from "@headlessui/react";
+
 import { useEffect, useState } from "react";
+import { RadioGroup } from "@headlessui/react";
 
 const settings = [
   {
@@ -57,9 +58,9 @@ export default function UserRoleSelector({ callback, initValue }) {
                 settingIdx === settings.length - 1
                   ? "rounded-bl-md rounded-br-md"
                   : "",
-                checked ? "z-10 border-teal-200 bg-teal-50" : "border-gray-200",
+                checked ? "border-teal-200 bg-teal-50 z-10" : "border-gray-200",
                 "relative flex cursor-pointer border p-4 focus:outline-none",
-                setting.disabled && "cursor-not-allowed opacity-50"
+                setting.disabled && "cursor-not-allowed opacity-50",
               )
             }
           >
@@ -68,10 +69,10 @@ export default function UserRoleSelector({ callback, initValue }) {
                 <span
                   className={classNames(
                     checked
-                      ? "border-transparent bg-teal-600"
+                      ? "bg-teal-600 border-transparent"
                       : "border-gray-300 bg-white",
-                    active ? "ring-2 ring-teal-500 ring-offset-2" : "",
-                    "mt-0.5 flex h-4 w-4 shrink-0 cursor-pointer items-center justify-center rounded-full border"
+                    active ? "ring-teal-500 ring-2 ring-offset-2" : "",
+                    "mt-0.5 flex h-4 w-4 shrink-0 cursor-pointer items-center justify-center rounded-full border",
                   )}
                   aria-hidden="true"
                 >
@@ -82,7 +83,7 @@ export default function UserRoleSelector({ callback, initValue }) {
                     as="span"
                     className={classNames(
                       checked ? "text-teal-900" : "text-gray-900",
-                      "block text-sm font-medium"
+                      "block text-sm font-medium",
                     )}
                   >
                     {setting.name}
@@ -91,7 +92,7 @@ export default function UserRoleSelector({ callback, initValue }) {
                     as="span"
                     className={classNames(
                       checked ? "text-teal-700" : "text-gray-500",
-                      "block text-sm"
+                      "block text-sm",
                     )}
                   >
                     {setting.description}

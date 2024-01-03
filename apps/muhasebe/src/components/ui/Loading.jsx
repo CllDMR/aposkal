@@ -135,7 +135,7 @@ const Loading = ({ text }) => {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50">
       <div className="-mt-32 flex flex-col items-center justify-start">
-        <div className=" flex justify-center h-28">
+        <div className="flex h-28 justify-center">
           <Logo className="h-10 w-auto" width={150} />
         </div>
         <div className="-mt-12 h-28 text-center">

@@ -1,25 +1,20 @@
 // use only server side code
-import { cache } from 'react';
+import { cache } from "react";
 
 import {
-    acceptInvite,
-    addUserToCompany,
-    checkPermission,
-    createCompany,
-    getCompaniesByUid,
-    getCompanyById,
-    getCompanyUsers,
-    getInvitation,
-    getUserFromCompany,
-    removeUserFromCompany,
-    updateUserInCompany
-} from './companies/index.js';
-
-import {
-    createNewUser,
-    getAuth,
-    getUserByEmail
-} from './user/index.js';
+  acceptInvite,
+  addUserToCompany,
+  checkPermission,
+  createCompany,
+  getCompaniesByUid,
+  getCompanyById,
+  getCompanyUsers,
+  getInvitation,
+  getUserFromCompany,
+  removeUserFromCompany,
+  updateUserInCompany,
+} from "./companies/index.js";
+import { createNewUser, getAuth, getUserByEmail } from "./user/index.js";
 
 // export for server components use only with cache
 export const _getUserByEmail = cache(getUserByEmail);
@@ -31,15 +26,17 @@ export const _getUserFromCompany = cache(getUserFromCompany);
 
 // export for api use only
 export {
-    acceptInvite, addUserToCompany,
-    checkPermission,
-    createCompany,
-    createNewUser,
-    getAuth,
-    getCompanyById,
-    getCompanyUsers,
-    getInvitation,
-    getUserByEmail,
-    getUserFromCompany, removeUserFromCompany, updateUserInCompany
+  acceptInvite,
+  addUserToCompany,
+  checkPermission,
+  createCompany,
+  createNewUser,
+  getAuth,
+  getCompanyById,
+  getCompanyUsers,
+  getInvitation,
+  getUserByEmail,
+  getUserFromCompany,
+  removeUserFromCompany,
+  updateUserInCompany,
 };
-

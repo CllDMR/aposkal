@@ -1,7 +1,9 @@
 import { emailSchema } from "@/validationSchemas";
 // import { NextResponse } from "next/server";
 import { Resend } from "resend";
+
 import emailTemplate from "./template";
+
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 // export async function POST() {
@@ -27,7 +29,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sendEmail = async (emailData) => {
   const validation = emailSchema.safeParse(emailData);
-  if (!validation.success) return { "message": validation.error.errors };
+  if (!validation.success) return { message: validation.error.errors };
   await resend.emails.send({
     from: emailData.from || "noreply@aposkal.com",
     to: emailData.to,
@@ -35,6 +37,5 @@ export const sendEmail = async (emailData) => {
     html: emailTemplate({ htmlMessage: emailData.html }),
     // react: <WelcomeTemplate name="Furkan" />,
   });
-  return { messsage: "email send" }
-}
-
+  return { messsage: "email send" };
+};

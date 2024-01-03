@@ -1,11 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import DocumentFormLayout from "@/components/document/DocumentFormLayout";
 import RightDrawer from "@/components/document/RightDrawer";
 import Input from "@/components/ui/Input";
 import NumberInput from "@/components/ui/NumberInput";
 import TextArea from "@/components/ui/TextArea";
-import { useState } from "react";
 
 const lines = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }];
 
@@ -25,7 +25,7 @@ const NewInvoice = () => {
         </div>
       }
       docInfo={
-        <div className="grid xl:grid-cols-2 gap-4">
+        <div className="grid gap-4 xl:grid-cols-2">
           <Input type="date" label="Fatura Tarihi" />
 
           <div className="grid grid-cols-2 gap-2 space-y-0">
@@ -41,17 +41,17 @@ const NewInvoice = () => {
       note={<TextArea rows="3" label="Notlar" />}
       total={
         <div>
-          <div className="flex text-sm justify-between">
-            <div className="text-gray-600 font-semibold">Ara Toplam</div>
-            <div className="text-gray-600 font-semibold">0,00 TL</div>
+          <div className="flex justify-between text-sm">
+            <div className="font-semibold text-gray-600">Ara Toplam</div>
+            <div className="font-semibold text-gray-600">0,00 TL</div>
           </div>
-          <div className="flex text-sm justify-between">
-            <div className="text-gray-600 font-semibold">Kdv</div>
-            <div className="text-gray-600 font-semibold">0,00 TL</div>
+          <div className="flex justify-between text-sm">
+            <div className="font-semibold text-gray-600">Kdv</div>
+            <div className="font-semibold text-gray-600">0,00 TL</div>
           </div>
           <div className="flex justify-between">
-            <div className="text-gray-600 font-bold">Genel Toplam</div>
-            <div className="text-gray-600 font-bold">0,00 TL</div>
+            <div className="font-bold text-gray-600">Genel Toplam</div>
+            <div className="font-bold text-gray-600">0,00 TL</div>
           </div>
         </div>
       }
@@ -60,10 +60,10 @@ const NewInvoice = () => {
       <div className="divide-y-2">
         {lines.map((line) => (
           <div
-            className="md:flex  gap-3 space-y-3 md:space-y-0 even:bg-sky-50 py-4 px-3"
+            className="even:bg-sky-50 gap-3 space-y-3 px-3 py-4 md:flex md:space-y-0"
             key={line.id}
           >
-            <div className="w-full md:w-5/12 mt-4 md:mt-0">
+            <div className="mt-4 w-full md:mt-0 md:w-5/12">
               <Input label="Ürün Adı" />
             </div>
 
@@ -90,7 +90,7 @@ const NewInvoice = () => {
                 <buton
                   type="button"
                   onClick={() => setDrawer({ id: line.id })}
-                  className="inline-flex items-center px-2 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-teal-500 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                  className="bg-teal-500 hover:bg-teal-600 focus:ring-teal-500 inline-flex items-center rounded-md border border-transparent px-2 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +98,7 @@ const NewInvoice = () => {
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="w-5 h-5"
+                    className="h-5 w-5"
                   >
                     <path
                       strokeLinecap="round"
@@ -115,7 +115,7 @@ const NewInvoice = () => {
           <buton
             type="button"
             onClick={handleAddLine}
-            className="inline-flex items-center px-2 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-teal-500 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+            className="bg-teal-500 hover:bg-teal-600 focus:ring-teal-500 inline-flex items-center rounded-md border border-transparent px-2 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"
           >
             Satır Ekle
           </buton>

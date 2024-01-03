@@ -1,6 +1,7 @@
 "use client";
-import Input from "@/components/ui/Input";
+
 import { useEffect, useState } from "react";
+import Input from "@/components/ui/Input";
 
 const NumberInput = ({
   label,

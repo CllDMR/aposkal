@@ -1,13 +1,14 @@
 "use client";
+
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Label from "@/components/ui/InputLabel";
 import Toggle from "@/components/ui/Toggle";
 import { inviteUserSchema } from "@/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 const NewUser = () => {
@@ -30,7 +31,7 @@ const NewUser = () => {
 
   useEffect(() => {
     setValue("companyId", params.companyId);
-  }, []);
+  }, [params.companyId, setValue]);
 
   const onSubmit = handleSubmit(async (data) => {
     setSubmitting(true);
@@ -67,7 +68,7 @@ const NewUser = () => {
           <div className="mt-5 md:col-span-2 md:mt-0">
             <form onSubmit={onSubmit}>
               <div className="overflow-hidden shadow sm:rounded-md">
-                <div className="bg-white px-4 py-5  sm:p-6">
+                <div className="bg-white px-4 py-5 sm:p-6">
                   <div className="">
                     <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
                       <Label htmlFor="name">Ad Soyad</Label>
@@ -96,8 +97,8 @@ const NewUser = () => {
                     </div>
                   </div>
                   {/* <div className="mt-4">
-                    <div className="  border-t border-gray-200 ">
-                      <h3 className=" py-4 text-center text-lg ">
+                    <div className="border-t border-gray-200 ">
+                      <h3 className="py-4 text-lg text-center ">
                         Kullanıcı Yetkileri
                       </h3>
                       <ToggleActive

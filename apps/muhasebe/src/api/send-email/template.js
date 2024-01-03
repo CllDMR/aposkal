@@ -1,6 +1,6 @@
 const emailTemplate = ({ name, htmlMessage }) => {
-    const currentYear = new Date().getFullYear();
-    return `<!DOCTYPE html>
+  const currentYear = new Date().getFullYear();
+  return `<!DOCTYPE html>
     <html>
     <head>
         <title>Aposkal Email</title>
@@ -57,7 +57,7 @@ const emailTemplate = ({ name, htmlMessage }) => {
             </div>
         </div>
     </body>
-    </html>`
-}
+    </html>`;
+};
 
 module.exports = emailTemplate;

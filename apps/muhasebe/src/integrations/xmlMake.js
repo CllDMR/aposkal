@@ -1,15 +1,15 @@
-import { Invoice } from 'ubl-builder';
+import { Invoice } from "ubl-builder";
+
 // const { Invoice } = require('ubl-builder');
 const invoice = new Invoice("1234", {});
 
-
-
-invoice.addProperty("xmlns", "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2");
+invoice.addProperty(
+  "xmlns",
+  "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2",
+);
 invoice.addProperty("key", "value");
 
-
-
-const xmlAsString = invoice.getXml(true)
+const xmlAsString = invoice.getXml(true);
 
 console.log(xmlAsString);
 

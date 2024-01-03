@@ -1,15 +1,16 @@
 "use client";
+
+import { Fragment, useState } from "react";
 import Sidebar from "@/app/[companyId]/SideBar";
 import { Dialog, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Fragment, useState } from "react";
 
 const SideBarLayout = ({ company }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div>
-      <div className="fixed top-0 right-0 inset-0 flex h-min w-10 p-3 z-50 lg:hidden">
+      <div className="fixed inset-0 right-0 top-0 z-50 flex h-min w-10 p-3 lg:hidden">
         <button
           type="button"
           className="-m-2.5 p-2.5 text-gray-700 lg:hidden"
@@ -19,7 +20,7 @@ const SideBarLayout = ({ company }) => {
           <Bars3Icon className="h-6 w-6" aria-hidden="true" />
         </button>
       </div>
-      <div className="hidden lg:fixed  bg-red-500 lg:inset-y-0 lg:z-50 lg:flex lg:w-52 lg:flex-col">
+      <div className="bg-red-500 hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-52 lg:flex-col">
         <div className="h-screen">
           <Transition.Root show={sidebarOpen} as={Fragment}>
             <Dialog

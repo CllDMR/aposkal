@@ -1,6 +1,7 @@
-import { _getCompanyUsers } from "@db/index";
 import Image from "next/image";
 import Link from "next/link";
+import { _getCompanyUsers } from "@db/index";
+
 /*
 [
   {
@@ -29,8 +30,8 @@ const Users = async ({ params }) => {
 
   return (
     <>
-      <div className=" overflow-hidden shadow sm:rounded-md">
-        <div className="border-b border-gray-200 bg-white px-4 py-5   sm:px-6 ">
+      <div className="overflow-hidden shadow sm:rounded-md">
+        <div className="border-b border-gray-200 bg-white px-4 py-5 sm:px-6 ">
           <div className="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
             <div className="ml-4 mt-2">
               <h3 className="text-lg font-medium leading-6 text-gray-900">
@@ -43,19 +44,19 @@ const Users = async ({ params }) => {
                 // onClick={onAddUser}
                 href={`/app/${companyId}/settings/users/new`}
                 type="button"
-                className="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-teal-500 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                className="bg-teal-500 hover:bg-teal-600 focus:ring-teal-500 relative inline-flex items-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"
               >
                 Kullanıcı Ekle
               </Link>
             </div>
           </div>
         </div>
-        <ul className="divide-y divide-gray-200 bg-white  ">
+        <ul className="divide-y divide-gray-200 bg-white ">
           {users.map((user) => (
             <li key={user.id}>
               <Link
                 href={`/app/${companyId}/settings/users/${user.id}/edit`}
-                className="block hover:bg-gray-50 cursor-pointer"
+                className="block cursor-pointer hover:bg-gray-50"
               >
                 <div className="flex items-center px-4 py-4 sm:px-6">
                   <div className="flex min-w-0 flex-1 items-center">
@@ -72,18 +73,18 @@ const Users = async ({ params }) => {
                     </div>
                     <div className="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
                       <div>
-                        <p className="truncate text-sm font-medium text-teal-600 ">
+                        <p className="text-teal-600 truncate text-sm font-medium ">
                           {user.name}{" "}
                         </p>
-                        <p className="mt-2 flex items-center text-sm text-gray-500 space-x-1">
-                          <div className="  text-gray-400 ">
+                        <p className="mt-2 flex items-center space-x-1 text-sm text-gray-500">
+                          <div className="text-gray-400 ">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"
                               viewBox="0 0 24 24"
                               strokeWidth={1.5}
                               stroke="currentColor"
-                              className="w-4 h-4"
+                              className="h-4 w-4"
                             >
                               <path
                                 strokeLinecap="round"
@@ -95,15 +96,15 @@ const Users = async ({ params }) => {
                           <span className="truncate">{user.email}</span>
                         </p>
 
-                        <p className="mt-2 flex items-center text-sm text-gray-500 space-x-1">
-                          <div className="  text-gray-400 ">
+                        <p className="mt-2 flex items-center space-x-1 text-sm text-gray-500">
+                          <div className="text-gray-400 ">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"
                               viewBox="0 0 24 24"
                               strokeWidth={1.5}
                               stroke="currentColor"
-                              className="w-4 h-4"
+                              className="h-4 w-4"
                             >
                               <path
                                 strokeLinecap="round"
@@ -135,7 +136,7 @@ const Users = async ({ params }) => {
                       viewBox="0 0 24 24"
                       strokeWidth={1.5}
                       stroke="currentColor"
-                      className="w-6 h-6"
+                      className="h-6 w-6"
                     >
                       <path
                         strokeLinecap="round"
@@ -164,7 +165,7 @@ const StateView = ({ isActive, inviteId }) => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="mr-1.5 h-5 w-5 flex-shrink-0 text-yellow-400"
+          className="text-yellow-400 mr-1.5 h-5 w-5 flex-shrink-0"
         >
           <path
             strokeLinecap="round"
@@ -184,7 +185,7 @@ const StateView = ({ isActive, inviteId }) => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="mr-1.5 h-5 w-5 flex-shrink-0 text-yellow-400"
+          className="text-yellow-400 mr-1.5 h-5 w-5 flex-shrink-0"
         >
           <path
             strokeLinecap="round"
@@ -204,7 +205,7 @@ const StateView = ({ isActive, inviteId }) => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="mr-1.5 h-5 w-5 flex-shrink-0 text-green-400"
+          className="text-green-400 mr-1.5 h-5 w-5 flex-shrink-0"
         >
           <path
             strokeLinecap="round"
@@ -228,7 +229,7 @@ const UserTypeWiev = ({ role }) => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="mr-1.5 h-5 w-5 flex-shrink-0 text-yellow-400"
+          className="text-yellow-400 mr-1.5 h-5 w-5 flex-shrink-0"
         >
           <path
             strokeLinecap="round"
@@ -248,7 +249,7 @@ const UserTypeWiev = ({ role }) => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="mr-1.5 h-5 w-5 flex-shrink-0 text-yellow-400"
+          className="text-yellow-400 mr-1.5 h-5 w-5 flex-shrink-0"
         >
           <path
             strokeLinecap="round"
@@ -268,7 +269,7 @@ const UserTypeWiev = ({ role }) => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="mr-1.5 h-5 w-5 flex-shrink-0 text-green-400"
+          className="text-green-400 mr-1.5 h-5 w-5 flex-shrink-0"
         >
           <path
             strokeLinecap="round"
@@ -288,7 +289,7 @@ const UserTypeWiev = ({ role }) => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="mr-1.5 h-5 w-5 flex-shrink-0 text-green-400"
+          className="text-green-400 mr-1.5 h-5 w-5 flex-shrink-0"
         >
           <path
             strokeLinecap="round"

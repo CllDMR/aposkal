@@ -1,9 +1,33 @@
 {
   "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "skipLibCheck": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "noUncheckedIndexedAccess": true,
+
+    "baseUrl": "./",
     "paths": {
-      "@/*": ["./app/*"],
+      "@/*": ["./src/*"],
       "prismaClient": ["./prisma/client"],
       "@db/*": ["./prisma/services/*"]
-    }
-  }
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [".", ".next/types/**/*.ts"],
+  "exclude": ["node_modules", ".next", ".turbo"]
 }

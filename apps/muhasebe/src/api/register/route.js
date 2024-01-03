@@ -1,15 +1,15 @@
+import { NextResponse } from "next/server";
 import { sendEmail } from "@/api/send-email/email";
 import { createNewUser } from "@db/index";
-import { NextResponse } from "next/server";
 
 export async function POST(request) {
-
-  const host = request.headers.get('host');
+  const host = request.headers.get("host");
   const body = await request.json();
 
   const userRes = await createNewUser(body);
-  // if userRes throws error  
-  if (userRes.error) return NextResponse.json({ error: userRes.error }, { status: 400 });
+  // if userRes throws error
+  if (userRes.error)
+    return NextResponse.json({ error: userRes.error }, { status: 400 });
 
   // TODO: send email verification
   const emailVerifiedCode = userRes.newUser.emailVerifiedCode;

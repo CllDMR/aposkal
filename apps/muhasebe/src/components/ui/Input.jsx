@@ -1,14 +1,14 @@
 "use client";
-import { ExclamationTriangleIcon } from "@heroicons/react/20/solid";
 
 import { forwardRef } from "react";
+import { ExclamationTriangleIcon } from "@heroicons/react/20/solid";
 
 const classNames = (...classes) => classes.filter(Boolean).join(" ");
 
 function Input({ inputClassName, type = "text", label, ...rest }, ref) {
   let className = classNames(
     "block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-500 sm:text-sm sm:leading-6 outline-none",
-    inputClassName ? inputClassName : ""
+    inputClassName ? inputClassName : "",
   );
 
   if (rest.error) {
@@ -39,11 +39,11 @@ function InputError({ error, className = "" }) {
     return (
       <div className={className}>
         <div
-          className=" flex w-full py-1 text-xs text-red-600 "
+          className="text-red-600 flex w-full py-1 text-xs "
           id="email-error"
         >
           <ExclamationTriangleIcon
-            className="mr-1 h-4  w-4 text-red-500 "
+            className="text-red-500 mr-1 h-4 w-4 "
             aria-hidden="true"
           />
           {error}

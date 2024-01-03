@@ -1,4 +1,8 @@
 "use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/landing/Button";
 import TextField from "@/components/landing/Fields";
 import { Logo } from "@/components/landing/Logo";
@@ -7,10 +11,8 @@ import { SlimLayout } from "@/components/landing/SlimLayout";
 import Spinner from "@/components/landing/spinner";
 import { createCompanySchema } from "@/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
+
 export default function CreateCompany() {
   const router = useRouter();
 
@@ -64,7 +66,7 @@ export default function CreateCompany() {
       </h2>
       <p className="mt-2 text-sm text-gray-700">
         veya{" "}
-        <Link href="/app" className="font-medium text-blue-600 hover:underline">
+        <Link href="/app" className="text-blue-600 font-medium hover:underline">
           Firma Seçin
         </Link>{" "}
       </p>
@@ -138,7 +140,7 @@ export default function CreateCompany() {
           {...register("email")}
         />
 
-        <p className="col-span-full text-sm text-red-500">{error}</p>
+        <p className="text-red-500 col-span-full text-sm">{error}</p>
 
         <div className="col-span-full">
           <Button

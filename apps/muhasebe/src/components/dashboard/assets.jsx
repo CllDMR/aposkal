@@ -20,7 +20,7 @@ const data = [
     label: "Kasa",
     value: "500.000",
     icon: (
-      <BanknotesIcon className="w-5 h-6 text-gray-400" aria-hidden="true" />
+      <BanknotesIcon className="h-6 w-5 text-gray-400" aria-hidden="true" />
     ),
     type: "positive",
   },
@@ -29,7 +29,7 @@ const data = [
     value: "1.500.000",
     icon: (
       <BuildingLibraryIcon
-        className="w-5 h-6 text-gray-400"
+        className="h-6 w-5 text-gray-400"
         aria-hidden="true"
       />
     ),
@@ -39,7 +39,7 @@ const data = [
     label: "Pos",
     value: "1.500.000",
     icon: (
-      <CalculatorIcon className="w-5 h-6 text-gray-400" aria-hidden="true" />
+      <CalculatorIcon className="h-6 w-5 text-gray-400" aria-hidden="true" />
     ),
     type: "positive",
   },
@@ -47,7 +47,7 @@ const data = [
     label: "Kredi Kartı",
     value: "-35.000",
     icon: (
-      <CreditCardIcon className="w-5 h-6 text-gray-400" aria-hidden="true" />
+      <CreditCardIcon className="h-6 w-5 text-gray-400" aria-hidden="true" />
     ),
     type: "negative",
     divider: true,
@@ -56,13 +56,13 @@ const data = [
   {
     label: "Çek",
     value: "600.000",
-    icon: <TicketIcon className="w-5 h-6 text-gray-400" aria-hidden="true" />,
+    icon: <TicketIcon className="h-6 w-5 text-gray-400" aria-hidden="true" />,
     type: "positive",
   },
   {
     label: "Senet",
     value: "-340.000",
-    icon: <TicketIcon className="w-5 h-6 text-gray-400" aria-hidden="true" />,
+    icon: <TicketIcon className="h-6 w-5 text-gray-400" aria-hidden="true" />,
     type: "negative",
   },
   {
@@ -70,7 +70,7 @@ const data = [
     value: "2.300.000",
     icon: (
       <BuildingOfficeIcon
-        className="w-5 h-6 text-gray-400"
+        className="h-6 w-5 text-gray-400"
         aria-hidden="true"
       />
     ),
@@ -81,7 +81,7 @@ const data = [
     value: "-1.300.000",
     icon: (
       <BuildingOfficeIcon
-        className="w-5 h-6 text-gray-400"
+        className="h-6 w-5 text-gray-400"
         aria-hidden="true"
       />
     ),
@@ -91,20 +91,20 @@ const data = [
     label: "Vergi SGK",
     value: "-8.000",
     icon: (
-      <BriefcaseIcon className="w-5 h-6 text-gray-400" aria-hidden="true" />
+      <BriefcaseIcon className="h-6 w-5 text-gray-400" aria-hidden="true" />
     ),
     type: "negative",
   },
   {
     label: "Krediler",
     value: "-50.000",
-    icon: <Bars3Icon className="w-5 h-6 text-gray-400" aria-hidden="true" />,
+    icon: <Bars3Icon className="h-6 w-5 text-gray-400" aria-hidden="true" />,
     type: "negative",
   },
   {
     label: "Ortaklar",
     value: "-5.000",
-    icon: <UsersIcon className="w-5 h-6 text-gray-400" aria-hidden="true" />,
+    icon: <UsersIcon className="h-6 w-5 text-gray-400" aria-hidden="true" />,
     type: "negative",
     divider: true,
   },
@@ -112,13 +112,13 @@ const data = [
   {
     label: "Stoklar",
     value: "9.000.000",
-    icon: <SwatchIcon className="w-5 h-6 text-gray-400" aria-hidden="true" />,
+    icon: <SwatchIcon className="h-6 w-5 text-gray-400" aria-hidden="true" />,
     type: "positive",
   },
   {
     label: "Demirbaşlar",
     value: "4.600.000",
-    icon: <TruckIcon className="w-5 h-6 text-gray-400" aria-hidden="true" />,
+    icon: <TruckIcon className="h-6 w-5 text-gray-400" aria-hidden="true" />,
     type: "positive",
   },
 ];
@@ -137,9 +137,9 @@ export const Assets = () => {
   return (
     <div className="lg:col-start-3 lg:row-end-1">
       <h2 className="sr-only">Summary</h2>
-      <div className="rounded-lg shadow-sm bg-gray-50 ring-1 ring-gray-900/5">
+      <div className="rounded-lg bg-gray-50 shadow-sm ring-1 ring-gray-900/5">
         <dl className="flex flex-wrap">
-          <div className="flex-auto pt-6 pb-3 pl-6 border-b">
+          <div className="flex-auto border-b pb-3 pl-6 pt-6">
             <dt className="text-sm font-semibold leading-6 text-gray-900 ">
               Varlıklar
             </dt>
@@ -152,19 +152,19 @@ export const Assets = () => {
             <div
               key={i}
               className={clsx(
-                "py-2 flex w-full flex-none gap-x-4 px-6",
-                item.divider && "border-b"
+                "flex w-full flex-none gap-x-4 px-6 py-2",
+                item.divider && "border-b",
               )}
             >
               <dt className="flex-none">{item.icon}</dt>
-              <dd className="flex justify-between w-full text-sm leading-6 text-gray-500">
+              <dd className="flex w-full justify-between text-sm leading-6 text-gray-500">
                 <span> {item.label}</span>
                 {item.type === "positive" ? (
-                  <span className="text-base text-teal-500 font-base">
+                  <span className="text-teal-500 font-base text-base">
                     {item.value} ₺
                   </span>
                 ) : (
-                  <span className="text-base text-orange-500 font-base">
+                  <span className="text-orange-500 font-base text-base">
                     {item.value} ₺
                   </span>
                 )}
@@ -172,7 +172,7 @@ export const Assets = () => {
             </div>
           ))}
         </dl>
-        <div className="px-6 py-6 border-t border-gray-900/5">
+        <div className="border-t border-gray-900/5 px-6 py-6">
           <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
             Detaylı Rapor <span aria-hidden="true">&rarr;</span>
           </a>

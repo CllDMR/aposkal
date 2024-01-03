@@ -1,8 +1,8 @@
 "use client";
 
+import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { Fragment } from "react";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -12,7 +12,7 @@ export default function Example({ items }) {
   return (
     <div className="inline-flex rounded-md shadow-sm">
       <Menu as="div" className="relative -ml-px block">
-        <Menu.Button className="relative inline-flex items-center rounded-md bg-white px-2 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10 space-x-2">
+        <Menu.Button className="relative inline-flex items-center space-x-2 rounded-md bg-white px-2 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10">
           <span> Satış Ekle</span>
 
           <ChevronDownIcon className="h-5 w-5" aria-hidden="true" />
@@ -35,7 +35,7 @@ export default function Example({ items }) {
                       href={item.href}
                       className={classNames(
                         active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                        "block px-4 py-2 text-sm"
+                        "block px-4 py-2 text-sm",
                       )}
                     >
                       {item.name}

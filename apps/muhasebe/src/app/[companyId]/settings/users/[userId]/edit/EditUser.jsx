@@ -1,8 +1,10 @@
 "use client";
-import Button from "@/components/ui/Button";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import Button from "@/components/ui/Button";
+
 import ToggleActive from "./ToggleActive";
 import UserRoleSelector from "./UserRoleSelector";
 
@@ -83,23 +85,23 @@ const EditUser = ({ currentUserRole, companyUserData, userData }) => {
 
   return (
     <div className="overflow-hidden shadow sm:rounded-md">
-      <div className="bg-white px-4 py-5  sm:p-6">
+      <div className="bg-white px-4 py-5 sm:p-6">
         <div className="">
-          <div className=" border-gray-200  py-3 ">
+          <div className="border-gray-200 py-3 ">
             <dl className="sm:divide-y sm:divide-gray-200">
-              <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+              <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
                 <dt className="text-sm font-medium text-gray-500">Ad Soyad</dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                   {userData?.name}
                 </dd>
               </div>
-              <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+              <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
                 <dt className="text-sm font-medium text-gray-500">e Posta</dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                   {userData?.email}
                 </dd>
               </div>
-              <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+              <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
                 <dt className="text-sm font-medium text-gray-500">
                   Cep Telefonu
                 </dt>
@@ -169,15 +171,15 @@ const UserPermissions = ({
 
   if (companyUserData.role === "OWNER")
     return (
-      <div className="  border-t border-gray-200 ">
-        <p className=" py-4 text-center text-lg text-gray-700 ">Hesap Sahibi</p>
+      <div className="border-t border-gray-200 ">
+        <p className="py-4 text-center text-lg text-gray-700 ">Hesap Sahibi</p>
       </div>
     );
 
   if (companyUserData.inviteId)
     return (
-      <div className="  border-t border-gray-200 ">
-        <p className=" py-4 text-center text-lg text-gray-700 ">
+      <div className="border-t border-gray-200 ">
+        <p className="py-4 text-center text-lg text-gray-700 ">
           {" "}
           Kullanıcı henüz daveti kabul etmedi.
         </p>
@@ -185,8 +187,8 @@ const UserPermissions = ({
     );
 
   return (
-    <div className="  border-t border-gray-200 ">
-      <h3 className=" py-4 text-center text-lg ">Kullanıcı Yetkileri</h3>
+    <div className="border-t border-gray-200 ">
+      <h3 className="py-4 text-center text-lg ">Kullanıcı Yetkileri</h3>
       <ToggleActive isActive={isActive} setIsActive={setIsActive} />
       <div className="">
         <UserRoleSelector callback={setRole} initValue={role} />

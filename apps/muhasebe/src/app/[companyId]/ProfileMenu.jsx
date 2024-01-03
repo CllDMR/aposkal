@@ -1,9 +1,10 @@
 "use client";
-import { Menu, Transition } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
+
+import { Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Fragment } from "react";
+import { Menu, Transition } from "@headlessui/react";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 const userNavigation = [
   { name: "Profil", href: "#" },
@@ -33,12 +34,12 @@ const ProfileMenu = ({ session, company }) => {
           />
           <span className="hidden lg:flex lg:items-center">
             <span
-              className="ml-4 text-sm font-semibold leading-6 text-gray-900 truncate max-w-32"
+              className="ml-4 max-w-32 truncate text-sm font-semibold leading-6 text-gray-900"
               aria-hidden="true"
             >
               {session.user.name}
 
-              <span className="truncate block text-left text-sm text-gray-500">
+              <span className="block truncate text-left text-sm text-gray-500">
                 {company.data.title}
               </span>
             </span>
@@ -66,7 +67,7 @@ const ProfileMenu = ({ session, company }) => {
                     href={item.href}
                     className={classNames(
                       active ? "bg-gray-50" : "",
-                      "block px-3 py-1 text-sm leading-6 text-gray-900"
+                      "block px-3 py-1 text-sm leading-6 text-gray-900",
                     )}
                   >
                     {item.name}

@@ -21,8 +21,7 @@ export const authOptions = {
         },
       },
       async authorize(credentials, req) {
-        if (!credentials?.email || !credentials.password)
-          return null;
+        if (!credentials?.email || !credentials.password) return null;
 
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
@@ -32,16 +31,12 @@ export const authOptions = {
 
         const passwordsMatch = await bcrypt.compare(
           credentials.password,
-          user.hashedPassword
+          user.hashedPassword ?? "",
         );
 
         return passwordsMatch ? user : null;
       },
     }),
-    // GoogleProvider({
-    //   clientId: process.env.GOOGLE_CLIENT_ID,
-    //   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    // }),
   ],
   session: {
     strategy: "jwt",
@@ -49,11 +44,10 @@ export const authOptions = {
   },
 
   pages: {
-    signIn: '/auth/login',
-    signOut: '/auth/signout',
-    error: '/auth/error', // Error code passed in query string as ?error=
+    signIn: "/auth/login",
+    signOut: "/auth/signout",
+    error: "/auth/error", // Error code passed in query string as ?error=
     // verifyRequest: '/auth/verify-request', // (used for check email message)
     // newUser: '/auth/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)
-  }
-
+  },
 };

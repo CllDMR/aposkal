@@ -1,7 +1,6 @@
-import clsx from "clsx";
-
 import { Button } from "@/components/landing/Button";
 import { Container } from "@/components/landing/Container";
+import clsx from "clsx";
 
 function SwirlyDoodle(props) {
   return (
@@ -26,7 +25,7 @@ function CheckIcon({ className, ...props }) {
       aria-hidden="true"
       className={clsx(
         "h-6 w-6 flex-none fill-current stroke-current",
-        className
+        className,
       )}
       {...props}
     >
@@ -52,26 +51,26 @@ function Plan({ name, price, description, href, features, featured = false }) {
     <section
       className={clsx(
         "flex flex-col rounded-3xl px-6 sm:px-8",
-        featured ? "order-first bg-blue-600 py-8 lg:order-none" : "lg:py-8"
+        featured ? "bg-blue-600 order-first py-8 lg:order-none" : "lg:py-8",
       )}
     >
-      <h3 className="mt-5 font-display text-lg text-white">{name}</h3>
+      <h3 className="font-display mt-5 text-lg text-white">{name}</h3>
       <p
         className={clsx(
           "mt-2 text-base",
-          featured ? "text-white" : "text-slate-400"
+          featured ? "text-white" : "text-slate-400",
         )}
       >
         {description}
       </p>
-      <p className="order-first font-display text-5xl font-light tracking-tight text-white">
+      <p className="font-display order-first text-5xl font-light tracking-tight text-white">
         {price}
       </p>
       <ul
         role="list"
         className={clsx(
           "order-last mt-10 flex flex-col gap-y-3 text-sm",
-          featured ? "text-white" : "text-slate-200"
+          featured ? "text-white" : "text-slate-200",
         )}
       >
         {features.map((feature) => (
@@ -105,12 +104,12 @@ export function Pricing() {
         <div className="md:text-center">
           <h2 className="font-display text-3xl tracking-tight text-white sm:text-4xl">
             <span className="relative whitespace-nowrap">
-              <SwirlyDoodle className="absolute left-0 top-1/2 h-[1em] w-full fill-blue-400" />
+              <SwirlyDoodle className="fill-blue-400 absolute left-0 top-1/2 h-[1em] w-full" />
               <span className="relative">Simple pricing,</span>
             </span>{" "}
             for everyone.
           </h2>
-          <p className="mt-4 text-lg text-slate-400">
+          <p className="text-slate-400 mt-4 text-lg">
             It doesn’t matter what size your business is, our software won’t
             work well for you.
           </p>
