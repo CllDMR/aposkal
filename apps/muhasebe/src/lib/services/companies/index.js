@@ -1,19 +1,19 @@
 // use only server side code
 
+import { db } from "@/lib/db";
 import { createCompanySchema } from "@/validationSchemas";
 import bcrypt from "bcrypt";
-import { prisma } from "prismaClient";
 import { v4 as uuidv4 } from "uuid";
 
 import { createNewUser, getAuth } from ".././user/index.js";
 
 export const getCompaniesByUid = async (userId) => {
-  const companyIds = await prisma.companyUser.findMany({
+  const companyIds = await db.companyUser.findMany({
     where: { userId, isActive: true },
     select: { companyId: true },
   });
 
-  const companies = await prisma.company.findMany({
+  const companies = await db.company.findMany({
     where: { id: { in: companyIds.map((company) => company.companyId) } },
   });
 
@@ -44,7 +44,7 @@ export const getCompanyById = async ({
   companyId = parseInt(companyId);
 
   // check if user is in company
-  const companyUser = await prisma.companyUser.findFirst({
+  const companyUser = await db.companyUser.findFirst({
     where: { companyId, userId },
   });
 
@@ -56,7 +56,7 @@ export const getCompanyById = async ({
       },
     };
 
-  const company = await prisma.company.findUnique({
+  const company = await db.company.findUnique({
     where: { id: companyId },
   });
 
@@ -71,14 +71,14 @@ export const getCompanyById = async ({
 export const getCompanyUsers = async ({ companyId }) => {
   companyId = parseInt(companyId);
 
-  const companyUsers = await prisma.companyUser.findMany({
+  const companyUsers = await db.companyUser.findMany({
     where: { companyId },
   });
 
   const userIds = companyUsers.map((user) => user.userId);
 
   // exapt hashedPassword
-  const users = await prisma.user.findMany({
+  const users = await db.user.findMany({
     where: { id: { in: userIds } },
     select: {
       id: true,
@@ -109,7 +109,7 @@ export const getCompanyUsers = async ({ companyId }) => {
 
 export const checkPermission = async ({ companyId, userId }) => {
   companyId = parseInt(companyId);
-  const companyUser = await prisma.companyUser.findFirst({
+  const companyUser = await db.companyUser.findFirst({
     where: { companyId, userId },
   });
 
@@ -129,7 +129,7 @@ export const createCompany = async ({ company, userId }) => {
   if (!validation.success)
     return { error: validation.error.format(), code: 400 };
 
-  const newCompany = await prisma.company.create({
+  const newCompany = await db.company.create({
     data: {
       companyType: company.companyType,
       title: company.title,
@@ -141,7 +141,7 @@ export const createCompany = async ({ company, userId }) => {
     },
   });
 
-  const newPerm = await prisma.companyUser.create({
+  const newPerm = await db.companyUser.create({
     data: {
       companyId: newCompany.id,
       userId,
@@ -167,7 +167,7 @@ export const addUserToCompany = async ({
   let invitedUser = null;
 
   // check email is used before
-  const user = await prisma.user.findUnique({
+  const user = await db.user.findUnique({
     where: { email },
   });
 
@@ -177,7 +177,7 @@ export const addUserToCompany = async ({
     invitedUser = user;
 
     // check if user is in company
-    const companyUser = await prisma.companyUser.findUnique({
+    const companyUser = await db.companyUser.findUnique({
       where: { companyId_userId: { companyId, userId } },
     });
     if (companyUser) return { error: "User already in company", code: 400 };
@@ -191,14 +191,14 @@ export const addUserToCompany = async ({
 
     // update changePasswordCode
     const changePasswordCode = uuidv4();
-    await prisma.user.update({
+    await db.user.update({
       where: { id: userId },
       data: { changePasswordCode },
     });
   }
 
   const inviteId = uuidv4();
-  const newPerm = await prisma.companyUser.create({
+  const newPerm = await db.companyUser.create({
     data: {
       companyId,
       userId,
@@ -209,14 +209,14 @@ export const addUserToCompany = async ({
     },
   });
 
-  const companyData = await prisma.company.findUnique({
+  const companyData = await db.company.findUnique({
     where: { id: companyId },
     select: { title: true },
   });
 
   const companyTitle = companyData.title;
 
-  const inviterUser = await prisma.user.findUnique({
+  const inviterUser = await db.user.findUnique({
     where: { id: invitedBy },
     select: { name: true },
   });
@@ -232,7 +232,7 @@ export const getInvitation = async ({ inviteId, email }) => {
     companyUser: null,
   };
 
-  invitationObject.invitedUser = await prisma.user.findUnique({
+  invitationObject.invitedUser = await db.user.findUnique({
     where: { email },
     select: {
       id: true,
@@ -252,7 +252,7 @@ export const getInvitation = async ({ inviteId, email }) => {
     ? true
     : false;
 
-  invitationObject.companyUser = await prisma.companyUser.findUnique({
+  invitationObject.companyUser = await db.companyUser.findUnique({
     where: { inviteId },
   });
 
@@ -267,21 +267,21 @@ export const getInvitation = async ({ inviteId, email }) => {
 };
 
 export const acceptInvite = async ({ inviteId, userId, email, password }) => {
-  const invitedUser = await prisma.user.findUnique({
+  const invitedUser = await db.user.findUnique({
     where: { id: userId },
   });
 
   if (!invitedUser || invitedUser.email !== email)
     return { error: "User not found", code: 404 };
 
-  const companyUser = await prisma.companyUser.findUnique({
+  const companyUser = await db.companyUser.findUnique({
     where: { inviteId },
   });
 
   if (!companyUser) return { error: "Invitation not found", code: 404 };
 
   if (!invitedUser.emailVerified) {
-    await prisma.user.update({
+    await db.user.update({
       where: { id: userId },
       data: {
         emailVerified: new Date(),
@@ -291,7 +291,7 @@ export const acceptInvite = async ({ inviteId, userId, email, password }) => {
   }
 
   if (invitedUser.changePasswordCode) {
-    await prisma.user.update({
+    await db.user.update({
       where: { id: userId },
       data: {
         changePasswordCode: null,
@@ -300,7 +300,7 @@ export const acceptInvite = async ({ inviteId, userId, email, password }) => {
     });
   }
 
-  await prisma.companyUser.update({
+  await db.companyUser.update({
     where: { inviteId },
     data: {
       isActive: true,
@@ -327,7 +327,7 @@ export const getUserFromCompany = async ({ companyId, userId }) => {
   // userObject.currentUser = currentUser;
   if (!currentUserId) return { error: "User not found", code: 404 };
 
-  const currentUserInCompany = await prisma.companyUser.findFirst({
+  const currentUserInCompany = await db.companyUser.findFirst({
     where: { companyId, userId: currentUserId },
   });
 
@@ -335,7 +335,7 @@ export const getUserFromCompany = async ({ companyId, userId }) => {
 
   if (!currentUserInCompany) return { error: "User not authorized", code: 403 };
 
-  userObject.user = await prisma.user.findUnique({
+  userObject.user = await db.user.findUnique({
     where: { id: userId },
 
     select: {
@@ -350,7 +350,7 @@ export const getUserFromCompany = async ({ companyId, userId }) => {
 
   if (!userObject.user) return { error: "User not found", code: 404 };
 
-  userObject.companyUser = await prisma.companyUser.findFirst({
+  userObject.companyUser = await db.companyUser.findFirst({
     where: { companyId, userId },
   });
 
@@ -373,7 +373,7 @@ export const updateUserInCompany = async ({
   if (!authUserId) return { error: "1 User not authorized", code: 403 };
 
   // chek authUser authorise this company
-  const authUserInCompany = await prisma.companyUser.findFirst({
+  const authUserInCompany = await db.companyUser.findFirst({
     where: { companyId, userId: authUserId },
   });
 
@@ -385,7 +385,7 @@ export const updateUserInCompany = async ({
     return { error: "User not authorized", code: 403 };
 
   // check user is in company
-  const userInCompany = await prisma.companyUser.findUnique({
+  const userInCompany = await db.companyUser.findUnique({
     where: { companyId_userId: { companyId, userId } },
   });
 
@@ -396,7 +396,7 @@ export const updateUserInCompany = async ({
     return { error: "3 User not authorized", code: 403 };
   // update user
 
-  const updatedUser = await prisma.companyUser.update({
+  const updatedUser = await db.companyUser.update({
     where: { companyId_userId: { companyId, userId } },
     data: {
       isActive,
@@ -416,7 +416,7 @@ export const removeUserFromCompany = async ({ companyId, userId }) => {
   if (!authUserId) return { error: "User not authorized", code: 403 };
 
   // chek authUser authorise this company
-  const authUserInCompany = await prisma.companyUser.findFirst({
+  const authUserInCompany = await db.companyUser.findFirst({
     where: { companyId, userId: authUserId },
   });
 
@@ -428,7 +428,7 @@ export const removeUserFromCompany = async ({ companyId, userId }) => {
     return { error: "User not authorized", code: 403 };
 
   // check user is in company
-  const userInCompany = await prisma.companyUser.findUnique({
+  const userInCompany = await db.companyUser.findUnique({
     where: { companyId_userId: { companyId, userId } },
   });
 
@@ -440,7 +440,7 @@ export const removeUserFromCompany = async ({ companyId, userId }) => {
 
   // remove user
 
-  const removedUser = await prisma.companyUser.delete({
+  const removedUser = await db.companyUser.delete({
     where: { companyId_userId: { companyId, userId } },
   });
 

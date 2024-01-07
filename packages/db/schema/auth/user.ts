@@ -10,7 +10,7 @@ import { usersToTenants } from "./usersToTenants";
 
 export const user = mySqlTable("user", {
   id: varchar("id", { length: 255 }).$defaultFn(nanoid).notNull().primaryKey(),
-  name: varchar("name", { length: 255 }),
+  name: varchar("name", { length: 255 }).notNull(),
   email: varchar("email", { length: 255 }).notNull(),
   password: varchar("password", { length: 255 }).notNull(),
   emailVerified: timestamp("emailVerified", {
@@ -18,6 +18,9 @@ export const user = mySqlTable("user", {
     fsp: 3,
   }),
   image: varchar("image", { length: 255 }),
+  emailVerifiedCode: varchar("image", { length: 255 }),
+  changePasswordCode: varchar("image", { length: 255 }),
+  phone: varchar("image", { length: 255 }),
 });
 
 export const userRelations = relations(user, ({ many }) => ({

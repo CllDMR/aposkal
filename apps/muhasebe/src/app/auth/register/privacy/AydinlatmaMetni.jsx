@@ -1,4 +1,4 @@
-const AydinlatmaMetni = () => {
+export const AydinlatmaMetni = () => {
   const sellerCompany = {
     title: "SCRIPT YAZILIM LİMİTED ŞİRKETİ ",
     address:
@@ -133,5 +133,3 @@ const AydinlatmaMetni = () => {
     </>
   );
 };
-
-export default AydinlatmaMetni;

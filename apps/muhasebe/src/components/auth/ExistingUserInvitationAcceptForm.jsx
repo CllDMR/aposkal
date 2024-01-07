@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/landing/Button";
@@ -14,118 +14,66 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn, signOut } from "next-auth/react";
 import { useForm } from "react-hook-form";
 
-/*
-{
-  isNewUser: false,
-  invitedUser: {
-    id: 'clqr3exji0007n2450v1yhn48',
-    name: 'Furkan Şevki ARICI',
-    email: 'furkanarici@icloud.com',
-    emailVerified: 2023-12-29T20:35:53.455Z,
-    phone: '5412070553',
-    image: 'https://i0.wp.com/avatar-management--avatars.us-west-2.prod.public.atl-paas.net/initials/FA-1.png?ssl=1'
-  },
-  companyUser: {
-    id: 'clqrz8nld0004ophixwu1kpb2',
-    companyId: 3,
-    userId: 'clqr3exji0007n2450v1yhn48',
-    role: 'USER',
-    createdAt: 2023-12-30T11:26:03.889Z,
-    updatedAt: 2023-12-30T11:26:03.889Z,
-    invitedAt: 2023-12-30T11:26:03.887Z,
-    invitedBy: 'clqrywfif0000ophiaoh8ro87',
-    isActive: false,
-    acceptedInviteAt: null,
-    inviteId: '98aaccde-2246-44ba-a35f-92d50dd910c3'
-  },
-  isUserNew: false
-}
-
-*/
-
-export default function AcceptInviteForm({ inviteId, userId, email }) {
+export function ExistingUserInvitationAcceptForm({ inviteId, userId, email }) {
   const router = useRouter();
-
-  const [error, setError] = useState("");
-  const [isSubmitting, setSubmitting] = useState(false);
 
   const {
     register,
-    control,
     handleSubmit,
     watch,
-    setValue,
-    formState: { errors },
+    formState: { isSubmitting, errors },
+    setError,
+    getValues,
+    clearErrors,
   } = useForm({
+    defaultValues: {
+      email,
+      inviteId,
+      userId,
+    },
     resolver: zodResolver(acceptInvitationSchema),
   });
 
   useEffect(() => {
     signOut({ redirect: false });
-    // set email
-    setValue("email", email);
-    setValue("inviteId", inviteId);
-    setValue("userId", userId);
-  }, [email, inviteId, setValue, userId]);
+  }, []);
 
   const onResetPassword = async () => {
-    const email = watch("email");
-    if (!email)
-      return setError("Parola sıfırlamak için Email alanını doldurunuz");
-    setSubmitting(true);
-    try {
-      const res = await fetch("/api/auth/resetPassword/send", {
+    const data = getValues();
+    const [_, error] = await tryCatch(
+      fetch("/api/auth/resetPassword/send", {
         method: "POST",
-        body: JSON.stringify({ email }),
-      });
+        body: JSON.stringify({ email: data.email }),
+      }),
+    );
 
-      const responseData = await res.json();
-      if (responseData.error) {
-        setError(responseData.error || "Hatayla karşılaşıldı");
-        setSubmitting(false);
-      } else {
-        setError("");
-        alert("Parola sıfırlama linki gönderildi");
-        setSubmitting(false);
-      }
-    } catch (error) {
-      setError("Hatayla karşılaşıldı");
-      setSubmitting(false);
-    }
+    if (error) return voidsetError("server", error);
+    else return void clearErrors("server");
   };
 
   const onSubmit = handleSubmit(async (data) => {
-    // try sign in
-    // if success accept invitation
-
-    try {
-      const res = await signIn("credentials", {
+    const [signInRes, signInError] = await tryCatch(
+      signIn("credentials", {
         ...data,
         redirect: false,
-      });
+      }),
+    );
+    if (signInRes.error) return void setError("server", signInRes.error);
+    else if (signInError) return void setError("server", signInError);
 
-      if (res.error) {
-        setError("Hatalı giriş bilgileri");
-        setSubmitting(false);
-      } else {
-        const res = await fetch("/api/companies/inviteUser/accept", {
-          method: "POST",
-          body: JSON.stringify(data),
-        });
-        if (res.error) {
-          setError(res.error);
-          setSubmitting(false);
-          return;
-        }
+    const [inviteUserAcceptRes, inviteUserAcceptError] = await tryCatch(
+      fetch("/api/companies/inviteUser/accept", {
+        method: "POST",
+        body: JSON.stringify(data),
+      }),
+    );
 
-        router.push("/app");
-        router.refresh();
-        setSubmitting(false);
-      }
-    } catch (error) {
-      // setError(error);
-      setSubmitting(false);
-    }
+    if (inviteUserAcceptRes.error)
+      return void setError("server", inviteUserAcceptRes.error);
+    else if (inviteUserAcceptError)
+      return void setError("server", inviteUserAcceptError);
+
+    return void router.push("/app");
   });
 
   return (
@@ -146,7 +94,6 @@ export default function AcceptInviteForm({ inviteId, userId, email }) {
         </Link>{" "} */}
       </p>
       <form
-        action="#"
         onSubmit={onSubmit}
         className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2"
       >
@@ -171,7 +118,7 @@ export default function AcceptInviteForm({ inviteId, userId, email }) {
           className="col-span-full"
         />
 
-        <p className="col-span-full text-sm text-red-500">{error}</p>
+        <p className="text-red-500 col-span-full text-sm">{error}</p>
 
         <p className="mt-2 text-sm text-gray-700">
           Parolanızı mı unuttunuz?{" "}
@@ -179,7 +126,7 @@ export default function AcceptInviteForm({ inviteId, userId, email }) {
             onClick={onResetPassword}
             type="button"
             variant="link"
-            className="font-medium text-blue-600 hover:underline"
+            className="text-blue-600 font-medium hover:underline"
           >
             Parolamı sıfırla
           </Button>{" "}

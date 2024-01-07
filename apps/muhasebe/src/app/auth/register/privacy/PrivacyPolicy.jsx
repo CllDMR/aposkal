@@ -1,4 +1,4 @@
-const PrivacyPolicy = () => {
+export const PrivacyPolicy = () => {
   const sellerCompany = {
     title: "SCRIPT YAZILIM LİMİTED ŞİRKETİ ",
     address:
@@ -238,5 +238,3 @@ const PrivacyPolicy = () => {
     </>
   );
 };
-
-export default PrivacyPolicy;

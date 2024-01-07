@@ -14,72 +14,53 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn, signOut } from "next-auth/react";
 import { useForm } from "react-hook-form";
 
-export default function RegisterForm() {
+export function LoginForm() {
   const router = useRouter();
 
   const [error, setError] = useState("");
-  const [isSubmitting, setSubmitting] = useState(false);
   const {
     register,
-    control,
     handleSubmit,
-    watch,
-    formState: { errors },
+    getValues,
+    formState: { isSubmitting, errors },
   } = useForm({
     resolver: zodResolver(loginUserSchema),
   });
 
-  // do signout
   useEffect(() => {
     signOut({ redirect: false });
   }, []);
 
   const onResetPassword = async () => {
-    const email = watch("email");
+    const email = getValues("email");
     if (!email)
-      return setError("Parola sıfırlamak için Email alanını doldurunuz");
-    setSubmitting(true);
-    try {
-      const res = await fetch("/api/auth/resetPassword/send", {
+      return void setError("Parola sıfırlamak için Email alanını doldurunuz");
+
+    const [res, error] = await tryCatch(
+      fetch("/api/auth/resetPassword/send", {
         method: "POST",
         body: JSON.stringify({ email }),
-      });
-
-      const responseData = await res.json();
-      if (responseData.error) {
-        setError(responseData.error || "Hatayla karşılaşıldı");
-        setSubmitting(false);
-      } else {
-        setError("");
-        alert("Parola sıfırlama linki gönderildi");
-        setSubmitting(false);
-      }
-    } catch (error) {
-      setError("Hatayla karşılaşıldı");
-      setSubmitting(false);
-    }
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+    );
+    if (res.error) return void setError("server", res.error);
+    else if (error) return void setError("server", error);
+    else return void alert("Parola sıfırlama linki gönderildi");
   };
+
   const onSubmit = handleSubmit(async (data) => {
-    setSubmitting(true);
-    try {
-      const res = await signIn("credentials", {
+    const [_, error] = await tryCatch(
+      signIn("credentials", {
         ...data,
         redirect: false,
-        callbackUrl: "/app",
-      });
-      if (res.error) {
-        setError("Hatalı giriş bilgileri");
-        setSubmitting(false);
-      } else {
-        router.push("/app");
-        router.refresh();
-        // setSubmitting(false);
-      }
-    } catch (error) {
-      setError(error);
-      setSubmitting(false);
-    }
+      }),
+    );
+    if (error) return void setError("server", error);
+    else return void router.push("/app");
   });
+
   return (
     <SlimLayout>
       <div className="flex">
@@ -94,13 +75,12 @@ export default function RegisterForm() {
         Hesabınız yok mu?{" "}
         <Link
           href="/auth/register"
-          className="font-medium text-blue-600 hover:underline"
+          className="text-blue-600 font-medium hover:underline"
         >
           Ücretsiz hesap oluşturun
         </Link>{" "}
       </p>
       <form
-        action="#"
         onSubmit={onSubmit}
         className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2"
       >
@@ -131,13 +111,13 @@ export default function RegisterForm() {
             onClick={onResetPassword}
             type="button"
             variant="link"
-            className="font-medium text-blue-600 hover:underline"
+            className="text-blue-600 font-medium hover:underline"
           >
             Parolamı sıfırla
           </Button>{" "}
         </p>
 
-        <p className="col-span-full text-sm text-red-500">{error}</p>
+        <p className="text-red-500 col-span-full text-sm">{error}</p>
 
         <div className="col-span-full">
           <Button

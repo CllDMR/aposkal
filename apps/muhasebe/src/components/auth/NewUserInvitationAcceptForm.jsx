@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/landing/Button";
@@ -14,63 +14,39 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn, signOut } from "next-auth/react";
 import { useForm } from "react-hook-form";
 
-export default function AcceptInviteForm({ inviteId, userId, email }) {
+export function NewUserInvitationAcceptForm({ inviteId, userId, email }) {
   const router = useRouter();
-
-  const [error, setError] = useState("");
-  const [isSubmitting, setSubmitting] = useState(false);
 
   const {
     register,
-    control,
     handleSubmit,
-    watch,
-    setValue,
-    formState: { errors },
+    formState: { isSubmitting, errors },
+    setError,
   } = useForm({
+    defaultValues: { inviteId, userId, email },
     resolver: zodResolver(acceptInvitationSchema),
   });
 
-  // do signout
   useEffect(() => {
     signOut({ redirect: false });
   }, []);
 
-  useEffect(() => {
-    // set email
-    setValue("email", email);
-    setValue("inviteId", inviteId);
-    setValue("userId", userId);
-  }, [email, inviteId, setValue, userId]);
-
   const onSubmit = handleSubmit(async (data) => {
-    const p1 = watch("password");
-    const p2 = watch("password2");
-    if (p1 !== p2) return setError("Parolalar eşleşmiyor");
-    setSubmitting(true);
-    try {
-      const res = await fetch("/api/companies/inviteUser/accept", {
+    const [_, error] = await tryCatch(
+      fetch("/api/companies/inviteUser/accept", {
         method: "POST",
         body: JSON.stringify(data),
-      });
-      if (res.error) {
-        setError(res.error);
-        setSubmitting(false);
-        return;
-      }
-
+      }),
+    );
+    if (error) return void setError("server", error);
+    else {
       await signIn("credentials", {
         ...data,
         redirect: false,
         callbackUrl: "/app",
       });
 
-      router.push("/app");
-      router.refresh();
-      setSubmitting(false);
-    } catch (error) {
-      setError("Hatayla karşılaşıldı");
-      setSubmitting(false);
+      return void router.push("/app");
     }
   });
 
@@ -93,7 +69,6 @@ export default function AcceptInviteForm({ inviteId, userId, email }) {
       </p>
 
       <form
-        action="#"
         onSubmit={onSubmit}
         className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2"
       >
@@ -122,15 +97,17 @@ export default function AcceptInviteForm({ inviteId, userId, email }) {
           className="col-span-full"
           label="Parola Tekrar"
           type="password"
-          {...register("password2")}
+          {...register("confirmpassword")}
         />
 
         <InputError
-          error={errors?.password2?.message}
+          error={errors?.confirmpassword?.message}
           className="col-span-full"
         />
 
-        <p className="text-red-500 col-span-full text-sm">{error}</p>
+        <p className="text-red-500 col-span-full text-sm">
+          {errors.server?.message}
+        </p>
 
         <div className="col-span-full">
           <Button

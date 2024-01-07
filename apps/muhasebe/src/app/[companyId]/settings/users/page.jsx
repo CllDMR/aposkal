@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { _getCompanyUsers } from "@db/index";
+import { _getCompanyUsers } from "@/lib/services";
 
 /*
 [

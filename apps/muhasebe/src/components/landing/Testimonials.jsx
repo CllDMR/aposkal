@@ -1,10 +1,5 @@
 import Image from "next/image";
 import { Container } from "@/components/landing/Container";
-import avatarImage1 from "@/images/avatars/avatar-1.png";
-import avatarImage2 from "@/images/avatars/avatar-2.png";
-import avatarImage3 from "@/images/avatars/avatar-3.png";
-import avatarImage4 from "@/images/avatars/avatar-4.png";
-import avatarImage5 from "@/images/avatars/avatar-5.png";
 
 const testimonials = [
   [
@@ -14,7 +9,7 @@ const testimonials = [
       author: {
         name: "Sheryl Berge",
         role: "CEO at Lynch LLC",
-        image: avatarImage1,
+        image: "/images/avatars/avatar-1.png",
       },
     },
     {
@@ -23,7 +18,7 @@ const testimonials = [
       author: {
         name: "Amy Hahn",
         role: "Director at Velocity Industries",
-        image: avatarImage4,
+        image: "/images/avatars/avatar-4.png",
       },
     },
   ],
@@ -34,7 +29,7 @@ const testimonials = [
       author: {
         name: "Leland Kiehn",
         role: "Founder of Kiehn and Sons",
-        image: avatarImage5,
+        image: "/images/avatars/avatar-5.png",
       },
     },
     {
@@ -43,7 +38,7 @@ const testimonials = [
       author: {
         name: "Erin Powlowski",
         role: "COO at Armstrong Inc",
-        image: avatarImage2,
+        image: "/images/avatars/avatar-2.png",
       },
     },
   ],
@@ -54,7 +49,7 @@ const testimonials = [
       author: {
         name: "Peter Renolds",
         role: "Founder of West Inc",
-        image: avatarImage3,
+        image: "/images/avatars/avatar-3.png",
       },
     },
     {
@@ -63,7 +58,7 @@ const testimonials = [
       author: {
         name: "Amy Hahn",
         role: "Director at Velocity Industries",
-        image: avatarImage4,
+        image: "/images/avatars/avatar-4.png",
       },
     },
   ],

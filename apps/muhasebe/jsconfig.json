@@ -19,7 +19,6 @@
     "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"],
-      "prismaClient": ["./prisma/client"],
       "@db/*": ["./prisma/services/*"]
     },
     "plugins": [

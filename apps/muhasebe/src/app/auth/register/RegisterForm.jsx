@@ -14,60 +14,51 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn, signOut } from "next-auth/react";
 import { useForm } from "react-hook-form";
 
-import PrivacyPolicyModal from "./privacy/Modal";
+import { Privacy } from "./privacy";
 
-export default function RegisterForm() {
+export function RegisterForm() {
   const router = useRouter();
 
   const [error, setError] = useState("");
-  const [isSubmitting, setSubmitting] = useState(false);
   const [openPrivacyPolicy, setOpenPrivacyPolicy] = useState(false);
   const [isAgreed, setIsAgreed] = useState(false);
+
   const {
     register,
-    control,
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: { isSubmitting, errors },
   } = useForm({
     resolver: zodResolver(registerUserSchema),
   });
 
-  // do signout
   useEffect(() => {
     signOut({ redirect: false });
   }, []);
 
   const onSubmit = handleSubmit(async (data) => {
-    setSubmitting(true);
-    try {
-      const registerRes = await fetch("/api/register", {
+    const [registerRes, registerError] = await tryCatch(
+      fetch("/api/register", {
         method: "POST",
-        body: JSON.stringify(data),
+        body: JSON.stringify({ email }),
         headers: {
           "Content-Type": "application/json",
         },
-      });
-
-      const responseData = await registerRes.json();
-      if (responseData?.email) {
-        await signIn("credentials", {
+      }),
+    );
+    if (registerRes.error) return void setError("server", registerRes.error);
+    else if (registerError) return void setError("server", registerError);
+    else {
+      const [signInRes, signInError] = await tryCatch(
+        signIn("credentials", {
           ...data,
           redirect: false,
-          callbackUrl: "/app",
-        });
-        router.refresh();
-        router.push("/app");
-        // setSubmitting(false);
-      }
-
-      if (responseData?.error) {
-        setError(responseData.error);
-        setSubmitting(false);
-      }
-    } catch (error) {
-      setError(error?.error || "Bir hata oluştu");
-      setSubmitting(false);
+        }),
+      );
+      if (signInRes.error) return void setError("server", signInRes.error);
+      else if (signInError) return void setError("server", signInError);
+      router.refresh();
+      router.push("/app");
     }
   });
 
@@ -85,13 +76,12 @@ export default function RegisterForm() {
         Hesabınız var mı?{" "}
         <Link
           href="/auth/login"
-          className="font-medium text-blue-600 hover:underline"
+          className="text-blue-600 font-medium hover:underline"
         >
           Giriş Yapın
         </Link>{" "}
       </p>
       <form
-        action="#"
         onSubmit={onSubmit}
         className="mt-10 grid grid-cols-1 gap-x-6 gap-y-1 sm:grid-cols-2"
       >
@@ -138,12 +128,12 @@ export default function RegisterForm() {
             name="agreement"
             id="agreement"
             checked={isAgreed}
-            className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+            className="text-blue-600 focus:ring-blue-500 h-4 w-4 rounded border-gray-300"
             onChange={(e) => setIsAgreed(e.target.checked)}
           />
           <label htmlFor="agreement2" className="ml-4">
             <span
-              className="w-full cursor-pointer text-sm text-gray-700 hover:text-blue-600"
+              className="hover:text-blue-600 w-full cursor-pointer text-sm text-gray-700"
               id="privacy-policy-description"
               onClick={() => setOpenPrivacyPolicy(true)}
             >
@@ -151,13 +141,13 @@ export default function RegisterForm() {
               Politikasını&apos;nı okudum kabul ediyorum.
             </span>
           </label>
-          <PrivacyPolicyModal
+          <Privacy
             open={openPrivacyPolicy}
             setOpen={setOpenPrivacyPolicy}
             name={watch("name")}
           />
         </div>
-        <p className="col-span-full text-sm text-red-500">{error}</p>
+        <p className="text-red-500 col-span-full text-sm">{error}</p>
         <div className="col-span-full">
           <Button
             disabled={!isAgreed || isSubmitting}

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Logo } from "@/components/landing/Logo";
 
-export default function Unauthorized() {
+export default function Page() {
   return (
     <main className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
       <div className="h-28 justify-center">

@@ -1,17 +1,13 @@
 import { NextResponse } from "next/server";
-import { sendEmail } from "@/api/send-email/email";
+import { db } from "@/lib/db";
+import { sendEmailResetPasswordVerified } from "@/lib/email";
 import { resetPasswordSchema } from "@/validationSchemas";
 import bcrypt from "bcrypt";
-import { prisma } from "prismaClient";
 
 export async function POST(request) {
-  const body = await request.json();
+  const body = await parseRequestBody(request, resetPasswordSchema);
 
-  const validation = resetPasswordSchema.safeParse(body);
-  if (!validation.success)
-    return NextResponse.json(validation.error.format(), { status: 400 });
-
-  const user = await prisma.user.findUnique({
+  const user = await db.user.findUnique({
     where: {
       email: body.email,
       changePasswordCode: body.changePasswordCode,
@@ -24,7 +20,7 @@ export async function POST(request) {
 
   const hashedPassword = await bcrypt.hash(body.password, 10);
 
-  await prisma.user.update({
+  await db.user.update({
     where: {
       id: user.id,
     },
@@ -34,20 +30,7 @@ export async function POST(request) {
     },
   });
 
-  const emailData = {
-    // from: "",
-    to: user.email,
-    subject: "Şifreniz Değiştirildi",
-    html: `<h1>Aposkal</h1>
-          <p>Merhaba ${user.name},</p>
-          <br> 
-          <p>Aposkal hesabınızın parolası başarıyla değştirildi.</p>
-          <br> 
-          <p>Bu işlemi siz yapmadıysanız lütfen bizimle iletişime geçin.</p>
-          <p>Teşekkürler</p>`,
-  };
-
-  await sendEmail(emailData);
+  await sendEmailResetPasswordVerified(user.name, email);
 
   return NextResponse.json({ message: "Parola Değiştirildi" }, { status: 200 });
 }

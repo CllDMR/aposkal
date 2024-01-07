@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { acceptInvite } from "@db/index";
+import { acceptInvite } from "@/lib/services";
 
 export async function POST(request) {
   const body = await request.json();

@@ -169,42 +169,39 @@ const clients = [
 
 export const Detail = () => {
   return (
-    <>
-      {/* Recent client list*/}
-      <div className="mx-auto max-w-7xl ">
-        <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
-          <ul
-            role="list"
-            className="mt-6 grid grid-cols-1 gap-x-4 gap-y-4 lg:grid-cols-3 xl:gap-x-4"
-          >
-            {clients.map((client) => (
-              <li
-                key={client.id}
-                className="overflow-hidden rounded-xl border border-gray-200"
-              >
-                <div className="flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
-                  {client.icon}
-                  <div className="text-sm font-medium leading-6 text-gray-900">
-                    {client.name}
-                  </div>
+    <div className="mx-auto max-w-7xl ">
+      <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
+        <ul
+          role="list"
+          className="mt-6 grid grid-cols-1 gap-x-4 gap-y-4 lg:grid-cols-3 xl:gap-x-4"
+        >
+          {clients.map((client) => (
+            <li
+              key={client.id}
+              className="overflow-hidden rounded-xl border border-gray-200"
+            >
+              <div className="flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
+                {client.icon}
+                <div className="text-sm font-medium leading-6 text-gray-900">
+                  {client.name}
                 </div>
-                <dl className="-my-3 divide-y divide-gray-100 px-6 py-4 text-sm leading-6">
-                  {client?.items?.map((item, i) => (
-                    <div key={i} className="flex justify-between gap-x-4 py-3">
-                      <dt className="w-36 truncate text-gray-500">
-                        {item.label}
-                      </dt>
-                      <dd className="text-gray-700">
-                        {item.value} {item.unit}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
-              </li>
-            ))}
-          </ul>
-        </div>
+              </div>
+              <dl className="-my-3 divide-y divide-gray-100 px-6 py-4 text-sm leading-6">
+                {client?.items?.map((item, i) => (
+                  <div key={i} className="flex justify-between gap-x-4 py-3">
+                    <dt className="w-36 truncate text-gray-500">
+                      {item.label}
+                    </dt>
+                    <dd className="text-gray-700">
+                      {item.value} {item.unit}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </li>
+          ))}
+        </ul>
       </div>
-    </>
+    </div>
   );
 };

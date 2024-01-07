@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { sendEmail } from "@/api/send-email/email";
-import { addUserToCompany, getAuth } from "@db/index";
+import { sendEmail } from "@/lib/resend/email";
+import { addUserToCompany, getAuth } from "@/lib/services";
 
 export async function POST(request) {
   const body = await request.json();

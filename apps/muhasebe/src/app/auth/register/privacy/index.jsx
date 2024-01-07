@@ -1,9 +1,11 @@
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
-import Privacy from "./Privacy";
+import { AcikRizaBayani } from "./AcikRizaBeyani";
+import { AydinlatmaMetni } from "./AydinlatmaMetni";
+import { PrivacyPolicy } from "./PrivacyPolicy";
 
-export default function Example({ open, setOpen, name }) {
+export const Privacy = ({ open, setOpen, name }) => {
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setOpen}>
@@ -33,7 +35,18 @@ export default function Example({ open, setOpen, name }) {
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:p-6 md:w-5/6">
                 <div>
                   <div className="mt-3 text-center sm:mt-5">
-                    <Privacy name={name} />
+                    <div className="container mx-auto my-2 rounded-md px-4 text-left ">
+                      <div className="mt-10 flex justify-end">
+                        {/* <Logo className="w-48 " /> */}
+                      </div>
+                      <div className="">
+                        <PrivacyPolicy />
+                      </div>
+                      <div className="mt-10">
+                        <AydinlatmaMetni />
+                        <AcikRizaBayani displayName={name} />
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div className="mt-5 sm:mt-6">
@@ -52,4 +65,4 @@ export default function Example({ open, setOpen, name }) {
       </Dialog>
     </Transition.Root>
   );
-}
+};

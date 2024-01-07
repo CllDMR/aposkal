@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { sendEmail } from "@/api/send-email/email";
-import { prisma } from "prismaClient";
+import { db } from "@/lib/db";
+import { sendEmailResetPassword } from "@/lib/email";
 import { v4 as uuidv4 } from "uuid";
 
 export async function POST(request) {
@@ -10,7 +10,7 @@ export async function POST(request) {
 
   if (!email) return false;
 
-  const user = await prisma.user.findUnique({
+  const user = await db.user.findUnique({
     where: { email },
   });
 
@@ -22,31 +22,16 @@ export async function POST(request) {
 
   const changePasswordCode = uuidv4();
 
-  await prisma.user.update({
+  await db.user.update({
     where: {
       id: user.id,
     },
     data: {
-      // update changePasswordCode as default uuid value on db
       changePasswordCode,
     },
   });
 
-  const emailData = {
-    // from: "",
-    to: email,
-    subject: "Şifre Sıfırlama",
-    html: `<h1>Aposkal</h1>
-          <p>Merhaba ${user.name},</p>
-          <br> 
-          <p>Bu e posta talebiniz üzerine gönderildi.</p>
-          <br> 
-          <p>Aşağıdaki linke tıklayarak parolanızı yeniden oluşturabilirsiniz.</p>
-          <p><a href="https://muhasebe.aposkal.com/auth/forgotPassword?code=${changePasswordCode}&email=${email}">Şimdi Parolanı Sıfırla</a></p>
-          <p>Teşekkürler</p>`,
-  };
-
-  await sendEmail(emailData);
+  await sendEmailResetPassword(user.name, email, changePasswordCode);
 
   return NextResponse.json({ message: "Email gönderildi." }, { status: 200 });
 }

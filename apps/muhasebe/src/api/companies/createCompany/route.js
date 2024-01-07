@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createCompany, getAuth } from "@db/index";
+import { createCompany, getAuth } from "@/lib/services";
 
 export async function POST(request) {
   const checkAtuhRes = await getAuth(request);

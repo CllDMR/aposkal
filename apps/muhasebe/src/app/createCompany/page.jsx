@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/landing/Button";
@@ -9,48 +8,36 @@ import { Logo } from "@/components/landing/Logo";
 import SelectField from "@/components/landing/SelectField";
 import { SlimLayout } from "@/components/landing/SlimLayout";
 import Spinner from "@/components/landing/spinner";
+import { tryCatch } from "@/utils/try";
 import { createCompanySchema } from "@/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-export default function CreateCompany() {
+export default function Page() {
   const router = useRouter();
 
-  const [error, setError] = useState("");
-  const [isSubmitting, setSubmitting] = useState(false);
   const {
     register,
-    control,
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: { isSubmitting, errors },
   } = useForm({
     resolver: zodResolver(createCompanySchema),
   });
 
   const onSubmit = handleSubmit(async (data) => {
-    setSubmitting(true);
-    try {
-      const res = await fetch("/api/companies/createCompany", {
+    const [res, resError] = await tryCatch(
+      fetch("/api/auth/resetPassword", {
         method: "POST",
+        body: JSON.stringify(data),
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
-      });
-
-      if (res.error) {
-        setSubmitting(false);
-        setError("Hatalı oluştu");
-      } else {
-        router.push("/app");
-        router.refresh();
-      }
-    } catch (error) {
-      setError(error);
-      setSubmitting(false);
-    }
-    // setSubmitting(false);
+      }),
+    );
+    if (resError) return void setError("server", resError);
+    else if (res.error) return void setError("server", res.error);
+    else return void router.push("/app");
   });
 
   return (
@@ -65,12 +52,11 @@ export default function CreateCompany() {
       </h2>
       <p className="mt-2 text-sm text-gray-700">
         veya{" "}
-        <Link href="/app" className="font-medium text-blue-600 hover:underline">
+        <Link href="/app" className="text-blue-600 font-medium hover:underline">
           Firma Seçin
         </Link>{" "}
       </p>
       <form
-        action="#"
         onSubmit={onSubmit}
         className="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2"
       >
@@ -139,7 +125,9 @@ export default function CreateCompany() {
           {...register("email")}
         />
 
-        <p className="col-span-full text-sm text-red-500">{error}</p>
+        <p className="text-red-500 col-span-full text-sm">
+          {errors.server?.message}
+        </p>
 
         <div className="col-span-full">
           <Button

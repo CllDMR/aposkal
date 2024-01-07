@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/landing/Button";
@@ -9,62 +8,42 @@ import { Logo } from "@/components/landing/Logo";
 import { SlimLayout } from "@/components/landing/SlimLayout";
 import Spinner from "@/components/landing/spinner";
 import InputError from "@/components/ui/inputError";
+import { api } from "@/utils/api";
 import { resetPasswordSchema } from "@/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-export default function RegisterForm({ email, changePasswordCode, userId }) {
+export default function ForgotPasswordForm({
+  email,
+  changePasswordCode,
+  userId,
+}) {
   const router = useRouter();
-
-  const [error, setError] = useState("");
-  const [isSubmitting, setSubmitting] = useState(false);
 
   const {
     register,
-    control,
     handleSubmit,
-    watch,
-    setValue,
-    formState: { errors },
+    formState: { isSubmitting, errors },
+    setError,
   } = useForm({
+    defaultValues: {
+      email,
+      changePasswordCode,
+      userId,
+    },
     resolver: zodResolver(resetPasswordSchema),
   });
 
-  useEffect(() => {
-    // set email
-    setValue("email", email);
-    setValue("changePasswordCode", changePasswordCode);
-    setValue("userId", userId);
-  }, [changePasswordCode, email, setValue, userId]);
-
-  const onSubmit = handleSubmit(async (data) => {
-    const p1 = watch("password");
-    const p2 = watch("password2");
-    if (p1 !== p2) return setError("Parolalar eşleşmiyor");
-    setSubmitting(true);
-    try {
-      const res = await fetch("/api/auth/resetPassword", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const responseData = await res.json();
-      if (responseData.error) {
-        setError(responseData.error || "Hatayla karşılaşıldı");
-        setSubmitting(false);
-      } else {
-        setError("");
-        router.push("/auth/login");
-        // setSubmitting(false);
-      }
-    } catch (error) {
-      setError("Hatayla karşılaşıldı");
-      setSubmitting(false);
-    }
+  const { mutateAsync } = api.auth.register.useMutation({
+    onError(error) {
+      setError("server", error);
+    },
+    onSuccess() {
+      router.push("/auth/login");
+    },
   });
+
+  const onSubmit = handleSubmit(mutateAsync);
 
   return (
     <SlimLayout>
@@ -86,7 +65,6 @@ export default function RegisterForm({ email, changePasswordCode, userId }) {
         </Link>{" "}
       </p>
       <form
-        action="#"
         onSubmit={onSubmit}
         className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2"
       >
@@ -115,15 +93,17 @@ export default function RegisterForm({ email, changePasswordCode, userId }) {
           className="col-span-full"
           label="Parola Tekrar"
           type="password"
-          {...register("password2")}
+          {...register("confirmpassword")}
         />
 
         <InputError
-          error={errors?.password2?.message}
+          error={errors?.confirmpassword?.message}
           className="col-span-full"
         />
 
-        <p className="text-red-500 col-span-full text-sm">{error}</p>
+        <p className="text-red-500 col-span-full text-sm">
+          {errors.server?.message}
+        </p>
 
         <div className="col-span-full">
           <Button

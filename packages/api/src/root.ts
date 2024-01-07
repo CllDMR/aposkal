@@ -1,5 +1,6 @@
 import { addressCompanyRouter } from "./router/address/address_company";
 import { addressTenantRouter } from "./router/address/address_tenant";
+import { authRouter } from "./router/auth/auth";
 import { companyRouter } from "./router/company/company";
 import { productRouter } from "./router/product/product";
 import { productCategoryRouter } from "./router/product/product_category";
@@ -15,6 +16,7 @@ import { warehouseRouter } from "./router/warehouse";
 import { createTRPCRouter } from "./trpc";
 
 export const appRouter = createTRPCRouter({
+  auth: authRouter,
   addressCompany: addressCompanyRouter,
   addressTenant: addressTenantRouter,
   company: companyRouter,

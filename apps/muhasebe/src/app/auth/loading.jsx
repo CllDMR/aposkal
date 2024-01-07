@@ -1,7 +1,5 @@
 import Loading from "@/components/ui/Loading";
 
-const loading = () => {
+export default function LoadingPage() {
   return <Loading />;
-};
-
-export default loading;
+}

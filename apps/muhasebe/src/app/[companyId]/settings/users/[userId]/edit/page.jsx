@@ -1,4 +1,4 @@
-import { getUserFromCompany } from "@db/index";
+import { getUserFromCompany } from "@/lib/services";
 
 import EditUser from "./EditUser";
 

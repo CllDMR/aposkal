@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import Header from "@/app/[companyId]/Header";
 import SideBarLayout from "@/app/[companyId]/SideBarLayout";
-import { _getCompanyById } from "@db/index";
+import { _getCompanyById } from "@/lib/services";
 
 export default async function AppLayout({ children, params }) {
   const companyId = params?.companyId;

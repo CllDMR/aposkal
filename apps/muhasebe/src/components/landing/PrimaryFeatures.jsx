@@ -3,11 +3,6 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Container } from "@/components/landing/Container";
-import backgroundImage from "@/images/background-features.jpg";
-import screenshotExpenses from "@/images/screenshots/expenses.png";
-import screenshotPayroll from "@/images/screenshots/payroll.png";
-import screenshotReporting from "@/images/screenshots/reporting.png";
-import screenshotVatReturns from "@/images/screenshots/vat-returns.png";
 import { Tab } from "@headlessui/react";
 import clsx from "clsx";
 
@@ -16,25 +11,25 @@ const features = [
     title: "Payroll",
     description:
       "Keep track of everyone's salaries and whether or not they've been paid. Direct deposit not supported.",
-    image: screenshotPayroll,
+    image: "/images/screenshots/payroll.png",
   },
   {
     title: "Claim expenses",
     description:
       "All of your receipts organized into one place, as long as you don't mind typing in the data by hand.",
-    image: screenshotExpenses,
+    image: "/images/screenshots/expenses.png",
   },
   {
     title: "VAT handling",
     description:
       "We only sell our software to companies who don't deal with VAT at all, so technically we do all the VAT stuff they need.",
-    image: screenshotVatReturns,
+    image: "/images/screenshots/vat-returns.png",
   },
   {
     title: "Reporting",
     description:
       "Easily export your data into an Excel spreadsheet where you can do whatever the hell you want with it.",
-    image: screenshotReporting,
+    image: "/images/screenshots/reporting.png",
   },
 ];
 
@@ -64,7 +59,7 @@ export function PrimaryFeatures() {
     >
       <Image
         className="absolute left-1/2 top-1/2 max-w-none translate-x-[-44%] translate-y-[-42%]"
-        src={backgroundImage}
+        src={"/images/background-features.jpg"}
         alt=""
         width={2245}
         height={1636}

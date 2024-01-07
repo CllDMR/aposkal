@@ -1,10 +1,10 @@
 // use only server side code
 
 import { authOptions } from "@/api/auth/authOptions";
+import { db } from "@/lib/db";
 import { registerUserSchema } from "@/validationSchemas";
 import bcrypt from "bcrypt";
 import { getServerSession } from "next-auth";
-import { prisma } from "prismaClient";
 
 import { checkPermission } from "../companies/index";
 
@@ -33,7 +33,7 @@ export const createNewUser = async (body) => {
   };
 
   // check email is used before
-  const isUserExist = await prisma.user.findUnique({
+  const isUserExist = await db.user.findUnique({
     where: { email: body.email },
   });
 
@@ -44,7 +44,7 @@ export const createNewUser = async (body) => {
     };
 
   const hashedPassword = await bcrypt.hash(body.password, 10);
-  const newUser = await prisma.user.create({
+  const newUser = await db.user.create({
     data: {
       email: body.email,
       name: body.name,
@@ -73,7 +73,7 @@ export const getAuth = async (request = null, companyId = null) => {
   authObject.session = await getServerSession(authOptions);
   if (authObject?.session) authObject.isAuth = true;
 
-  const user = await prisma.user.findUnique({
+  const user = await db.user.findUnique({
     where: { email: authObject.session.user.email },
 
     select: {
@@ -101,7 +101,7 @@ export const getAuth = async (request = null, companyId = null) => {
 };
 
 export const getUserByEmail = async (email) => {
-  const user = await prisma.user.findUnique({
+  const user = await db.user.findUnique({
     where: { email },
   });
   return user;

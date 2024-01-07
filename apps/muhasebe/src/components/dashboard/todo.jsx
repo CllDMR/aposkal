@@ -1,3 +1,5 @@
+"use client";
+
 import { DocumentIcon } from "@heroicons/react/20/solid";
 
 const clients = [

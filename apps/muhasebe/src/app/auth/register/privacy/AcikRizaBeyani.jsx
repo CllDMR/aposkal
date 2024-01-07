@@ -1,4 +1,4 @@
-const AcikRizaBayani = ({ displayName }) => {
+export const AcikRizaBayani = ({ displayName }) => {
   const sellerCompany = {
     title: "SCRIPT YAZILIM LİMİTED ŞİRKETİ ",
     address:
@@ -41,5 +41,3 @@ const AcikRizaBayani = ({ displayName }) => {
     </>
   );
 };
-
-export default AcikRizaBayani;

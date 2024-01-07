@@ -1,12 +1,12 @@
 import { authOptions } from "@/api/auth/authOptions";
+import { db } from "@/lib/db";
 import { getServerSession } from "next-auth";
-import { prisma } from "prismaClient";
 
 // use only server side
 
 const getAuth = async (req) => {
   const session = await getServerSession(authOptions);
-  const currentUser = await prisma.user.findUnique({
+  const currentUser = await db.user.findUnique({
     where: { email: session.user.email },
   });
 

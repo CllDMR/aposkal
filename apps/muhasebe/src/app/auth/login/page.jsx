@@ -1,9 +1,9 @@
-import LoginForm from "@/app/auth/login/LoginForm";
+import { LoginForm } from "./LoginForm";
 
 export const metadata = {
   title: "Sign In",
 };
 
-export default function Login() {
+export default function Page() {
   return <LoginForm />;
 }

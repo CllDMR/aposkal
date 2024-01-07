@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { removeUserFromCompany, updateUserInCompany } from "@db/index";
+import { removeUserFromCompany, updateUserInCompany } from "@/lib/services";
 
 export async function PATCH(request, { params }) {
   const userId = params.userId;

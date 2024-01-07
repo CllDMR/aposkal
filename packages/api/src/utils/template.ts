@@ -1,4 +1,4 @@
-const emailTemplate = ({ name, htmlMessage }) => {
+export const emailTemplate = (htmlMessage: string) => {
   const currentYear = new Date().getFullYear();
   return `<!DOCTYPE html>
     <html>
@@ -59,5 +59,3 @@ const emailTemplate = ({ name, htmlMessage }) => {
     </body>
     </html>`;
 };
-
-module.exports = emailTemplate;

@@ -4,7 +4,7 @@ import { Header } from "@/components/landing/Header";
 import { Hero } from "@/components/landing/Hero";
 import { getServerSession } from "next-auth";
 
-export default async function Home() {
+export default async function Page() {
   const session = await getServerSession(authOptions);
 
   return (
