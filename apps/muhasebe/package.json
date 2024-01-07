@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "format": "prettier --ignore-path ../../.gitignore --check \"./src/**/*.{js,cjs,mjs,ts,tsx,md,json}\"",
     "vercel-build": "prisma generate && next build",
     "clean": "git clean -xdf .next .turbo node_modules"
   },
