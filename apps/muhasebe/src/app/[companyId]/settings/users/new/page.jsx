@@ -3,10 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import Button from "@/components/ui/Button";
-import Input from "@/components/ui/Input";
-import Label from "@/components/ui/InputLabel";
-import Toggle from "@/components/ui/Toggle";
+import { Button, Input, Label, Toggle } from "@/components/ui";
 import { inviteUserSchema } from "@/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";

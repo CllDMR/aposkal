@@ -1,4 +1,4 @@
-import Toggle from "@/components/ui/Toggle";
+import { Toggle } from "@/components/ui";
 
 const ToggleActive = ({ isActive, setIsActive }) => {
   return (

@@ -1,5 +1,4 @@
-"use client";
-const Label = ({ htmlFor, children }) => {
+export const Label = ({ htmlFor, children }) => {
   return (
     <label
       htmlFor={htmlFor}
@@ -9,5 +8,3 @@ const Label = ({ htmlFor, children }) => {
     </label>
   );
 };
-
-export default Label;

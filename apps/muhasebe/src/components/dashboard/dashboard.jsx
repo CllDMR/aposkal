@@ -3,7 +3,7 @@ import { Detail } from "./detail";
 import { Profit } from "./profit";
 import { Todo } from "./todo";
 
-const Dashboard = () => {
+export const Dashboard = () => {
   return (
     <div className="grid-cols-12 gap-4 xl:grid ">
       <div className="col-span-9">
@@ -17,5 +17,3 @@ const Dashboard = () => {
     </div>
   );
 };
-
-export default Dashboard;

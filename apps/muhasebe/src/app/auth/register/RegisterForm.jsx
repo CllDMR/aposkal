@@ -3,12 +3,14 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/landing/Button";
-import TextField from "@/components/landing/Fields";
-import { Logo } from "@/components/landing/Logo";
-import { SlimLayout } from "@/components/landing/SlimLayout";
-import Spinner from "@/components/landing/spinner";
-import InputError from "@/components/ui/inputError";
+import {
+  Button,
+  Logo,
+  SlimLayout,
+  Spinner,
+  TextField,
+} from "@/components/landing";
+import { InputError } from "@/components/ui";
 import { registerUserSchema } from "@/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn, signOut } from "next-auth/react";
@@ -76,7 +78,7 @@ export function RegisterForm() {
         Hesabınız var mı?{" "}
         <Link
           href="/auth/login"
-          className="text-blue-600 font-medium hover:underline"
+          className="font-medium text-blue-600 hover:underline"
         >
           Giriş Yapın
         </Link>{" "}
@@ -128,12 +130,12 @@ export function RegisterForm() {
             name="agreement"
             id="agreement"
             checked={isAgreed}
-            className="text-blue-600 focus:ring-blue-500 h-4 w-4 rounded border-gray-300"
+            className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
             onChange={(e) => setIsAgreed(e.target.checked)}
           />
           <label htmlFor="agreement2" className="ml-4">
             <span
-              className="hover:text-blue-600 w-full cursor-pointer text-sm text-gray-700"
+              className="w-full cursor-pointer text-sm text-gray-700 hover:text-blue-600"
               id="privacy-policy-description"
               onClick={() => setOpenPrivacyPolicy(true)}
             >
@@ -147,7 +149,7 @@ export function RegisterForm() {
             name={watch("name")}
           />
         </div>
-        <p className="text-red-500 col-span-full text-sm">{error}</p>
+        <p className="col-span-full text-sm text-red-500">{error}</p>
         <div className="col-span-full">
           <Button
             disabled={!isAgreed || isSubmitting}

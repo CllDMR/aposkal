@@ -3,12 +3,14 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/landing/Button";
-import TextField from "@/components/landing/Fields";
-import { Logo } from "@/components/landing/Logo";
-import { SlimLayout } from "@/components/landing/SlimLayout";
-import Spinner from "@/components/landing/spinner";
-import InputError from "@/components/ui/inputError";
+import {
+  Button,
+  Logo,
+  SlimLayout,
+  Spinner,
+  TextField,
+} from "@/components/landing";
+import { InputError } from "@/components/ui";
 import { acceptInvitationSchema } from "@/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn, signOut } from "next-auth/react";
@@ -105,7 +107,7 @@ export function NewUserInvitationAcceptForm({ inviteId, userId, email }) {
           className="col-span-full"
         />
 
-        <p className="text-red-500 col-span-full text-sm">
+        <p className="col-span-full text-sm text-red-500">
           {errors.server?.message}
         </p>
 

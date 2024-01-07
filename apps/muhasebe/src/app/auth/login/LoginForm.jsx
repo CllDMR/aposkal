@@ -3,12 +3,14 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/landing/Button";
-import TextField from "@/components/landing/Fields";
-import { Logo } from "@/components/landing/Logo";
-import { SlimLayout } from "@/components/landing/SlimLayout";
-import Spinner from "@/components/landing/spinner";
-import InputError from "@/components/ui/inputError";
+import {
+  Button,
+  Logo,
+  SlimLayout,
+  Spinner,
+  TextField,
+} from "@/components/landing";
+import { InputError } from "@/components/ui";
 import { loginUserSchema } from "@/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn, signOut } from "next-auth/react";
@@ -75,7 +77,7 @@ export function LoginForm() {
         Hesabınız yok mu?{" "}
         <Link
           href="/auth/register"
-          className="text-blue-600 font-medium hover:underline"
+          className="font-medium text-blue-600 hover:underline"
         >
           Ücretsiz hesap oluşturun
         </Link>{" "}
@@ -111,13 +113,13 @@ export function LoginForm() {
             onClick={onResetPassword}
             type="button"
             variant="link"
-            className="text-blue-600 font-medium hover:underline"
+            className="font-medium text-blue-600 hover:underline"
           >
             Parolamı sıfırla
           </Button>{" "}
         </p>
 
-        <p className="text-red-500 col-span-full text-sm">{error}</p>
+        <p className="col-span-full text-sm text-red-500">{error}</p>
 
         <div className="col-span-full">
           <Button

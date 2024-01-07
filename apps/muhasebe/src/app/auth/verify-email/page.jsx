@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Logo } from "@/components/landing/Logo";
+import { Logo } from "@/components/landing";
 import { db } from "@/lib/db";
 
 export default async function Page({

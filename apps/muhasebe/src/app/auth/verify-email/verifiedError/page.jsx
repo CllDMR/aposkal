@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Logo } from "@/components/landing/Logo";
+import { Logo } from "@/components/landing";
 
 export default function Page() {
   return (
@@ -19,7 +19,7 @@ export default function Page() {
           <Link
             href="/auth/verify-email/resend"
             // onClick={() => signOut({ redirect: true, callbackUrl: "/" })}
-            className="bg-teal-600 hover:bg-teal-500 focus-visible:outline-teal-600 rounded-md px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+            className="rounded-md bg-teal-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
           >
             Yeniden Eposta Gönder
           </Link>

@@ -2,12 +2,14 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/landing/Button";
-import TextField from "@/components/landing/Fields";
-import { Logo } from "@/components/landing/Logo";
-import { SlimLayout } from "@/components/landing/SlimLayout";
-import Spinner from "@/components/landing/spinner";
-import InputError from "@/components/ui/inputError";
+import {
+  Button,
+  Logo,
+  SlimLayout,
+  Spinner,
+  TextField,
+} from "@/components/landing";
+import { InputError } from "@/components/ui";
 import { api } from "@/utils/api";
 import { resetPasswordSchema } from "@/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -59,7 +61,7 @@ export default function ForgotPasswordForm({
         Veya giriş yapmak için{" "}
         <Link
           href="/auth/login"
-          className="text-blue-600 font-medium hover:underline"
+          className="font-medium text-blue-600 hover:underline"
         >
           tıklayın
         </Link>{" "}
@@ -101,7 +103,7 @@ export default function ForgotPasswordForm({
           className="col-span-full"
         />
 
-        <p className="text-red-500 col-span-full text-sm">
+        <p className="col-span-full text-sm text-red-500">
           {errors.server?.message}
         </p>
 

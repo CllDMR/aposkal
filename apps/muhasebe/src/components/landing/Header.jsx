@@ -3,10 +3,7 @@
 import { Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/landing/Button";
-import { Container } from "@/components/landing/Container";
-import { Logo } from "@/components/landing/Logo";
-import { NavLink } from "@/components/landing/NavLink";
+import { Button, Container, Logo, NavLink } from "@/components/landing";
 import { Popover, Transition } from "@headlessui/react";
 import clsx from "clsx";
 
@@ -22,7 +19,7 @@ function MobileNavIcon({ open }) {
   return (
     <svg
       aria-hidden="true"
-      className="stroke-slate-700 h-3.5 w-3.5 overflow-visible"
+      className="h-3.5 w-3.5 overflow-visible stroke-slate-700"
       fill="none"
       strokeWidth={2}
       strokeLinecap="round"
@@ -49,7 +46,7 @@ function MobileNavigation({ session }) {
   return (
     <Popover>
       <Popover.Button
-        className="relative z-10 flex h-8 w-8 items-center justify-center ui-not-focus-visible:outline-none"
+        className="ui-not-focus-visible:outline-none relative z-10 flex h-8 w-8 items-center justify-center"
         aria-label="Toggle Navigation"
       >
         {({ open }) => <MobileNavIcon open={open} />}
@@ -64,7 +61,7 @@ function MobileNavigation({ session }) {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Popover.Overlay className="bg-slate-300/50 fixed inset-0" />
+          <Popover.Overlay className="fixed inset-0 bg-slate-300/50" />
         </Transition.Child>
         <Transition.Child
           as={Fragment}
@@ -77,11 +74,11 @@ function MobileNavigation({ session }) {
         >
           <Popover.Panel
             as="div"
-            className="text-slate-900 ring-slate-900/5 absolute inset-x-0 top-full mt-4 flex origin-top flex-col rounded-2xl bg-white p-4 text-lg tracking-tight shadow-xl ring-1"
+            className="absolute inset-x-0 top-full mt-4 flex origin-top flex-col rounded-2xl bg-white p-4 text-lg tracking-tight text-slate-900 shadow-xl ring-1 ring-slate-900/5"
           >
             <MobileNavLink href="#features">Özellikler</MobileNavLink>
             <MobileNavLink href="#pricing">Fiyatlar</MobileNavLink>
-            <hr className="border-slate-300/40 m-2" />
+            <hr className="m-2 border-slate-300/40" />
             {session?.user === undefined && (
               <MobileNavLink href="/auth/login">Giriş</MobileNavLink>
             )}

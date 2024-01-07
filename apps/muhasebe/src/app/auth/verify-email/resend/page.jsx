@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { Logo } from "@/components/landing/Logo";
+import { Logo } from "@/components/landing";
 import { sendEmailResetPasswordAgain } from "@/lib/email";
 import { getAuth } from "@/lib/services";
 

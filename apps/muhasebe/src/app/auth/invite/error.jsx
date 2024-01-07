@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import { Logo } from "@/components/landing/Logo";
+import { Logo } from "@/components/landing";
 
 export default function Error({ error, reset }) {
   useEffect(() => {

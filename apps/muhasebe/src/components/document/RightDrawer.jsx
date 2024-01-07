@@ -4,10 +4,10 @@ import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
-import Button from "../ui/Button";
-import Input from "../ui/Input";
+import { Button } from "../ui/Button";
+import { Input } from "../ui/Input";
 
-const RightDrawer = (props) => {
+export function RightDrawer(props) {
   const { drawerObj, setDrawerObj, title, children } = props;
 
   const onClose = () => setDrawerObj(null);
@@ -53,7 +53,7 @@ const RightDrawer = (props) => {
                       <div className="ml-3 flex h-7 items-center">
                         <button
                           type="button"
-                          className="focus:ring-teal-500 rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2"
+                          className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
                           onClick={onClose}
                         >
                           <span className="sr-only">Close panel</span>
@@ -134,6 +134,4 @@ const RightDrawer = (props) => {
       </Dialog>
     </Transition.Root>
   );
-};
-
-export default RightDrawer;
+}

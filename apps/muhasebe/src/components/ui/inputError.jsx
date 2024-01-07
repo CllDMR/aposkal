@@ -1,15 +1,17 @@
+"use client";
+
 import { ExclamationTriangleIcon } from "@heroicons/react/20/solid";
 
-export default function InputError({ error, className = "" }) {
+export function InputError({ error, className = "" }) {
   if (error)
     return (
       <div className={className}>
         <div
-          className="text-red-600 flex w-full py-1 text-xs "
+          className="flex w-full py-1 text-xs text-red-600 "
           id="email-error"
         >
           <ExclamationTriangleIcon
-            className="text-red-500 mr-1 h-4 w-4"
+            className="mr-1 h-4 w-4 text-red-500"
             aria-hidden="true"
           />
           {error}

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { Container } from "@/components/landing/Container";
+import { Container } from "@/components/landing";
 import { Tab } from "@headlessui/react";
 import clsx from "clsx";
 
@@ -55,7 +55,7 @@ export function PrimaryFeatures() {
     <section
       id="features"
       aria-label="Features for running your books"
-      className="bg-blue-600 relative overflow-hidden pb-28 pt-20 sm:py-32"
+      className="relative overflow-hidden bg-blue-600 pb-28 pt-20 sm:py-32"
     >
       <Image
         className="absolute left-1/2 top-1/2 max-w-none translate-x-[-44%] translate-y-[-42%]"
@@ -70,7 +70,7 @@ export function PrimaryFeatures() {
           <h2 className="font-display text-3xl tracking-tight text-white sm:text-4xl md:text-5xl">
             Everything you need to run your books.
           </h2>
-          <p className="text-blue-100 mt-6 text-lg tracking-tight">
+          <p className="mt-6 text-lg tracking-tight text-blue-100">
             Well everything you need if you aren’t that picky about minor
             details like tax compliance.
           </p>
@@ -97,7 +97,7 @@ export function PrimaryFeatures() {
                       <h3>
                         <Tab
                           className={clsx(
-                            "font-display text-lg ui-not-focus-visible:outline-none",
+                            "font-display ui-not-focus-visible:outline-none text-lg",
                             selectedIndex === featureIndex
                               ? "text-blue-600 lg:text-white"
                               : "text-blue-100 hover:text-white lg:text-white",
@@ -130,7 +130,7 @@ export function PrimaryFeatures() {
                         {feature.description}
                       </p>
                     </div>
-                    <div className="bg-slate-50 shadow-blue-900/20 mt-10 w-[45rem] overflow-hidden rounded-xl shadow-xl sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
+                    <div className="mt-10 w-[45rem] overflow-hidden rounded-xl bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
                       <Image
                         className="w-full"
                         src={feature.image}

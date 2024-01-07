@@ -1,6 +1,5 @@
 import { Inter, Lexend } from "next/font/google";
 import { Providers } from "@/components/providers";
-import clsx from "clsx";
 
 import "../tailwind.css";
 
@@ -26,7 +25,25 @@ const lexend = Lexend({
 
 export default function RootLayout({ children }) {
   return (
-    <html
+    <html lang="en">
+      <body
+        className={[
+          "h-full scroll-smooth bg-white antialiased",
+          inter.variable,
+          lexend.variable,
+        ].join(" ")}
+      >
+        <div>
+          <Providers headers={headers()} session={session}>
+            {children}
+          </Providers>
+        </div>
+      </body>
+    </html>
+  );
+}
+
+/* <html
       lang="en"
       className={clsx(
         "h-full scroll-smooth bg-white antialiased",
@@ -36,9 +53,7 @@ export default function RootLayout({ children }) {
     >
       <body>
         <Providers>
-          <main className="flex h-full flex-col"> {children}</main>
+          <main className="flex flex-col h-full"> {children}</main>
         </Providers>
       </body>
-    </html>
-  );
-}
+    </html> */

@@ -17,16 +17,20 @@ function Label({ id, children }) {
   );
 }
 
-function TextField({ label, type = "text", className, ...rest }, ref) {
-  // let id = useId();
+export const TextField = forwardRef(
+  ({ label, type = "text", className, ...rest }, ref) => {
+    // let id = useId();
 
-  return (
-    <div className={className}>
-      {label && <Label>{label}</Label>}
-      <input type={type} className={formClasses} {...rest} ref={ref} />
-    </div>
-  );
-}
+    return (
+      <div className={className}>
+        {label && <Label>{label}</Label>}
+        <input type={type} className={formClasses} {...rest} ref={ref} />
+      </div>
+    );
+  },
+);
+
+TextField.displayName = "TextField";
 
 export function SelectField({ label, className, ...rest }) {
   return (
@@ -36,5 +40,3 @@ export function SelectField({ label, className, ...rest }) {
     </div>
   );
 }
-
-export default forwardRef(TextField);

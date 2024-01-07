@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import Button from "@/components/ui/Button";
+import { Button } from "@/components/ui";
 
 import ToggleActive from "./ToggleActive";
 import UserRoleSelector from "./UserRoleSelector";

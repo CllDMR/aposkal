@@ -2,12 +2,14 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/landing/Button";
-import TextField from "@/components/landing/Fields";
-import { Logo } from "@/components/landing/Logo";
-import SelectField from "@/components/landing/SelectField";
-import { SlimLayout } from "@/components/landing/SlimLayout";
-import Spinner from "@/components/landing/spinner";
+import {
+  Button,
+  Logo,
+  SelectField,
+  SlimLayout,
+  Spinner,
+  TextField,
+} from "@/components/landing";
 import { tryCatch } from "@/utils/try";
 import { createCompanySchema } from "@/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -52,7 +54,7 @@ export default function Page() {
       </h2>
       <p className="mt-2 text-sm text-gray-700">
         veya{" "}
-        <Link href="/app" className="text-blue-600 font-medium hover:underline">
+        <Link href="/app" className="font-medium text-blue-600 hover:underline">
           Firma Seçin
         </Link>{" "}
       </p>
@@ -125,7 +127,7 @@ export default function Page() {
           {...register("email")}
         />
 
-        <p className="text-red-500 col-span-full text-sm">
+        <p className="col-span-full text-sm text-red-500">
           {errors.server?.message}
         </p>
 

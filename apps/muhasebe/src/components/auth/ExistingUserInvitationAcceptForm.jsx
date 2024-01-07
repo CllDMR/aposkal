@@ -3,12 +3,15 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/landing/Button";
-import TextField from "@/components/landing/Fields";
-import { Logo } from "@/components/landing/Logo";
-import { SlimLayout } from "@/components/landing/SlimLayout";
-import Spinner from "@/components/landing/spinner";
-import InputError from "@/components/ui/inputError";
+import {
+  Button,
+  Logo,
+  SlimLayout,
+  Spinner,
+  TextField,
+} from "@/components/landing";
+import { InputError } from "@/components/ui";
+import { api } from "@/utils/api";
 import { acceptInvitationSchema } from "@/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn, signOut } from "next-auth/react";
@@ -20,7 +23,6 @@ export function ExistingUserInvitationAcceptForm({ inviteId, userId, email }) {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { isSubmitting, errors },
     setError,
     getValues,
@@ -38,17 +40,29 @@ export function ExistingUserInvitationAcceptForm({ inviteId, userId, email }) {
     signOut({ redirect: false });
   }, []);
 
+  const { mutateAsync: resetPasswordSendMutateAsync } =
+    api.auth.resetPasswordSend.useMutation({
+      onError(error) {
+        setError("server", error);
+      },
+      onSuccess() {
+        clearErrors("server");
+      },
+    });
+
+  const { mutateAsync: inviteUserAcceptMutateAsync } =
+    api.company.inviteUserAccept.useMutation({
+      onError(error) {
+        setError("server", error);
+      },
+      onSuccess() {
+        router.push("/app");
+      },
+    });
+
   const onResetPassword = async () => {
     const data = getValues();
-    const [_, error] = await tryCatch(
-      fetch("/api/auth/resetPassword/send", {
-        method: "POST",
-        body: JSON.stringify({ email: data.email }),
-      }),
-    );
-
-    if (error) return voidsetError("server", error);
-    else return void clearErrors("server");
+    await resetPasswordSendMutateAsync({ email: data.email });
   };
 
   const onSubmit = handleSubmit(async (data) => {
@@ -61,19 +75,7 @@ export function ExistingUserInvitationAcceptForm({ inviteId, userId, email }) {
     if (signInRes.error) return void setError("server", signInRes.error);
     else if (signInError) return void setError("server", signInError);
 
-    const [inviteUserAcceptRes, inviteUserAcceptError] = await tryCatch(
-      fetch("/api/companies/inviteUser/accept", {
-        method: "POST",
-        body: JSON.stringify(data),
-      }),
-    );
-
-    if (inviteUserAcceptRes.error)
-      return void setError("server", inviteUserAcceptRes.error);
-    else if (inviteUserAcceptError)
-      return void setError("server", inviteUserAcceptError);
-
-    return void router.push("/app");
+    await inviteUserAcceptMutateAsync(data);
   });
 
   return (
@@ -118,7 +120,7 @@ export function ExistingUserInvitationAcceptForm({ inviteId, userId, email }) {
           className="col-span-full"
         />
 
-        <p className="text-red-500 col-span-full text-sm">{error}</p>
+        <p className="col-span-full text-sm text-red-500">{error}</p>
 
         <p className="mt-2 text-sm text-gray-700">
           Parolanızı mı unuttunuz?{" "}
@@ -126,7 +128,7 @@ export function ExistingUserInvitationAcceptForm({ inviteId, userId, email }) {
             onClick={onResetPassword}
             type="button"
             variant="link"
-            className="text-blue-600 font-medium hover:underline"
+            className="font-medium text-blue-600 hover:underline"
           >
             Parolamı sıfırla
           </Button>{" "}

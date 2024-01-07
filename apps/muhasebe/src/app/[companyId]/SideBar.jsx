@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
-import { Logo } from "@/components/landing/Logo";
+import { Logo } from "@/components/landing";
 import { Disclosure } from "@headlessui/react";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 
@@ -16,16 +16,16 @@ export default function SideBar({ company }) {
   const navigation = sidebarItems(params.companyId);
 
   return (
-    <div className="bg-slate-100 flex h-full grow flex-col gap-y-5 overflow-y-auto border-r pb-4">
+    <div className="flex h-full grow flex-col gap-y-5 overflow-y-auto border-r bg-slate-100 pb-4">
       <div className="mx-auto my-8 space-y-3 ">
         <div className="flex h-full ">
           <Logo width={125} />
         </div>
         <div>
-          <p className="text-secondary -mt-4 text-center text-sm font-medium">
+          <p className="-mt-4 text-center text-sm font-medium text-secondary">
             Muhasebe
           </p>
-          <p className="text-red-600 text-center text-sm font-medium ">
+          <p className="text-center text-sm font-medium text-red-600 ">
             Beta{" "}
             <span className="mt-1 text-center text-xs text-gray-500">
               {packageJson.version}

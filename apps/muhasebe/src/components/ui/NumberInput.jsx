@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Input from "@/components/ui/Input";
+import { Input } from "@/components/ui";
 
-const NumberInput = ({
+export const NumberInput = ({
   label,
   currency,
   initValue = 0,
@@ -70,5 +70,3 @@ const NumberInput = ({
     />
   );
 };
-
-export default NumberInput;

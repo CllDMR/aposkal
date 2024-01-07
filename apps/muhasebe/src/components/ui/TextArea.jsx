@@ -3,7 +3,7 @@
 import { forwardRef } from "react";
 import { ExclamationTriangleIcon } from "@heroicons/react/20/solid";
 
-function TextArea({ type = "text", label, ...rest }, ref) {
+export const TextArea = forwardRef(({ type = "text", label, ...rest }, ref) => {
   let className =
     "block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-500 sm:text-sm sm:leading-6 outline-none";
 
@@ -27,20 +27,20 @@ function TextArea({ type = "text", label, ...rest }, ref) {
       <InputError className="mt-1" error={rest.error} />
     </div>
   );
-}
+});
 
-export default forwardRef(TextArea);
+TextArea.displayName = "TextArea";
 
 function InputError({ error, className = "" }) {
   if (error)
     return (
       <div className={className}>
         <div
-          className="text-red-600 flex w-full py-1 text-xs "
+          className="flex w-full py-1 text-xs text-red-600 "
           id="email-error"
         >
           <ExclamationTriangleIcon
-            className="text-red-500 mr-1 h-4 w-4 "
+            className="mr-1 h-4 w-4 text-red-500 "
             aria-hidden="true"
           />
           {error}

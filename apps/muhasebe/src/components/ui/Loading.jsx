@@ -1,4 +1,4 @@
-import { Logo } from "@/components/landing/Logo";
+import { Logo } from "@/components/landing";
 
 const Loader = (props) => {
   const { type, className = "", colorName } = props;
@@ -131,7 +131,7 @@ const Loader = (props) => {
   );
 };
 
-const Loading = ({ text }) => {
+export const Loading = ({ text }) => {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50">
       <div className="-mt-32 flex flex-col items-center justify-start">
@@ -151,5 +151,3 @@ const Loading = ({ text }) => {
     </div>
   );
 };
-
-export default Loading;

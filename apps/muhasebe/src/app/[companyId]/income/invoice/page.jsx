@@ -1,15 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import DocumentFormLayout from "@/components/document/DocumentFormLayout";
-import RightDrawer from "@/components/document/RightDrawer";
-import Input from "@/components/ui/Input";
-import NumberInput from "@/components/ui/NumberInput";
-import TextArea from "@/components/ui/TextArea";
+import { DocumentFormLayout, RightDrawer } from "@/components/document";
+import { Input, NumberInput, TextArea } from "@/components/ui";
 
-const lines = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }];
-
-const NewInvoice = () => {
+export default function Page() {
   const [lines, setLines] = useState([{ id: 1 }]);
   const [drawer, setDrawer] = useState(null);
 
@@ -60,7 +55,7 @@ const NewInvoice = () => {
       <div className="divide-y-2">
         {lines.map((line) => (
           <div
-            className="even:bg-sky-50 gap-3 space-y-3 px-3 py-4 md:flex md:space-y-0"
+            className="gap-3 space-y-3 px-3 py-4 even:bg-sky-50 md:flex md:space-y-0"
             key={line.id}
           >
             <div className="mt-4 w-full md:mt-0 md:w-5/12">
@@ -90,7 +85,7 @@ const NewInvoice = () => {
                 <buton
                   type="button"
                   onClick={() => setDrawer({ id: line.id })}
-                  className="bg-teal-500 hover:bg-teal-600 focus:ring-teal-500 inline-flex items-center rounded-md border border-transparent px-2 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"
+                  className="inline-flex items-center rounded-md border border-transparent bg-teal-500 px-2 py-2 text-sm font-medium text-white shadow-sm hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -115,7 +110,7 @@ const NewInvoice = () => {
           <buton
             type="button"
             onClick={handleAddLine}
-            className="bg-teal-500 hover:bg-teal-600 focus:ring-teal-500 inline-flex items-center rounded-md border border-transparent px-2 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"
+            className="inline-flex items-center rounded-md border border-transparent bg-teal-500 px-2 py-2 text-sm font-medium text-white shadow-sm hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
           >
             Satır Ekle
           </buton>
@@ -123,6 +118,4 @@ const NewInvoice = () => {
       </div>
     </DocumentFormLayout>
   );
-};
-
-export default NewInvoice;
+}

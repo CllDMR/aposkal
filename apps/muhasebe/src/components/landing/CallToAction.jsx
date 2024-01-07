@@ -1,12 +1,11 @@
 import Image from "next/image";
-import { Button } from "@/components/landing/Button";
-import { Container } from "@/components/landing/Container";
+import { Button, Container } from "@/components/landing";
 
 export function CallToAction() {
   return (
     <section
       id="get-started-today"
-      className="bg-blue-600 relative overflow-hidden py-32"
+      className="relative overflow-hidden bg-blue-600 py-32"
     >
       <Image
         className="absolute left-1/2 top-1/2 max-w-none -translate-x-1/2 -translate-y-1/2"

@@ -1,4 +1,4 @@
-const Button = (props) => {
+export const Button = (props) => {
   const {
     loading,
     children,
@@ -53,8 +53,6 @@ const Button = (props) => {
     </button>
   );
 };
-
-export default Button;
 
 const Loader = (props) => {
   const { type, className = "", colorName } = props;

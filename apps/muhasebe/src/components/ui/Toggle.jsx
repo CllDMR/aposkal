@@ -6,7 +6,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Toggle(props) {
+export function Toggle(props) {
   const { enabled, setEnabled, label, type } = props;
 
   if (type === "label-left")
@@ -14,7 +14,7 @@ export default function Toggle(props) {
       <Switch.Group as="div" className="flex items-center">
         {label && (
           <Switch.Label as="span" className="mr-3">
-            <span className="text-teal-900 text-sm">{label} </span>
+            <span className="text-sm text-teal-900">{label} </span>
           </Switch.Label>
         )}
         <Switch
@@ -22,7 +22,7 @@ export default function Toggle(props) {
           onChange={setEnabled}
           className={classNames(
             enabled ? "bg-secondary" : "bg-gray-200",
-            "focus:ring-primary relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2",
+            "relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
           )}
         >
           <span
@@ -43,7 +43,7 @@ export default function Toggle(props) {
         onChange={setEnabled}
         className={classNames(
           enabled ? "bg-secondary" : "bg-gray-200",
-          "focus:ring-primary relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2",
+          "relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
         )}
       >
         <span
@@ -62,3 +62,5 @@ export default function Toggle(props) {
     </Switch.Group>
   );
 }
+
+export default Toggle;
