@@ -16,7 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn, signOut } from "next-auth/react";
 import { useForm } from "react-hook-form";
 
-export function LoginForm() {
+export const LoginForm = () => {
   const router = useRouter();
 
   const [error, setError] = useState("");
@@ -138,4 +138,4 @@ export function LoginForm() {
       </form>
     </SlimLayout>
   );
-}
+};

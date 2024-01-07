@@ -1,8 +1,6 @@
-import NewButton from "./NewButton";
+import { NewButton } from "@/components/company-income/NewButton";
 
-export default function IncomeList({ params }) {
-  const companyId = params.companyId;
-  const root = `/app/${companyId}`;
+export default function IncomeList() {
   return (
     <div>
       <div className="flex justify-between">

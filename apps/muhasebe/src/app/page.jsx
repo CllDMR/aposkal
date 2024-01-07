@@ -1,9 +1,9 @@
-import { authOptions } from "@/api/auth/authOptions";
 import { Footer, Header, Hero } from "@/components/landing";
-import { getServerSession } from "next-auth";
+
+import { auth } from "@acme/auth";
 
 export default async function Page() {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   return (
     <>

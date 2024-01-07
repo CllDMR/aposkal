@@ -1,4 +1,5 @@
 import { Inter, Lexend } from "next/font/google";
+import { headers } from "next/headers";
 import { Providers } from "@/components/providers";
 
 import "../tailwind.css";

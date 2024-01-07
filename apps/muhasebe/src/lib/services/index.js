@@ -13,8 +13,8 @@ import {
   getUserFromCompany,
   removeUserFromCompany,
   updateUserInCompany,
-} from "./companies/index.js";
-import { createNewUser, getAuth, getUserByEmail } from "./user/index.js";
+} from "./companies";
+import { createNewUser, getAuth, getUserByEmail } from "./user";
 
 // export for server components use only with cache
 export const _getUserByEmail = cache(getUserByEmail);

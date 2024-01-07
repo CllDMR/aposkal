@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import sidebarItems from "@/app/[companyId]/sidebaritems";
+import { getSidebarItems } from "@/utils/sidebaritems";
 
 const permissions = [
   { id: "false", title: "Yetki Yok" },
@@ -10,10 +10,10 @@ const permissions = [
   { id: "all", title: "Tüm İşlemler" },
 ];
 
-const UserModuleSelector = ({ callback, initValue }) => {
+export const UserModuleSelector = ({ callback, initValue }) => {
   const params = useParams();
 
-  const navigation = sidebarItems(params.companyId);
+  const navigation = getSidebarItems(params.companyId);
   const modules = navigation.map((item) => item.name);
 
   const initTermObj = modules.reduce((acc, item) => {
@@ -53,7 +53,7 @@ const UserModuleSelector = ({ callback, initValue }) => {
                         name={item}
                         type="radio"
                         defaultChecked={permissionObj[item] === per.id}
-                        className="text-teal-600 focus:ring-teal-500 h-4 w-4 border-gray-300"
+                        className="h-4 w-4 border-gray-300 text-teal-600 focus:ring-teal-500"
                         onChange={(e) => handlePermissionChange(item, per.id)}
                       />
                       <label
@@ -73,5 +73,3 @@ const UserModuleSelector = ({ callback, initValue }) => {
     </div>
   );
 };
-
-export default UserModuleSelector;

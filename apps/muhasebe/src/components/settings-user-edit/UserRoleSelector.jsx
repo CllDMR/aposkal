@@ -28,7 +28,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function UserRoleSelector({ callback, initValue }) {
+export function UserRoleSelector({ callback, initValue }) {
   const init = settings.find((s) => s.id === initValue) || settings[1];
   const [selected, setSelected] = useState(init);
 
@@ -58,7 +58,7 @@ export default function UserRoleSelector({ callback, initValue }) {
                 settingIdx === settings.length - 1
                   ? "rounded-bl-md rounded-br-md"
                   : "",
-                checked ? "border-teal-200 bg-teal-50 z-10" : "border-gray-200",
+                checked ? "z-10 border-teal-200 bg-teal-50" : "border-gray-200",
                 "relative flex cursor-pointer border p-4 focus:outline-none",
                 setting.disabled && "cursor-not-allowed opacity-50",
               )
@@ -69,9 +69,9 @@ export default function UserRoleSelector({ callback, initValue }) {
                 <span
                   className={classNames(
                     checked
-                      ? "bg-teal-600 border-transparent"
+                      ? "border-transparent bg-teal-600"
                       : "border-gray-300 bg-white",
-                    active ? "ring-teal-500 ring-2 ring-offset-2" : "",
+                    active ? "ring-2 ring-teal-500 ring-offset-2" : "",
                     "mt-0.5 flex h-4 w-4 shrink-0 cursor-pointer items-center justify-center rounded-full border",
                   )}
                   aria-hidden="true"

@@ -1,6 +1,5 @@
+import { EditUser } from "@/components/settings-user-edit/EditUser";
 import { getUserFromCompany } from "@/lib/services";
-
-import EditUser from "./EditUser";
 
 export const dynamic = "force-dynamic";
 

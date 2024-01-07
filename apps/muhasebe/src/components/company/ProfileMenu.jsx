@@ -17,7 +17,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const ProfileMenu = ({ session, company }) => {
+export const ProfileMenu = ({ session, company }) => {
   if (!session || !session?.user?.name) return null;
 
   return (
@@ -34,7 +34,7 @@ const ProfileMenu = ({ session, company }) => {
           />
           <span className="hidden lg:flex lg:items-center">
             <span
-              className="ml-4 max-w-32 truncate text-sm font-semibold leading-6 text-gray-900"
+              className="max-w-32 ml-4 truncate text-sm font-semibold leading-6 text-gray-900"
               aria-hidden="true"
             >
               {session.user.name}
@@ -81,5 +81,3 @@ const ProfileMenu = ({ session, company }) => {
     </>
   );
 };
-
-export default ProfileMenu;

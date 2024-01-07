@@ -1,10 +1,10 @@
 // use only server side code
 
-import { authOptions } from "@/api/auth/authOptions";
 import { db } from "@/lib/db";
 import { registerUserSchema } from "@/validationSchemas";
 import bcrypt from "bcrypt";
-import { getServerSession } from "next-auth";
+
+import { auth } from "@acme/auth";
 
 import { checkPermission } from "../companies/index";
 
@@ -70,7 +70,7 @@ export const getAuth = async (request = null, companyId = null) => {
     // burada bearer token varsa onu kullanıyoruz db'den kontrol ediyoruz
   }
   // yoksa sessiondan kontrol ediyoruz
-  authObject.session = await getServerSession(authOptions);
+  authObject.session = await auth();
   if (authObject?.session) authObject.isAuth = true;
 
   const user = await db.user.findUnique({

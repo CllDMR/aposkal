@@ -8,7 +8,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example({ items }) {
+export function NewButton({ items }) {
   return (
     <div className="inline-flex rounded-md shadow-sm">
       <Menu as="div" className="relative -ml-px block">

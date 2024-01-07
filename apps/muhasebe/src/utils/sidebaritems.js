@@ -10,7 +10,7 @@ import {
   WrenchScrewdriverIcon,
 } from "@heroicons/react/24/outline";
 
-const navigation = (companyId) => {
+export const getSidebarItems = (companyId) => {
   const root = `app/${companyId}`;
   const sidebarItems = [
     {
@@ -137,5 +137,3 @@ const navigation = (companyId) => {
 
   return sidebarItems;
 };
-
-export default navigation;

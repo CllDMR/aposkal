@@ -15,11 +15,7 @@ import { resetPasswordSchema } from "@/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-export default function ForgotPasswordForm({
-  email,
-  changePasswordCode,
-  userId,
-}) {
+export function ForgotPasswordForm({ email, changePasswordCode, userId }) {
   const router = useRouter();
 
   const {

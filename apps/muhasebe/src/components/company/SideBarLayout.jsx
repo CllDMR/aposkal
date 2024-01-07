@@ -1,11 +1,12 @@
 "use client";
 
 import { Fragment, useState } from "react";
-import Sidebar from "@/app/[companyId]/SideBar";
 import { Dialog, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
-const SideBarLayout = ({ company }) => {
+import { SideBar } from "./SideBar";
+
+export const SideBarLayout = ({ company }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -20,7 +21,7 @@ const SideBarLayout = ({ company }) => {
           <Bars3Icon className="h-6 w-6" aria-hidden="true" />
         </button>
       </div>
-      <div className="bg-red-500 hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-52 lg:flex-col">
+      <div className="hidden bg-red-500 lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-52 lg:flex-col">
         <div className="h-screen">
           <Transition.Root show={sidebarOpen} as={Fragment}>
             <Dialog
@@ -74,20 +75,18 @@ const SideBarLayout = ({ company }) => {
                         </button>
                       </div>
                     </Transition.Child>
-                    {/* Sidebar component, swap this element with another sidebar if you like */}
-                    <Sidebar company={company} />
+                    {/* SideBar component, swap this element with another sidebar if you like */}
+                    <SideBar company={company} />
                   </Dialog.Panel>
                 </Transition.Child>
               </div>
             </Dialog>
           </Transition.Root>
           {/* Static sidebar for desktop */}
-          {/* Sidebar component, swap this element with another sidebar if you like */}
-          <Sidebar company={company} />
+          {/* SideBar component, swap this element with another sidebar if you like */}
+          <SideBar company={company} />
         </div>
       </div>
     </div>
   );
 };
-
-export default SideBarLayout;

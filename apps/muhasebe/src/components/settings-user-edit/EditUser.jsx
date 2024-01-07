@@ -5,16 +5,12 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui";
 
-import ToggleActive from "./ToggleActive";
-import UserRoleSelector from "./UserRoleSelector";
+import { ToggleActive } from "./ToggleActive";
+import { UserRoleSelector } from "./UserRoleSelector";
 
-const EditUser = ({ currentUserRole, companyUserData, userData }) => {
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState(null);
-
+export const EditUser = ({ currentUserRole, companyUserData, userData }) => {
   const [isActive, setIsActive] = useState(false);
   const [role, setRole] = useState(null);
-  const [modules, setModules] = useState(null);
 
   useEffect(() => {
     setIsActive(companyUserData?.isActive);
@@ -148,8 +144,6 @@ const EditUser = ({ currentUserRole, companyUserData, userData }) => {
     </div>
   );
 };
-
-export default EditUser;
 
 const UserPermissions = ({
   isActive,

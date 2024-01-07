@@ -17,24 +17,13 @@ function Label({ id, children }) {
   );
 }
 
-function TextField({ label, type = "text", className, ...rest }, ref) {
-  // let id = useId();
-
-  return (
-    <div className={className}>
-      {label && <Label>{label}</Label>}
-      <input type={type} className={formClasses} {...rest} ref={ref} />
-    </div>
-  );
-}
-
-export function SelectField({ label, className, ...rest }, ref) {
+export const SelectField = forwardRef(({ label, className, ...rest }, ref) => {
   return (
     <div className={className}>
       {label && <Label>{label}</Label>}
       <select {...rest} className={clsx(formClasses, "pr-8")} ref={ref} />
     </div>
   );
-}
+});
 
-export default forwardRef(SelectField);
+SelectField.displayName = "SelectField";

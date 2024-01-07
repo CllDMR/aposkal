@@ -1,4 +1,4 @@
-export default async function EditUserLayout({ children }) {
+export default function Layout({ children }) {
   return (
     <div>
       <div className="mt-10 sm:mt-0">

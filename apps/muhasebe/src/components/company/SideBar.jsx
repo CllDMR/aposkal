@@ -4,16 +4,16 @@ import { useRef } from "react";
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 import { Logo } from "@/components/landing";
+import { getSidebarItems } from "@/utils/sidebaritems";
 import { Disclosure } from "@headlessui/react";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 
 import packageJson from "../../../package.json";
-import sidebarItems from "./sidebaritems";
 
-export default function SideBar({ company }) {
+export const SideBar = ({ company }) => {
   const params = useParams();
 
-  const navigation = sidebarItems(params.companyId);
+  const navigation = getSidebarItems(params.companyId);
 
   return (
     <div className="flex h-full grow flex-col gap-y-5 overflow-y-auto border-r bg-slate-100 pb-4">
@@ -55,7 +55,7 @@ export default function SideBar({ company }) {
       </nav>
     </div>
   );
-}
+};
 
 const Menu = ({ item, index }) => {
   const currentPath = usePathname();

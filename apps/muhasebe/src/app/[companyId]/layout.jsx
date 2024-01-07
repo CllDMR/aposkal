@@ -1,9 +1,8 @@
 import { redirect } from "next/navigation";
-import Header from "@/app/[companyId]/Header";
-import SideBarLayout from "@/app/[companyId]/SideBarLayout";
+import { Header, SideBarLayout } from "@/components/company";
 import { _getCompanyById } from "@/lib/services";
 
-export default async function AppLayout({ children, params }) {
+export default async function Layout({ children, params }) {
   const companyId = params?.companyId;
 
   if (!companyId || isNaN(companyId)) return redirect("/auth/unauthorized");
@@ -19,16 +18,14 @@ export default async function AppLayout({ children, params }) {
   const session = company.session;
 
   return (
-    <div className="bg-slate-50 h-screen">
+    <div className="h-screen bg-slate-50">
       <SideBarLayout company={company} />
       <div className="flex h-full flex-col lg:pl-52 ">
         <Header session={session} company={company} />
-        <main className="bg-slate-50 h-full overflow-scroll px-4 py-5 sm:px-6 lg:px-8">
+        <main className="h-full overflow-scroll bg-slate-50 px-4 py-5 sm:px-6 lg:px-8">
           {children}
         </main>
       </div>
     </div>
   );
 }
-
-// export const dynamic = "force-dynamic";

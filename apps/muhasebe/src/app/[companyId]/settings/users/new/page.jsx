@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { Button, Input, Label } from "@/components/ui";
@@ -8,30 +8,25 @@ import { inviteUserSchema } from "@/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-export default function NewUser() {
+export default function Page() {
+  const params = useParams();
+  const router = useRouter();
+
   const {
     register,
-    control,
     handleSubmit,
     setValue,
-    watch,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(inviteUserSchema),
   });
-
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState(null);
-
-  const params = useParams();
-  const router = useRouter();
 
   useEffect(() => {
     setValue("companyId", params.companyId);
   }, [params.companyId, setValue]);
 
   const onSubmit = handleSubmit(async (data) => {
-    setSubmitting(true);
+    // setSubmitting(true);
     try {
       const registerRes = await fetch("/api/companies/inviteUser", {
         method: "POST",
@@ -45,14 +40,14 @@ export default function NewUser() {
 
       if (responseData?.error) {
         setError(responseData.error);
-        setSubmitting(false);
+        // setSubmitting(false);
       } else {
         router.refresh();
         router.push(`/app/${params.companyId}/settings/users`);
       }
     } catch (error) {
       setError(error?.error || "Bir hata oluştu");
-      setSubmitting(false);
+      // setSubmitting(false);
     }
   });
 

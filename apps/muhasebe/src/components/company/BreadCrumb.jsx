@@ -31,7 +31,7 @@ const createBreadCrumb = (paths, root) => {
   return filtered;
 };
 
-const NextBreadcrumb = ({}) => {
+export const BreadCrumb = ({}) => {
   const paths = usePathname();
   const params = useParams();
   const root = `/app/${params.companyId}`;
@@ -101,5 +101,3 @@ const NextBreadcrumb = ({}) => {
     </nav>
   );
 };
-
-export default NextBreadcrumb;
