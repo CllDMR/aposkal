@@ -2,7 +2,9 @@ import { getUserFromCompany } from "@/lib/services";
 
 import EditUser from "./EditUser";
 
-const Component = async ({ params }) => {
+export const dynamic = "force-dynamic";
+
+export default async function Component({ params }) {
   const companyId = params.companyId;
   const userId = params.userId;
 
@@ -24,7 +26,4 @@ const Component = async ({ params }) => {
       />
     </>
   );
-};
-
-export const dynamic = "force-dynamic";
-export default Component;
+}

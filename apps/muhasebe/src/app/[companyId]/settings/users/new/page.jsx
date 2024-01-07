@@ -3,12 +3,12 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { Button, Input, Label, Toggle } from "@/components/ui";
+import { Button, Input, Label } from "@/components/ui";
 import { inviteUserSchema } from "@/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-const NewUser = () => {
+export default function NewUser() {
   const {
     register,
     control,
@@ -142,25 +142,4 @@ const NewUser = () => {
       </div>
     </div>
   );
-};
-
-export default NewUser;
-
-const ToggleActive = ({ isActiveWatch, setValue }) => {
-  return (
-    <div className="py-4 sm:my-2 sm:grid sm:grid-cols-3 sm:items-start sm:gap-4">
-      <label>Kullanıcı Durumu</label>
-      <div className="col-span-2">
-        <Toggle
-          enabled={isActiveWatch}
-          setEnabled={(enabled) => setValue("isActive", enabled)}
-          label={
-            isActiveWatch
-              ? "Kullanıcı Aktif"
-              : "Kullanıcı Pasif firmanızın bilgilerine erişemez"
-          }
-        />
-      </div>
-    </div>
-  );
-};
+}

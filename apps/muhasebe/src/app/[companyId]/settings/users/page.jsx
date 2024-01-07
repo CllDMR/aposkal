@@ -2,29 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { _getCompanyUsers } from "@/lib/services";
 
-/*
-[
-  {
-    id: 'clqqa5kj200003l7fpjttnqpj',
-    name: 'Furkan Şevki ARICI',
-    email: 'furkanarici@icloud.com',
-    emailVerified: 2023-12-29T09:07:15.628Z,
-    phone: '5412070553',
-    image: 'https://i0.wp.com/avatar-management--avatars.us-west-2.prod.public.atl-paas.net/initials/FA-6.png?ssl=1',
-    permission: {
-      id: 'clqqa7rvj00023l7fzwsd1n1k',
-      companyId: 100009,
-      userId: 'clqqa5kj200003l7fpjttnqpj',
-      role: 'ADMIN',
-      createdAt: 2023-12-29T06:57:46.206Z,
-      updatedAt: 2023-12-29T06:57:46.206Z
-    }
-  }
-]
+export const dynamic = "force-dynamic";
 
-*/
-
-const Users = async ({ params }) => {
+export default async function Users({ params }) {
   const companyId = params?.companyId;
   const users = await _getCompanyUsers({ companyId });
 
@@ -44,7 +24,7 @@ const Users = async ({ params }) => {
                 // onClick={onAddUser}
                 href={`/app/${companyId}/settings/users/new`}
                 type="button"
-                className="bg-teal-500 hover:bg-teal-600 focus:ring-teal-500 relative inline-flex items-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"
+                className="relative inline-flex items-center rounded-md border border-transparent bg-teal-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
               >
                 Kullanıcı Ekle
               </Link>
@@ -73,7 +53,7 @@ const Users = async ({ params }) => {
                     </div>
                     <div className="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
                       <div>
-                        <p className="text-teal-600 truncate text-sm font-medium ">
+                        <p className="truncate text-sm font-medium text-teal-600 ">
                           {user.name}{" "}
                         </p>
                         <p className="mt-2 flex items-center space-x-1 text-sm text-gray-500">
@@ -153,7 +133,7 @@ const Users = async ({ params }) => {
       </div>
     </>
   );
-};
+}
 
 const StateView = ({ isActive, inviteId }) => {
   if (inviteId)
@@ -165,7 +145,7 @@ const StateView = ({ isActive, inviteId }) => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="text-yellow-400 mr-1.5 h-5 w-5 flex-shrink-0"
+          className="mr-1.5 h-5 w-5 flex-shrink-0 text-yellow-400"
         >
           <path
             strokeLinecap="round"
@@ -185,7 +165,7 @@ const StateView = ({ isActive, inviteId }) => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="text-yellow-400 mr-1.5 h-5 w-5 flex-shrink-0"
+          className="mr-1.5 h-5 w-5 flex-shrink-0 text-yellow-400"
         >
           <path
             strokeLinecap="round"
@@ -205,7 +185,7 @@ const StateView = ({ isActive, inviteId }) => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="text-green-400 mr-1.5 h-5 w-5 flex-shrink-0"
+          className="mr-1.5 h-5 w-5 flex-shrink-0 text-green-400"
         >
           <path
             strokeLinecap="round"
@@ -229,7 +209,7 @@ const UserTypeWiev = ({ role }) => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="text-yellow-400 mr-1.5 h-5 w-5 flex-shrink-0"
+          className="mr-1.5 h-5 w-5 flex-shrink-0 text-yellow-400"
         >
           <path
             strokeLinecap="round"
@@ -249,7 +229,7 @@ const UserTypeWiev = ({ role }) => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="text-yellow-400 mr-1.5 h-5 w-5 flex-shrink-0"
+          className="mr-1.5 h-5 w-5 flex-shrink-0 text-yellow-400"
         >
           <path
             strokeLinecap="round"
@@ -269,7 +249,7 @@ const UserTypeWiev = ({ role }) => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="text-green-400 mr-1.5 h-5 w-5 flex-shrink-0"
+          className="mr-1.5 h-5 w-5 flex-shrink-0 text-green-400"
         >
           <path
             strokeLinecap="round"
@@ -289,7 +269,7 @@ const UserTypeWiev = ({ role }) => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="text-green-400 mr-1.5 h-5 w-5 flex-shrink-0"
+          className="mr-1.5 h-5 w-5 flex-shrink-0 text-green-400"
         >
           <path
             strokeLinecap="round"
@@ -302,7 +282,3 @@ const UserTypeWiev = ({ role }) => {
     );
   else return null;
 };
-
-export default Users;
-
-export const dynamic = "force-dynamic";

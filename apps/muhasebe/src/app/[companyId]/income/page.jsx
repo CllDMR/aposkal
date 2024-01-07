@@ -1,6 +1,6 @@
 import NewButton from "./NewButton";
 
-const IncomeList = ({ params }) => {
+export default function IncomeList({ params }) {
   const companyId = params.companyId;
   const root = `/app/${companyId}`;
   return (
@@ -21,6 +21,4 @@ const IncomeList = ({ params }) => {
       </div>
     </div>
   );
-};
-
-export default IncomeList;
+}
