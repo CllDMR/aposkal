@@ -1,9 +1,9 @@
 import Image from "next/image";
 
-export const Logo = ({ className = "w-auto h-10 ", width = 80 }) => {
+export const Logo = ({ className = "w-auto h-10 ", width = 286.3 }) => {
   return (
     <div className={className}>
-      <Image width={width} src={"/images/logo.svg"} alt="Logo" />
+      <Image src="/images/logo.svg" alt="Logo" width={width} height={141.73} />
     </div>
   );
 };

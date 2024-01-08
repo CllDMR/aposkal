@@ -13,8 +13,9 @@ import {
 import { InputError } from "@/components/ui";
 import { registerUserSchema } from "@/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn, signOut } from "next-auth/react";
 import { useForm } from "react-hook-form";
+
+import { signIn, signOut } from "@acme/auth";
 
 import { Privacy } from "./privacy";
 

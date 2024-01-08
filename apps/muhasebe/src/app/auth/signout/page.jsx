@@ -1,8 +1,15 @@
-"use client";
-
 import Link from "next/link";
 import { Logo } from "@/components/landing";
-import { signOut } from "next-auth/react";
+
+import { signOut } from "@acme/auth";
+
+async function logout() {
+  "use server";
+  await signOut({
+    redirect: true,
+    callbackUrl: "/",
+  });
+}
 
 export default function Page() {
   return (
@@ -19,12 +26,12 @@ export default function Page() {
         </h1>
         <p className="mt-6 text-base leading-7 text-gray-600"></p>
         <div className="mt-10 flex items-center justify-center gap-x-6">
-          <a
-            onClick={() => signOut({ redirect: true, callbackUrl: "/" })}
-            className="rounded-md bg-teal-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
-          >
-            Çıkış Yap
-          </a>
+          <form action={logout}>
+            <button className="rounded-md bg-teal-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600">
+              Çıkış Yap
+            </button>
+          </form>
+
           <Link href="/app" className="text-sm font-semibold text-gray-900">
             Uygulamaya Dön <span aria-hidden="true">&rarr;</span>
           </Link>

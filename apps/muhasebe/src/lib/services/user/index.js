@@ -2,7 +2,8 @@
 
 import { db } from "@/lib/db";
 import { registerUserSchema } from "@/validationSchemas";
-import bcrypt from "bcrypt";
+
+// import bcrypt from "bcrypt";
 
 import { auth } from "@acme/auth";
 
@@ -43,13 +44,13 @@ export const createNewUser = async (body) => {
       code: 400,
     };
 
-  const hashedPassword = await bcrypt.hash(body.password, 10);
+  // const hashedPassword = await bcrypt.hash(body.password, 10);
   const newUser = await db.user.create({
     data: {
       email: body.email,
       name: body.name,
       phone: body.phone,
-      hashedPassword,
+      // hashedPassword,
       image: createUserPhotoUrl(body.name),
     },
   });

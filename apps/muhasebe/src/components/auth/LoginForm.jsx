@@ -13,8 +13,9 @@ import {
 import { InputError } from "@/components/ui";
 import { loginUserSchema } from "@/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn, signOut } from "next-auth/react";
 import { useForm } from "react-hook-form";
+
+import { signIn, signOut } from "@acme/auth";
 
 export const LoginForm = () => {
   const router = useRouter();

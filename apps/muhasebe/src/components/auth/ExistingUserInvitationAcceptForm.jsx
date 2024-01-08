@@ -14,8 +14,9 @@ import { InputError } from "@/components/ui";
 import { api } from "@/utils/api";
 import { acceptInvitationSchema } from "@/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn, signOut } from "next-auth/react";
 import { useForm } from "react-hook-form";
+
+import { signIn, signOut } from "@acme/auth";
 
 export function ExistingUserInvitationAcceptForm({ inviteId, userId, email }) {
   const router = useRouter();

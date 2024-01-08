@@ -2,7 +2,7 @@
 
 import { db } from "@/lib/db";
 import { createCompanySchema } from "@/validationSchemas";
-import bcrypt from "bcrypt";
+// import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 
 import { createNewUser, getAuth } from ".././user/index.js";
@@ -295,7 +295,7 @@ export const acceptInvite = async ({ inviteId, userId, email, password }) => {
       where: { id: userId },
       data: {
         changePasswordCode: null,
-        hashedPassword: await bcrypt.hash(password, 10),
+        // hashedPassword: await bcrypt.hash(password, 10),
       },
     });
   }

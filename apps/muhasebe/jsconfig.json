@@ -18,8 +18,8 @@
 
     "baseUrl": "./",
     "paths": {
-      "@/*": ["./src/*"],
-      "@db/*": ["./prisma/services/*"]
+      "@/*": ["./src/*"]
+      // "@db/*": ["./prisma/services/*"]
     },
     "plugins": [
       {

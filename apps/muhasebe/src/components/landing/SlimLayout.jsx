@@ -12,7 +12,8 @@ export function SlimLayout({ children }) {
         <div className="hidden sm:contents lg:relative lg:block lg:flex-1">
           <Image
             className="absolute inset-0 h-full w-full object-cover"
-            src={"/images/background-auth.jpg"}
+            src="/images/background-auth.jpg"
+            fill
             alt=""
             unoptimized
           />

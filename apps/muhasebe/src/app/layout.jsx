@@ -2,6 +2,8 @@ import { Inter, Lexend } from "next/font/google";
 import { headers } from "next/headers";
 import { Providers } from "@/components/providers";
 
+import { auth } from "@acme/auth";
+
 import "../tailwind.css";
 
 export const metadata = {
@@ -24,7 +26,9 @@ const lexend = Lexend({
   variable: "--font-lexend",
 });
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const session = await auth();
+
   return (
     <html lang="en">
       <body
