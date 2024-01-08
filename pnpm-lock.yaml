@@ -890,6 +890,9 @@ importers:
       superjson:
         specifier: 1.13.1
         version: 1.13.1
+      trpc-shield:
+        specifier: ^0.4.3
+        version: 0.4.3
       zod:
         specifier: ^3.22.4
         version: 3.22.4
@@ -8254,6 +8257,12 @@ packages:
   /tree-kill@1.2.2:
     resolution: {integrity: sha512-L0Orpi8qGpRG//Nd+H90vFB+3iHnue1zSSGmNOOCh1GLJ7rUKVwV2HvijphGQS2UmhUZewS9VgvxYIdgr+fG1A==}
     hasBin: true
+
+  /trpc-shield@0.4.3:
+    resolution: {integrity: sha512-cS29TSgKgZhi6garadu29YrtPUYD7/OxXg+URA2Ce4PZQfAmZlcInMP7E0mioqqgvnun7E9R9teSFfZa0kw8Yg==}
+    dependencies:
+      '@trpc/server': 10.44.1
+    dev: false
 
   /ts-api-utils@1.0.3(typescript@5.3.3):
     resolution: {integrity: sha512-wNMeqtMz5NtwpT/UZGY5alT+VoKdSsOOP/kqHFcUW1P/VRhH2wJ48+DN2WwUliNbQ976ETwDL0Ifd2VVvgonvg==}
