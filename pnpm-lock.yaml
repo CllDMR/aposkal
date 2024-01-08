@@ -615,9 +615,18 @@ importers:
 
   apps/muhasebe:
     dependencies:
+      '@acme/api':
+        specifier: ^0.1.0
+        version: link:../../packages/api
       '@acme/auth':
         specifier: ^0.1.0
         version: link:../../packages/auth
+      '@acme/db':
+        specifier: ^0.1.0
+        version: link:../../packages/db
+      '@acme/ui':
+        specifier: ^0.1.0
+        version: link:../../packages/ui
       '@headlessui/react':
         specifier: ^1.7.17
         version: 1.7.17(react-dom@18.2.0)(react@18.2.0)
