@@ -39,6 +39,8 @@ export const FormCheckbox = <TFormValues extends FieldValues>({
   const errorMessages = get(errors, name);
   const hasError = !!(errors && errorMessages);
 
+  const { ref, ...rest } = register?.(name, rules) ?? {};
+
   return (
     <div className={clsx("", className)} aria-live="polite">
       <div className="flex">
@@ -48,11 +50,12 @@ export const FormCheckbox = <TFormValues extends FieldValues>({
           label={label}
           aria-invalid={hasError}
           className={clsx({
-            "border-danger-600 transition-colors hover:border-danger-600 focus:border-danger-600 focus:outline-none focus:ring-2 focus:ring-danger-600 focus:ring-opacity-50":
+            "border-danger-600 hover:border-danger-600 focus:border-danger-600 focus:ring-danger-600 transition-colors focus:outline-none focus:ring-2 focus:ring-opacity-50":
               hasError,
           })}
+          innerRef={ref}
           {...props}
-          {...register?.(name, rules)}
+          {...rest}
         />
       </div>
       <ErrorMessage

@@ -1,6 +1,7 @@
 import type { DetailedHTMLProps, FC, InputHTMLAttributes } from "react";
 import { useEffect, useRef } from "react";
 import clsx from "clsx";
+import type { RefCallBack } from "react-hook-form";
 
 export type CheckboxSize = "medium" | "large";
 
@@ -11,6 +12,7 @@ export type CheckboxProps = {
   size?: CheckboxSize;
   className?: string;
   indeterminate?: boolean;
+  innerRef?: RefCallBack;
 } & Omit<
   DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
   "size" | "ref" | "type"
@@ -32,6 +34,7 @@ export const Checkbox: FC<CheckboxProps> = ({
   className = "",
   placeholder,
   indeterminate = false,
+  innerRef,
   // children,
   ...props
 }) => {
@@ -46,13 +49,16 @@ export const Checkbox: FC<CheckboxProps> = ({
   return (
     <input
       id={id}
-      ref={ref}
+      ref={(e) => {
+        if (innerRef) innerRef(e);
+        if (e) ref.current = e;
+      }}
       name={name}
       type="checkbox"
       aria-label={label}
       placeholder={placeholder}
       className={clsx([
-        "rounded border border-gray-300 bg-gray-50 leading-none text-gray-700 placeholder-gray-500 transition-colors ease-in-out hover:border-primary-400 focus:border-primary-400 focus:outline-none focus:ring-4 focus:ring-primary-400 focus:ring-opacity-30",
+        "hover:border-primary-400 focus:border-primary-400 focus:ring-primary-400 rounded border border-gray-300 bg-gray-50 leading-none text-gray-700 placeholder-gray-500 transition-colors ease-in-out focus:outline-none focus:ring-4 focus:ring-opacity-30",
         sizeMap[size],
         className,
       ])}
