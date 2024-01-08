@@ -47,7 +47,7 @@ export default async function SelectTenantPage() {
                 priority
               />
             </div>
-            {/* <p className="text-center text-sm text-gray-500">
+            {/* <p className="text-sm text-center text-gray-500">
               {packageJson.version}
             </p> */}
           </div>
