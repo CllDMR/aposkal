@@ -15,8 +15,8 @@ const fontSans = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Logistic Manager",
-  description: "Simple logistic management tool.",
+  title: "Muhasebe",
+  description: "Simple muhasebe tool.",
 };
 
 export default async function Layout(props: { children: React.ReactNode }) {
