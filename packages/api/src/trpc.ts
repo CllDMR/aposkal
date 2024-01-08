@@ -14,6 +14,8 @@ import { ZodError } from "zod";
 import { auth } from "@acme/auth";
 import { db } from "@acme/db";
 
+import { permissions } from "./shield";
+
 /**
  * 1. CONTEXT
  *
@@ -62,13 +64,15 @@ export const createTRPCContext = async (opts: {
   });
 };
 
+export type Context = typeof createTRPCContext;
+
 /**
  * 2. INITIALIZATION
  *
  * This is where the trpc api is initialized, connecting the context and
  * transformer
  */
-const t = initTRPC.context<typeof createTRPCContext>().create({
+const t = initTRPC.context<Context>().create({
   transformer: superjson,
   errorFormatter({ shape, error }) {
     return {
@@ -120,6 +124,8 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
   });
 });
 
+export const permissionsMiddleware = t.middleware(permissions);
+
 /**
  * Protected (authed) procedure
  *
@@ -129,4 +135,6 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
  *
  * @see https://trpc.io/docs/procedures
  */
-export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
+export const protectedProcedure = t.procedure
+  .use(permissionsMiddleware)
+  .use(enforceUserIsAuthed);
