@@ -11,6 +11,7 @@ export async function createRandomUser(): Promise<
 
   return {
     id: faker.string.nanoid(),
+    // role: "basic",
     email: faker.internet.email(),
     emailVerified: faker.date.recent(),
     image: faker.internet.avatar(),

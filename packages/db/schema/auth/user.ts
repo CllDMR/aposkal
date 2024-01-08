@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { timestamp, varchar } from "drizzle-orm/mysql-core";
+import { mysqlEnum, timestamp, varchar } from "drizzle-orm/mysql-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { nanoid } from "nanoid";
 
@@ -10,6 +10,7 @@ import { usersToTenants } from "./usersToTenants";
 
 export const user = mySqlTable("user", {
   id: varchar("id", { length: 255 }).$defaultFn(nanoid).notNull().primaryKey(),
+  role: mysqlEnum("role", ["admin", "basic"]).notNull().default("basic"),
   name: varchar("name", { length: 255 }).notNull(),
   email: varchar("email", { length: 255 }).notNull(),
   password: varchar("password", { length: 255 }).notNull(),
@@ -18,9 +19,9 @@ export const user = mySqlTable("user", {
     fsp: 3,
   }),
   image: varchar("image", { length: 255 }),
-  emailVerifiedCode: varchar("image", { length: 255 }),
-  changePasswordCode: varchar("image", { length: 255 }),
-  phone: varchar("image", { length: 255 }),
+  emailVerifiedCode: varchar("emailVerifiedCode", { length: 255 }),
+  changePasswordCode: varchar("changePasswordCode", { length: 255 }),
+  phone: varchar("phone", { length: 255 }),
 });
 
 export const userRelations = relations(user, ({ many }) => ({

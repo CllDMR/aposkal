@@ -151,9 +151,7 @@ export const {
             else throw new Error("credentials.password is not true.");
           } else throw new Error("credentials.password is empty.");
         } else {
-          if (!credentials.name) throw new Error("credentials.name is empty.");
-          // Could not found user with email. Should register but not found name value. Probably trying to register with login page.
-          else {
+          if (credentials.email && credentials.name && credentials.password) {
             await db
               .insert(schema.user)
               .values({
@@ -201,7 +199,8 @@ export const {
             }
 
             return newUser ?? null;
-          }
+          } else throw new Error("User not found");
+          // Could not found user with email. Should register but not found name value. Probably trying to register with login page.
         }
       },
     }),
@@ -212,8 +211,9 @@ export const {
       user: {
         ...session.user,
         id: token.sub!,
-        ti: token.ti,
-        tn: token.tn,
+        ti: token.ti as string,
+        tn: token.tn as string,
+        role: token.role as string,
         email: token.email,
         image: token.picture,
         name: token.name,
@@ -224,6 +224,8 @@ export const {
         case "signIn":
           if (user) {
             token.sub = user.id;
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+            token.role = (user as any).role as string;
             token.email = user.email;
             token.name = user.name;
             token.picture = user.image;
@@ -238,6 +240,8 @@ export const {
         case "signUp":
           if (user) {
             token.sub = user.id;
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+            token.role = (user as any).role as string;
             token.email = user.email;
             token.name = user.name;
             token.picture = user.image;
@@ -255,6 +259,8 @@ export const {
             token.ti = session?.user.ti;
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             token.tn = session?.user.tn;
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            token.role = session?.user.role;
           }
           break;
         default:
@@ -268,10 +274,11 @@ export const {
         else if (request.nextUrl.pathname === "/auth/select-tenant")
           return true;
         else if (request.nextUrl.pathname === "/auth/register") return true;
-        else return !!auth?.user.id && !!auth?.user.email;
+        else return !!auth?.user.id && !!auth?.user.email && !!auth?.user.role;
       return (
         !!auth?.user?.id &&
         !!auth?.user.email &&
+        !!auth?.user.role &&
         !!auth?.user.ti &&
         !!auth?.user.tn
       );
