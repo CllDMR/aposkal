@@ -183,9 +183,8 @@ function FeaturesDesktop() {
                     <Tab className="ui-not-focus-visible:outline-none">
                       <span className="absolute inset-0" />
                       {feature.name}
-                    </Tab>
-                  ) as // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  any,
+                    </Tab> // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  ) as any,
                 }}
                 isActive={featureIndex === selectedIndex}
                 className="relative"
