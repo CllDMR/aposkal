@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import type { Dispatch, FC, SetStateAction } from "react";
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
@@ -7,8 +7,8 @@ import { AydınlatmaMetni } from "./AydınlatmaMetni";
 import { PrivacyPolicy } from "./PrivacyPolicy";
 
 interface PrivacyProps {
-  open;
-  setOpen;
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
   name: string;
 }
 

@@ -1,8 +1,5 @@
-interface PageProps {
-  params: {};
-  searchParams: Record<string, string | string[] | undefined>;
-}
+import { NewUserInvitationAcceptForm } from "~/components/auth";
 
-export default function Page({ params: {}, searchParams: {} }: PageProps) {
-  return <div>Page</div>;
+export default function Page() {
+  return <NewUserInvitationAcceptForm email="" inviteId="" userId="" />;
 }

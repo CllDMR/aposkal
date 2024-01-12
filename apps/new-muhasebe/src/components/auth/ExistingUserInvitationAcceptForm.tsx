@@ -1,13 +1,12 @@
 "use client";
 
+import type { FC } from "react";
 import { useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { signIn, signOut } from "@acme/auth";
-
+import { signOutAction } from "~/actions/signout";
 import {
   Button,
   Logo,
@@ -16,69 +15,102 @@ import {
   TextField,
 } from "~/components/landing";
 import { InputError } from "~/components/ui";
-import { api } from "~/utils/api";
 import { acceptInvitationSchema } from "~/validationSchemas";
 
-export function ExistingUserInvitationAcceptForm({ inviteId, userId, email }) {
-  const router = useRouter();
+interface ExistingUserInvitationAcceptFormProps {
+  inviteId: string;
+  userId: string;
+  email: string;
+}
+
+interface ExistingUserInvitationAcceptFormFields {
+  email: string;
+  password: string;
+  commonError: string;
+}
+
+export const ExistingUserInvitationAcceptForm: FC<
+  ExistingUserInvitationAcceptFormProps
+> = ({
+  // inviteId, userId,
+  email,
+}) => {
+  // const router = useRouter();
 
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, errors },
-    setError,
+    // setError,
     getValues,
-    clearErrors,
-  } = useForm({
+    // clearErrors,
+  } = useForm<ExistingUserInvitationAcceptFormFields>({
     defaultValues: {
       email,
-      inviteId,
-      userId,
+      password: "",
     },
     resolver: zodResolver(acceptInvitationSchema),
   });
 
   useEffect(() => {
-    signOut({ redirect: false });
+    void signOutAction();
   }, []);
 
-  const { mutateAsync: resetPasswordSendMutateAsync } =
-    api.auth.resetPasswordSend.useMutation({
-      onError(error) {
-        setError("server", error);
-      },
-      onSuccess() {
-        clearErrors("server");
-      },
-    });
+  // const { mutateAsync: resetPasswordSendMutateAsync } =
+  //   api.auth.resetPasswordSend.useMutation({
+  //     onError(error) {
+  //       setError("commonError", {
+  //         type: "server",
+  //         message: error.message,
+  //       });
+  //     },
+  //     onSuccess() {
+  //       clearErrors();
+  //     },
+  //   });
 
-  const { mutateAsync: inviteUserAcceptMutateAsync } =
-    api.company.inviteUserAccept.useMutation({
-      onError(error) {
-        setError("server", error);
-      },
-      onSuccess() {
-        router.push("/app");
-      },
-    });
+  // const { mutateAsync: inviteUserAcceptMutateAsync } =
+  //   api.company.inviteUserAccept.useMutation({
+  //     onError(error) {
+  //       setError("commonError", {
+  //         type: "server",
+  //         message: error.message,
+  //       });
+  //     },
+  //     onSuccess() {
+  //       router.push("/app");
+  //     },
+  //   });
 
-  const onResetPassword = async () => {
-    const data = getValues();
-    await resetPasswordSendMutateAsync({ email: data.email });
-  };
+  const onResetPassword =
+    // async
+    () => {
+      const _data = getValues();
+      // await resetPasswordSendMutateAsync({ email: data.email });
+    };
 
-  const onSubmit = handleSubmit(async (data) => {
-    const [signInRes, signInError] = await tryCatch(
-      signIn("credentials", {
-        ...data,
-        redirect: false,
-      }),
-    );
-    if (signInRes.error) return void setError("server", signInRes.error);
-    else if (signInError) return void setError("server", signInError);
-
-    await inviteUserAcceptMutateAsync(data);
-  });
+  const onSubmit = handleSubmit(
+    // async
+    (_data) => {
+      // const [signInRes, signInError] = await tryCatch(
+      //   signIn("credentials", {
+      //     ...data,
+      //     redirect: false,
+      //   }),
+      // );
+      // if (signInRes.error)
+      //   return void setError("commonError", {
+      //     type: "server",
+      //     message: signInRes.error.message,
+      //   });
+      // else if (signInError)
+      //   return void setError("commonError", {
+      //     type: "server",
+      //     message: signInError.message,
+      //   });
+      // await inviteUserAcceptMutateAsync(data);
+    },
+  );
 
   return (
     <SlimLayout>
@@ -102,6 +134,7 @@ export function ExistingUserInvitationAcceptForm({ inviteId, userId, email }) {
         className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2"
       >
         <TextField
+          id="email"
           className="col-span-full"
           label="Email"
           type="email"
@@ -111,6 +144,7 @@ export function ExistingUserInvitationAcceptForm({ inviteId, userId, email }) {
         />
 
         <TextField
+          id="password"
           className="col-span-full"
           label="Parola"
           type="password"
@@ -122,13 +156,15 @@ export function ExistingUserInvitationAcceptForm({ inviteId, userId, email }) {
           className="col-span-full"
         />
 
-        <p className="col-span-full text-sm text-red-500">{error}</p>
+        <p className="col-span-full text-sm text-red-500">
+          {errors.commonError?.message}
+        </p>
 
         <p className="mt-2 text-sm text-gray-700">
           Parolanızı mı unuttunuz?{" "}
           <Button
             onClick={onResetPassword}
-            type="button"
+            // type="button"
             variant="link"
             className="font-medium text-blue-600 hover:underline"
           >
@@ -153,4 +189,4 @@ export function ExistingUserInvitationAcceptForm({ inviteId, userId, email }) {
       </form>
     </SlimLayout>
   );
-}
+};

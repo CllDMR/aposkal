@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Invoice } from "ubl-builder";
 
 // const { Invoice } = require('ubl-builder');

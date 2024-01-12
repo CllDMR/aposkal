@@ -1,4 +1,4 @@
-import { hash } from "bcrypt";
+import { hash } from "bcryptjs";
 import { nanoid } from "nanoid";
 
 import { eq, schema } from "@acme/db";

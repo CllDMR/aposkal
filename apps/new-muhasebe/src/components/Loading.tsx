@@ -5,7 +5,7 @@ import { Logo } from "./Logo";
 export const Loading: FC<{ text?: string }> = ({ text }) => {
   const color = "#34BE82";
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50">
+    <div className="absolute left-0 top-0 flex h-full min-h-screen w-full flex-col items-center justify-center bg-gray-50">
       <div className="-mt-32 flex flex-col items-center justify-start">
         <div className="flex h-28 justify-center">
           <Logo className="h-10 w-auto" width={150} />

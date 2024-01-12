@@ -25,7 +25,7 @@ export const resetPasswordSchema = z
   .object({
     email: z.string().email(),
     password: z.string().min(6),
-    confirmpassword: z.string().min(6),
+    confirmPassword: z.string().min(6),
     changePasswordCode: z.string().min(1),
     userId: z.string().min(1),
   })
@@ -51,7 +51,7 @@ export const acceptInvitationSchema = z
     userId: z.string().min(1),
     email: z.string().email(),
     password: z.string().min(6),
-    confirmpassword: z.string().min(6),
+    confirmPassword: z.string().min(6),
   })
   .superRefine(({ confirmPassword, password }, ctx) => {
     if (confirmPassword !== password) {

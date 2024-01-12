@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { Client } from "@planetscale/database";
-import { hash } from "bcrypt";
+import { hash } from "bcryptjs";
 import * as dotenv from "dotenv";
 import { drizzle } from "drizzle-orm/planetscale-serverless";
 

@@ -1,5 +1,5 @@
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
-import { compare, hash } from "bcrypt";
+import { compare, hash } from "bcryptjs";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
@@ -33,6 +33,13 @@ export const {
 } = NextAuth({
   session: { strategy: "jwt" },
   adapter: DrizzleAdapter(db, tableCreator),
+  pages: {
+    signIn: "/auth/login",
+    signOut: "/auth/logout",
+    newUser: "/auth/register",
+    error: "/auth/error",
+    verifyRequest: "/auth/verifyRequest",
+  },
   cookies: {
     sessionToken: {
       name:
@@ -147,6 +154,7 @@ export const {
           if (!user?.emailVerified)
             throw new Error("User email not verified."); // Email not verified.
           else if (typeof credentials.password === "string") {
+            // if (credentials.password === user.password) return user;
             if (await compare(credentials.password, user.password)) return user;
             else throw new Error("credentials.password is not true.");
           } else throw new Error("credentials.password is empty.");
@@ -157,6 +165,7 @@ export const {
               .values({
                 email: credentials.email as string,
                 name: credentials.name as string,
+                // password: credentials.password as string,
                 password: await hash(
                   credentials.password as string,
                   saltRounds,

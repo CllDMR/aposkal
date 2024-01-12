@@ -21,6 +21,15 @@ export default {
         secondary: "#203A7F",
         info: "#00E1C7",
       },
+      animation: {
+        fadein: "fadein 0.2s linear 0s 1 forwards",
+      },
+      keyframes: {
+        fadein: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "100" },
+        },
+      },
     },
   },
   plugins: [],
