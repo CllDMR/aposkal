@@ -91,11 +91,11 @@ export function ForgotPasswordForm({ email, changePasswordCode, userId }) {
           className="col-span-full"
           label="Parola Tekrar"
           type="password"
-          {...register("confirmpassword")}
+          {...register("confirmPassword")}
         />
 
         <InputError
-          error={errors?.confirmpassword?.message}
+          error={errors?.confirmPassword?.message}
           className="col-span-full"
         />
 

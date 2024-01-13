@@ -100,11 +100,11 @@ export function NewUserInvitationAcceptForm({ inviteId, userId, email }) {
           className="col-span-full"
           label="Parola Tekrar"
           type="password"
-          {...register("confirmpassword")}
+          {...register("confirmPassword")}
         />
 
         <InputError
-          error={errors?.confirmpassword?.message}
+          error={errors?.confirmPassword?.message}
           className="col-span-full"
         />
 
