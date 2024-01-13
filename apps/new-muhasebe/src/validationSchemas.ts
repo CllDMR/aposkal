@@ -18,7 +18,7 @@ export const createCompanySchema = z.object({
   vknTckn: z.string().min(10).max(11),
   taxOffice: z.string().min(3),
   adress: z.string().min(3),
-  email: z.string().email(3),
+  email: z.string().email(),
 });
 
 export const resetPasswordSchema = z

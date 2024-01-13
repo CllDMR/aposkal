@@ -2,7 +2,23 @@
 import { Invoice } from "ubl-builder";
 
 // const { Invoice } = require('ubl-builder');
-const invoice = new Invoice("1234", {});
+const invoice = new Invoice("1234", {
+  enviroment: "2",
+  issuer: {
+    endDate: "2030-01-19",
+    endRange: "950000000",
+    prefix: "",
+    resolutionNumber: "",
+    startDate: "2019-01-19",
+    startRange: "990000000",
+    technicalKey: "",
+  },
+  software: {
+    id: "",
+    pin: "",
+    providerNit: "",
+  },
+});
 
 invoice.addProperty(
   "xmlns",
