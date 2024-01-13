@@ -33,8 +33,13 @@ export const env = createEnv({
     ORDER_SUBDOMAIN: z.string(),
     ORDER_PORT: z.coerce.number(),
 
+    MUHASEBE_SUBDOMAIN: z.string(),
+    MUHASEBE_PORT: z.coerce.number(),
+
     DOMAIN: z.string(),
     PORT: z.coerce.number(),
+
+    RESEND_API_KEY: z.coerce.number(),
 
     NEXTAUTH_URL: z.string().url(),
     DATABASE_URL: z.string().url(),
@@ -49,6 +54,7 @@ export const env = createEnv({
     NEXT_PUBLIC_INVENTORY_BASE_URL: z.string(),
     NEXT_PUBLIC_LOGISTIC_BASE_URL: z.string(),
     NEXT_PUBLIC_ORDER_BASE_URL: z.string(),
+    NEXT_PUBLIC_MUHASEBE_BASE_URL: z.string(),
   },
   /**
    * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
@@ -71,8 +77,13 @@ export const env = createEnv({
     ORDER_SUBDOMAIN: process.env.ORDER_SUBDOMAIN,
     ORDER_PORT: process.env.ORDER_PORT,
 
+    MUHASEBE_SUBDOMAIN: process.env.MUHASEBE_SUBDOMAIN,
+    MUHASEBE_PORT: process.env.MUHASEBE_PORT,
+
     DOMAIN: process.env.DOMAIN,
-    PORT: process.env.LOGISTIC_PORT,
+    PORT: process.env.MUHASEBE_PORT,
+
+    RESEND_API_KEY: process.env.RESEND_API_KEY,
 
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     VERCEL_URL: process.env.VERCEL_URL,
@@ -83,6 +94,7 @@ export const env = createEnv({
     NEXT_PUBLIC_INVENTORY_BASE_URL: process.env.NEXT_PUBLIC_INVENTORY_BASE_URL,
     NEXT_PUBLIC_LOGISTIC_BASE_URL: process.env.NEXT_PUBLIC_LOGISTIC_BASE_URL,
     NEXT_PUBLIC_ORDER_BASE_URL: process.env.NEXT_PUBLIC_ORDER_BASE_URL,
+    NEXT_PUBLIC_MUHASEBE_BASE_URL: process.env.NEXT_PUBLIC_MUHASEBE_BASE_URL,
   },
   skipValidation:
     !!process.env.CI ||
