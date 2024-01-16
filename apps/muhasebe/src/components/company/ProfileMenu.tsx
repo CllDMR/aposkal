@@ -31,14 +31,16 @@ export const ProfileMenu: FC<ProfileMenuProps> = ({ session, tenantName }) => {
       <Menu as="div" className="relative">
         <Menu.Button className="-m-1.5 flex items-center p-1.5">
           <span className="sr-only">Open user menu</span>
-          <Image
-            className="h-8 w-8 rounded-full bg-gray-50"
-            // TODO: Add default user image
-            src={session.user.image ?? ""}
-            alt="profile picture"
-            width={32}
-            height={32}
-          />
+          {session.user.image ? (
+            <Image
+              className="h-8 w-8 rounded-full bg-gray-50"
+              // TODO: Add default user image
+              src={session.user.image}
+              alt="profile picture"
+              width={32}
+              height={32}
+            />
+          ) : null}
           <span className="hidden lg:flex lg:items-center">
             <span
               className="max-w-32 ml-4 truncate text-sm font-semibold leading-6 text-gray-900"

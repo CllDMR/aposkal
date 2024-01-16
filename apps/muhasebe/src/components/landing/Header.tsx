@@ -167,16 +167,18 @@ export const Header: FC<HeaderProps> = ({ session }) => {
           </div>
           <div className="flex items-center gap-x-5 md:gap-x-8">
             <NavLink href="/auth/login">Giriş</NavLink>
-            <NavLink href="/auth/login">
-              <Image
-                className="h-8 w-8 rounded-full bg-gray-50"
-                // TODO: add default user image
-                src={session.user.image ?? ""}
-                alt="profile picture"
-                width={32}
-                height={32}
-              />
-            </NavLink>
+            {session.user.image ? (
+              <NavLink href="/auth/login">
+                <Image
+                  className="h-8 w-8 rounded-full bg-gray-50"
+                  // TODO: add default user image
+                  src={session.user.image}
+                  alt="profile picture"
+                  width={32}
+                  height={32}
+                />
+              </NavLink>
+            ) : null}
 
             <div className="-mr-1 md:hidden">
               <MobileNavigation session={session} />
