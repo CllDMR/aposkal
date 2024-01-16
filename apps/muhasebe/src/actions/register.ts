@@ -25,7 +25,7 @@ export const registerAction = async (formData: FormData) => {
       redirect: false,
     });
 
-    redirect(baseUrl + "/auth/select-company");
+    redirect(baseUrl + "/auth/verify-email/sent");
   } catch (error) {
     // Handle auth errors
     if (error instanceof AuthError) {
