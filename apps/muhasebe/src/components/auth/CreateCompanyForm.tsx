@@ -64,7 +64,6 @@ export const CreateCompanyForm: FC = () => {
       <SelectField
         className="col-span-full"
         label="Firma Türü"
-        default
         {...register("type")}
       >
         <option value="personal">Şahıs Firması</option>

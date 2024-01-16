@@ -158,15 +158,15 @@ export const useSaleOfferPDFTemplateFromFormValues = ({
         },
         selectedCompany: {
           title: tenant.title,
-          address: tenant.address.name,
+          address: tenant.address?.name ?? "",
           tcVkn: tenant.taxNo,
           taxAdmin: tenant.taxOffice,
-          phoneNumber: tenant.firmPhoneNumber,
+          phoneNumber: tenant.firmPhoneNumber ?? "",
           email: tenant.email,
-          web: tenant.web,
-          ticaretSicilNo: tenant.ticaretSicilNo,
-          mersisNo: tenant.mersisNo,
-          companyLogo: tenant.logoURL,
+          web: tenant.web ?? "",
+          ticaretSicilNo: tenant.ticaretSicilNo ?? "",
+          mersisNo: tenant.mersisNo ?? "",
+          companyLogo: tenant.logoURL ?? "",
         },
       });
 
@@ -357,15 +357,15 @@ export const useSaleOfferPDFTemplateFromValues = ({
         },
         selectedCompany: {
           title: tenant.title,
-          address: tenant.address.name,
+          address: tenant.address?.name ?? "",
           tcVkn: tenant.taxNo,
           taxAdmin: tenant.taxOffice,
-          phoneNumber: tenant.firmPhoneNumber,
+          phoneNumber: tenant.firmPhoneNumber ?? "",
           email: tenant.email,
-          web: tenant.web,
-          ticaretSicilNo: tenant.ticaretSicilNo,
-          mersisNo: tenant.mersisNo,
-          companyLogo: tenant.logoURL,
+          web: tenant.web ?? "",
+          ticaretSicilNo: tenant.ticaretSicilNo ?? "",
+          mersisNo: tenant.mersisNo ?? "",
+          companyLogo: tenant.logoURL ?? "",
         },
       });
 
