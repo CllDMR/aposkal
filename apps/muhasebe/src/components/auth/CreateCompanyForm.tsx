@@ -5,18 +5,15 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { Button, SelectField, Spinner, TextField } from "~/components/landing";
-import { api } from "~/utils/api";
-import { createCompanySchema } from "~/validationSchemas";
+import { tenantCreateInput } from "@acme/api/src/inputs/tenant";
 
-interface CreateCompanyFormFields {
-  companyType: "personal" | "anonim" | "limited" | "other";
-  title: string;
-  vknTckn: string;
-  taxOffice: string;
-  mersisNo: string;
-  address: string;
-  email: string;
+import { Button, SelectField, Spinner, TextField } from "~/components/landing";
+import type { RouterInputs } from "~/utils/api";
+import { api } from "~/utils/api";
+
+type TenantCreateFormFields = RouterInputs["tenant"]["create"];
+
+interface CreateCompanyFormFields extends TenantCreateFormFields {
   commonError: string;
 }
 
@@ -30,10 +27,14 @@ export const CreateCompanyForm: FC = () => {
     formState: { isSubmitting, errors },
     setError,
   } = useForm<CreateCompanyFormFields>({
-    resolver: zodResolver(createCompanySchema),
+    resolver: zodResolver(tenantCreateInput),
+    defaultValues: {
+      isForeign: false,
+      type: "personal",
+    },
   });
 
-  const { mutateAsync } = api.company.create.useMutation({
+  const { mutateAsync } = api.tenant.create.useMutation({
     onError(error) {
       setError("commonError", {
         type: "server",
@@ -41,41 +42,31 @@ export const CreateCompanyForm: FC = () => {
       });
     },
     onSuccess() {
-      router.push("/dashboard");
+      router.push("/auth/select-company");
       router.refresh();
     },
   });
 
   const onSubmit = handleSubmit(async (data) => {
-    await mutateAsync({
-      email: data.email,
-      type: data.companyType,
-      addresses: [],
-      firmPhoneNumber: "",
-      isForeign: false,
-      mersisNo: data.mersisNo,
-      qualifiedPhoneNumber: "",
-      taxNo: data.vknTckn, // ?? emin değilim
-      taxOffice: data.taxOffice,
-      ticaretSicilNo: "",
-      title: data.title,
-      web: "",
-    });
+    await mutateAsync(data);
   });
 
-  const companyType = watch("companyType");
+  const companyType = watch("type");
+
+  if (errors) console.log({ errors });
 
   return (
     <form
       onSubmit={onSubmit}
+      // onSubmit={() => alert("asd")}
       className="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2"
     >
       <SelectField
         className="col-span-full"
         label="Firma Türü"
-        {...register("companyType")}
+        default
+        {...register("type")}
       >
-        <option></option>
         <option value="personal">Şahıs Firması</option>
         <option value="limited">Limited Şirket</option>
         <option value="anonim">Anonim Şirket</option>
@@ -83,42 +74,51 @@ export const CreateCompanyForm: FC = () => {
 
       <TextField
         id="title"
+        name="title"
         className="col-span-full"
         label={companyType === "personal" ? "Ad Soyad" : "Şirket Ünvanı"}
         type="text"
-        {...register("title")}
+        register={register}
       />
 
       <TextField
-        id="vknTckn"
+        id="taxNo"
+        name="taxNo"
         label={companyType === "personal" ? "T.C. Kimlik No" : "Vergi No"}
         type="text"
-        {...register("vknTckn")}
+        register={register}
+        rules={{
+          maxLength: companyType === "personal" ? 11 : 10,
+          minLength: companyType === "personal" ? 11 : 10,
+        }}
       />
 
       <TextField
         id="taxOffice"
+        name="taxOffice"
         label="Vergi Dairesi"
         type="text"
-        {...register("taxOffice")}
+        register={register}
       />
 
-      <TextField
+      {/* <TextField
         id="address"
+        name="address"
         className="col-span-full"
         label="Adres"
         type="address"
         autoComplete="address"
-        {...register("address")}
-      />
+        register={register}
+      /> */}
 
       <TextField
         id="email"
+        name="email"
         className="col-span-full"
         label="e-Posta"
         type="email"
         autoComplete="email"
-        {...register("email")}
+        register={register}
       />
 
       <p className="col-span-full text-sm text-red-500">

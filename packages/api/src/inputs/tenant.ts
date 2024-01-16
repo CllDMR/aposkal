@@ -37,7 +37,7 @@ export const tenantCreateInput = insertTenantSchema
     id: true,
     addressId: true,
   })
-  .merge(z.object({ address: addressTenantCreateInput }));
+  .merge(z.object({ address: z.optional(addressTenantCreateInput) }));
 
 export const tenantUpdateInput = insertTenantSchema.required().partial({
   addressId: true,

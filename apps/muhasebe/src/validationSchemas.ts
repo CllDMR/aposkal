@@ -12,15 +12,6 @@ export const loginUserSchema = z.object({
   password: z.string().min(6),
 });
 
-export const createCompanySchema = z.object({
-  companyType: z.string().min(3),
-  title: z.string().min(3),
-  vknTckn: z.string().min(10).max(11),
-  taxOffice: z.string().min(3),
-  adress: z.string().min(3),
-  email: z.string().email(),
-});
-
 export const resetPasswordSchema = z
   .object({
     email: z.string().email(),
