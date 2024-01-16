@@ -39,7 +39,7 @@ export const env = createEnv({
     DOMAIN: z.string(),
     PORT: z.coerce.number(),
 
-    RESEND_API_KEY: z.coerce.number(),
+    RESEND_API_KEY: z.string(),
 
     NEXTAUTH_URL: z.string().url(),
     DATABASE_URL: z.string().url(),
