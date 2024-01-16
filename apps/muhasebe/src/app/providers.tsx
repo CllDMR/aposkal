@@ -1,5 +1,6 @@
 "use client";
 
+import type { FC, PropsWithChildren } from "react";
 import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -7,6 +8,7 @@ import { ReactQueryStreamedHydration } from "@tanstack/react-query-next-experime
 import { loggerLink, unstable_httpBatchStreamLink } from "@trpc/client";
 import type { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import superjson from "superjson";
 
 import { env } from "~/env.mjs";
@@ -69,3 +71,13 @@ export function Providers(props: {
     </api.Provider>
   );
 }
+
+export const ReCaptchaProvider: FC<PropsWithChildren> = ({ children }) => {
+  const recaptchaKey = env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+
+  return (
+    <GoogleReCaptchaProvider reCaptchaKey={recaptchaKey}>
+      {children}
+    </GoogleReCaptchaProvider>
+  );
+};

@@ -4,19 +4,44 @@ import { redirect } from "next/navigation";
 import { AuthError } from "next-auth";
 
 import { signIn } from "~/app/api/auth/[...nextauth]/route";
+import { env } from "~/env.mjs";
 import { getBaseUrl } from "~/utils/get-base-url";
 
 export const registerAction = async (formData: FormData) => {
+  const secretKey = env.RECAPTCHA_SECRET_KEY;
   const baseUrl = getBaseUrl();
 
-  const { email, name, password } = JSON.parse(
+  const { gRecaptchaToken, email, name, password } = JSON.parse(
     JSON.stringify(Object.fromEntries(formData)),
   ) as {
     email: string;
     name: string;
     password: string;
+    gRecaptchaToken: string;
   };
+
+  const recaptchaHeaders = new Headers();
+  recaptchaHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+  const recaptchaFormData = `secret=${secretKey}&response=${gRecaptchaToken}`;
+
   try {
+    const res = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+      method: "POST",
+      headers: recaptchaHeaders,
+      body: recaptchaFormData,
+    });
+    const resBody = (await res.json()) as {
+      success: boolean;
+      challenge_ts: string;
+      hostname: string;
+      score: number;
+    };
+
+    if (!resBody?.success && resBody?.score <= 0.5) {
+      console.log("fail: resBody.score:", resBody.score);
+      throw new Error("Failed: ReCaptcha"); // Throw error
+    }
     await signIn("credentials", {
       email,
       name,
@@ -27,7 +52,7 @@ export const registerAction = async (formData: FormData) => {
 
     redirect(baseUrl + "/auth/verify-email/sent");
   } catch (error) {
-    // Handle auth errors
+    console.log("recaptcha error:", error);
     if (error instanceof AuthError) {
       redirect(
         baseUrl +

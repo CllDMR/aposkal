@@ -1,3 +1,8 @@
+"use client";
+
+import { useCallback, useEffect } from "react";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+
 import { registerAction } from "~/actions/register";
 
 export const RegisterForm = () => {
@@ -6,8 +11,40 @@ export const RegisterForm = () => {
   // let errors = {};
   // if (searchParamsError) errors = { [searchParamsError]: "Error Message" };
 
+  const { executeRecaptcha } = useGoogleReCaptcha();
+
+  // Create an event handler so you can call the verification on button click event or form submit
+  const handleReCaptchaVerify = useCallback(async () => {
+    if (!executeRecaptcha) {
+      console.log("Execute recaptcha not yet available");
+      return;
+    }
+
+    return await executeRecaptcha();
+    // Do whatever you want with the token
+  }, [executeRecaptcha]);
+
+  // You can use useEffect to trigger the verification as soon as the component being loaded
+  useEffect(() => {
+    void handleReCaptchaVerify();
+  }, [handleReCaptchaVerify]);
+
   return (
-    <form className="flex animate-fadein flex-col" action={registerAction}>
+    <form
+      className="flex animate-fadein flex-col"
+      action={async (formData: FormData) => {
+        const token = await handleReCaptchaVerify();
+
+        if (!token) {
+          console.log("no token");
+          return;
+        }
+
+        formData.append("gRecaptchaToken", token);
+
+        await registerAction(formData);
+      }}
+    >
       <div className="mb-6 mt-10 flex flex-col gap-y-4">
         <div className="">
           <label

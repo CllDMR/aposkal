@@ -40,6 +40,7 @@ export const env = createEnv({
     PORT: z.coerce.number(),
 
     RESEND_API_KEY: z.string(),
+    RECAPTCHA_SECRET_KEY: z.string(),
 
     NEXTAUTH_URL: z.string().url(),
     DATABASE_URL: z.string().url(),
@@ -55,6 +56,7 @@ export const env = createEnv({
     NEXT_PUBLIC_LOGISTIC_BASE_URL: z.string(),
     NEXT_PUBLIC_ORDER_BASE_URL: z.string(),
     NEXT_PUBLIC_MUHASEBE_BASE_URL: z.string(),
+    NEXT_PUBLIC_RECAPTCHA_SITE_KEY: z.string(),
   },
   /**
    * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
@@ -84,6 +86,8 @@ export const env = createEnv({
     PORT: process.env.MUHASEBE_PORT,
 
     RESEND_API_KEY: process.env.RESEND_API_KEY,
+    NEXT_PUBLIC_RECAPTCHA_SITE_KEY: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
+    RECAPTCHA_SECRET_KEY: process.env.RECAPTCHA_SECRET_KEY,
 
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     VERCEL_URL: process.env.VERCEL_URL,
