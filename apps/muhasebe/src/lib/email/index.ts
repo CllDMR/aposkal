@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Resend } from "resend";
 
+import { getBaseUrl } from "~/utils/get-base-url";
 import { emailTemplate } from "./template";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -39,6 +40,30 @@ export const sendEmailResetPassword = async (
               <p>Aşağıdaki linke tıklayarak parolanızı yeniden oluşturabilirsiniz.</p>
               <p><a href="https://muhasebe.aposkal.com/auth/new-password/email-verified?code=${changePasswordCode}&email=${email}">Şimdi Parolanı Sıfırla</a></p>
               <p>Teşekkürler</p>`,
+  };
+
+  await sendEmail(emailData);
+};
+
+export const sendEmailVerifyEmailAddress = async (
+  name: string,
+  email: string,
+  emailVerifiedCode: string,
+) => {
+  const baseUrl = getBaseUrl();
+
+  const emailData: EmailData = {
+    to: email,
+    subject: "Email Doğrulama",
+    html: `<h1>Aposkal</h1>
+          <p>Merhaba ${name},</p>
+          <br>
+          <p>Aposkal hesabınızı oluşturduğunuz için teşekkürler.</p>
+          <p>Aposkalı kullanmaya başlamadan önce email adresinizi doğrulamanız gerekiyor.</p>
+          <br>
+          <p>Aşağıdaki linke tıklayarak email adresinizi doğrulayabilirsiniz.</p>
+          <p>Email adresini doğrulamak için lütfen <a href="${baseUrl}/auth/verify-email/verify?code=${emailVerifiedCode}&email=${email}">tıklayın</a></p>
+          <p>Teşekkürler</p>`,
   };
 
   await sendEmail(emailData);

@@ -7,7 +7,7 @@ import Credentials from "next-auth/providers/credentials";
 
 import { db, eq, schema, tableCreator } from "@acme/db";
 
-import { getBaseUrl } from "~/utils/get-base-url";
+import { sendEmailVerifyEmailAddress } from "~/lib/email";
 
 export type { Session } from "@auth/core";
 
@@ -189,37 +189,41 @@ export const authOptions = {
               .limit(1)
               .then((a) => a[0]);
 
-            const baseUrl = getBaseUrl();
-
-            const response = await fetch(
-              "https://mandrillapp.com/api/1.0/messages/send",
-              {
-                body: JSON.stringify({
-                  key: process.env.MAILCHIMP_API_KEY,
-                  message: {
-                    from_email: "no_reply@ustagil.org",
-                    subject: "Confirm Registration to Ustagil",
-                    text: `${baseUrl}/auth/verify-email?code=${emailVerifiedCode}&email=${
-                      credentials.email as string
-                    }`,
-                    to: [{ email: credentials.email, type: "to" }],
-                  },
-                }),
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                method: "POST",
-              },
+            await sendEmailVerifyEmailAddress(
+              credentials.name as string,
+              credentials.email as string,
+              emailVerifiedCode,
             );
 
-            if (!response.ok) {
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-              const errors = await response.json();
-              throw new AuthError({
-                name: "Email",
-                message: "Something bad happend." + JSON.stringify(errors),
-              });
-            }
+            // const response = await fetch(
+            //   "https://mandrillapp.com/api/1.0/messages/send",
+            //   {
+            //     body: JSON.stringify({
+            //       key: process.env.MAILCHIMP_API_KEY,
+            //       message: {
+            //         from_email: "no_reply@ustagil.org",
+            //         subject: "Confirm Registration to Ustagil",
+            //         text: `${baseUrl}/auth/verify-email?code=${emailVerifiedCode}&email=${
+            //           credentials.email as string
+            //         }`,
+            //         to: [{ email: credentials.email, type: "to" }],
+            //       },
+            //     }),
+            //     headers: {
+            //       "Content-Type": "application/json",
+            //     },
+            //     method: "POST",
+            //   },
+            // );
+
+            // if (!response.ok) {
+            //   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            //   const errors = await response.json();
+            //   throw new AuthError({
+            //     name: "Email",
+            //     message: "Something bad happend." + JSON.stringify(errors),
+            //   });
+            // }
 
             return newUser ?? null;
           } else
