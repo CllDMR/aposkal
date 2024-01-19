@@ -1,20 +1,20 @@
 "use client";
 
-import type { FC } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import type { FC } from "react";
 import { useForm } from "react-hook-form";
 
 import { postUpdateInput } from "@acme/api/src/inputs/post";
 import { Form } from "@acme/ui/atoms";
 import {
-  Button,
-  FormCheckbox,
-  FormDateInput,
-  FormInput,
+    Button,
+    FormCheckbox,
+    FormDateInput,
+    FormInput,
 } from "@acme/ui/molecules";
 
+import { api } from "@acme/api-client";
 import type { RouterInputs, RouterOutputs } from "~/utils/api";
-import { api } from "~/utils/api";
 
 type PostEditFormFields = RouterInputs["post"]["update"];
 type Post = NonNullable<RouterOutputs["post"]["get"]>;

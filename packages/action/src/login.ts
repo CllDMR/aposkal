@@ -7,7 +7,7 @@ import { signIn } from "@acme/auth";
 import { getBaseUrl } from "@acme/util";
 
 export const loginAction = async (formData: FormData) => {
-  const baseUrl = getBaseUrl();
+  const baseUrl = getBaseUrl("self");
 
   const { email, password } = JSON.parse(
     JSON.stringify(Object.fromEntries(formData)),

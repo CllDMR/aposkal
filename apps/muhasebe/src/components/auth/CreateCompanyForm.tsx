@@ -6,8 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import type { RouterInputs } from "@acme/api";
+import { api } from "@acme/api-client";
 import { tenantCreateInput } from "@acme/api/src/inputs/tenant";
-import { api } from "@acme/util";
 
 import { Button, SelectField, Spinner, TextField } from "~/components/landing";
 

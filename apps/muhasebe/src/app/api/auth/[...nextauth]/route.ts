@@ -1,5 +1,5 @@
 export { GET, POST } from "@acme/auth";
-// export const runtime = "edge";
+
 
 // import { DrizzleAdapter } from "@auth/drizzle-adapter";
 // import { compare, hash } from "bcryptjs";

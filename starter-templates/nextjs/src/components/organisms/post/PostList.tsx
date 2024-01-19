@@ -4,8 +4,8 @@ import type { FC } from "react";
 
 import { Button, LinkButton } from "@acme/ui/molecules";
 
+import { api } from "@acme/api-client";
 import type { RouterOutputs } from "~/utils/api";
-import { api } from "~/utils/api";
 
 interface PostListProps {
   posts: RouterOutputs["post"]["list"];

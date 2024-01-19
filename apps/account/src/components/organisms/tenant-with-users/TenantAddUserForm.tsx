@@ -4,12 +4,12 @@ import type { FC } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+import { api } from "@acme/api-client";
 import { tenantAddUserInput } from "@acme/api/src/inputs/tenant";
 import { Form } from "@acme/ui/atoms";
 import { Button, FormInput } from "@acme/ui/molecules";
 
 import type { RouterInputs } from "~/utils/api";
-import { api } from "~/utils/api";
 
 type TenantAddUserFormFields = RouterInputs["tenant"]["addUser"];
 

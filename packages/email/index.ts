@@ -51,7 +51,7 @@ export const sendEmailVerifyEmailAddress = async (
   email: string,
   emailVerifiedCode: string,
 ) => {
-  const baseUrl = getBaseUrl();
+  const baseUrl = getBaseUrl("account");
 
   const emailData: EmailData = {
     to: email,

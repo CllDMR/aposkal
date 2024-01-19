@@ -4,12 +4,12 @@ import type { FC } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 
+import { api } from "@acme/api-client";
 import { supplierUpdateInput } from "@acme/api/src/inputs/supplier";
 import { Form, FormBottom } from "@acme/ui/atoms";
 import { Button, FormDropdownInput, FormInput } from "@acme/ui/molecules";
 
 import type { RouterInputs, RouterOutputs } from "~/utils/api";
-import { api } from "~/utils/api";
 
 type SupplierEditFormFields = RouterInputs["supplier"]["update"];
 type Supplier = NonNullable<RouterOutputs["supplier"]["get"]>;

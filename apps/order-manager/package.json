@@ -16,6 +16,8 @@
     "ci:deploy": "vercel deploy --prebuilt"
   },
   "dependencies": {
+    "@acme/util": "^0.1.0",
+    "@acme/api-client": "^0.1.0",
     "@acme/api": "^0.1.0",
     "@acme/auth": "^0.1.0",
     "@acme/db": "^0.1.0",

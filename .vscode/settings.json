@@ -1,9 +1,10 @@
 {
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    "source.fixAll.eslint": "never"
   },
+  "eslint.validate": ["javascript"],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
   "eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
   "eslint.workingDirectories": [
     { "pattern": "apps/*/" },
@@ -26,5 +27,5 @@
   ],
   "[svg]": {
     "editor.defaultFormatter": "jock.svg"
-  }
+  },
 }

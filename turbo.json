@@ -33,15 +33,17 @@
     },
     "format": {
       "outputs": ["node_modules/.cache/.prettiercache"],
-      "outputMode": "new-only"
+      "outputMode": "errors-only"
     },
     "lint": {
       "dependsOn": ["^topo"],
       "outputs": ["node_modules/.cache/.eslintcache"]
+      ,"outputMode": "errors-only"
     },
     "typecheck": {
       "dependsOn": ["^topo"],
       "outputs": ["node_modules/.cache/tsbuildinfo.json"]
+      ,"outputMode": "errors-only"
     },
     "clean": {
       "cache": false

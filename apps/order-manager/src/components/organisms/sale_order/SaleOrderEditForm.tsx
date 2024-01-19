@@ -4,6 +4,7 @@ import type { FC } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+import { api } from "@acme/api-client";
 import { saleOrderUpdateInput } from "@acme/api/src/inputs/sale_order/sale_order";
 import { Form, FormBottom } from "@acme/ui/atoms";
 import {
@@ -14,7 +15,6 @@ import {
 } from "@acme/ui/molecules";
 
 import type { RouterInputs, RouterOutputs } from "~/utils/api";
-import { api } from "~/utils/api";
 
 type SaleOrderEditFormFields = RouterInputs["saleOrder"]["update"];
 

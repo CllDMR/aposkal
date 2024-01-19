@@ -5,11 +5,11 @@ import { useMemo } from "react";
 import type { ColumnDef } from "@tanstack/react-table";
 import { useFieldArray, useFormContext } from "react-hook-form";
 
+import { api } from "@acme/api-client";
 import { Button, FormDropdownInput, FormInput } from "@acme/ui/molecules";
 import { Table } from "@acme/ui/organisms";
 
 import type { RouterInputs, RouterOutputs } from "~/utils/api";
-import { api } from "~/utils/api";
 
 interface TableItem {
   id: string;

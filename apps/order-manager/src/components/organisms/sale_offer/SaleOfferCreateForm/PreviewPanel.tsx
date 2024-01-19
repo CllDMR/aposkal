@@ -5,9 +5,9 @@ import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 
 import type { RouterInputs, RouterOutputs } from "@acme/api";
+import { api } from "@acme/api-client";
 import { Button } from "@acme/ui/molecules";
 
-import { api } from "~/utils/api";
 import { useSaleOfferPDFTemplateFromFormValues } from "~/utils/useSaleOfferPDFTemplate";
 
 type SaleOfferCreateFormFields = RouterInputs["saleOffer"]["create"];

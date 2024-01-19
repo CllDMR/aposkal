@@ -12,7 +12,7 @@ import {
 import { getBaseUrl } from "@acme/util";
 
 export const changePasswordStartAction = async (formData: FormData) => {
-  const baseUrl = getBaseUrl();
+  const baseUrl = getBaseUrl("self");
 
   const { email } = JSON.parse(
     JSON.stringify(Object.fromEntries(formData)),
@@ -59,7 +59,7 @@ export const changePasswordStartAction = async (formData: FormData) => {
 };
 
 export const confirmChangePasswordAction = async (formData: FormData) => {
-  const baseUrl = getBaseUrl();
+  const baseUrl = getBaseUrl("self");
 
   const { email, changePasswordCode, userId, password, confirmPassword } =
     JSON.parse(JSON.stringify(Object.fromEntries(formData))) as {
