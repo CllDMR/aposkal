@@ -1,5 +1,5 @@
 {
-  "name": "@acme/util",
+  "name": "@acme/env",
   "version": "0.1.0",
   "private": true,
   "main": "./index.ts",
@@ -11,16 +11,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "next": "^14.0.4",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "@heroicons/react": "^2.0.18",
-    "@trpc/react-query": "^10.44.1",
-    "next-auth": "5.0.0-beta.4"
+    "@t3-oss/env-nextjs": "^0.6.1",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@acme/api": "^0.1.0",
-    "@acme/env": "^0.1.0",
     "@acme/eslint-config": "^0.2.0",
     "@acme/prettier-config": "^0.1.0",
     "@acme/tsconfig": "^0.1.0",

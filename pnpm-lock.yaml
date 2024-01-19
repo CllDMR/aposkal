@@ -1146,6 +1146,34 @@ importers:
         specifier: ^5.1.6
         version: 5.1.6
 
+  packages/env:
+    dependencies:
+      '@t3-oss/env-nextjs':
+        specifier: ^0.6.1
+        version: 0.6.1(typescript@5.1.6)(zod@3.22.4)
+      zod:
+        specifier: ^3.22.4
+        version: 3.22.4
+    devDependencies:
+      '@acme/eslint-config':
+        specifier: ^0.2.0
+        version: link:../../tooling/eslint
+      '@acme/prettier-config':
+        specifier: ^0.1.0
+        version: link:../../tooling/prettier
+      '@acme/tsconfig':
+        specifier: ^0.1.0
+        version: link:../../tooling/typescript
+      eslint:
+        specifier: ^8.47.0
+        version: 8.47.0
+      prettier:
+        specifier: ^3.0.2
+        version: 3.0.2
+      typescript:
+        specifier: ^5.1.6
+        version: 5.1.6
+
   packages/ui:
     devDependencies:
       '@acme/api':
@@ -1231,7 +1259,32 @@ importers:
         version: 4.4.1(@types/react@18.2.21)(react@18.2.0)
 
   packages/util:
+    dependencies:
+      '@heroicons/react':
+        specifier: ^2.0.18
+        version: 2.0.18(react@18.2.0)
+      '@trpc/react-query':
+        specifier: ^10.44.1
+        version: 10.44.1(@tanstack/react-query@4.36.1)(@trpc/client@10.44.1)(@trpc/server@10.44.1)(react-dom@18.2.0)(react@18.2.0)
+      next:
+        specifier: ^14.0.4
+        version: 14.0.4(react-dom@18.2.0)(react@18.2.0)
+      next-auth:
+        specifier: 5.0.0-beta.4
+        version: 5.0.0-beta.4(next@14.0.4)(nodemailer@6.9.4)(react@18.2.0)
+      react:
+        specifier: 18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: 18.2.0
+        version: 18.2.0(react@18.2.0)
     devDependencies:
+      '@acme/api':
+        specifier: ^0.1.0
+        version: link:../api
+      '@acme/env':
+        specifier: ^0.1.0
+        version: link:../env
       '@acme/eslint-config':
         specifier: ^0.2.0
         version: link:../../tooling/eslint
