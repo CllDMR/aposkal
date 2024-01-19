@@ -5,11 +5,11 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+import type { RouterInputs } from "@acme/api";
 import { tenantCreateInput } from "@acme/api/src/inputs/tenant";
+import { api } from "@acme/util";
 
 import { Button, SelectField, Spinner, TextField } from "~/components/landing";
-import type { RouterInputs } from "~/utils/api";
-import { api } from "~/utils/api";
 
 type TenantCreateFormFields = RouterInputs["tenant"]["create"];
 

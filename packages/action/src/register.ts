@@ -3,9 +3,9 @@
 import { redirect } from "next/navigation";
 import { AuthError } from "next-auth";
 
-import { signIn } from "~/app/api/auth/[...nextauth]/route";
-import { env } from "~/env.mjs";
-import { getBaseUrl } from "~/utils/get-base-url";
+import { signIn } from "@acme/auth";
+import { env } from "@acme/env";
+import { getBaseUrl } from "@acme/util";
 
 export const registerAction = async (formData: FormData) => {
   const secretKey = env.RECAPTCHA_SECRET_KEY;

@@ -1,6 +1,5 @@
 // Importing env files here to validate on build
-import "@acme/auth/env.mjs";
-import "./src/env.mjs";
+import "@acme/env";
 
 /** @type {import("next").NextConfig} */
 const config = {

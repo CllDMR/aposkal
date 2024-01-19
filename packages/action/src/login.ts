@@ -3,8 +3,8 @@
 import { redirect } from "next/navigation";
 import { AuthError } from "next-auth";
 
-import { signIn } from "~/app/api/auth/[...nextauth]/route";
-import { getBaseUrl } from "~/utils/get-base-url";
+import { signIn } from "@acme/auth";
+import { getBaseUrl } from "@acme/util";
 
 export const loginAction = async (formData: FormData) => {
   const baseUrl = getBaseUrl();

@@ -11,8 +11,8 @@ import { SessionProvider } from "next-auth/react";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import superjson from "superjson";
 
-import { env } from "~/env.mjs";
-import { api } from "~/utils/api";
+import { env } from "@acme/env";
+import { api } from "@acme/util";
 
 const getBaseUrl = () => {
   if (typeof window !== "undefined") return ""; // browser should use relative url

@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Resend } from "resend";
 
-import { getBaseUrl } from "~/utils/get-base-url";
+import { getBaseUrl } from "@acme/util";
+
 import { emailTemplate } from "./template";
 
 const resend = new Resend(process.env.RESEND_API_KEY);

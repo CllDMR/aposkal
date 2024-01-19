@@ -1,6 +1,6 @@
 import type { FC } from "react";
 
-import { confirmChangePasswordAction } from "~/actions/changePassword";
+import { confirmChangePasswordAction } from "@acme/action";
 
 interface NewPasswordFormProps {
   email: string;

@@ -4,11 +4,11 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
 import { db, eq, schema, tableCreator } from "@acme/db";
-
-import { env } from "./env.mjs";
+import { env } from "@acme/env";
 
 export type { Session } from "@auth/core";
 
+export { authConfig } from "./auth.config";
 export const providers = [""] as const;
 export type OAuthProviders = (typeof providers)[number];
 const saltRounds = 6;

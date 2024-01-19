@@ -5,12 +5,11 @@ import { nanoid } from "nanoid";
 import { AuthError } from "next-auth";
 
 import { and, db, eq, schema } from "@acme/db";
-
 import {
   sendEmailResetPassword,
   sendEmailResetPasswordVerified,
-} from "~/lib/email";
-import { getBaseUrl } from "~/utils/get-base-url";
+} from "@acme/email";
+import { getBaseUrl } from "@acme/util";
 
 export const changePasswordStartAction = async (formData: FormData) => {
   const baseUrl = getBaseUrl();

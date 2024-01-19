@@ -8,7 +8,7 @@
 import type { FC } from "react";
 import { useEffect, useState } from "react";
 
-import { sidebarItems } from "~/utils/sidebaritems";
+import { sidebarItems } from "@acme/util";
 
 const permissions = [
   { id: "false", title: "Yetki Yok" },

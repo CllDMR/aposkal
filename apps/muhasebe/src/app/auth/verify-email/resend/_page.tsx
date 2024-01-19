@@ -2,9 +2,9 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { auth } from "@acme/auth";
+import { sendEmailResetPasswordAgain } from "@acme/email";
 
 import { Logo } from "~/components/landing";
-import { sendEmailResetPasswordAgain } from "~/lib/email";
 
 export default async function Page() {
   const session = await auth();

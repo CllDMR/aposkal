@@ -1,6 +1,6 @@
 import type { NextAuthConfig } from "next-auth";
 
-import { env } from "./env.mjs";
+import { env } from "@acme/env";
 
 const domain = env.NODE_ENV === "production" ? env.DOMAIN : undefined;
 const cookiePrefix = "__Secure";

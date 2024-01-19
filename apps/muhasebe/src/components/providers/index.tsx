@@ -9,8 +9,7 @@ import type { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import superjson from "superjson";
 
-import { api } from "~/utils/api";
-import { getBaseUrl } from "~/utils/get-base-url";
+import { api, getBaseUrl } from "@acme/util";
 
 export function Providers(props: {
   children: React.ReactNode;

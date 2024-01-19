@@ -10,11 +10,14 @@
     "format": "prettier --ignore-path ../../.gitignore --check \"**/*.{mjs,ts,md,json}\"",
     "typecheck": "tsc --noEmit"
   },
-  "dependencies": {},
+  "dependencies": {
+    "resend": "^2.1.0"
+  },
   "devDependencies": {
     "@acme/eslint-config": "^0.2.0",
     "@acme/prettier-config": "^0.1.0",
     "@acme/tsconfig": "^0.1.0",
+    "@acme/util": "^0.1.0",
     "eslint": "^8.47.0",
     "prettier": "^3.0.2",
     "typescript": "^5.1.6"

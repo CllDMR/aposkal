@@ -3,7 +3,7 @@
 import { useCallback, useEffect } from "react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
-import { registerAction } from "~/actions/register";
+import { registerAction } from "@acme/action";
 
 export const RegisterForm = () => {
   // const searchParams = useSearchParams();

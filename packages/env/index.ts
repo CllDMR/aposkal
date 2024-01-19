@@ -41,6 +41,7 @@ export const env = createEnv({
 
     RESEND_API_KEY: z.string(),
     RECAPTCHA_SECRET_KEY: z.string(),
+    MAILCHIMP_API_KEY: z.string(),
 
     NEXTAUTH_URL: z.string().url(),
     DATABASE_URL: z.string().url(),
@@ -88,6 +89,7 @@ export const env = createEnv({
     RESEND_API_KEY: process.env.RESEND_API_KEY,
     NEXT_PUBLIC_RECAPTCHA_SITE_KEY: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
     RECAPTCHA_SECRET_KEY: process.env.RECAPTCHA_SECRET_KEY,
+    MAILCHIMP_API_KEY: process.env.MAILCHIMP_API_KEY,
 
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     VERCEL_URL: process.env.VERCEL_URL,

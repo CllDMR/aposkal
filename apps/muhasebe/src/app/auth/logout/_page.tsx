@@ -1,9 +1,8 @@
 import Image from "next/image";
 
+import { logOutAction } from "@acme/action";
 import { Card } from "@acme/ui/atoms";
 import { Button } from "@acme/ui/molecules";
-
-import { logOutAction } from "~/actions/logout";
 
 export default function Page() {
   return (
