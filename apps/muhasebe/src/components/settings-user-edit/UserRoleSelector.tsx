@@ -65,7 +65,7 @@ export const UserRoleSelector: FC<UserRoleSelectorProps> = ({
                 settingIdx === settings.length - 1
                   ? "rounded-bl-md rounded-br-md"
                   : "",
-                checked ? "z-10 border-teal-200 bg-teal-50" : "border-gray-200",
+                checked ? "border-teal-200 bg-teal-50 z-10" : "border-gray-200",
                 "relative flex cursor-pointer border p-4 focus:outline-none",
                 setting.disabled && "cursor-not-allowed opacity-50",
               )
@@ -76,9 +76,9 @@ export const UserRoleSelector: FC<UserRoleSelectorProps> = ({
                 <span
                   className={clsx(
                     checked
-                      ? "border-transparent bg-teal-600"
+                      ? "bg-teal-600 border-transparent"
                       : "border-gray-300 bg-white",
-                    active ? "ring-2 ring-teal-500 ring-offset-2" : "",
+                    active ? "ring-teal-500 ring-2 ring-offset-2" : "",
                     "mt-0.5 flex h-4 w-4 shrink-0 cursor-pointer items-center justify-center rounded-full border",
                   )}
                   aria-hidden="true"

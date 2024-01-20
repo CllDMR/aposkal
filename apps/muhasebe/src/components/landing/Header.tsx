@@ -37,7 +37,7 @@ const MobileNavIcon: FC<MobileNavIconProps> = ({ open }) => {
   return (
     <svg
       aria-hidden="true"
-      className="h-3.5 w-3.5 overflow-visible stroke-slate-700"
+      className="stroke-slate-700 h-3.5 w-3.5 overflow-visible"
       fill="none"
       strokeWidth={2}
       strokeLinecap="round"
@@ -68,7 +68,7 @@ const MobileNavigation: FC<MobileNavigationProps> = ({ session }) => {
   return (
     <Popover>
       <Popover.Button
-        className="ui-not-focus-visible:outline-none relative z-10 flex h-8 w-8 items-center justify-center"
+        className="relative z-10 flex h-8 w-8 items-center justify-center ui-not-focus-visible:outline-none"
         aria-label="Toggle Navigation"
       >
         {({ open }) => <MobileNavIcon open={open} />}
@@ -83,7 +83,7 @@ const MobileNavigation: FC<MobileNavigationProps> = ({ session }) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Popover.Overlay className="fixed inset-0 bg-slate-300/50" />
+          <Popover.Overlay className="bg-slate-300/50 fixed inset-0" />
         </Transition.Child>
         <Transition.Child
           as={Fragment}
@@ -96,11 +96,11 @@ const MobileNavigation: FC<MobileNavigationProps> = ({ session }) => {
         >
           <Popover.Panel
             as="div"
-            className="absolute inset-x-0 top-full mt-4 flex origin-top flex-col rounded-2xl bg-white p-4 text-lg tracking-tight text-slate-900 shadow-xl ring-1 ring-slate-900/5"
+            className="text-slate-900 ring-slate-900/5 absolute inset-x-0 top-full mt-4 flex origin-top flex-col rounded-2xl bg-white p-4 text-lg tracking-tight shadow-xl ring-1"
           >
             <MobileNavLink href="#features">Özellikler</MobileNavLink>
             <MobileNavLink href="#pricing">Fiyatlar</MobileNavLink>
-            <hr className="m-2 border-slate-300/40" />
+            <hr className="border-slate-300/40 m-2" />
             {session?.user === undefined && (
               <MobileNavLink href="/auth/login">Giriş</MobileNavLink>
             )}

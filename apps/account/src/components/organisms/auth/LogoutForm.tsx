@@ -1,4 +1,3 @@
-
 import { logOutAction } from "@acme/action";
 import { Button } from "@acme/ui/molecules";
 

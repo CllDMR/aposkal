@@ -31,7 +31,7 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
         <input
           type={type}
           className={clsx(
-            "block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm outline-none ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-500 sm:text-sm sm:leading-6",
+            "focus:ring-teal-500 block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm outline-none ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6",
             className,
             {
               "ring-red-300  focus:ring-red-500  sm:leading-6": error,
@@ -60,11 +60,11 @@ const InputError: FC<InputErrorProps> = ({ error, className = "" }) => {
     return (
       <div className={className}>
         <div
-          className="flex w-full py-1 text-xs text-red-600 "
+          className="text-red-600 flex w-full py-1 text-xs "
           id="email-error"
         >
           <ExclamationTriangleIcon
-            className="mr-1 h-4 w-4 text-red-500 "
+            className="text-red-500 mr-1 h-4 w-4 "
             aria-hidden="true"
           />
           {error}

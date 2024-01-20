@@ -10,16 +10,16 @@ import { Menu } from "./Menu";
 
 export const SideBar: FC = () => {
   return (
-    <div className="flex h-full grow flex-col gap-y-5 overflow-y-auto border-r bg-slate-100 pb-4">
+    <div className="bg-slate-100 flex h-full grow flex-col gap-y-5 overflow-y-auto border-r pb-4">
       <div className="mx-auto my-8 space-y-3 ">
         <div className="flex h-full ">
           <Logo width={125} />
         </div>
         <div>
-          <p className="-mt-4 text-center text-sm font-medium text-secondary">
+          <p className="text-secondary -mt-4 text-center text-sm font-medium">
             Muhasebe
           </p>
-          <p className="text-center text-sm font-medium text-red-600 ">
+          <p className="text-red-600 text-center text-sm font-medium ">
             Beta{" "}
             {/* <span className="mt-1 text-center text-xs text-gray-500">
               {packageJson.version}

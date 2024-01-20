@@ -1,12 +1,8 @@
-
 import { loginAction } from "@acme/action";
 
 export default function LoginForm() {
   return (
-    <form
-      className="flex flex-col"
-      action={loginAction}
-    >
+    <form className="flex flex-col" action={loginAction}>
       <div className="flex flex-col">
         <div className="mb-3">
           <label

@@ -17,7 +17,7 @@ export const DocumentFormLayout: FC<DocumentFormLayoutProps> = ({
 }) => {
   return (
     <div className="overflow-scroll-y container flex min-h-full flex-col shadow sm:rounded-md md:max-h-full">
-      <div className="divide-x border bg-slate-50 md:flex">
+      <div className="bg-slate-50 divide-x border md:flex">
         {/* Header */}
         <div className="space-y-4 px-4 py-6 md:w-1/2">
           <h1 className="col-span-full font-semibold text-gray-600">
@@ -45,7 +45,7 @@ export const DocumentFormLayout: FC<DocumentFormLayoutProps> = ({
         </div>
       </div>
       {/* Notes and totals */}
-      <div className="border bg-slate-50 md:flex ">
+      <div className="bg-slate-50 border md:flex ">
         <div className="flex-1 divide-x md:flex">
           <div className="space-y-4 px-4 py-6 md:w-2/3">
             <h1 className="col-span-full font-semibold text-gray-600">

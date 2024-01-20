@@ -173,7 +173,6 @@ export const Assets = () => {
           ))}
         </dl>
         <div className="border-t border-gray-900/5 px-6 py-6">
-          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
           <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
             Detaylı Rapor <span aria-hidden="true">&rarr;</span>
           </a>

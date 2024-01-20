@@ -22,7 +22,7 @@ export const SideBarLayout: FC = () => {
           <Bars3Icon className="h-6 w-6" aria-hidden="true" />
         </button>
       </div>
-      <div className="hidden bg-red-500 lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-52 lg:flex-col">
+      <div className="bg-red-500 hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-52 lg:flex-col">
         <div className="h-screen">
           <Transition.Root show={sidebarOpen} as={Fragment}>
             <Dialog

@@ -9,16 +9,16 @@ import backgroundImage from "../../../../public/images/background-auth.jpg";
 export default function LoginPage() {
   return (
     <LayoutSlim backgroundImage={backgroundImage}>
-      <div className="animate-fadein flex items-center justify-center">
+      <div className="flex animate-fadein items-center justify-center">
         <Link href="/" aria-label="Home">
           <Logo className="h-32" />
         </Link>
       </div>
 
-      <h2 className="animate-fadein mt-14 text-lg font-semibold text-gray-900">
+      <h2 className="mt-14 animate-fadein text-lg font-semibold text-gray-900">
         Hesabınıza giriş yapın
       </h2>
-      <p className="animate-fadein mb-10 mt-2 text-sm text-gray-700">
+      <p className="mb-10 mt-2 animate-fadein text-sm text-gray-700">
         Hesabınız yok mu?{" "}
         <Link
           href="/auth/register"
@@ -30,7 +30,7 @@ export default function LoginPage() {
 
       <LoginForm />
 
-      <p className="animate-fadein mt-2 text-sm text-gray-700">
+      <p className="mt-2 animate-fadein text-sm text-gray-700">
         Parolanızı mı unuttunuz?{" "}
         <Link
           href="/auth/new-password/send-email"

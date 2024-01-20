@@ -11,7 +11,7 @@ export const Spinner: FC<SpinnerProps> = ({ size = "5" }) => {
     <div className="-mt-5 translate-x-1/2 translate-y-1/2 transform pt-0">
       <div
         className={
-          "tw-border-t-transparent animate-spin rounded-full  border-4 border-solid border-blue-400 " +
+          "tw-border-t-transparent border-blue-400 animate-spin  rounded-full border-4 border-solid " +
           className
         }
         style={{ borderTopColor: "transparent" }}

@@ -22,7 +22,12 @@ export default function Layout(props: { children: React.ReactNode }) {
 
   return (
     <html lang="en">
-      <body className={["scroll-smooth font-sans antialiased ", fontSans.variable].join(" ")}>
+      <body
+        className={[
+          "scroll-smooth font-sans antialiased ",
+          fontSans.variable,
+        ].join(" ")}
+      >
         <div>
           <Providers
           // session={session}

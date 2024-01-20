@@ -160,11 +160,11 @@ export const Assets = () => {
               <dd className="flex w-full justify-between text-sm leading-6 text-gray-500">
                 <span> {item.label}</span>
                 {item.type === "positive" ? (
-                  <span className="font-base text-base text-teal-500">
+                  <span className="font-base text-teal-500 text-base">
                     {item.value} ₺
                   </span>
                 ) : (
-                  <span className="font-base text-base text-orange-500">
+                  <span className="font-base text-orange-500 text-base">
                     {item.value} ₺
                   </span>
                 )}

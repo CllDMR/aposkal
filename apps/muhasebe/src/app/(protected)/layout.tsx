@@ -13,11 +13,11 @@ export default async function Layout({
   if (!session) redirect("/auth/unauthorized");
 
   return (
-    <div className="h-screen bg-slate-50">
+    <div className="bg-slate-50 h-screen">
       <SideBarLayout />
       <div className="flex h-full flex-col lg:pl-52 ">
         <Header session={session} tenantName={session.user.tn} />
-        <main className="h-full overflow-scroll bg-slate-50 px-4 py-5 sm:px-6 lg:px-8">
+        <main className="bg-slate-50 h-full overflow-scroll px-4 py-5 sm:px-6 lg:px-8">
           {children}
         </main>
       </div>

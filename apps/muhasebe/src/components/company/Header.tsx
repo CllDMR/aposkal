@@ -12,7 +12,7 @@ interface HeaderProps {
 
 export const Header: FC<HeaderProps> = ({ session, tenantName }) => {
   return (
-    <div className="z-10 flex h-14 items-center justify-between border-b border-gray-200 bg-slate-100 px-4 py-3 sm:px-5 lg:px-5">
+    <div className="bg-slate-100 z-10 flex h-14 items-center justify-between border-b border-gray-200 px-4 py-3 sm:px-5 lg:px-5">
       <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
         <div className="relative flex flex-1 ">
           {/* <BreadCrumb homeElement={"Home"} separator={<span> | </span>} /> */}

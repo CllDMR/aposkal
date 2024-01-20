@@ -22,14 +22,14 @@ export const Toggle: FC<ToggleProps> = ({
       <Switch.Group as="div" className="flex items-center">
         {label && (
           <Switch.Label as="span" className="mr-3">
-            <span className="text-sm text-teal-900">{label} </span>
+            <span className="text-teal-900 text-sm">{label} </span>
           </Switch.Label>
         )}
         <Switch
           checked={enabled}
           onChange={setEnabled}
           className={clsx(
-            "relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
+            "focus:ring-primary relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2",
             enabled ? "bg-secondary" : "bg-gray-200",
           )}
         >
@@ -50,7 +50,7 @@ export const Toggle: FC<ToggleProps> = ({
         checked={enabled}
         onChange={setEnabled}
         className={clsx(
-          "relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
+          "focus:ring-primary relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2",
           enabled ? "bg-secondary" : "bg-gray-200",
         )}
       >

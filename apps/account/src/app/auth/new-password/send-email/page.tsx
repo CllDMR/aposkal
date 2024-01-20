@@ -3,8 +3,8 @@ import Link from "next/link";
 import { Logo } from "@acme/ui/atoms";
 import { LayoutSlim } from "@acme/ui/templates";
 
-import backgroundImage from "../../../../../public/images/background-auth.jpg";
 import { NewPasswordForm } from "~/components/organisms/auth/NewPasswordForm";
+import backgroundImage from "../../../../../public/images/background-auth.jpg";
 
 interface PageProps {
   searchParams: Record<string, string | string[] | undefined>;
@@ -18,16 +18,16 @@ export default function Page({ searchParams: { email } }: PageProps) {
 
   return (
     <LayoutSlim backgroundImage={backgroundImage}>
-      <div className="animate-fadein flex">
+      <div className="flex animate-fadein">
         <Link href="/" aria-label="Home">
           <Logo className="w-36" />
         </Link>
       </div>
 
-      <h2 className="animate-fadein mt-20 text-lg font-semibold text-gray-900">
+      <h2 className="mt-20 animate-fadein text-lg font-semibold text-gray-900">
         Parolanızı sıfırlayın
       </h2>
-      <p className="animate-fadein mt-2 text-sm text-gray-700">
+      <p className="mt-2 animate-fadein text-sm text-gray-700">
         Veya giriş yapmak için{" "}
         <Link
           href="/auth/login"

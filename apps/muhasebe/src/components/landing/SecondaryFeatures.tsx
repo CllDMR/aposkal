@@ -135,10 +135,10 @@ const Feature: FC<FeatureProps> = ({
       >
         {feature.name}
       </h3>
-      <p className="font-display mt-2 text-xl text-slate-900">
+      <p className="font-display text-slate-900 mt-2 text-xl">
         {feature.summary}
       </p>
-      <p className="mt-4 text-sm text-slate-600">{feature.description}</p>
+      <p className="text-slate-600 mt-4 text-sm">{feature.description}</p>
     </div>
   );
 };
@@ -150,8 +150,8 @@ function FeaturesMobile() {
         <div key={feature.summary}>
           <Feature feature={feature} className="mx-auto max-w-2xl" isActive />
           <div className="relative mt-10 pb-10">
-            <div className="absolute -inset-x-4 bottom-0 top-8 bg-slate-200 sm:-inset-x-6" />
-            <div className="relative mx-auto w-[52.75rem] overflow-hidden rounded-xl bg-white shadow-lg shadow-slate-900/5 ring-1 ring-slate-500/10">
+            <div className="bg-slate-200 absolute -inset-x-4 bottom-0 top-8 sm:-inset-x-6" />
+            <div className="shadow-slate-900/5 ring-slate-500/10 relative mx-auto w-[52.75rem] overflow-hidden rounded-xl bg-white shadow-lg ring-1">
               <Image
                 className="w-full"
                 src={feature.image}
@@ -191,20 +191,20 @@ function FeaturesDesktop() {
               />
             ))}
           </Tab.List>
-          <Tab.Panels className="rounded-4xl relative mt-20 overflow-hidden bg-slate-200 px-14 py-16 xl:px-16">
+          <Tab.Panels className="rounded-4xl bg-slate-200 relative mt-20 overflow-hidden px-14 py-16 xl:px-16">
             <div className="-mx-5 flex">
               {features.map((feature, featureIndex) => (
                 <Tab.Panel
                   static
                   key={feature.summary}
                   className={clsx(
-                    "ui-not-focus-visible:outline-none px-5 transition duration-500 ease-in-out",
+                    "px-5 transition duration-500 ease-in-out ui-not-focus-visible:outline-none",
                     featureIndex !== selectedIndex && "opacity-60",
                   )}
                   style={{ transform: `translateX(-${selectedIndex * 100}%)` }}
                   aria-hidden={featureIndex !== selectedIndex}
                 >
-                  <div className="w-[52.75rem] overflow-hidden rounded-xl bg-white shadow-lg shadow-slate-900/5 ring-1 ring-slate-500/10">
+                  <div className="shadow-slate-900/5 ring-slate-500/10 w-[52.75rem] overflow-hidden rounded-xl bg-white shadow-lg ring-1">
                     <Image
                       className="w-full"
                       src={feature.image}
@@ -215,7 +215,7 @@ function FeaturesDesktop() {
                 </Tab.Panel>
               ))}
             </div>
-            <div className="rounded-4xl pointer-events-none absolute inset-0 ring-1 ring-inset ring-slate-900/10" />
+            <div className="rounded-4xl ring-slate-900/10 pointer-events-none absolute inset-0 ring-1 ring-inset" />
           </Tab.Panels>
         </>
       )}
@@ -232,10 +232,10 @@ export function SecondaryFeatures() {
     >
       <Container>
         <div className="mx-auto max-w-2xl md:text-center">
-          <h2 className="font-display text-3xl tracking-tight text-slate-900 sm:text-4xl">
+          <h2 className="font-display text-slate-900 text-3xl tracking-tight sm:text-4xl">
             Simplify everyday business tasks.
           </h2>
-          <p className="mt-4 text-lg tracking-tight text-slate-700">
+          <p className="text-slate-700 mt-4 text-lg tracking-tight">
             Because you’d probably be a little confused if we suggested you
             complicate your everyday business tasks instead.
           </p>

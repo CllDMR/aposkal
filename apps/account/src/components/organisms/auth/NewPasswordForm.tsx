@@ -24,7 +24,7 @@ export const NewPasswordForm: FC<NewPasswordFormProps> = ({ email }) => {
             id="email"
             name="email"
             type="text"
-            className="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-base text-gray-900 placeholder-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm sm:leading-6"
+            className="focus:border-blue-500 focus:ring-blue-500 block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-base text-gray-900 placeholder-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
             autoComplete="email"
             defaultValue={email}
           />
@@ -33,7 +33,7 @@ export const NewPasswordForm: FC<NewPasswordFormProps> = ({ email }) => {
         {/* <pre>{errors ? JSON.stringify(errors, null, 4) : null}</pre> */}
       </div>
 
-      <button className="group inline-flex w-full items-center justify-center rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 hover:text-slate-100 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 active:bg-blue-800 active:text-blue-100 disabled:opacity-50">
+      <button className="bg-blue-600 hover:bg-blue-500 hover:text-slate-100 focus-visible:outline-blue-600 active:bg-blue-800 active:text-blue-100 group inline-flex w-full items-center justify-center rounded-full px-4 py-2 text-sm font-semibold text-white focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-50">
         E-Posta Yolla
       </button>
     </form>

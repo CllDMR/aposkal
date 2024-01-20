@@ -59,7 +59,7 @@ export const RightDrawer: FC<RightDrawerProps> = ({
                       <div className="ml-3 flex h-7 items-center">
                         <button
                           type="button"
-                          className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+                          className="focus:ring-teal-500 rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2"
                           onClick={onClose}
                         >
                           <span className="sr-only">Close panel</span>

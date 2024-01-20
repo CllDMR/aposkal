@@ -8,16 +8,16 @@ import backgroundImage from "../../../../../public/images/background-auth.jpg";
 export default function Page() {
   return (
     <LayoutSlim backgroundImage={backgroundImage}>
-      <div className="animate-fadein flex">
+      <div className="flex animate-fadein">
         <Link href="/" aria-label="Home">
           <Logo className="w-36" />
         </Link>
       </div>
 
-      <h2 className="animate-fadein mt-20 text-lg font-semibold text-gray-900">
+      <h2 className="mt-20 animate-fadein text-lg font-semibold text-gray-900">
         E-Posta gönderildi
       </h2>
-      <p className="animate-fadein mt-2 text-sm text-gray-700">
+      <p className="mt-2 animate-fadein text-sm text-gray-700">
         Lütfen e-postanızı kontrol ediniz ve parola sıfırlama link&apos;ine
         tıklayınız.
       </p>

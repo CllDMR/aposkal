@@ -66,7 +66,7 @@ export const UserModuleSelector: FC<UserModuleSelectorProps> = ({
                         name={item}
                         type="radio"
                         defaultChecked={permissionObj[item] === per.id}
-                        className="h-4 w-4 border-gray-300 text-teal-600 focus:ring-teal-500"
+                        className="text-teal-600 focus:ring-teal-500 h-4 w-4 border-gray-300"
                         onChange={() => handlePermissionChange(item, per.id)}
                       />
                       <label
