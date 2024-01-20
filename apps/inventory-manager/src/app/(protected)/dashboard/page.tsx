@@ -1,9 +1,5 @@
-import { Main } from "@acme/ui/atoms";
+import { Dashboard } from "@acme/ui/templates";
 
 export default function DashboardPage() {
-  return (
-    <Main>
-      <span>Dashboard Page</span>
-    </Main>
-  );
+  return <Dashboard />;
 }
