@@ -1,3 +1,4 @@
+export { Logo } from "./logo";
 export { Card } from "./card";
 export { Checkbox } from "./checkbox";
 export type { CheckboxProps, CheckboxSize } from "./checkbox";

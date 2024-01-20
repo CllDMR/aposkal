@@ -16,6 +16,8 @@
     "ci:deploy": "vercel deploy --prebuilt"
   },
   "dependencies": {
+    "@acme/action": "^0.1.0",
+    "@acme/email": "^0.1.0",
     "@acme/util": "^0.1.0",
     "@acme/api-client": "^0.1.0",
     "@acme/api": "^0.1.0",
@@ -52,7 +54,8 @@
     "tailwind-merge": "^1.14.0",
     "zod": "^3.22.4",
     "zod-form-data": "^2.0.2",
-    "zustand": "^4.4.1"
+    "zustand": "^4.4.1",
+    "react-google-recaptcha-v3": "^1.10.1"
   },
   "devDependencies": {
     "@acme/eslint-config": "^0.2.0",

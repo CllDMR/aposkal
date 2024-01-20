@@ -18,6 +18,10 @@
     "./organisms/landing/*": {
       "types": "./organisms/landing/*/index.tsx",
       "default": "./organisms/landing/*/index.tsx"
+    },
+    "./templates/*": {
+      "types": "./templates/*/index.tsx",
+      "default": "./templates/*/index.tsx"
     }
   },
   "license": "MIT",

@@ -1,3 +1,5 @@
+"use client";
+
 import type { DetailedHTMLProps, FC, InputHTMLAttributes } from "react";
 import { useEffect, useRef } from "react";
 import clsx from "clsx";
