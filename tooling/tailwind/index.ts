@@ -19,7 +19,24 @@ export default {
       danger: colors.red,
       disabled: colors.slate,
     },
-    extend: {},
+
+    extend: {
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-conic":
+          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
+      animation: {
+        fadein: "fadein 0.2s linear 0s 1 forwards",
+      },
+      keyframes: {
+        fadein: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "100" },
+        },
+      },
+    },
+
   },
   plugins: [require("@headlessui/tailwindcss")],
 } satisfies Config;
