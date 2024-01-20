@@ -13,9 +13,9 @@ import {
 } from "@acme/ui/organisms/landing";
 import type { NavbarNavigationPath } from "@acme/ui/organisms/navbar";
 import type { AppsDropdownSolution } from "@acme/ui/organisms/navbar/apps-dropdown";
-import { getBaseUrl } from "@acme/util/src/get-base-url";
+import { getBaseAuthUrl } from "@acme/util/src/get-base-url";
 
-const baseAuthUrl = getBaseUrl("muhasebe");
+const baseAuthUrl = getBaseAuthUrl();
 
 const toAuthURL = (path: string) => `${baseAuthUrl}${path}`;
 
@@ -69,15 +69,13 @@ const solutions: AppsDropdownSolution[] = [
   },
 ];
 export default async function HomePage() {
-  const baseUrl = getBaseUrl("muhasebe") ?? "";
+  const baseAuthUrl = getBaseAuthUrl() ?? "";
   const session = await auth();
 
   return (
     <>
       <Header
-        baseAuthUrl={baseUrl}
-        hasSessionRedirectPathname="/profile"
-        hasSessionRedirectButtonTitle="Profile"
+        baseAuthUrl={baseAuthUrl}
         session={session}
         navigationPaths={navbarNavigationPaths}
         domain={env.DOMAIN}
