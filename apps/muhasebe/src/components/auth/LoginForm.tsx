@@ -1,4 +1,4 @@
-import { loginAction } from "~/actions/login";
+import { loginAction } from "@acme/action";
 
 export const LoginForm = () => {
   // const searchParams = useSearchParams();

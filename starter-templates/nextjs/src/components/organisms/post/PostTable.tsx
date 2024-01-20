@@ -1,14 +1,14 @@
 "use client";
 
+import type { ColumnDef } from "@tanstack/react-table";
 import type { FC } from "react";
 import { useMemo } from "react";
-import type { ColumnDef } from "@tanstack/react-table";
 
 import { Button, LinkButton } from "@acme/ui/molecules";
 import { Table } from "@acme/ui/organisms";
 
-import type { RouterOutputs } from "~/utils/api";
-import { api } from "~/utils/api";
+import { api } from "@acme/api-client";
+import type { RouterOutputs } from "@acme/api";
 
 interface TableItem {
   id: string;

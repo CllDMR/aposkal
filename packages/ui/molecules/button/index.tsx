@@ -1,6 +1,8 @@
 import type { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from "react";
 import clsx from "clsx";
 
+import { Loader } from "./Loader";
+
 enum ButtonVariant {
   PRIMARY,
   SECONDARY,
@@ -54,6 +56,7 @@ interface ButtonProps {
   // State
   fullwidth?: boolean;
   disabled?: HTMLButtonProps["disabled"];
+  loading?: boolean;
   // isLoading?: boolean;
 
   //Functionality
@@ -66,6 +69,7 @@ export function Button({
   variant = ButtonVariant.PRIMARY,
   size = ButtonSize.SMALL,
   disabled = false,
+  loading = false,
   fullwidth = false,
   onClick,
 }: ButtonProps) {
@@ -79,6 +83,8 @@ export function Button({
 
   return (
     <button className={css} type={type} disabled={disabled} onClick={onClick}>
+      {loading && <Loader />}
+
       {children}
     </button>
   );

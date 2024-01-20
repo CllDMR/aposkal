@@ -2,9 +2,10 @@
 
 import type { FC } from "react";
 
+import { sidebarItems } from "@acme/util";
+
 import { Logo } from "~/components/landing";
-import { sidebarItems } from "~/utils/sidebaritems";
-import packageJson from "../../../../package.json";
+// import packageJson from "../../../../package.json";
 import { Menu } from "./Menu";
 
 export const SideBar: FC = () => {
@@ -20,9 +21,9 @@ export const SideBar: FC = () => {
           </p>
           <p className="text-center text-sm font-medium text-red-600 ">
             Beta{" "}
-            <span className="mt-1 text-center text-xs text-gray-500">
+            {/* <span className="mt-1 text-center text-xs text-gray-500">
               {packageJson.version}
-            </span>
+            </span> */}
           </p>
         </div>
       </div>

@@ -4,11 +4,12 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
 import { db, eq, schema, tableCreator } from "@acme/db";
-
-import { env } from "./env.mjs";
+import { env } from "@acme/env";
+import { getBaseUrl } from "@acme/util/src/get-base-url";
 
 export type { Session } from "@auth/core";
 
+export { authConfig } from "./auth.config";
 export const providers = [""] as const;
 export type OAuthProviders = (typeof providers)[number];
 const saltRounds = 6;
@@ -17,13 +18,6 @@ const domain = env.NODE_ENV === "production" ? env.DOMAIN : undefined;
 const cookiePrefix = "__Secure";
 const useSecureCookies = env.NODE_ENV === "production";
 
-const getBaseUrl = () => {
-  if (typeof window !== "undefined") return ""; // browser should use relative url
-  if (env.NEXT_PUBLIC_ACCOUNT_BASE_URL) return env.NEXT_PUBLIC_ACCOUNT_BASE_URL;
-  if (env.VERCEL_URL) return env.VERCEL_URL; // SSR should use vercel url
-
-  return `http://localhost:${env.ACCOUNT_PORT}`; // dev SSR should use localhost
-};
 export const {
   handlers: { GET, POST },
   auth,
@@ -180,7 +174,7 @@ export const {
               .limit(1)
               .then((a) => a[0]);
 
-            const baseUrl = getBaseUrl();
+            const baseUrl = getBaseUrl("account");
 
             const response = await fetch(
               "https://mandrillapp.com/api/1.0/messages/send",

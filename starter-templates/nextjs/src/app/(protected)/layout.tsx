@@ -7,7 +7,7 @@ import type { DrawerNavigationPath } from "@acme/ui/organisms/drawer";
 import type { NavbarNavigationPath } from "@acme/ui/organisms/navbar";
 
 import { env } from "~/env.mjs";
-import { getBaseAuthUrl } from "~/utils/get-base-url";
+import { getBaseAuthUrl } from "@acme/util";
 
 const baseAuthUrl = getBaseAuthUrl();
 

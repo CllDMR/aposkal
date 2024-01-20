@@ -9,15 +9,8 @@ import type { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import superjson from "superjson";
 
-import { env } from "~/env.mjs";
-import { api } from "~/utils/api";
-
-const getBaseUrl = () => {
-  if (typeof window !== "undefined") return ""; // browser should use relative url
-  if (env.VERCEL_URL) return env.VERCEL_URL; // SSR should use vercel url
-
-  return `http://localhost:${env.PORT}`; // dev SSR should use localhost
-};
+import { api } from "@acme/api-client";
+import { getBaseUrl } from "@acme/util";
 
 export function Providers(props: {
   children: React.ReactNode;
@@ -45,7 +38,7 @@ export function Providers(props: {
             (opts.direction === "down" && opts.result instanceof Error),
         }),
         unstable_httpBatchStreamLink({
-          url: `${getBaseUrl()}/api/trpc`,
+          url: `${getBaseUrl("self")}/api/trpc`,
           headers() {
             const headers = new Map(props.headers);
             headers.set("x-trpc-source", "nextjs-react");

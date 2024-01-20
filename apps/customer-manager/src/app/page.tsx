@@ -1,6 +1,5 @@
-// export const runtime = "edge";
-
 import { auth } from "@acme/auth";
+import { env } from "@acme/env";
 import {
   CallToAction,
   Faqs,
@@ -14,9 +13,7 @@ import {
 } from "@acme/ui/organisms/landing";
 import type { NavbarNavigationPath } from "@acme/ui/organisms/navbar";
 import type { AppsDropdownSolution } from "@acme/ui/organisms/navbar/apps-dropdown";
-
-import { env } from "~/env.mjs";
-import { getBaseAuthUrl } from "~/utils/get-base-url";
+import { getBaseAuthUrl } from "@acme/util";
 
 const baseAuthUrl = getBaseAuthUrl();
 

@@ -5,10 +5,9 @@ import { useRouter } from "next/navigation";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import { useSession } from "next-auth/react";
 
+import type { RouterOutputs } from "@acme/api";
+import { api } from "@acme/api-client";
 import { Form } from "@acme/ui/atoms";
-
-import type { RouterOutputs } from "~/utils/api";
-import { api } from "~/utils/api";
 
 interface SelectTenantProps {
   tenants: RouterOutputs["tenant"]["listOfUserTenants"];

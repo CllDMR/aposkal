@@ -1,6 +1,6 @@
 import { LinkButton } from "@acme/ui/molecules";
 
-// export const runtime = "edge";
+
 
 export default async function HomePage() {
   const session = await getServerSession();

@@ -1,0 +1,38 @@
+{
+  "name": "@acme/util",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "lint": "eslint .",
+    "format": "prettier --ignore-path ../../.gitignore --check \"**/*.{mjs,ts,md,json}\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "pdfmake": "^0.2.7",
+    "to-words": "^3.6.1",
+    "@heroicons/react": "^2.0.18",
+    "@trpc/react-query": "^10.44.1",
+    "next": "^14.0.4",
+    "next-auth": "5.0.0-beta.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "@acme/env": "^0.1.0",
+    "@acme/eslint-config": "^0.2.0",
+    "@acme/prettier-config": "^0.1.0",
+    "@acme/tsconfig": "^0.1.0",
+    "eslint": "^8.47.0",
+    "prettier": "^3.0.2",
+    "typescript": "^5.1.6"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@acme/eslint-config/base"
+    ]
+  },
+  "prettier": "@acme/prettier-config"
+}

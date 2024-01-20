@@ -6,8 +6,7 @@ import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import { useSession } from "next-auth/react";
 
 import type { RouterOutputs } from "@acme/api";
-
-import { api } from "~/utils/api";
+import { api } from "@acme/api-client";
 
 interface SelectCompanyProps {
   tenants: RouterOutputs["tenant"]["listOfUserTenants"];

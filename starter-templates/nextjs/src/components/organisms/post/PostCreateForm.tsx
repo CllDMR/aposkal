@@ -1,20 +1,20 @@
 "use client";
 
-import type { FC } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import type { FC } from "react";
 import { useForm } from "react-hook-form";
 
 import { postCreateInput } from "@acme/api/src/inputs/post";
 import { Form } from "@acme/ui/atoms";
 import {
-  Button,
-  FormCheckbox,
-  FormDateInput,
-  FormInput,
+    Button,
+    FormCheckbox,
+    FormDateInput,
+    FormInput,
 } from "@acme/ui/molecules";
 
-import type { RouterInputs } from "~/utils/api";
-import { api } from "~/utils/api";
+import { api } from "@acme/api-client";
+import type { RouterInputs } from "@acme/api";
 
 type PostCreateFormFields = RouterInputs["post"]["create"];
 

@@ -6,7 +6,9 @@ import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { signOutAction } from "~/actions/signout";
+import { signOutAction } from "@acme/action";
+import { acceptInvitationSchema } from "@acme/validation-schema";
+
 import {
   Button,
   Logo,
@@ -15,7 +17,6 @@ import {
   TextField,
 } from "~/components/landing";
 import { InputError } from "~/components/ui";
-import { acceptInvitationSchema } from "~/validationSchemas";
 
 interface ExistingUserInvitationAcceptFormProps {
   inviteId: string;

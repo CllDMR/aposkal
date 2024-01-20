@@ -9,8 +9,8 @@ import type { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import superjson from "superjson";
 
-import { api } from "~/utils/api";
-import { getBaseUrl } from "~/utils/get-base-url";
+import { api } from "@acme/api-client";
+import { getBaseUrl } from "@acme/util";
 
 export function Providers(props: {
   children: React.ReactNode;
@@ -38,7 +38,7 @@ export function Providers(props: {
             (opts.direction === "down" && opts.result instanceof Error),
         }),
         unstable_httpBatchStreamLink({
-          url: `${getBaseUrl()}/api/trpc`,
+          url: `${getBaseUrl("self")}/api/trpc`,
           headers() {
             const headers = new Map(props.headers);
             headers.set("x-trpc-source", "nextjs-react");

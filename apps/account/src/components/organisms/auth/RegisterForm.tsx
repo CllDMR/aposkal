@@ -4,11 +4,10 @@ import { AuthError } from "next-auth";
 
 import { signIn } from "@acme/auth";
 import { Card } from "@acme/ui/atoms";
-
-import { getBaseUrl } from "~/utils/get-base-url";
+import { getBaseUrl } from "@acme/util";
 
 export default function RegisterForm() {
-  const baseUrl = getBaseUrl();
+  const baseUrl = getBaseUrl("account");
 
   return (
     <div className="grid min-h-screen min-w-full items-center justify-center">

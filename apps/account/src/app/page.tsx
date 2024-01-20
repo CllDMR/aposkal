@@ -1,6 +1,5 @@
-// export const runtime = "edge";
-
 import { auth } from "@acme/auth";
+import { env } from "@acme/env";
 import {
   CallToAction,
   Faqs,
@@ -14,11 +13,9 @@ import {
 } from "@acme/ui/organisms/landing";
 import type { NavbarNavigationPath } from "@acme/ui/organisms/navbar";
 import type { AppsDropdownSolution } from "@acme/ui/organisms/navbar/apps-dropdown";
+import { getBaseUrl } from "@acme/util";
 
-import { env } from "~/env.mjs";
-import { getBaseUrl } from "~/utils/get-base-url";
-
-const baseAuthUrl = getBaseUrl();
+const baseAuthUrl = getBaseUrl("account");
 
 const toAuthURL = (path: string) => `${baseAuthUrl}${path}`;
 
@@ -73,7 +70,7 @@ const solutions: AppsDropdownSolution[] = [
 ];
 
 export default async function HomePage() {
-  const baseUrl = getBaseUrl() ?? "";
+  const baseUrl = getBaseUrl("account") ?? "";
   const session = await auth();
 
   return (
