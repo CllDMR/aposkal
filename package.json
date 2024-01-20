@@ -6,7 +6,7 @@
   },
   "packageManager": "pnpm@8.6.12",
   "scripts": {
-    "build": "dotenv -- turbo build --concurrency=60% --continue",
+    "build": "dotenv -- turbo build --concurrency=40% --continue",
     "preview": "dotenv -- turbo preview",
     "start": "dotenv -- turbo start",
     "clean": "git clean -xdf node_modules",
