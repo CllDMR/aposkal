@@ -25,6 +25,11 @@ const config = {
       skipDefaultConversion: true,
       // preventFullImport: true,
     },
+    "@acme/ui/templates": {
+      transform: "@acme/ui/templates/{{ kebabCase member }}",
+      skipDefaultConversion: true,
+      // preventFullImport: true,
+    },
   },
   /** Enables hot reloading for local packages without a build step */
   transpilePackages: [
@@ -46,6 +51,12 @@ const config = {
       },
       {
         hostname: "tailwindui.com",
+      },
+      {
+        hostname: "i0.wp.com",
+      },
+      {
+        hostname: "cloudflare-ipfs.com",
       },
     ],
   },

@@ -52,6 +52,12 @@ const config = {
       {
         hostname: "tailwindui.com",
       },
+      {
+        hostname: "i0.wp.com",
+      },
+      {
+        hostname: "cloudflare-ipfs.com",
+      },
     ],
   },
 };
