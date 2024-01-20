@@ -5,6 +5,7 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+import type { RouterInputs } from "@acme/api";
 import { api } from "@acme/api-client";
 import { tenantCreateInput } from "@acme/api/src/inputs/tenant";
 import { Form } from "@acme/ui/atoms";
@@ -14,8 +15,6 @@ import {
   FormDropdownInput,
   FormInput,
 } from "@acme/ui/molecules";
-
-import type { RouterInputs } from "~/utils/api";
 
 type CreateTenantFromFields = RouterInputs["tenant"]["create"];
 

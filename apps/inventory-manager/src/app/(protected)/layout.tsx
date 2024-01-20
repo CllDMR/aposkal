@@ -1,11 +1,10 @@
 import { auth } from "@acme/auth";
+import { env } from "@acme/env";
 import { Drawer, DrawerMobileWrapper, Navbar } from "@acme/ui/organisms";
 import type { DrawerNavigationPath } from "@acme/ui/organisms/drawer";
 import type { NavbarNavigationPath } from "@acme/ui/organisms/navbar";
 import type { AppsDropdownSolution } from "@acme/ui/organisms/navbar/apps-dropdown";
-
-import { env } from "~/env.mjs";
-import { getBaseAuthUrl } from "~/utils/get-base-url";
+import { getBaseAuthUrl } from "@acme/util";
 
 const baseAuthUrl = getBaseAuthUrl();
 

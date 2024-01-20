@@ -4,12 +4,11 @@ import type { FC } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+import type { RouterInputs } from "@acme/api";
 import { api } from "@acme/api-client";
 import { productCategoryCreateInput } from "@acme/api/src/inputs/product/product_category";
 import { Form, FormBottom } from "@acme/ui/atoms";
 import { Button, FormInput } from "@acme/ui/molecules";
-
-import type { RouterInputs } from "~/utils/api";
 
 type ProductCategoryCreateFormFields =
   RouterInputs["productCategory"]["create"];

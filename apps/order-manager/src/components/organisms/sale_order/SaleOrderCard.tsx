@@ -2,10 +2,9 @@
 
 import type { FC } from "react";
 
+import type { RouterOutputs } from "@acme/api";
 import { api } from "@acme/api-client";
 import { ItemHeader } from "@acme/ui/molecules";
-
-import type { RouterOutputs } from "~/utils/api";
 
 interface SaleOrderCardProps {
   saleOrder: RouterOutputs["saleOrder"]["get"];

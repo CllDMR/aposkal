@@ -5,7 +5,7 @@ import { Button, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { api } from "@acme/api-client";
-import type { RouterOutputs } from "~/utils/api";
+import type { RouterOutputs } from "@acme/api";
 
 function PostCard(props: {
   post: RouterOutputs["post"]["list"][number];

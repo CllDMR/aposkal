@@ -5,7 +5,7 @@ import type { FC } from "react";
 import { Button, LinkButton } from "@acme/ui/molecules";
 
 import { api } from "@acme/api-client";
-import type { RouterOutputs } from "~/utils/api";
+import type { RouterOutputs } from "@acme/api";
 
 interface PostCardProps {
   initPost: RouterOutputs["post"]["get"];

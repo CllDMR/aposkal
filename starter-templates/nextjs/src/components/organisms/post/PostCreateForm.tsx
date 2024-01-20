@@ -14,7 +14,7 @@ import {
 } from "@acme/ui/molecules";
 
 import { api } from "@acme/api-client";
-import type { RouterInputs } from "~/utils/api";
+import type { RouterInputs } from "@acme/api";
 
 type PostCreateFormFields = RouterInputs["post"]["create"];
 

@@ -14,7 +14,7 @@ import {
 } from "@acme/ui/molecules";
 
 import { api } from "@acme/api-client";
-import type { RouterInputs, RouterOutputs } from "~/utils/api";
+import type { RouterInputs, RouterOutputs } from "@acme/api";
 
 type PostEditFormFields = RouterInputs["post"]["update"];
 type Post = NonNullable<RouterOutputs["post"]["get"]>;

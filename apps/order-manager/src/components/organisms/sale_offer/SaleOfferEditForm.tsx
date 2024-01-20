@@ -4,12 +4,11 @@ import type { FC } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+import type { RouterInputs, RouterOutputs } from "@acme/api";
 import { api } from "@acme/api-client";
 import { saleOfferUpdateInput } from "@acme/api/src/inputs/sale_offer/sale_offer";
 import { Form, FormBottom } from "@acme/ui/atoms";
 import { Button, FormDateInput, FormDropdownInput } from "@acme/ui/molecules";
-
-import type { RouterInputs, RouterOutputs } from "~/utils/api";
 
 type SaleOfferEditFormFields = RouterInputs["saleOffer"]["update"];
 

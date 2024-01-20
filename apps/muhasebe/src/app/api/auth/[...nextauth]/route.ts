@@ -1,6 +1,5 @@
 export { GET, POST } from "@acme/auth";
 
-
 // import { DrizzleAdapter } from "@auth/drizzle-adapter";
 // import { compare, hash } from "bcryptjs";
 // import { nanoid } from "nanoid";

@@ -4,12 +4,11 @@ import type { FC } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+import type { RouterInputs, RouterOutputs } from "@acme/api";
 import { api } from "@acme/api-client";
 import { productTagUpdateInput } from "@acme/api/src/inputs/product/product_tag";
 import { Form, FormBottom } from "@acme/ui/atoms";
 import { Button, FormInput } from "@acme/ui/molecules";
-
-import type { RouterInputs, RouterOutputs } from "~/utils/api";
 
 type ProductTagEditFormFields = RouterInputs["productTag"]["update"];
 type ProductTag = NonNullable<RouterOutputs["productTag"]["get"]>;

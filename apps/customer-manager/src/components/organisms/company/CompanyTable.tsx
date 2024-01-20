@@ -7,10 +7,9 @@ import { useSearchParams } from "next/navigation";
 import type { ColumnDef } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
 
+import type { RouterOutputs } from "@acme/api";
 import { api } from "@acme/api-client";
 import { Table } from "@acme/ui/organisms";
-
-import type { RouterOutputs } from "~/utils/api";
 
 interface TableItem {
   id: string;

@@ -8,7 +8,7 @@ import { Button, LinkButton } from "@acme/ui/molecules";
 import { Table } from "@acme/ui/organisms";
 
 import { api } from "@acme/api-client";
-import type { RouterOutputs } from "~/utils/api";
+import type { RouterOutputs } from "@acme/api";
 
 interface TableItem {
   id: string;

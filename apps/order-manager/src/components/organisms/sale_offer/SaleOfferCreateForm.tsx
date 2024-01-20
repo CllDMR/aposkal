@@ -4,12 +4,12 @@ import type { FC } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 
+import type { RouterInputs, RouterOutputs } from "@acme/api";
 import { api } from "@acme/api-client";
 import { saleOfferCreateInput } from "@acme/api/src/inputs/sale_offer/sale_offer";
 import { Form } from "@acme/ui/atoms";
 import { TabPanel } from "@acme/ui/organisms";
 
-import type { RouterInputs, RouterOutputs } from "~/utils/api";
 import { SaleOfferCreateInfoPanel } from "./SaleOfferCreateForm/InfoPanel";
 import { SaleOfferCreateNotePanel } from "./SaleOfferCreateForm/NotePanel";
 import { SaleOfferCreatePreviewPanel } from "./SaleOfferCreateForm/PreviewPanel";

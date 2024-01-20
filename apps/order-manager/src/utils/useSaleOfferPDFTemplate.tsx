@@ -3,9 +3,7 @@ import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 
 import type { RouterInputs, RouterOutputs } from "@acme/api";
-
-import { sayiOkunusu } from "./number-format";
-import { createPDFTemplateSaleOffer } from "./pdf-templates/sale-offer";
+import { createPDFTemplateSaleOffer, sayiOkunusu } from "@acme/util";
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;

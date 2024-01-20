@@ -12,6 +12,8 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "pdfmake": "^0.2.7",
+    "to-words": "^3.6.1",
     "@heroicons/react": "^2.0.18",
     "@trpc/react-query": "^10.44.1",
     "next": "^14.0.4",
