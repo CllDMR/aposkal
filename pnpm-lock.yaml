@@ -32,6 +32,9 @@ importers:
 
   apps/account:
     dependencies:
+      '@acme/action':
+        specifier: ^0.1.0
+        version: link:../../packages/action
       '@acme/api':
         specifier: ^0.1.0
         version: link:../../packages/api
@@ -44,6 +47,9 @@ importers:
       '@acme/db':
         specifier: ^0.1.0
         version: link:../../packages/db
+      '@acme/email':
+        specifier: ^0.1.0
+        version: link:../../packages/email
       '@acme/env':
         specifier: ^0.1.0
         version: link:../../packages/env

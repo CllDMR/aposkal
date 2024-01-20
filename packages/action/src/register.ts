@@ -9,7 +9,7 @@ import { getBaseUrl } from "@acme/util";
 
 export const registerAction = async (formData: FormData) => {
   const secretKey = env.RECAPTCHA_SECRET_KEY;
-  const baseUrl = getBaseUrl("self");
+  const baseUrl = getBaseUrl("account");
 
   const { gRecaptchaToken, email, name, password } = JSON.parse(
     JSON.stringify(Object.fromEntries(formData)),

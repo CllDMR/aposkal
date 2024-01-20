@@ -1,3 +1,4 @@
+export { Loading } from "./loading";
 export { Button } from "./button";
 export { ButtonIcon } from "./button-icon";
 export { FormCheckbox } from "./form-checkbox";
