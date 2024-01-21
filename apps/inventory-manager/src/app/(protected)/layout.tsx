@@ -6,6 +6,8 @@ import type { NavbarNavigationPath } from "@acme/ui/organisms/navbar";
 import type { AppsDropdownSolution } from "@acme/ui/organisms/navbar/apps-dropdown";
 import { getBaseAuthUrl } from "@acme/util";
 
+import packageJson from "../../../package.json";
+
 const baseAuthUrl = getBaseAuthUrl();
 
 const toAuthURL = (path: string) => `${baseAuthUrl}${path}`;
@@ -199,7 +201,10 @@ export default async function Layout(props: { children: React.ReactNode }) {
       <div>
         <DrawerMobileWrapper navigationPaths={drawerNavigationPaths} />
 
-        <Drawer navigationPaths={drawerNavigationPaths} />
+        <Drawer
+          navigationPaths={drawerNavigationPaths}
+          packageJsonVersion={packageJson.version}
+        />
 
         {props.children}
       </div>
