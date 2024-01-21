@@ -9,6 +9,10 @@
       "dependsOn": ["^ci:pull"],
       "outputs": [".vercel/**"]
     },
+    "ci:push": {
+      "dependsOn": ["^ci:push"],
+      "outputs": [".vercel/**"]
+    },
     "ci:build": {
       "dependsOn": ["^ci:build", "^ci:pull"],
       "outputs": [".vercel/**"]

@@ -12,7 +12,8 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "vercel-build": "prisma generate && next build",
-    "ci:pull": "vercel env pull .env --yes",
+    "ci:pull": "npx dotenv-vault@latest pull --yes",
+    "ci:push": "npx dotenv-vault@latest push --yes",
     "ci:build": "vercel build",
     "ci:deploy": "vercel deploy --prebuilt"
   },

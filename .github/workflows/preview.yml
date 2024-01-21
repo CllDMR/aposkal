@@ -55,8 +55,8 @@ jobs:
       - name: Check workspaces
         run: pnpm manypkg check
 
-      # - name: Pull Project Artifacts
-      #   run: pnpm --concurrency=80% ci:pull -- --environment=preview --token="${{ secrets.VERCEL_TOKEN }}"
+      - name: Pull Project Artifacts
+        run: pnpm ci:pull -- staging .env
 
       # - name: Build Project Artifacts
       #   run: pnpm --concurrency=80% ci:build -- --token="${{ secrets.VERCEL_TOKEN }}"
