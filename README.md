@@ -7,4 +7,4 @@
 - Logistic management
 - Supplier management
 
-run dev muhasebe : pnpm dev --filter="_muhasebe_"
+run dev muhasebe : pnpm dev --filter="*muhasebe*"
