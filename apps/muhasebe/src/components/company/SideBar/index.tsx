@@ -9,6 +9,11 @@ import { Logo } from "~/components/landing";
 import { Menu } from "./Menu";
 
 export const SideBar: FC = () => {
+  const nonBottomItems = sidebarItems.filter(
+    (item) => item.location !== "bottom",
+  );
+  const bottomItems = sidebarItems.filter((item) => item.location === "bottom");
+
   return (
     <div className="bg-slate-100 flex h-full grow flex-col gap-y-5 overflow-y-auto border-r pb-4">
       <div className="mx-auto my-8 space-y-3 ">
@@ -31,19 +36,19 @@ export const SideBar: FC = () => {
       <nav className="mt-1 flex h-full flex-1 flex-col">
         <ul className="flex flex-1 flex-col gap-y-7">
           <li>
-            {sidebarItems
-              .filter((item) => item.location !== "bottom")
-              .map((item, index) => (
-                <Menu key={index} item={item} index={index} />
-              ))}
+            {nonBottomItems.map((item, index) => (
+              <Menu key={index} item={item} index={index} />
+            ))}
           </li>
 
           <li className="mt-auto">
-            {sidebarItems
-              .filter((item) => item.location === "bottom")
-              .map((item, index) => (
-                <Menu key={index} item={item} index={index} />
-              ))}
+            {bottomItems.map((item, index) => (
+              <Menu
+                key={index + nonBottomItems.length}
+                item={item}
+                index={index}
+              />
+            ))}
           </li>
         </ul>
       </nav>

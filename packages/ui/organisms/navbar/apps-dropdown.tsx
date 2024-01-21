@@ -24,7 +24,7 @@ export const AppsDropdown: FC<{
         <Popover.Button
           className={`
             ${open ? "" : "text-opacity-90"}
-            group inline-flex items-center rounded-md px-2 py-2 text-base font-medium text-gray-400 hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-opacity-75`}
+            focus-visible:ring-primary-400 group inline-flex items-center rounded-md px-2 py-2 text-base font-medium text-gray-400 hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75`}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -67,7 +67,7 @@ export const AppsDropdown: FC<{
                           item.port +
                           (goToPathname ? item.pathname : "")
                     }
-                    className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-primary-500 focus-visible:ring-opacity-50"
+                    className="focus-visible:ring-primary-500 -m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-opacity-50"
                   >
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center text-white sm:h-12 sm:w-12">
                       {renderIcon(item.iconName)}
@@ -86,7 +86,7 @@ export const AppsDropdown: FC<{
               <div className="bg-gray-50 p-4">
                 <a
                   href="##"
-                  className="flow-root rounded-md px-2 py-2 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-primary-500 focus-visible:ring-opacity-50"
+                  className="focus-visible:ring-primary-500 flow-root rounded-md px-2 py-2 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-opacity-50"
                 >
                   <span className="flex items-center">
                     <span className="text-sm font-medium text-gray-900">

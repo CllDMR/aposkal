@@ -48,7 +48,6 @@ export const Menu: FC<MenuProps> = ({ item, index }) => {
         return (
           <div className="border-b-2 border-gray-50" key={index}>
             <Disclosure.Button className="w-full" as="div">
-              {}
               {item.children ? (
                 <div
                   // close others
