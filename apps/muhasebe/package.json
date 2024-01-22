@@ -11,11 +11,12 @@
     "preview": "next start -p 3005",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "vercel-build": "prisma generate && next build",
-    "ci:pull": "npx dotenv-vault@latest pull --yes",
+    "ci:pull:dotenv": "npx dotenv-vault@latest pull --yes",
+    "ci:pull:vercel": "vercel pull --yes",
     "ci:push": "npx dotenv-vault@latest push --yes",
     "ci:build": "vercel build",
-    "ci:deploy": "vercel deploy --prebuilt"
+    "vercel-build": "cd ../.. && pnpm build --filter='@acme/muhasebe'",
+    "ci:deploy": "vercel deploy --prebuilt --yes"
   },
   "dependencies": {
     "@acme/action": "^0.1.0",

@@ -20,7 +20,8 @@
     "lint": "turbo lint --concurrency=60% --continue -- --cache --cache-location 'node_modules/.cache/.eslintcache'",
     "lint:fix": "turbo lint --concurrency=60% --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache'",
     "typecheck": "turbo typecheck --concurrency=60% --continue",
-    "ci:pull": "turbo ci:pull",
+    "ci:pull:vercel": "turbo ci:pull:vercel",
+    "ci:pull:dotenv": "turbo ci:pull:dotenv",
     "ci:push": "turbo ci:push",
     "ci:build": "turbo ci:build",
     "ci:deploy": "turbo ci:deploy"

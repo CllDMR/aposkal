@@ -5,8 +5,12 @@
     "topo": {
       "dependsOn": ["^topo"]
     },
-    "ci:pull": {
-      "dependsOn": ["^ci:pull"],
+    "ci:pull:vercel": {
+      "dependsOn": ["^ci:pull:vercel"],
+      "outputs": [".vercel/**"]
+    },
+    "ci:pull:dotenv": {
+      "dependsOn": ["^ci:pull:dotenv"],
       "outputs": [".vercel/**"]
     },
     "ci:push": {
@@ -14,11 +18,16 @@
       "outputs": [".vercel/**"]
     },
     "ci:build": {
-      "dependsOn": ["^ci:build", "^ci:pull"],
+      "dependsOn": ["^ci:build", "^ci:pull:vercel", "^ci:pull:dotenv"],
       "outputs": [".vercel/**"]
     },
     "ci:deploy": {
-      "dependsOn": ["^ci:build", "^ci:pull", "^ci:deploy"],
+      "dependsOn": [
+        "^ci:build",
+        "^ci:pull:vercel",
+        "^ci:pull:dotenv",
+        "^ci:deploy"
+      ],
       "outputs": [".vercel/**"]
     },
     "build": {
@@ -41,13 +50,13 @@
     },
     "lint": {
       "dependsOn": ["^topo"],
-      "outputs": ["node_modules/.cache/.eslintcache"]
-      ,"outputMode": "errors-only"
+      "outputs": ["node_modules/.cache/.eslintcache"],
+      "outputMode": "errors-only"
     },
     "typecheck": {
       "dependsOn": ["^topo"],
-      "outputs": ["node_modules/.cache/tsbuildinfo.json"]
-      ,"outputMode": "errors-only"
+      "outputs": ["node_modules/.cache/tsbuildinfo.json"],
+      "outputMode": "errors-only"
     },
     "clean": {
       "cache": false
