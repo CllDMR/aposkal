@@ -1,3 +1,6 @@
+
+import IncomeList from "~/components/templates/income/IncomeList";
+
 interface PageProps {
   // eslint-disable-next-line @typescript-eslint/ban-types
   params: {};
@@ -6,5 +9,9 @@ interface PageProps {
 
 // eslint-disable-next-line no-empty-pattern
 export default function Page({ params: {}, searchParams: {} }: PageProps) {
-  return <div>Page</div>;
+  return (
+
+    <IncomeList />
+
+  );
 }

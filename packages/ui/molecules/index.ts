@@ -1,4 +1,3 @@
-export { Loading } from "./loading";
 export { Button } from "./button";
 export { ButtonIcon } from "./button-icon";
 export { FormCheckbox } from "./form-checkbox";
@@ -15,3 +14,6 @@ export { FormTextarea } from "./form-textarea";
 export type { FormTextareaProps } from "./form-textarea";
 export { ItemHeader } from "./item-header";
 export { LinkButton } from "./link-button";
+export { Loading } from "./loading";
+export { MyPopover } from "./my-popover";
+

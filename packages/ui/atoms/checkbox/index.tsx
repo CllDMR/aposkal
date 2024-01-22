@@ -1,8 +1,8 @@
 "use client";
 
+import clsx from "clsx";
 import type { DetailedHTMLProps, FC, InputHTMLAttributes } from "react";
 import { useEffect, useRef } from "react";
-import clsx from "clsx";
 import type { RefCallBack } from "react-hook-form";
 
 export type CheckboxSize = "medium" | "large";
